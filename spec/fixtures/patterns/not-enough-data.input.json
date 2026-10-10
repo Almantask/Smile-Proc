@@ -1,0 +1,56 @@
+{
+  "now": "2026-10-18T17:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "weeklyCard": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "entries": [
+    {
+      "id": "00000000-0000-4000-8000-000000000600",
+      "createdAt": "2026-08-01T08:00:00.000Z",
+      "updatedAt": "2026-08-01T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000601",
+      "createdAt": "2026-10-16T07:00:00.000Z",
+      "updatedAt": "2026-10-16T07:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000602",
+      "createdAt": "2026-10-17T10:00:00.000Z",
+      "updatedAt": "2026-10-17T10:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000603",
+      "createdAt": "2026-10-17T16:00:00.000Z",
+      "updatedAt": "2026-10-17T16:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    }
+  ],
+  "places": []
+}

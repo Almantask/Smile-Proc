@@ -1,0 +1,17 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 1,
+  "firstItemLibraryID": "time-higher",
+  "itemsIncludeLibraryIDs": [
+    "time-higher"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.higher.night",
+      "confidence": "earlyHint"
+    }
+  ]
+}

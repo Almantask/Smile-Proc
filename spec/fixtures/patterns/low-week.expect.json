@@ -1,0 +1,10 @@
+{
+  "variant": "normal",
+  "isLowWeek": true,
+  "windowKind": "twoWeeks",
+  "maxItemCount": 2,
+  "itemCount": 0,
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": []
+}

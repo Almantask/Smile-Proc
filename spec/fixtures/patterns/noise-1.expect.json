@@ -1,0 +1,42 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 2,
+  "firstItemLibraryID": "time-lower",
+  "itemsIncludeLibraryIDs": [
+    "time-lower",
+    "weekday-higher"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.lower.evening",
+      "confidence": "pattern"
+    },
+    {
+      "id": "weekday.higher.6",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "timeOfDay.higher.night",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "weekdayDaypart.lower.4.evening",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "weekday.lower.4",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "weekday.lower.2",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "weekdayDaypart.lower.2.evening",
+      "confidence": "earlyHint"
+    }
+  ]
+}

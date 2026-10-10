@@ -1,0 +1,10 @@
+{
+  "regions": {
+    "US": [ { "name": "988 Suicide & Crisis Lifeline", "phone": "988", "sms": "988", "verified": false } ],
+    "GB": [ { "name": "Samaritans", "phone": "116 123", "verified": false } ],
+    "IE": [ { "name": "Samaritans", "phone": "116 123", "verified": false } ],
+    "IT": [ { "name": "Telefono Amico Italia", "phone": "02 2327 2327", "verified": false } ]
+  },
+  "emergency": { "US": "911", "CA": "911", "GB": "999", "default": "112" },
+  "directory": { "name": "Find A Helpline", "url": "https://findahelpline.com", "verified": false }
+}

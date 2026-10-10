@@ -1,0 +1,10 @@
+{
+  "variant": "notEnoughData",
+  "isLowWeek": false,
+  "windowKind": "twoWeeks",
+  "maxItemCount": 1,
+  "itemCount": 0,
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": []
+}

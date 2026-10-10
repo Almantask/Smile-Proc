@@ -1,0 +1,21 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "twoWeeks",
+  "maxItemCount": 3,
+  "itemCount": 1,
+  "firstItemLibraryID": "sunday-evening",
+  "itemsIncludeLibraryIDs": [
+    "sunday-evening"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "weekdayDaypart.lower.7.evening",
+      "confidence": "pattern"
+    },
+    {
+      "id": "weekday.lower.7",
+      "confidence": "pattern"
+    }
+  ]
+}

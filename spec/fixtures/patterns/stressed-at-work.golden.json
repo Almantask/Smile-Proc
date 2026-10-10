@@ -1,0 +1,81 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 12,
+  "moodCounts": [
+    0,
+    12,
+    0
+  ],
+  "days": [
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "tagAtPlace.anxious.stressed.p:00000000-0000-4000-8000-000000000300",
+      "libraryID": "stress-at-place"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "tagAtPlace.anxious.stressed.p:00000000-0000-4000-8000-000000000300",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": null,
+      "meanRest": null,
+      "diff": null,
+      "z": null,
+      "score": 0.8
+    },
+    {
+      "id": "tagAtPlace.calm.u:00000000-0000-4000-8000-000000000320",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": null,
+      "meanRest": null,
+      "diff": null,
+      "z": null,
+      "score": 0.8
+    }
+  ]
+}

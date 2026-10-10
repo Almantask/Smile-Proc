@@ -1,0 +1,53 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 10,
+  "moodCounts": [
+    0,
+    9,
+    1
+  ],
+  "days": [
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      2,
+      0
+    ],
+    [
+      0,
+      3,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [],
+  "candidates": []
+}

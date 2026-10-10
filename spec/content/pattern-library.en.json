@@ -1,0 +1,97 @@
+[
+  { "id": "afternoon-dip", "match": { "detector": "timeOfDay", "direction": "lower", "segment": "afternoon" },
+    "title": "Afternoons run lower",
+    "common": "Lots of people notice their mood and energy dip after lunch.",
+    "tip": "Try a 10-minute walk or a few minutes of daylight shortly before the dip usually starts.",
+    "question": "Where could a 10-minute break fit tomorrow afternoon?" },
+
+  { "id": "sunday-evening", "match": { "detector": "weekdayDaypart", "direction": "lower", "weekday": "7", "segment": "evening" },
+    "title": "Sunday evenings feel heavier",
+    "common": "A dip before the week starts is something many people recognise.",
+    "tip": "Plan one small thing to look forward to on Monday.",
+    "question": "What's one small thing you could put into Monday?" },
+
+  { "id": "out-lifts", "match": { "detector": "awayFromHome", "direction": "higher" },
+    "title": "You feel better when you're out",
+    "common": "Many people find a change of scene lifts their mood.",
+    "tip": "Put one outdoor or out-of-the-house block into your week.",
+    "question": "Which day has room for it?" },
+
+  { "id": "stress-at-place", "match": { "detector": "tagAtPlace", "tag": "anxious.stressed" },
+    "title": "Stress tends to show up at {place}",
+    "common": "It's common for one place to carry most of a week's stress.",
+    "tip": "Take a 2-minute pause when you arrive at {place}, or just before you leave.",
+    "question": "Arriving or leaving — which pause is easier to try?" },
+
+  { "id": "tired-on-low", "match": { "detector": "tagOnLow", "tag": "tired" },
+    "title": "Tiredness shows up on most low check-ins",
+    "common": "Low mood and tiredness often travel together.",
+    "tip": "Look at sleep before anything else: pick one night this week to start winding down earlier.",
+    "question": "Which night could start 30 minutes earlier?" },
+
+  { "id": "time-lower", "match": { "detector": "timeOfDay", "direction": "lower" },
+    "title": "Your {segment}s run lower",
+    "common": "Many people have a time of day that's harder than the rest.",
+    "tip": "Give your {segment}s one small buffer this week: a short break, something to eat, or a few minutes outside.",
+    "question": "What would make the next {segment} a little easier?" },
+
+  { "id": "time-higher", "match": { "detector": "timeOfDay", "direction": "higher" },
+    "title": "Your best stretch is the {segment}",
+    "common": "Most people have a time of day when they feel more like themselves.",
+    "tip": "If you can, put something you care about into your {segment}s.",
+    "question": "What could you move into that time?" },
+
+  { "id": "weekday-lower", "match": { "detector": "weekday", "direction": "lower" },
+    "title": "{weekday}s run lower",
+    "common": "Many people have one day of the week that's harder than the others.",
+    "tip": "Add one small, kind thing to your next {weekday}.",
+    "question": "What would make next {weekday} lighter?" },
+
+  { "id": "weekday-higher", "match": { "detector": "weekday", "direction": "higher" },
+    "title": "{weekday}s go well for you",
+    "common": "Noticing your good days is as useful as noticing the hard ones.",
+    "tip": "Look at what's different about {weekday}s and borrow one piece of it for another day.",
+    "question": "What makes {weekday}s work?" },
+
+  { "id": "weekday-segment-lower", "match": { "detector": "weekdayDaypart", "direction": "lower" },
+    "title": "{weekday} {segment}s run lower",
+    "common": "Many people notice one stretch of the week that's harder.",
+    "tip": "Plan something small and easy for your next {weekday} {segment}.",
+    "question": "What could you plan for it?" },
+
+  { "id": "weekday-segment-higher", "match": { "detector": "weekdayDaypart", "direction": "higher" },
+    "title": "{weekday} {segment}s go well",
+    "common": "Noticing what goes well is half of repeating it.",
+    "tip": "Think about what makes that time work and borrow one piece for another day.",
+    "question": "Which piece would you borrow?" },
+
+  { "id": "place-lower", "match": { "detector": "place", "direction": "lower" },
+    "title": "Check-ins at {place} run lower",
+    "common": "Places often carry their own mood.",
+    "tip": "Try one small change at {place}: a short pause, a different spot, or a moment outside.",
+    "question": "Which change is easiest to try?" },
+
+  { "id": "place-higher", "match": { "detector": "place", "direction": "higher" },
+    "title": "You feel better at {place}",
+    "common": "Many people have a place that steadies them.",
+    "tip": "If you can, spend a little more time at {place} this week.",
+    "question": "When could you get there?" },
+
+  { "id": "home-higher", "match": { "detector": "awayFromHome", "direction": "lower" },
+    "title": "Home feels better than being out",
+    "common": "Being out takes more energy for a lot of people.",
+    "tip": "Plan a few quiet minutes to recharge after you get back.",
+    "question": "When do you usually need that most?" },
+
+  { "id": "tag-on-low", "match": { "detector": "tagOnLow" },
+    "title": "Feeling {tag} shows up on most low check-ins",
+    "common": "Putting a name to what's behind a low moment is a useful step.",
+    "tip": "Pick one small thing that would ease feeling {tag} this week.",
+    "question": "What usually helps, even a little?" },
+
+  { "id": "tag-at-place", "match": { "detector": "tagAtPlace" },
+    "title": "Feeling {tag} tends to show up at {place}",
+    "common": "It's common for one place to bring out one feeling.",
+    "tip": "Take a 2-minute pause at {place} this week and notice what changes.",
+    "question": "When would that pause fit?" }
+]

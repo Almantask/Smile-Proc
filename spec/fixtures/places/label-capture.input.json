@@ -1,0 +1,82 @@
+{
+  "entries": [
+    {
+      "id": "00000000-0000-4000-8000-000000001510",
+      "createdAt": "2026-10-12T08:00:00.000Z",
+      "updatedAt": "2026-10-12T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46406525332375,
+        "longitude": 9.19,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-12T08:00:00.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000001511",
+      "createdAt": "2026-10-13T08:01:00.000Z",
+      "updatedAt": "2026-10-13T08:01:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.4642,
+        "longitude": 9.190128082276281,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-13T08:01:00.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000001512",
+      "createdAt": "2026-10-14T08:02:00.000Z",
+      "updatedAt": "2026-10-14T08:02:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46433474667624,
+        "longitude": 9.190256164552563,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-14T08:02:00.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000001513",
+      "createdAt": "2026-10-15T08:03:00.000Z",
+      "updatedAt": "2026-10-15T08:03:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464469493352496,
+        "longitude": 9.19,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-15T08:03:00.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    }
+  ],
+  "places": [
+    {
+      "id": "00000000-0000-4000-8000-000000001500",
+      "name": "Office",
+      "kind": "work",
+      "anchorLatitude": 45.4642,
+      "anchorLongitude": 9.19,
+      "createdAt": "2026-09-01T07:00:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 12,
+  "moodCounts": [
+    6,
+    0,
+    6
+  ],
+  "days": [
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "timeOfDay.lower.afternoon",
+      "libraryID": "afternoon-dip"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 1.0,
+      "meanRest": 3.0,
+      "diff": -2.0,
+      "z": -11.547005,
+      "score": 1.4
+    }
+  ]
+}

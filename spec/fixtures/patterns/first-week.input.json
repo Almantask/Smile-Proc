@@ -1,0 +1,78 @@
+{
+  "now": "2026-10-18T17:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "weeklyCard": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "entries": [
+    {
+      "id": "00000000-0000-4000-8000-000000000700",
+      "createdAt": "2026-10-16T07:00:00.000Z",
+      "updatedAt": "2026-10-16T07:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000701",
+      "createdAt": "2026-10-16T12:00:00.000Z",
+      "updatedAt": "2026-10-16T12:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000702",
+      "createdAt": "2026-10-17T06:00:00.000Z",
+      "updatedAt": "2026-10-17T06:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000703",
+      "createdAt": "2026-10-17T16:00:00.000Z",
+      "updatedAt": "2026-10-17T16:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000704",
+      "createdAt": "2026-10-18T09:00:00.000Z",
+      "updatedAt": "2026-10-18T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000705",
+      "createdAt": "2026-10-18T14:00:00.000Z",
+      "updatedAt": "2026-10-18T14:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    }
+  ],
+  "places": []
+}

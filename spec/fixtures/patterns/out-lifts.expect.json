@@ -1,0 +1,34 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 2,
+  "firstItemLibraryID": "out-lifts",
+  "itemsIncludeLibraryIDs": [
+    "out-lifts",
+    "time-higher"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "awayFromHome.higher",
+      "confidence": "pattern"
+    },
+    {
+      "id": "place.higher.u:00000000-0000-4000-8000-000000000420",
+      "confidence": "pattern"
+    },
+    {
+      "id": "place.lower.p:00000000-0000-4000-8000-000000000400",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.higher.afternoon",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.lower.morning",
+      "confidence": "pattern"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "cases": [
+    {
+      "name": "before-card-time",
+      "now": "2026-10-14T10:00:00.000Z",
+      "entries": [
+        {
+          "id": "00000000-0000-4000-8000-000000001800",
+          "createdAt": "2026-10-14T07:00:00.000Z",
+          "updatedAt": "2026-10-14T07:00:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001801",
+          "createdAt": "2026-10-14T07:01:00.000Z",
+          "updatedAt": "2026-10-14T07:01:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001802",
+          "createdAt": "2026-10-14T07:02:00.000Z",
+          "updatedAt": "2026-10-14T07:02:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001803",
+          "createdAt": "2026-10-14T07:03:00.000Z",
+          "updatedAt": "2026-10-14T07:03:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001804",
+          "createdAt": "2026-10-14T07:04:00.000Z",
+          "updatedAt": "2026-10-14T07:04:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        }
+      ],
+      "existingPeriodEnds": [],
+      "shouldBuild": false
+    },
+    {
+      "name": "first-card-time",
+      "now": "2026-10-18T17:05:00.000Z",
+      "entries": [
+        {
+          "id": "00000000-0000-4000-8000-000000001800",
+          "createdAt": "2026-10-14T07:00:00.000Z",
+          "updatedAt": "2026-10-14T07:00:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001801",
+          "createdAt": "2026-10-14T07:01:00.000Z",
+          "updatedAt": "2026-10-14T07:01:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001802",
+          "createdAt": "2026-10-14T07:02:00.000Z",
+          "updatedAt": "2026-10-14T07:02:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001803",
+          "createdAt": "2026-10-14T07:03:00.000Z",
+          "updatedAt": "2026-10-14T07:03:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001804",
+          "createdAt": "2026-10-14T07:04:00.000Z",
+          "updatedAt": "2026-10-14T07:04:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        }
+      ],
+      "existingPeriodEnds": [],
+      "shouldBuild": true
+    },
+    {
+      "name": "already-built",
+      "now": "2026-10-18T17:05:00.000Z",
+      "entries": [
+        {
+          "id": "00000000-0000-4000-8000-000000001800",
+          "createdAt": "2026-10-14T07:00:00.000Z",
+          "updatedAt": "2026-10-14T07:00:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001801",
+          "createdAt": "2026-10-14T07:01:00.000Z",
+          "updatedAt": "2026-10-14T07:01:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001802",
+          "createdAt": "2026-10-14T07:02:00.000Z",
+          "updatedAt": "2026-10-14T07:02:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001803",
+          "createdAt": "2026-10-14T07:03:00.000Z",
+          "updatedAt": "2026-10-14T07:03:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001804",
+          "createdAt": "2026-10-14T07:04:00.000Z",
+          "updatedAt": "2026-10-14T07:04:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        }
+      ],
+      "existingPeriodEnds": [
+        "2026-10-18T17:00:00.000Z"
+      ],
+      "shouldBuild": false
+    },
+    {
+      "name": "too-few",
+      "now": "2026-10-18T17:05:00.000Z",
+      "entries": [
+        {
+          "id": "00000000-0000-4000-8000-000000001800",
+          "createdAt": "2026-10-14T07:00:00.000Z",
+          "updatedAt": "2026-10-14T07:00:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001801",
+          "createdAt": "2026-10-14T07:01:00.000Z",
+          "updatedAt": "2026-10-14T07:01:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000001802",
+          "createdAt": "2026-10-14T07:02:00.000Z",
+          "updatedAt": "2026-10-14T07:02:00.000Z",
+          "timeZoneID": "Europe/Rome",
+          "mood": 2,
+          "tags": [],
+          "comment": null,
+          "location": null,
+          "source": "app"
+        }
+      ],
+      "existingPeriodEnds": [],
+      "shouldBuild": false
+    }
+  ]
+}

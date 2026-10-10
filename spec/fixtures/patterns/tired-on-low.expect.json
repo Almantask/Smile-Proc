@@ -1,0 +1,17 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 1,
+  "firstItemLibraryID": "tired-on-low",
+  "itemsIncludeLibraryIDs": [
+    "tired-on-low"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern"
+    }
+  ]
+}

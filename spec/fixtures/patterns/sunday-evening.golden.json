@@ -1,0 +1,81 @@
+{
+  "periodStart": "2026-11-08T18:00:00.000Z",
+  "periodEnd": "2026-11-15T18:00:00.000Z",
+  "windowKind": "twoWeeks",
+  "entryCount": 7,
+  "moodCounts": [
+    1,
+    0,
+    6
+  ],
+  "days": [
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "weekdayDaypart.lower.7.evening",
+      "libraryID": "sunday-evening"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "weekdayDaypart.lower.7.evening",
+      "confidence": "pattern",
+      "nSegment": 4,
+      "nRest": 36,
+      "meanSegment": 1.0,
+      "meanRest": 3.0,
+      "diff": -2.0,
+      "z": -12.649111,
+      "score": 1.0
+    },
+    {
+      "id": "weekday.lower.7",
+      "confidence": "pattern",
+      "nSegment": 16,
+      "nRest": 24,
+      "meanSegment": 2.5,
+      "meanRest": 3.0,
+      "diff": -0.5,
+      "z": -2.75681,
+      "score": 0.7
+    }
+  ]
+}

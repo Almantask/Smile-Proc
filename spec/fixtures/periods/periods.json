@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "name": "exact-sunday",
+      "now": "2026-10-18T17:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "one-minute-before",
+      "now": "2026-10-18T16:59:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "monday-morning",
+      "now": "2026-10-19T06:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "dst-sunday-after",
+      "now": "2026-10-25T18:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-18T17:00:00.000Z",
+      "periodEnd": "2026-10-25T18:00:00.000Z"
+    },
+    {
+      "name": "dst-sunday-just-before",
+      "now": "2026-10-25T17:59:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "new-york",
+      "now": "2026-10-18T23:00:00.000Z",
+      "timeZoneID": "America/New_York",
+      "weeklyCard": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      },
+      "periodStart": "2026-10-11T23:00:00.000Z",
+      "periodEnd": "2026-10-18T23:00:00.000Z"
+    }
+  ]
+}

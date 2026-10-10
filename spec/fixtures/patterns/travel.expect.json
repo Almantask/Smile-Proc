@@ -1,0 +1,14 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 0,
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": [],
+  "dayparts": {
+    "travel-ny": "morning",
+    "travel-rome": "afternoon"
+  }
+}

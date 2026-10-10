@@ -1,0 +1,778 @@
+{
+  "cases": [
+    {
+      "detector": "timeOfDay",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-lower"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "afternoon-dip"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-lower"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "lower",
+      "segment": "night",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-lower"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-higher"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-higher"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-higher"
+    },
+    {
+      "detector": "timeOfDay",
+      "direction": "higher",
+      "segment": "night",
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "time-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "lower",
+      "segment": null,
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-lower"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekday",
+      "direction": "higher",
+      "segment": null,
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "morning",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "afternoon",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-lower"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "lower",
+      "segment": "evening",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "sunday-evening"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "morning",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "afternoon",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "1",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "2",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "3",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "4",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "5",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "6",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "weekdayDaypart",
+      "direction": "higher",
+      "segment": "evening",
+      "weekday": "7",
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "weekday-segment-higher"
+    },
+    {
+      "detector": "place",
+      "direction": "lower",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "home",
+      "tag": null,
+      "libraryID": "place-lower"
+    },
+    {
+      "detector": "place",
+      "direction": "lower",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "work",
+      "tag": null,
+      "libraryID": "place-lower"
+    },
+    {
+      "detector": "place",
+      "direction": "lower",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "other",
+      "tag": null,
+      "libraryID": "place-lower"
+    },
+    {
+      "detector": "place",
+      "direction": "higher",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "home",
+      "tag": null,
+      "libraryID": "place-higher"
+    },
+    {
+      "detector": "place",
+      "direction": "higher",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "work",
+      "tag": null,
+      "libraryID": "place-higher"
+    },
+    {
+      "detector": "place",
+      "direction": "higher",
+      "segment": null,
+      "weekday": null,
+      "placeKind": "other",
+      "tag": null,
+      "libraryID": "place-higher"
+    },
+    {
+      "detector": "awayFromHome",
+      "direction": "lower",
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "home-higher"
+    },
+    {
+      "detector": "awayFromHome",
+      "direction": "higher",
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": null,
+      "libraryID": "out-lifts"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "happy",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "calm",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "sad",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "anxious",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "angry",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "tired",
+      "libraryID": "tired-on-low"
+    },
+    {
+      "detector": "tagOnLow",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "surprised",
+      "libraryID": "tag-on-low"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "happy",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "calm",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "sad",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "anxious",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "angry",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "tired",
+      "libraryID": "tag-at-place"
+    },
+    {
+      "detector": "tagAtPlace",
+      "direction": null,
+      "segment": null,
+      "weekday": null,
+      "placeKind": null,
+      "tag": "surprised",
+      "libraryID": "tag-at-place"
+    }
+  ]
+}

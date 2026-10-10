@@ -1,0 +1,21 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "oneWeek",
+  "maxItemCount": 3,
+  "itemCount": 1,
+  "firstItemLibraryID": "stress-at-place",
+  "itemsIncludeLibraryIDs": [
+    "stress-at-place"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagAtPlace.anxious.stressed.p:00000000-0000-4000-8000-000000000300",
+      "confidence": "pattern"
+    },
+    {
+      "id": "tagAtPlace.calm.u:00000000-0000-4000-8000-000000000320",
+      "confidence": "pattern"
+    }
+  ]
+}

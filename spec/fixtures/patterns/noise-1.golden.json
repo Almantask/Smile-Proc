@@ -1,0 +1,140 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 18,
+  "moodCounts": [
+    3,
+    7,
+    8
+  ],
+  "days": [
+    [
+      0,
+      2,
+      1
+    ],
+    [
+      1,
+      2,
+      0
+    ],
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      2,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      4
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "timeOfDay.lower.evening",
+      "libraryID": "time-lower"
+    },
+    {
+      "patternID": "weekday.higher.6",
+      "libraryID": "weekday-higher"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "timeOfDay.lower.evening",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 12,
+      "meanSegment": 1.5,
+      "meanRest": 2.666667,
+      "diff": -1.166667,
+      "z": -4.572381,
+      "score": 0.9
+    },
+    {
+      "id": "weekday.higher.6",
+      "confidence": "earlyHint",
+      "nSegment": 4,
+      "nRest": 14,
+      "meanSegment": 3.0,
+      "meanRest": 2.071429,
+      "diff": 0.928571,
+      "z": 2.488922,
+      "score": 0.371429
+    },
+    {
+      "id": "timeOfDay.higher.night",
+      "confidence": "earlyHint",
+      "nSegment": 6,
+      "nRest": 12,
+      "meanSegment": 2.666667,
+      "meanRest": 2.083333,
+      "diff": 0.583333,
+      "z": 1.624725,
+      "score": 0.35
+    },
+    {
+      "id": "weekdayDaypart.lower.4.evening",
+      "confidence": "earlyHint",
+      "nSegment": 3,
+      "nRest": 15,
+      "meanSegment": 1.333333,
+      "meanRest": 2.466667,
+      "diff": -1.133333,
+      "z": -2.833333,
+      "score": 0.34
+    },
+    {
+      "id": "weekday.lower.4",
+      "confidence": "earlyHint",
+      "nSegment": 4,
+      "nRest": 14,
+      "meanSegment": 1.75,
+      "meanRest": 2.428571,
+      "diff": -0.678571,
+      "z": -1.674074,
+      "score": 0.271429
+    },
+    {
+      "id": "weekday.lower.2",
+      "confidence": "earlyHint",
+      "nSegment": 3,
+      "nRest": 15,
+      "meanSegment": 1.666667,
+      "meanRest": 2.4,
+      "diff": -0.733333,
+      "z": -1.613118,
+      "score": 0.22
+    },
+    {
+      "id": "weekdayDaypart.lower.2.evening",
+      "confidence": "earlyHint",
+      "nSegment": 3,
+      "nRest": 15,
+      "meanSegment": 1.666667,
+      "meanRest": 2.4,
+      "diff": -0.733333,
+      "z": -1.613118,
+      "score": 0.22
+    }
+  ]
+}

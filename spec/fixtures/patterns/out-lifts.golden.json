@@ -1,0 +1,118 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 12,
+  "moodCounts": [
+    6,
+    0,
+    6
+  ],
+  "days": [
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "awayFromHome.higher",
+      "libraryID": "out-lifts"
+    },
+    {
+      "patternID": "timeOfDay.higher.afternoon",
+      "libraryID": "time-higher"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "awayFromHome.higher",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 3.0,
+      "meanRest": 1.0,
+      "diff": 2.0,
+      "z": 11.547005,
+      "score": 1.4
+    },
+    {
+      "id": "place.higher.u:00000000-0000-4000-8000-000000000420",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 3.0,
+      "meanRest": 1.0,
+      "diff": 2.0,
+      "z": 11.547005,
+      "score": 1.4
+    },
+    {
+      "id": "place.lower.p:00000000-0000-4000-8000-000000000400",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 1.0,
+      "meanRest": 3.0,
+      "diff": -2.0,
+      "z": -11.547005,
+      "score": 1.4
+    },
+    {
+      "id": "timeOfDay.higher.afternoon",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 3.0,
+      "meanRest": 1.0,
+      "diff": 2.0,
+      "z": 11.547005,
+      "score": 1.4
+    },
+    {
+      "id": "timeOfDay.lower.morning",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 6,
+      "meanSegment": 1.0,
+      "meanRest": 3.0,
+      "diff": -2.0,
+      "z": -11.547005,
+      "score": 1.4
+    }
+  ]
+}

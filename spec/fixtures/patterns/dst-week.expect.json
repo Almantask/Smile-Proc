@@ -1,0 +1,21 @@
+{
+  "variant": "firstWeek",
+  "isLowWeek": false,
+  "windowKind": "twoWeeks",
+  "maxItemCount": 1,
+  "itemCount": 0,
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": [],
+  "dayparts": {
+    "dst-a": "evening",
+    "dst-b": "night",
+    "dst-c": "night",
+    "dst-d": "afternoon",
+    "dst-e": "evening",
+    "dst-f": "morning",
+    "dst-g": "morning",
+    "dst-h": "morning",
+    "dst-i": "morning"
+  }
+}

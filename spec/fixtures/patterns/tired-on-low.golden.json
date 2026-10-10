@@ -1,0 +1,70 @@
+{
+  "periodStart": "2026-10-11T17:00:00.000Z",
+  "periodEnd": "2026-10-18T17:00:00.000Z",
+  "windowKind": "oneWeek",
+  "entryCount": 10,
+  "moodCounts": [
+    5,
+    5,
+    0
+  ],
+  "days": [
+    [
+      2,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "isLowWeek": false,
+  "variant": "normal",
+  "maxItemCount": 3,
+  "items": [
+    {
+      "patternID": "tagOnLow.tired",
+      "libraryID": "tired-on-low"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "meanSegment": null,
+      "meanRest": null,
+      "diff": null,
+      "z": null,
+      "score": 0.7
+    }
+  ]
+}
