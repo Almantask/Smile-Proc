@@ -19,7 +19,7 @@
     "minSdk": 29,
     "targetSdk": 37,
     "buildTools": "37.0.0",
-    "composeBom": "2026.10.00",
+    "composeBom": "2026.09.00",
     "room": "2.8.5",
     "glance": "1.2.0",
     "navigation": "2.10.1",

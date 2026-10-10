@@ -6,14 +6,15 @@
 - Shared content: emotion tags, pattern config, pattern library, helpline seed.
 - English strings and generators (`spec/tools/gen_strings.py`, `spec/tools/generate_fixtures.py`).
 - Reference engine (`spec/tools/engine.py`) and fixtures, including goldens, periods, places, low-mood cases, library coverage, canonical JSON, and the export/seal vectors.
-- Android SDK 37.1 and build-tools 37.0.0 are installed on the build machine. The apps themselves are in progress.
+- Android `:core` and the Compose app. Unit tests pass and `assembleDebug` produces a signed debug APK. Sideload `dist/SmileProc-debug.apk` (app id `com.example.smileproc`, min Android 10).
+- iOS `SmileCore`, the SwiftUI app, the widget extension, and `ios/project.yml`. This machine has no Xcode, so that build is source-only until a Mac runs `scripts/test-ios.sh`.
+- Details: `docs/progress-android.md`, `docs/progress-ios.md`.
 
 ## Left
 
-- Android app and Kotlin `:core`, then a debug APK.
-- iOS app and `SmileCore`. This machine has no Xcode, so the iOS build is source-only until a Mac.
-- Device spikes S1–S3 and A1–A4. Results table in `docs/spikes.md` is empty.
+- Device spikes S1–S3 and A1–A4. The results table in `docs/spikes.md` is empty until you try them on a phone.
 - Helpline verification. Every entry is still `verified: false`.
+- A Mac compile of the iOS project, including the first GRDB package resolve.
 
 ## Deviations
 

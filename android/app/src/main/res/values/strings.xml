@@ -15,6 +15,7 @@
     <string name="debug_inbox">Inbox files</string>
     <string name="debug_patterns">Pattern debugger</string>
     <string name="debug_seed">Seed 4 weeks of demo data</string>
+    <string name="debug_spikeNotes">A1: after the phone has been unlocked once since boot, lock it and tap a reminder face. The check-in is in History after you unlock, and the lock screen only says SmileProc. A2: a reminder saves the last known location, or none. A3: the home-screen widget shows Saved for about 60 seconds and does not show which face. A4: leave a reminder overnight and note how many minutes late it was.</string>
     <string name="debug_spikes">Device spikes</string>
     <string name="debug_title">Debug</string>
     <string name="deleteAll_action">Delete everything</string>

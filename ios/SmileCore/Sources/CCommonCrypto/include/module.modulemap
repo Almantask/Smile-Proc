@@ -1,0 +1,4 @@
+module CCommonCrypto [system] {
+    header "CCommonCrypto.h"
+    export *
+}
