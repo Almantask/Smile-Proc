@@ -1,0 +1,105 @@
+{
+  "description": "CardPeriod: periodEnd = latest card time <= now in the device zone; periodStart = the same local time 7 calendar days earlier.",
+  "cases": [
+    {
+      "name": "midweek",
+      "now": "2026-10-14T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "exactly-at-card-time",
+      "now": "2026-10-18T17:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "one-ms-before-card-time",
+      "now": "2026-10-18T16:59:59.999Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "dst-autumn-card-evening",
+      "now": "2026-10-25T19:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "dst-autumn-midweek",
+      "now": "2026-10-28T12:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "dst-spring-card-evening",
+      "now": "2026-03-29T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "monday-morning-card-time",
+      "now": "2026-10-12T05:59:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 1,
+        "hour": 8,
+        "minute": 0
+      }
+    },
+    {
+      "name": "saturday-card-time-exact",
+      "now": "2026-10-17T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 6,
+        "hour": 9,
+        "minute": 30
+      }
+    },
+    {
+      "name": "new-york-dst-end",
+      "now": "2026-11-02T01:00:00.000Z",
+      "timeZoneID": "America/New_York",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    },
+    {
+      "name": "year-boundary",
+      "now": "2027-01-01T11:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "cardTime": {
+        "weekday": 7,
+        "hour": 19,
+        "minute": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "afternoon-dip",
+  "itemsIncludeLibraryIDs": [
+    "afternoon-dip"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern"
+    }
+  ],
+  "dayparts": {
+    "cd2b4555-ff3c-471c-bf7b-906fb14e86fc": "afternoon",
+    "1270833b-b97f-45c6-aa5f-c96c3c0ae6b0": "evening",
+    "0c99a366-0874-43c0-b4f8-e7da3f1def1b": "morning"
+  },
+  "notes": [
+    "Wed 14 - Fri 16 entries carry timeZoneID America/New_York (EDT, UTC-4); the device zone is Europe/Rome.",
+    "In their own zone: 14 Oct 14:30 EDT = afternoon; 14 Oct 20:30 EDT (15 Oct 00:30Z) = evening; 15 Oct 09:00 EDT (13:00Z) = morning. In Rome time they would be evening, night and afternoon.",
+    "Same shape as afternoon-dip in local time: 7 Low afternoons, 4 Good mornings, 3 Good evenings -> same numbers.",
+    "Every local date has 1 Low + 1 Good -> no weekday candidate (dates in each entry's own zone).",
+    "Two clusters (Milan 8 entries, New York 6), both mean 2.0 -> no place candidate."
+  ]
+}

@@ -1,0 +1,1799 @@
+{
+  "scenario": "noise-1",
+  "description": "4 weeks of random check-ins (25 a week): moods, times, places and tags uniform at random.",
+  "now": "2026-10-18T18:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "labels": [],
+  "entries": [
+    {
+      "id": "d2d4aa47-e8b7-49aa-ae86-fbe64ef5d712",
+      "createdAt": "2026-09-21T05:20:00.000Z",
+      "updatedAt": "2026-09-21T05:21:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.hopeful",
+        "happy.grateful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464193,
+        "longitude": 9.190088,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-09-21T05:20:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "323afe6a-12ff-4809-a88b-58b1ef084a11",
+      "createdAt": "2026-09-21T06:20:00.000Z",
+      "updatedAt": "2026-09-21T06:20:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.484948,
+        "longitude": 9.204899,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-09-21T06:20:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "cc55f38f-3c37-4a9a-9287-9b9ba9af346f",
+      "createdAt": "2026-09-21T15:50:00.000Z",
+      "updatedAt": "2026-09-21T15:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46416,
+        "longitude": 9.190066,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-09-21T15:50:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "a6cce1df-ad9d-404c-bda0-d2b570921dec",
+      "createdAt": "2026-09-22T08:25:00.000Z",
+      "updatedAt": "2026-09-22T08:25:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464144,
+        "longitude": 9.190064,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-09-22T08:25:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "ad237c4c-07db-4f19-9712-876b8a0065fd",
+      "createdAt": "2026-09-22T08:50:00.000Z",
+      "updatedAt": "2026-09-22T08:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy",
+        "sad.disappointed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464216,
+        "longitude": 9.18999,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-09-22T08:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "59ddcee1-9d49-4f4b-935d-6f5788cd3b77",
+      "createdAt": "2026-09-22T11:25:00.000Z",
+      "updatedAt": "2026-09-22T11:26:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "tired.drained",
+        "angry.resentful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464249,
+        "longitude": 9.189937,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-09-22T11:21:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "f9c5b87b-51ce-45af-8aaa-e7f84faa3ede",
+      "createdAt": "2026-09-23T10:30:00.000Z",
+      "updatedAt": "2026-09-23T10:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485033,
+        "longitude": 9.204997,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-09-23T10:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "2a4578d6-9bb8-4931-bca1-2c10138a319b",
+      "createdAt": "2026-09-23T17:05:00.000Z",
+      "updatedAt": "2026-09-23T17:06:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464171,
+        "longitude": 9.190068,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-09-23T17:05:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "e82151d0-d11a-4e11-ab86-04594aaef1dc",
+      "createdAt": "2026-09-23T18:10:00.000Z",
+      "updatedAt": "2026-09-23T18:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464255,
+        "longitude": 9.189928,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-09-23T18:06:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "296fdc5f-a181-43b2-983d-2d20f0d9d985",
+      "createdAt": "2026-09-23T19:25:00.000Z",
+      "updatedAt": "2026-09-23T19:26:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "anxious.insecure",
+        "sad.hurt"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464205,
+        "longitude": 9.190008,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-09-23T19:25:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "33312a72-5ca2-4a82-b4cf-ff5299676ada",
+      "createdAt": "2026-09-24T09:20:00.000Z",
+      "updatedAt": "2026-09-24T09:21:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "surprised.startled",
+        "tired.bored"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464156,
+        "longitude": 9.189948,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-09-24T09:20:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "dc20c7ac-60e6-4b41-8391-f659c7fb8711",
+      "createdAt": "2026-09-24T11:35:00.000Z",
+      "updatedAt": "2026-09-24T11:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "sad.down",
+        "tired.unmotivated"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464221,
+        "longitude": 9.19012,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-09-24T11:35:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "e99e6f35-8730-416e-a807-f2c39cc5eb44",
+      "createdAt": "2026-09-25T05:25:00.000Z",
+      "updatedAt": "2026-09-25T05:25:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464206,
+        "longitude": 9.189999,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-09-25T05:21:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "150c17b5-7a7f-4764-9b31-955edad93a7a",
+      "createdAt": "2026-09-25T06:10:00.000Z",
+      "updatedAt": "2026-09-25T06:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485063,
+        "longitude": 9.204995,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-09-25T06:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "ab461058-7daa-4433-ae28-caa6c1af6dae",
+      "createdAt": "2026-09-25T13:50:00.000Z",
+      "updatedAt": "2026-09-25T13:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464115,
+        "longitude": 9.189972,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-09-25T13:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "f9838db5-375f-4faf-accb-ed65e5064abf",
+      "createdAt": "2026-09-25T15:50:00.000Z",
+      "updatedAt": "2026-09-25T15:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464198,
+        "longitude": 9.18989,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-09-25T15:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "ecf60683-bd22-4cda-aaae-3678b56750e2",
+      "createdAt": "2026-09-26T07:30:00.000Z",
+      "updatedAt": "2026-09-26T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464243,
+        "longitude": 9.190062,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-09-26T07:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "6cc58028-192f-4da1-98d3-7d22c2c1249d",
+      "createdAt": "2026-09-26T10:00:00.000Z",
+      "updatedAt": "2026-09-26T10:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.focused",
+        "angry.irritated"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484954,
+        "longitude": 9.204913,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-09-26T09:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b0e850eb-48f9-43fc-9123-463e600a341b",
+      "createdAt": "2026-09-26T16:30:00.000Z",
+      "updatedAt": "2026-09-26T16:31:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.grateful",
+        "happy.excited"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464134,
+        "longitude": 9.190023,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-09-26T16:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "700a1f3f-72bd-4c8b-9f1d-2c3c475425eb",
+      "createdAt": "2026-09-26T18:30:00.000Z",
+      "updatedAt": "2026-09-26T18:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464143,
+        "longitude": 9.190023,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-09-26T18:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "dc04ae4a-b510-48e7-a20e-60e620040554",
+      "createdAt": "2026-09-27T07:05:00.000Z",
+      "updatedAt": "2026-09-27T07:05:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.48494,
+        "longitude": 9.204925,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-09-27T07:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "fbd533f6-8190-4f59-b062-c72ab6914fb7",
+      "createdAt": "2026-09-27T08:40:00.000Z",
+      "updatedAt": "2026-09-27T08:40:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464222,
+        "longitude": 9.190016,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-09-27T08:36:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b8dbc5d3-b5bc-4f34-aade-773ee0af513e",
+      "createdAt": "2026-09-27T10:45:00.000Z",
+      "updatedAt": "2026-09-27T10:46:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "surprised.curious",
+        "happy.joyful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464223,
+        "longitude": 9.189942,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-09-27T10:45:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "a091e3af-c651-4869-bc41-1f48377432dc",
+      "createdAt": "2026-09-27T11:40:00.000Z",
+      "updatedAt": "2026-09-27T11:41:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "calm.peaceful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464129,
+        "longitude": 9.189956,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-09-27T11:36:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "fb997792-a1c5-4da2-a6bc-1e44cdf5400e",
+      "createdAt": "2026-09-27T14:10:00.000Z",
+      "updatedAt": "2026-09-27T14:11:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired.unmotivated"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464248,
+        "longitude": 9.189955,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-09-27T14:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "2d3e4b71-ea68-420c-af9e-787549e5c661",
+      "createdAt": "2026-09-28T09:00:00.000Z",
+      "updatedAt": "2026-09-28T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464261,
+        "longitude": 9.189927,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-09-28T08:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b4458b8a-efd3-40d6-8f49-085fa1f4ce25",
+      "createdAt": "2026-09-28T10:50:00.000Z",
+      "updatedAt": "2026-09-28T10:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.sleepy"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "8fba3189-6d0d-43d5-a9a2-daf0f88d201f",
+      "createdAt": "2026-09-28T14:10:00.000Z",
+      "updatedAt": "2026-09-28T14:11:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "sad.down",
+        "sad.hurt"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464142,
+        "longitude": 9.189972,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-09-28T14:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "65abf8b3-c7fb-4b8a-89d8-e9c803226808",
+      "createdAt": "2026-09-28T16:00:00.000Z",
+      "updatedAt": "2026-09-28T16:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464248,
+        "longitude": 9.19005,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-09-28T15:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "98465865-683b-4afc-9d6c-6ef88f5c1750",
+      "createdAt": "2026-09-28T17:35:00.000Z",
+      "updatedAt": "2026-09-28T17:35:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464236,
+        "longitude": 9.190112,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-09-28T17:31:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "26ee6c34-4294-491d-becf-dcdc193bdad1",
+      "createdAt": "2026-09-28T18:50:00.000Z",
+      "updatedAt": "2026-09-28T18:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.relaxed",
+        "surprised.startled"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.48501,
+        "longitude": 9.205067,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-09-28T18:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "bbcace45-80fd-4e10-8caf-dcff096b926a",
+      "createdAt": "2026-09-29T14:50:00.000Z",
+      "updatedAt": "2026-09-29T14:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "angry.impatient"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464162,
+        "longitude": 9.190043,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-09-29T14:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "3aec2c51-7f00-4659-bccb-89729062a855",
+      "createdAt": "2026-09-30T09:25:00.000Z",
+      "updatedAt": "2026-09-30T09:25:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464219,
+        "longitude": 9.190013,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-09-30T09:21:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "cb4cfe96-d102-4fe6-9779-1b79ed5580a1",
+      "createdAt": "2026-09-30T10:30:00.000Z",
+      "updatedAt": "2026-09-30T10:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485023,
+        "longitude": 9.205095,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-09-30T10:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "46fd6ca7-03c5-4edf-b4fb-d78b03872646",
+      "createdAt": "2026-09-30T20:30:00.000Z",
+      "updatedAt": "2026-09-30T20:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464157,
+        "longitude": 9.19002,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-09-30T20:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "18107027-a4bf-4f6e-ae25-aeced9bff2c8",
+      "createdAt": "2026-10-01T08:45:00.000Z",
+      "updatedAt": "2026-10-01T08:45:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464233,
+        "longitude": 9.189884,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-01T08:41:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "1690b7a5-d317-4409-b748-f0ff4db22af2",
+      "createdAt": "2026-10-01T12:25:00.000Z",
+      "updatedAt": "2026-10-01T12:26:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "anxious.worried",
+        "sad.down"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464262,
+        "longitude": 9.190027,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-01T12:21:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "be431df1-f07f-46d0-9821-aeabd72ecd11",
+      "createdAt": "2026-10-01T13:05:00.000Z",
+      "updatedAt": "2026-10-01T13:06:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "calm.peaceful",
+        "surprised.confused"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464235,
+        "longitude": 9.18991,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-10-01T13:05:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "bf296090-6ac9-4456-84cc-ab5915a3bd42",
+      "createdAt": "2026-10-01T15:10:00.000Z",
+      "updatedAt": "2026-10-01T15:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.484934,
+        "longitude": 9.205036,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-10-01T15:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "3b5fbff9-5b55-47c9-8f22-7589742db13e",
+      "createdAt": "2026-10-01T16:20:00.000Z",
+      "updatedAt": "2026-10-01T16:21:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "angry.resentful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484948,
+        "longitude": 9.205026,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-01T16:16:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "da791257-5900-4909-bc85-1a8fc14b19a7",
+      "createdAt": "2026-10-01T18:15:00.000Z",
+      "updatedAt": "2026-10-01T18:15:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464132,
+        "longitude": 9.190027,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-10-01T18:11:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b48450d4-d5af-4c59-910b-f521556926f6",
+      "createdAt": "2026-10-01T19:35:00.000Z",
+      "updatedAt": "2026-10-01T19:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "angry.frustrated",
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464228,
+        "longitude": 9.190047,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-10-01T19:35:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "7ca257dd-26f6-4f71-a6f1-ae7b8172a325",
+      "createdAt": "2026-10-02T12:50:00.000Z",
+      "updatedAt": "2026-10-02T12:51:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.bored"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484985,
+        "longitude": 9.205027,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-10-02T12:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "f8ae4baf-1a7e-4434-9c1f-9188558385bf",
+      "createdAt": "2026-10-02T18:50:00.000Z",
+      "updatedAt": "2026-10-02T18:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464209,
+        "longitude": 9.190064,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-10-02T18:50:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "0a1c080c-75a6-4f8b-9a24-25a629d1635d",
+      "createdAt": "2026-10-03T07:30:00.000Z",
+      "updatedAt": "2026-10-03T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.48507,
+        "longitude": 9.205003,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-10-03T07:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "f3bd3742-6331-4fff-8ede-79d9a951b4b8",
+      "createdAt": "2026-10-03T09:45:00.000Z",
+      "updatedAt": "2026-10-03T09:46:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.proud"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464162,
+        "longitude": 9.190092,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-03T09:41:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "7dea2355-62d7-49fe-ba4e-8ae01d64213c",
+      "createdAt": "2026-10-03T12:05:00.000Z",
+      "updatedAt": "2026-10-03T12:05:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464233,
+        "longitude": 9.190074,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-10-03T12:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "521e9997-8318-4487-8601-cf30928d413b",
+      "createdAt": "2026-10-04T07:10:00.000Z",
+      "updatedAt": "2026-10-04T07:11:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "angry.jealous"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464149,
+        "longitude": 9.189917,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-10-04T07:06:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "cf5ff78e-2fd2-4043-95a0-c06b2ba86b24",
+      "createdAt": "2026-10-04T08:05:00.000Z",
+      "updatedAt": "2026-10-04T08:05:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485041,
+        "longitude": 9.204975,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-04T08:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "d3bba572-a9d5-41d3-b9c2-86f1ae5a0a6c",
+      "createdAt": "2026-10-04T11:00:00.000Z",
+      "updatedAt": "2026-10-04T11:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised.confused",
+        "anxious.worried"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464184,
+        "longitude": 9.189983,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-10-04T10:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "9365cb09-b1f4-49f3-8eae-e4969819da9b",
+      "createdAt": "2026-10-05T11:45:00.000Z",
+      "updatedAt": "2026-10-05T11:46:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "sad.nostalgic",
+        "surprised"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484978,
+        "longitude": 9.205066,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-05T11:45:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "4f85b3f2-c2d0-43c8-8d6f-8ff27139fde4",
+      "createdAt": "2026-10-05T17:20:00.000Z",
+      "updatedAt": "2026-10-05T17:20:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "bb16c5b6-5f66-4ecf-8e8f-45a12f49ae79",
+      "createdAt": "2026-10-06T05:15:00.000Z",
+      "updatedAt": "2026-10-06T05:16:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.numb",
+        "sad"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464169,
+        "longitude": 9.190004,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-10-06T05:15:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "8aad5f3d-31eb-4f0a-8daa-fc51973249a8",
+      "createdAt": "2026-10-06T11:15:00.000Z",
+      "updatedAt": "2026-10-06T11:16:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised",
+        "calm.relaxed"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "e37f1a71-2fa9-408a-9c78-ac1203ca3789",
+      "createdAt": "2026-10-06T13:15:00.000Z",
+      "updatedAt": "2026-10-06T13:16:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "anxious.overwhelmed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464263,
+        "longitude": 9.189996,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-10-06T13:11:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "5a3d0468-5467-48ab-8a0c-0022da2c523e",
+      "createdAt": "2026-10-06T15:50:00.000Z",
+      "updatedAt": "2026-10-06T15:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464246,
+        "longitude": 9.189976,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-06T15:50:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "fce26a0d-ca23-4a36-8333-4f65d0cadfa6",
+      "createdAt": "2026-10-06T17:00:00.000Z",
+      "updatedAt": "2026-10-06T17:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485022,
+        "longitude": 9.204997,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-06T16:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "6da87c07-56a9-4b96-9013-3fcb51e2cce1",
+      "createdAt": "2026-10-06T19:10:00.000Z",
+      "updatedAt": "2026-10-06T19:11:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "sad.disappointed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484945,
+        "longitude": 9.205072,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-10-06T19:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "b5f67562-7162-4474-af2e-bca14cfa17c2",
+      "createdAt": "2026-10-07T10:45:00.000Z",
+      "updatedAt": "2026-10-07T10:45:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "95925cce-229f-4d88-a58a-6c2aa578c202",
+      "createdAt": "2026-10-07T17:55:00.000Z",
+      "updatedAt": "2026-10-07T17:55:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464175,
+        "longitude": 9.189942,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-10-07T17:55:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "f4695c64-5dfa-49dd-a2eb-20b619fd8b46",
+      "createdAt": "2026-10-08T11:40:00.000Z",
+      "updatedAt": "2026-10-08T11:41:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "anxious.nervous",
+        "calm.relaxed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464289,
+        "longitude": 9.190012,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-08T11:40:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "a2e20a2a-8d26-4708-b021-2f80d1c984ce",
+      "createdAt": "2026-10-08T15:35:00.000Z",
+      "updatedAt": "2026-10-08T15:35:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464282,
+        "longitude": 9.189953,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-08T15:31:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "040c2833-6508-4936-b293-f90dcda48644",
+      "createdAt": "2026-10-08T16:55:00.000Z",
+      "updatedAt": "2026-10-08T16:56:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised.amazed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485027,
+        "longitude": 9.205011,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-10-08T16:55:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "4da8329f-0b7b-410f-b86c-7dd48b784a2f",
+      "createdAt": "2026-10-09T12:15:00.000Z",
+      "updatedAt": "2026-10-09T12:15:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464189,
+        "longitude": 9.190072,
+        "horizontalAccuracy": 14.0,
+        "capturedAt": "2026-10-09T12:15:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "00c7e9ee-af61-4e0e-8e65-a894e68f82f5",
+      "createdAt": "2026-10-09T14:10:00.000Z",
+      "updatedAt": "2026-10-09T14:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "71233c66-e2eb-4047-9645-b9b81b2e8228",
+      "createdAt": "2026-10-09T20:05:00.000Z",
+      "updatedAt": "2026-10-09T20:05:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464167,
+        "longitude": 9.190091,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-10-09T20:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "aac9609e-724b-4f1a-abf5-5f776f9e66cd",
+      "createdAt": "2026-10-10T08:35:00.000Z",
+      "updatedAt": "2026-10-10T08:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "calm.safe",
+        "sad"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464138,
+        "longitude": 9.189922,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-10-10T08:31:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "df159bda-68a7-426f-87bd-5ed4fd1b5711",
+      "createdAt": "2026-10-10T12:50:00.000Z",
+      "updatedAt": "2026-10-10T12:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464214,
+        "longitude": 9.190013,
+        "horizontalAccuracy": 14.0,
+        "capturedAt": "2026-10-10T12:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "aef7dd25-c29e-47b8-a89f-114ded81c96a",
+      "createdAt": "2026-10-10T17:20:00.000Z",
+      "updatedAt": "2026-10-10T17:20:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.48494,
+        "longitude": 9.204968,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-10T17:16:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "90706aad-70b4-4591-a648-230715be1346",
+      "createdAt": "2026-10-11T06:25:00.000Z",
+      "updatedAt": "2026-10-11T06:26:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "surprised.curious"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484959,
+        "longitude": 9.205032,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-11T06:25:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "06d99ac6-2605-4285-a9d5-dda683dab109",
+      "createdAt": "2026-10-11T09:05:00.000Z",
+      "updatedAt": "2026-10-11T09:06:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464165,
+        "longitude": 9.190056,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-11T09:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "ec0469b6-8fda-48fd-9c00-a8b98ade847f",
+      "createdAt": "2026-10-11T09:15:00.000Z",
+      "updatedAt": "2026-10-11T09:15:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464181,
+        "longitude": 9.190056,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-11T09:11:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "1be40538-a9d9-4c53-9274-07bb342107d3",
+      "createdAt": "2026-10-11T11:10:00.000Z",
+      "updatedAt": "2026-10-11T11:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "cfba9b6c-69b1-49f5-a2cb-50e05bf1e2be",
+      "createdAt": "2026-10-11T12:10:00.000Z",
+      "updatedAt": "2026-10-11T12:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464113,
+        "longitude": 9.18999,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-10-11T12:06:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b7dbd3df-24b1-46aa-a47f-78abf15135fc",
+      "createdAt": "2026-10-11T13:00:00.000Z",
+      "updatedAt": "2026-10-11T13:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485046,
+        "longitude": 9.205011,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-11T13:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "54a59f92-05a3-4a9c-8ca5-c3d953c3ca4d",
+      "createdAt": "2026-10-12T06:35:00.000Z",
+      "updatedAt": "2026-10-12T06:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.bored",
+        "tired.sleepy"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.46422,
+        "longitude": 9.190005,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-10-12T06:31:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "876f4ac2-2948-4a98-b8df-64eda031446a",
+      "createdAt": "2026-10-12T09:00:00.000Z",
+      "updatedAt": "2026-10-12T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised.confused"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464166,
+        "longitude": 9.189945,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-12T08:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "2ed0ae26-430b-4333-839c-fee9273f004b",
+      "createdAt": "2026-10-12T16:05:00.000Z",
+      "updatedAt": "2026-10-12T16:05:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485081,
+        "longitude": 9.205052,
+        "horizontalAccuracy": 9.0,
+        "capturedAt": "2026-10-12T16:01:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "32b78c44-d049-4ff3-86d1-a0d9689678c4",
+      "createdAt": "2026-10-13T05:25:00.000Z",
+      "updatedAt": "2026-10-13T05:25:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.484953,
+        "longitude": 9.204919,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-13T05:25:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "a31bcb00-f1c5-4e37-9499-01a3232c00c4",
+      "createdAt": "2026-10-13T10:55:00.000Z",
+      "updatedAt": "2026-10-13T10:56:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious",
+        "angry"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485029,
+        "longitude": 9.204962,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-13T10:55:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "03490a82-ad34-4770-9fb7-725fcd4d8295",
+      "createdAt": "2026-10-13T14:55:00.000Z",
+      "updatedAt": "2026-10-13T14:56:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "anxious.nervous"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485019,
+        "longitude": 9.204893,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-10-13T14:51:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "f30f9c64-008c-4731-bfaf-9e7e6edc78a4",
+      "createdAt": "2026-10-13T16:10:00.000Z",
+      "updatedAt": "2026-10-13T16:11:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised.confused",
+        "happy.hopeful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485051,
+        "longitude": 9.205051,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-10-13T16:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "69b7703c-9a1c-4c76-890a-e021b78e231a",
+      "createdAt": "2026-10-13T19:00:00.000Z",
+      "updatedAt": "2026-10-13T19:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "surprised.moved",
+        "anxious.worried"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464222,
+        "longitude": 9.190106,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-13T18:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "7f8451b0-ac8f-4497-8d3c-f549c0ec60f6",
+      "createdAt": "2026-10-14T06:25:00.000Z",
+      "updatedAt": "2026-10-14T06:25:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464238,
+        "longitude": 9.189959,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-14T06:25:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "549a7e6d-8896-405d-81f4-62ca4b6bd211",
+      "createdAt": "2026-10-14T13:40:00.000Z",
+      "updatedAt": "2026-10-14T13:41:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "surprised.confused"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484945,
+        "longitude": 9.205006,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-14T13:36:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a0290746-ae27-480d-844b-22faa9cc32d8",
+      "createdAt": "2026-10-14T15:50:00.000Z",
+      "updatedAt": "2026-10-14T15:50:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464243,
+        "longitude": 9.190093,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-10-14T15:46:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "07877eb1-0760-48bf-bdd1-e154894004f6",
+      "createdAt": "2026-10-14T19:25:00.000Z",
+      "updatedAt": "2026-10-14T19:26:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "sad.nostalgic",
+        "surprised.startled"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485061,
+        "longitude": 9.204931,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-14T19:21:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "db5dfd68-c3cc-468c-b51d-65656c92fd5e",
+      "createdAt": "2026-10-15T08:35:00.000Z",
+      "updatedAt": "2026-10-15T08:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "tired",
+        "anxious.overwhelmed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464175,
+        "longitude": 9.190024,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-15T08:35:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "d65e8add-35b5-4c3a-aeaa-8200f5bce79e",
+      "createdAt": "2026-10-15T09:55:00.000Z",
+      "updatedAt": "2026-10-15T09:55:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485031,
+        "longitude": 9.205114,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-15T09:51:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "3ff4617f-fe6e-4811-bc73-2dca8658ca0d",
+      "createdAt": "2026-10-15T20:15:00.000Z",
+      "updatedAt": "2026-10-15T20:15:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.484968,
+        "longitude": 9.2049,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-15T20:11:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "cf70571f-b3a2-4de3-a16d-bc2725933abb",
+      "createdAt": "2026-10-15T20:15:00.000Z",
+      "updatedAt": "2026-10-15T20:16:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "sad.lonely",
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464161,
+        "longitude": 9.190109,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-15T20:11:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "2318ad45-48a4-489b-8be9-d13102c629d8",
+      "createdAt": "2026-10-16T06:00:00.000Z",
+      "updatedAt": "2026-10-16T06:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.485049,
+        "longitude": 9.205042,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-16T06:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "50099538-e678-40d5-8ee8-d42144827ee6",
+      "createdAt": "2026-10-16T10:10:00.000Z",
+      "updatedAt": "2026-10-16T10:10:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464154,
+        "longitude": 9.190098,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-10-16T10:10:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "edb56a6e-cb57-451b-bb42-4df132232ba3",
+      "createdAt": "2026-10-16T15:00:00.000Z",
+      "updatedAt": "2026-10-16T15:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "822afaff-b4e2-4e83-a60d-e9083ebbb952",
+      "createdAt": "2026-10-17T07:35:00.000Z",
+      "updatedAt": "2026-10-17T07:35:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464243,
+        "longitude": 9.190038,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-17T07:35:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "6f9dacf3-817a-4769-84b3-fa44236c7a1e",
+      "createdAt": "2026-10-17T13:35:00.000Z",
+      "updatedAt": "2026-10-17T13:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy.excited",
+        "happy"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464133,
+        "longitude": 9.189937,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-10-17T13:35:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "1581efa6-2a38-4607-b4fc-15fd61d6d2e2",
+      "createdAt": "2026-10-17T18:30:00.000Z",
+      "updatedAt": "2026-10-17T18:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.484966,
+        "longitude": 9.205005,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-17T18:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "d1b93743-9df3-4444-86ed-e5886599b5f9",
+      "createdAt": "2026-10-18T08:35:00.000Z",
+      "updatedAt": "2026-10-18T08:36:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "surprised.confused",
+        "surprised"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464138,
+        "longitude": 9.189975,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-18T08:31:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a9df9df9-e166-4b99-a343-43271548692f",
+      "createdAt": "2026-10-18T09:45:00.000Z",
+      "updatedAt": "2026-10-18T09:45:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46418,
+        "longitude": 9.190109,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-18T09:45:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "9c1b6836-58ad-407a-992e-640282b88715",
+      "createdAt": "2026-10-18T15:30:00.000Z",
+      "updatedAt": "2026-10-18T15:31:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "anxious"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.46417,
+        "longitude": 9.189984,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-18T15:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    }
+  ]
+}

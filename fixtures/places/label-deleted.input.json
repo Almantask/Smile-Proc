@@ -1,0 +1,92 @@
+{
+  "scenario": "label-deleted",
+  "description": "label-capture after the Home label was deleted: the same points fall back to unnamed clusters.",
+  "labels": [],
+  "entries": [
+    {
+      "id": "7d67ad5f-14ce-438a-a094-efed0435145c",
+      "createdAt": "2026-10-05T13:00:00.000Z",
+      "updatedAt": "2026-10-05T13:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.4642,
+        "longitude": 9.19,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-05T13:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "4e8df0ee-f2f8-4074-a0b7-ac4c29142c76",
+      "createdAt": "2026-10-05T19:00:00.000Z",
+      "updatedAt": "2026-10-05T19:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.4642,
+        "longitude": 9.191154,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-05T18:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "7308d5f6-83e6-4eea-91ec-ad42de2208e4",
+      "createdAt": "2026-10-06T01:00:00.000Z",
+      "updatedAt": "2026-10-06T01:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.4642,
+        "longitude": 9.188846,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-10-06T01:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "3d9fa3e8-3199-4686-9210-b9a094aeb50d",
+      "createdAt": "2026-10-06T07:00:00.000Z",
+      "updatedAt": "2026-10-06T07:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.465369,
+        "longitude": 9.19,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-06T07:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "3ec64790-2124-4630-95f2-8be451c17a32",
+      "createdAt": "2026-10-06T13:00:00.000Z",
+      "updatedAt": "2026-10-06T13:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.45,
+        "longitude": 9.165,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-06T12:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    }
+  ]
+}

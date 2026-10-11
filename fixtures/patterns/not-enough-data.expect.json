@@ -1,0 +1,10 @@
+{
+  "variant": "notEnoughData",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "notes": [
+    "Period entries 4 < notEnoughDataBelow 5 -> notEnoughData, max 1 item (hints allowed).",
+    "Low share 2/4 = 0.5 < 0.6 -> not a low week (4 >= lowWeekMinEntries, but the share is too small).",
+    "4 < shortWeekThreshold 10 -> detectors read the 14 days ending at periodEnd; it holds the same 4 entries."
+  ]
+}

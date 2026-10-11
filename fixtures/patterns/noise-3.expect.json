@@ -1,0 +1,10 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 3,
+  "notes": [
+    "Seeded noise, entries between Mon 21 Sep and Sun 18 Oct. Card week: 25 entries, 7 Low -> share 0.28 < lowWeekShare 0.6.",
+    "First entry is in the week of 21 Sep, more than 14 days before periodEnd -> normal variant.",
+    "No pattern is designed in; the golden (M2) pins the exact candidate list."
+  ]
+}

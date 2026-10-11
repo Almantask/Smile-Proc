@@ -1,0 +1,27 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "sunday-evening",
+  "itemsIncludeLibraryIDs": [
+    "sunday-evening"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "weekdayDaypart.lower.7.evening",
+      "confidence": "pattern"
+    }
+  ],
+  "dayparts": {
+    "db0462dd-45dd-476c-b894-3425301e015c": "evening"
+  },
+  "notes": [
+    "Weekday window [Sun 20 Sep 19:00, Sun 18 Oct 19:00): 60 entries. Sunday evenings 20 Sep, 27 Sep, 4 Oct, 11 Oct are Low (4); every other entry is Okay.",
+    "weekdayDaypart Sunday x evening: nSeg 4 (= weekdayMinSegment), 4 distinct dates, rest 56 all Okay. diff -1 (>= weekdayMinAbsDiff 0.5); variances 0 -> sdFloor; z = -1 / (0.3 * sqrt(1/4 + 1/56)) = -6.4 -> pattern. score = 1 * 0.4 + 0.2 = 0.6.",
+    "weekday Sunday: 12 entries (4 Low, 8 Okay), mean 1.67 vs rest 2.0 -> diff -0.33 < 0.5, no candidate.",
+    "Card window: 15 entries; evenings mean 1.86 vs rest 2.0 -> diff -0.14 < minAbsDiff 0.4, no time candidate.",
+    "First entry 20 Sep, 28 days before periodEnd -> normal, weekday detectors on.",
+    "Library: sunday-evening (detector, direction, weekday, segment) beats weekday-segment-lower.",
+    "Low share 1/15 -> not a low week."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "sameCluster": [
+    [
+      "7d67ad5f-14ce-438a-a094-efed0435145c",
+      "4e8df0ee-f2f8-4074-a0b7-ac4c29142c76"
+    ]
+  ],
+  "differentCluster": [
+    [
+      "4e8df0ee-f2f8-4074-a0b7-ac4c29142c76",
+      "7308d5f6-83e6-4eea-91ec-ad42de2208e4"
+    ],
+    [
+      "7d67ad5f-14ce-438a-a094-efed0435145c",
+      "7308d5f6-83e6-4eea-91ec-ad42de2208e4"
+    ],
+    [
+      "7d67ad5f-14ce-438a-a094-efed0435145c",
+      "3d9fa3e8-3199-4686-9210-b9a094aeb50d"
+    ],
+    [
+      "7d67ad5f-14ce-438a-a094-efed0435145c",
+      "3ec64790-2124-4630-95f2-8be451c17a32"
+    ]
+  ],
+  "unclustered": [],
+  "notes": [
+    "Order by createdAt: centre, east90, west90, north130, far.",
+    "centre starts u:centre. east90 is 90 m from its centroid -> joins; centroid moves 45 m east.",
+    "west90 is 135 m from that centroid -> new cluster. north130 is 137 m and 158 m from the two centroids -> new cluster.",
+    "Stabilise: centre is 45 m from its own centroid and 90 m from west90's -> stays. Nothing moves."
+  ]
+}

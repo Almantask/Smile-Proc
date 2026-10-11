@@ -1,0 +1,29 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "time-lower",
+  "itemsIncludeLibraryIDs": [
+    "time-lower"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.lower.evening",
+      "confidence": "pattern"
+    }
+  ],
+  "dayparts": {
+    "029afce0-d87e-4930-b420-7b9b64c46ef5": "afternoon",
+    "907ec9ee-da08-4848-a8e1-b0f51cc9c979": "morning",
+    "6d740e73-3f67-4c1b-88b5-9ca3da6444d2": "night",
+    "2c72ff3c-0ee6-411c-bedd-b38425263732": "evening"
+  },
+  "notes": [
+    "periodEnd = Sun 25 Oct 19:00 CET (18:00Z); periodStart = Sun 18 Oct 19:00 CEST (17:00Z): 7 calendar days = 169 h.",
+    "Dayparts in the entry's own zone: 24 Oct 10:30Z = 12:30 CEST (afternoon); 25 Oct 10:30Z = 11:30 CET (morning); 25 Oct 03:30Z = 04:30 CET (night); 25 Oct 17:30Z = 18:30 CET (evening). A fixed +2 h offset would get the last three wrong (12:30, 05:30, 19:30 -> afternoon, morning, evening) or put 18:30 outside a 168 h window.",
+    "Card window: 16 entries. Evenings: 7 Low (18-24 Oct, 20:00) + 1 Okay (25 Oct 18:30) -> mean 1.125; rest: 4 Good mornings, 3 Good afternoons, 1 Okay night -> mean 2.875. diff -1.75 -> pattern. score = 1.75 * 0.8 + 0.2 = 1.6.",
+    "Mornings (4) and afternoons (3) are higher but below patternMinSegment -> hints at most, family time already used.",
+    "Every ISO weekday has mean 2.0: Mon-Sat one Low evening + one Good daytime entry; Sunday = 18 Oct Low evening + 25 Oct Okay night, Good morning, Okay evening -> no weekday candidate; weekday x daypart segments hold <= 2 entries.",
+    "There is no evening-specific library entry -> time-lower ('Your {segment}s run lower')."
+  ]
+}

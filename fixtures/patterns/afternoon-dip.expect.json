@@ -1,0 +1,41 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "afternoon-dip",
+  "itemsIncludeLibraryIDs": [
+    "afternoon-dip"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.higher.morning",
+      "confidence": "earlyHint"
+    },
+    {
+      "id": "timeOfDay.higher.evening",
+      "confidence": "earlyHint"
+    }
+  ],
+  "dayparts": {
+    "0db894e3-4c1d-4b1f-b02a-305eb4a1674b": "afternoon",
+    "4c19d5e7-78ae-4fcc-b080-275b912caa7a": "morning",
+    "3c4bd6c4-e761-42a7-b941-a77753266106": "evening"
+  },
+  "notes": [
+    "Card window [Sun 11 Oct 19:00, Sun 18 Oct 19:00) Rome: 14 entries (>= shortWeekThreshold 10, week window).",
+    "afternoon: nSeg 7 all Low; rest 7 all Good. diff = 1 - 3 = -2; both variances 0 -> sdFloor 0.3; z = -2 / (0.3 * sqrt(1/7 + 1/7)) = -12.5. nSeg, nRest >= 5 -> pattern. score = 2 * 0.7 + 0.2 = 1.6.",
+    "morning: nSeg 4 Good vs rest 10 (7 Low, 3 Good): diff 1.4, z = 2.83 -> earlyHint only (nSeg 4 < patternMinSegment 5).",
+    "evening: nSeg 3 Good vs rest 11 (7 Low, 4 Good): diff 1.27, z = 2.12 -> earlyHint only.",
+    "No competing higher *pattern*, so the balance rule doesn't apply. The hints are family time, already used.",
+    "Weekday detectors: the 28-day window holds only the card week; every weekday has 1 Low + 1 Good -> mean 2, diff 0. weekdayDaypart segments have 1 entry each.",
+    "Library: afternoon-dip (detector, direction, segment = 3 keys) beats time-lower (2 keys).",
+    "Low share 7/14 = 0.5 < lowWeekShare 0.6 -> not a low week.",
+    "First entry 1 Sep (47 days before periodEnd) -> normal variant.",
+    "All located entries share one cluster: place detectors have no rest group (nRest 0).",
+    "Items: one per family -> only afternoon-dip."
+  ]
+}

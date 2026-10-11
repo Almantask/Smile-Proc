@@ -1,0 +1,29 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "out-lifts",
+  "itemsIncludeLibraryIDs": [
+    "out-lifts"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "awayFromHome.higher",
+      "confidence": "pattern"
+    },
+    {
+      "id": "place.lower.p:dbe9c250-1ce1-462c-90de-80e8b288c4e8",
+      "confidence": "pattern"
+    }
+  ],
+  "notes": [
+    "Card week Mon 12 - Sat 17, 3 entries a day: 10 away (5 at A, 5 at B, all Good), 8 at Home (all Okay).",
+    "awayFromHome: seg = 10 away, rest = 8 at Home. diff +1, variances 0 -> sdFloor; z = 1 / (0.3 * sqrt(1/10 + 1/8)) = 7.0 -> pattern. score = 1 * 1.0 + 0.2 = 1.2.",
+    "place.lower.p:<home>: seg 8 vs rest 10 -> diff -1, pattern, score 1 * 0.8 + 0.2 = 1.0 (same family, lower score).",
+    "place.higher at A (or B): seg 5 Good vs rest 13 (mean 2.38) -> diff 0.62, z = 2.67 -> pattern, score 0.51.",
+    "Time of day: mornings 4 away + 2 home (mean 2.67), afternoons and evenings 3 + 3 (2.5) -> |diff| 0.17 < 0.4.",
+    "Weekdays: each day has 3 entries (nSeg 3 < weekdayMinSegment 4) and |diff| <= 0.27 -> nothing.",
+    "Items: one per family -> only out-lifts. It is `higher`, so the balance rule changes nothing.",
+    "Library: out-lifts (awayFromHome, higher) beats home-higher (awayFromHome, lower), which doesn't match."
+  ]
+}

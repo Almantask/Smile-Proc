@@ -1,0 +1,303 @@
+{
+  "scenario": "dst-week",
+  "description": "Card week across the end of summer time in Rome (Sun 25 Oct 2026, 03:00 CEST -> 02:00 CET).",
+  "now": "2026-10-25T19:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "labels": [],
+  "entries": [
+    {
+      "id": "bc2bcecd-ef1e-4d16-9daf-35fb6bf5c5a1",
+      "createdAt": "2026-09-10T08:00:00.000Z",
+      "updatedAt": "2026-09-10T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464249,
+        "longitude": 9.190098,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-09-10T08:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "9170eafb-532a-4c76-9c62-536c8ae56171",
+      "createdAt": "2026-10-18T18:00:00.000Z",
+      "updatedAt": "2026-10-18T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464196,
+        "longitude": 9.189997,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-18T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "bf3040f9-3495-47f0-a415-85d913e37395",
+      "createdAt": "2026-10-19T07:30:00.000Z",
+      "updatedAt": "2026-10-19T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464158,
+        "longitude": 9.190074,
+        "horizontalAccuracy": 14.0,
+        "capturedAt": "2026-10-19T07:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "76a6d66e-744d-4eb3-8545-6995d77894da",
+      "createdAt": "2026-10-19T18:00:00.000Z",
+      "updatedAt": "2026-10-19T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464204,
+        "longitude": 9.190044,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-19T18:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "98a4b3c7-1a0e-4110-a7fc-eda46b7a0aa2",
+      "createdAt": "2026-10-20T12:30:00.000Z",
+      "updatedAt": "2026-10-20T12:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464199,
+        "longitude": 9.189966,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-10-20T12:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "ced29bdc-842f-4e1a-b0b6-494496537f36",
+      "createdAt": "2026-10-20T18:00:00.000Z",
+      "updatedAt": "2026-10-20T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464241,
+        "longitude": 9.189998,
+        "horizontalAccuracy": 11.0,
+        "capturedAt": "2026-10-20T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "0a1b8b01-560f-49b1-868f-24ccc5bd05d0",
+      "createdAt": "2026-10-21T07:30:00.000Z",
+      "updatedAt": "2026-10-21T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464157,
+        "longitude": 9.189916,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-21T07:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "3b49c7c3-b65a-43dd-9a3f-be369477e97c",
+      "createdAt": "2026-10-21T18:00:00.000Z",
+      "updatedAt": "2026-10-21T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464257,
+        "longitude": 9.19007,
+        "horizontalAccuracy": 8.0,
+        "capturedAt": "2026-10-21T18:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "c3c07c72-2adc-4e4b-937f-c5d3f5a23569",
+      "createdAt": "2026-10-22T12:30:00.000Z",
+      "updatedAt": "2026-10-22T12:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464194,
+        "longitude": 9.189906,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-22T12:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "42d03387-66ff-4792-9df8-c1ffd20e712a",
+      "createdAt": "2026-10-22T18:00:00.000Z",
+      "updatedAt": "2026-10-22T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464234,
+        "longitude": 9.190114,
+        "horizontalAccuracy": 14.0,
+        "capturedAt": "2026-10-22T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "2ececaa2-39c5-43b0-b77a-3a2b14f2ad65",
+      "createdAt": "2026-10-23T07:30:00.000Z",
+      "updatedAt": "2026-10-23T07:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464127,
+        "longitude": 9.18998,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-10-23T07:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a8ea1e60-08dd-4605-94d8-2750d51be974",
+      "createdAt": "2026-10-23T18:00:00.000Z",
+      "updatedAt": "2026-10-23T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46419,
+        "longitude": 9.190117,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-10-23T18:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "029afce0-d87e-4930-b420-7b9b64c46ef5",
+      "createdAt": "2026-10-24T10:30:00.000Z",
+      "updatedAt": "2026-10-24T10:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464211,
+        "longitude": 9.189992,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-24T10:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "d54ac8e9-c072-46ff-b966-8b372d7feff0",
+      "createdAt": "2026-10-24T18:00:00.000Z",
+      "updatedAt": "2026-10-24T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464157,
+        "longitude": 9.189888,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-10-24T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "6d740e73-3f67-4c1b-88b5-9ca3da6444d2",
+      "createdAt": "2026-10-25T03:30:00.000Z",
+      "updatedAt": "2026-10-25T03:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.46418,
+        "longitude": 9.19,
+        "horizontalAccuracy": 25.0,
+        "capturedAt": "2026-10-25T03:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "907ec9ee-da08-4848-a8e1-b0f51cc9c979",
+      "createdAt": "2026-10-25T10:30:00.000Z",
+      "updatedAt": "2026-10-25T10:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464226,
+        "longitude": 9.190012,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-25T10:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "2c72ff3c-0ee6-411c-bedd-b38425263732",
+      "createdAt": "2026-10-25T17:30:00.000Z",
+      "updatedAt": "2026-10-25T17:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464211,
+        "longitude": 9.18992,
+        "horizontalAccuracy": 12.0,
+        "capturedAt": "2026-10-25T17:26:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    }
+  ]
+}

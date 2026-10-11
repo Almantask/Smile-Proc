@@ -1,0 +1,23 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "stress-at-place",
+  "itemsIncludeLibraryIDs": [
+    "stress-at-place"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagAtPlace.anxious.stressed.p:77455678-4cf5-49c7-91b1-7e399e570d68",
+      "confidence": "pattern"
+    }
+  ],
+  "notes": [
+    "Work label 'Office' (kind work) anchored at the work point; work entries are within 10 m -> cluster p:<label id>.",
+    "Card week: 10 work entries (Mon-Fri 11:00 and 15:00), 7 home entries (evenings), all Okay -> every mean-comparison diff is 0, no mean candidates, no Low entries.",
+    "At work: anxious on 6 of 10 tagged entries (all anxious.stressed): count 6 >= 3, share 0.6 >= tagAtPlaceMinShare 0.4. Elsewhere: anxious 1/7 = 0.14 -> gap 0.46 >= 0.25. count 6 >= tagPatternCount 5 -> pattern.",
+    "All 6 anxious hits are anxious.stressed (100% >= fineTagDominance 0.7) -> reported as the fine tag.",
+    "Every other core stays below tagMinCount 3 at each place (work: happy 2, calm 2; home: calm 2, happy 2, anxious, surprised, tired 1 each) -> no other tag candidate.",
+    "Library: stress-at-place (detector, tag = anxious.stressed) beats tag-at-place (detector)."
+  ]
+}

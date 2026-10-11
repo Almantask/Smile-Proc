@@ -1,0 +1,52 @@
+{
+  "sameCluster": [
+    [
+      "ca01ac16-114e-4d54-9a55-809aa02e2e8d",
+      "2dbe2658-1953-4eb0-b844-3c8f08fcf259",
+      "bf6bfc0c-a31e-487a-934a-4245e1d7ee5d",
+      "b7095787-664c-4139-a616-043708180b73",
+      "85159a5f-affe-4a57-9174-86cd735dc88b",
+      "c1bfd77e-5ca4-42ca-a685-763b88b4107c",
+      "3b9d976e-f20e-41e9-93f3-6f453aa91a91",
+      "83665a1b-b9a5-4cb0-a43a-6146acada5a3"
+    ],
+    [
+      "f443b6b8-29b7-4df0-b4f0-40ca01b02dbd",
+      "1fa31d8f-edaf-41c5-8b9a-e11de530f2df",
+      "04d6c67e-bec5-467c-9eeb-5c06e0382516",
+      "be9ccb1c-8059-453b-9b97-e77c353b85dd",
+      "dc420722-96f7-4cd9-bb74-23567cde7f07",
+      "c9baa49c-28f2-4f3a-9dd7-1c125b91d7ae",
+      "a7950671-31fc-4f69-b421-d6918d3cd006",
+      "e80e97de-4a52-47f2-8a91-0ea1825993f6"
+    ],
+    [
+      "6833328c-17ac-43da-b97a-cdb8ae50aff4",
+      "e4d4ce0a-41d8-4c51-b648-df05d6f76f7e",
+      "37feffbf-cc98-49de-8e37-755a18b5cfec",
+      "cf880edf-42e5-4962-a679-5f23d2f59636",
+      "f75c8653-408b-4cfd-9b5d-999dc37fe47c",
+      "ead00c85-5564-4695-893d-a47c1ed8f3a7",
+      "a223e0c5-5222-4e76-bee2-bd7f947cc78c",
+      "8faecc29-d70e-40db-81f2-6db2344b727d"
+    ]
+  ],
+  "differentCluster": [
+    [
+      "ca01ac16-114e-4d54-9a55-809aa02e2e8d",
+      "f443b6b8-29b7-4df0-b4f0-40ca01b02dbd"
+    ],
+    [
+      "f443b6b8-29b7-4df0-b4f0-40ca01b02dbd",
+      "6833328c-17ac-43da-b97a-cdb8ae50aff4"
+    ],
+    [
+      "ca01ac16-114e-4d54-9a55-809aa02e2e8d",
+      "6833328c-17ac-43da-b97a-cdb8ae50aff4"
+    ]
+  ],
+  "unclustered": [],
+  "notes": [
+    "Every point is within 40 m of its centre, so every running centroid is too: any member is within 80 m (< placeRadiusMeters 100) of its group's centroid, and the centres are > 2 km apart."
+  ]
+}

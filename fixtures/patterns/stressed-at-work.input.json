@@ -1,0 +1,380 @@
+{
+  "scenario": "stressed-at-work",
+  "description": "Stress shows up at the place labelled Work; every mood is Okay.",
+  "now": "2026-10-18T18:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "labels": [
+    {
+      "id": "77455678-4cf5-49c7-91b1-7e399e570d68",
+      "name": "Office",
+      "kind": "work",
+      "anchorLatitude": 45.485,
+      "anchorLongitude": 9.205,
+      "createdAt": "2026-09-01T10:00:00.000Z"
+    }
+  ],
+  "entries": [
+    {
+      "id": "d21024d1-0050-4bf3-9254-04f6ced7fe1c",
+      "createdAt": "2026-09-02T08:00:00.000Z",
+      "updatedAt": "2026-09-02T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464135,
+        "longitude": 9.190008,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-09-02T08:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "66f9b5c6-f1a5-438f-831b-23ee735523df",
+      "createdAt": "2026-09-09T08:00:00.000Z",
+      "updatedAt": "2026-09-09T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464198,
+        "longitude": 9.189998,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-09-09T07:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a6a69cc1-a966-4e7e-983a-069a6f46e555",
+      "createdAt": "2026-10-12T09:00:00.000Z",
+      "updatedAt": "2026-10-12T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485025,
+        "longitude": 9.204995,
+        "horizontalAccuracy": 16.0,
+        "capturedAt": "2026-10-12T08:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a7fe45f3-ebdb-4129-b009-5a08e89dc6b4",
+      "createdAt": "2026-10-12T13:00:00.000Z",
+      "updatedAt": "2026-10-12T13:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485016,
+        "longitude": 9.205092,
+        "horizontalAccuracy": 18.0,
+        "capturedAt": "2026-10-12T12:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "993e632d-8050-4c89-8671-b65eff7d47d6",
+      "createdAt": "2026-10-12T18:00:00.000Z",
+      "updatedAt": "2026-10-12T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.relaxed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464182,
+        "longitude": 9.189881,
+        "horizontalAccuracy": 22.0,
+        "capturedAt": "2026-10-12T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "2b2fad5b-5368-4083-9f24-c0e24a2f5da5",
+      "createdAt": "2026-10-13T09:00:00.000Z",
+      "updatedAt": "2026-10-13T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.proud"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485019,
+        "longitude": 9.205015,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-13T09:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "9eaeb0f3-ba9e-492c-a5ac-4bc175a4becb",
+      "createdAt": "2026-10-13T13:00:00.000Z",
+      "updatedAt": "2026-10-13T13:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484963,
+        "longitude": 9.205103,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-13T13:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "a5a1bcad-f481-4401-98e2-4dc8a5f3951b",
+      "createdAt": "2026-10-13T18:00:00.000Z",
+      "updatedAt": "2026-10-13T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.grateful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464221,
+        "longitude": 9.190101,
+        "horizontalAccuracy": 23.0,
+        "capturedAt": "2026-10-13T18:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "8e827b4d-6bf8-4b84-8f41-373cc8916244",
+      "createdAt": "2026-10-14T09:00:00.000Z",
+      "updatedAt": "2026-10-14T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.focused"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485043,
+        "longitude": 9.204961,
+        "horizontalAccuracy": 21.0,
+        "capturedAt": "2026-10-14T08:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a7ce1c78-d5bd-4ff0-81fa-e8c57ca84e38",
+      "createdAt": "2026-10-14T13:00:00.000Z",
+      "updatedAt": "2026-10-14T13:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484966,
+        "longitude": 9.20489,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-14T12:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "21cf0d75-4c92-40cb-bc01-bab0714392e3",
+      "createdAt": "2026-10-14T18:00:00.000Z",
+      "updatedAt": "2026-10-14T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.relaxed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464261,
+        "longitude": 9.189924,
+        "horizontalAccuracy": 15.0,
+        "capturedAt": "2026-10-14T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "c0334ede-19ea-404f-a9d5-49fdf13a01f6",
+      "createdAt": "2026-10-15T09:00:00.000Z",
+      "updatedAt": "2026-10-15T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485044,
+        "longitude": 9.204989,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-15T08:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "e3210800-270e-4791-a265-82ea026e832c",
+      "createdAt": "2026-10-15T13:00:00.000Z",
+      "updatedAt": "2026-10-15T13:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.proud"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484997,
+        "longitude": 9.205095,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-15T12:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "795c7627-55ee-4c38-aa15-dae5cdb270e8",
+      "createdAt": "2026-10-15T18:00:00.000Z",
+      "updatedAt": "2026-10-15T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "surprised.curious"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464149,
+        "longitude": 9.190075,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-15T18:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "114cd565-2e14-461a-8df5-dc75619958e4",
+      "createdAt": "2026-10-16T09:00:00.000Z",
+      "updatedAt": "2026-10-16T09:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.stressed"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.485023,
+        "longitude": 9.204945,
+        "horizontalAccuracy": 19.0,
+        "capturedAt": "2026-10-16T09:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "90661d31-f8c1-406a-8c06-7a861ce8b6be",
+      "createdAt": "2026-10-16T13:00:00.000Z",
+      "updatedAt": "2026-10-16T13:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "calm.focused"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.484987,
+        "longitude": 9.205033,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-16T13:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "e24d0fdf-f74e-48ed-82e4-49cd9d1f1fdb",
+      "createdAt": "2026-10-16T18:00:00.000Z",
+      "updatedAt": "2026-10-16T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "anxious.worried"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464265,
+        "longitude": 9.189938,
+        "horizontalAccuracy": 10.0,
+        "capturedAt": "2026-10-16T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b99e2f22-2279-4888-8975-5f834fd6b92d",
+      "createdAt": "2026-10-17T18:00:00.000Z",
+      "updatedAt": "2026-10-17T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "happy.grateful"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464181,
+        "longitude": 9.189991,
+        "horizontalAccuracy": 13.0,
+        "capturedAt": "2026-10-17T17:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "a5a4010f-5aba-4c6a-9f17-9616f40a8cae",
+      "createdAt": "2026-10-18T15:30:00.000Z",
+      "updatedAt": "2026-10-18T15:31:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [
+        "tired.sleepy"
+      ],
+      "comment": null,
+      "location": {
+        "latitude": 45.464283,
+        "longitude": 9.189966,
+        "horizontalAccuracy": 24.0,
+        "capturedAt": "2026-10-18T15:30:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    }
+  ]
+}

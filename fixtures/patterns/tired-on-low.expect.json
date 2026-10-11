@@ -1,0 +1,26 @@
+{
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "firstItemLibraryID": "tired-on-low",
+  "itemsIncludeLibraryIDs": [
+    "tired-on-low"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern"
+    }
+  ],
+  "notes": [
+    "Card week Mon 12 - Sat 17: each day one Low and one Good, swapping morning 09:00 / evening 20:00; plus an untagged Okay on Sun 18 at 09:00. 13 entries.",
+    "Low tagged entries: 6 (>= tagMinLowTagged 4). Core tired on 5 of them (drained x2, sleepy x2, tired x1): share 0.83 >= 0.5, count 5 >= tagMinCount 3. Among Okay/Good tagged entries (6) tired never appears: share 0, gap 0.83 >= 0.25. count 5 >= tagPatternCount 5 -> pattern.",
+    "No fine tag reaches fineTagDominance 0.7 of the tired hits (2/5 max) -> reported as core 'tired'.",
+    "sad appears once among Low (< tagMinCount) -> no candidate.",
+    "Mornings and evenings each hold 3 Low + 3 Good (+1 Okay morning) -> means 2.0 / 2.0, no time candidate.",
+    "Every weekday has 1 Low + 1 Good -> no weekday candidate. No location -> no place or tagAtPlace candidate.",
+    "All tagged entries are in the card week, so the result doesn't depend on which window tag detectors read.",
+    "Library: tired-on-low (detector, tag) beats tag-on-low (detector).",
+    "Low share 6/13 = 0.46 -> not a low week."
+  ]
+}

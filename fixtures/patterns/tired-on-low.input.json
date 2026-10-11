@@ -1,0 +1,203 @@
+{
+  "scenario": "tired-on-low",
+  "description": "Most Low check-ins in the card week are tagged with a tired feeling.",
+  "now": "2026-10-18T18:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "labels": [],
+  "entries": [
+    {
+      "id": "bb604005-04b5-45d3-8c61-d425cd05ad52",
+      "createdAt": "2026-09-03T08:00:00.000Z",
+      "updatedAt": "2026-09-03T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "19a847a2-2fe2-4873-b165-f7b4f0911657",
+      "createdAt": "2026-09-10T08:00:00.000Z",
+      "updatedAt": "2026-09-10T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "904dd7da-9d4a-4805-9b6a-c54360f55ce8",
+      "createdAt": "2026-10-12T07:00:00.000Z",
+      "updatedAt": "2026-10-12T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "5798f1e0-2482-45c0-b126-f52b7537c513",
+      "createdAt": "2026-10-12T18:00:00.000Z",
+      "updatedAt": "2026-10-12T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy.grateful"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "cec46620-c693-4c61-8631-efc31eb73817",
+      "createdAt": "2026-10-13T07:00:00.000Z",
+      "updatedAt": "2026-10-13T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "calm.relaxed"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "6106b749-e247-40af-8634-1270be43abbe",
+      "createdAt": "2026-10-13T18:00:00.000Z",
+      "updatedAt": "2026-10-13T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired.sleepy"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "76a66748-5311-4b82-8987-526d911b81e3",
+      "createdAt": "2026-10-14T07:00:00.000Z",
+      "updatedAt": "2026-10-14T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "93778a9d-6a71-4a8f-bbac-c49328c9626c",
+      "createdAt": "2026-10-14T18:00:00.000Z",
+      "updatedAt": "2026-10-14T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy.proud"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "ea56ffb1-1793-4a4d-a191-22dc2239d422",
+      "createdAt": "2026-10-15T07:00:00.000Z",
+      "updatedAt": "2026-10-15T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "calm.content"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "856a7a3c-66f5-453d-a7a5-8bc52f0f2502",
+      "createdAt": "2026-10-15T18:00:00.000Z",
+      "updatedAt": "2026-10-15T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired.drained"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "088be640-de9f-4c2d-95f3-800dc90893d7",
+      "createdAt": "2026-10-16T07:00:00.000Z",
+      "updatedAt": "2026-10-16T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "tired.sleepy"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "75d19048-77fa-450f-9ea8-9fa18aa3fad2",
+      "createdAt": "2026-10-16T18:00:00.000Z",
+      "updatedAt": "2026-10-16T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "happy.grateful"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "6ad9efca-6779-486a-9af3-73ab2ce08764",
+      "createdAt": "2026-10-17T07:00:00.000Z",
+      "updatedAt": "2026-10-17T07:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [
+        "calm.peaceful"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "980f2b96-15a4-4d58-913a-5287410d9486",
+      "createdAt": "2026-10-17T18:00:00.000Z",
+      "updatedAt": "2026-10-17T18:01:10.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [
+        "sad.down"
+      ],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    },
+    {
+      "id": "c0000c6b-6b0d-4f64-b04c-653045fc47b2",
+      "createdAt": "2026-10-18T07:00:00.000Z",
+      "updatedAt": "2026-10-18T07:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "notification"
+    }
+  ]
+}

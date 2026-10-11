@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "name": "midweek",
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "exactly-at-card-time",
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "one-ms-before-card-time",
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "dst-autumn-card-evening",
+      "periodStart": "2026-10-18T17:00:00.000Z",
+      "periodEnd": "2026-10-25T18:00:00.000Z"
+    },
+    {
+      "name": "dst-autumn-midweek",
+      "periodStart": "2026-10-18T17:00:00.000Z",
+      "periodEnd": "2026-10-25T18:00:00.000Z"
+    },
+    {
+      "name": "dst-spring-card-evening",
+      "periodStart": "2026-03-22T18:00:00.000Z",
+      "periodEnd": "2026-03-29T17:00:00.000Z"
+    },
+    {
+      "name": "monday-morning-card-time",
+      "periodStart": "2026-09-28T06:00:00.000Z",
+      "periodEnd": "2026-10-05T06:00:00.000Z"
+    },
+    {
+      "name": "saturday-card-time-exact",
+      "periodStart": "2026-10-10T07:30:00.000Z",
+      "periodEnd": "2026-10-17T07:30:00.000Z"
+    },
+    {
+      "name": "new-york-dst-end",
+      "periodStart": "2026-10-25T23:00:00.000Z",
+      "periodEnd": "2026-11-02T00:00:00.000Z"
+    },
+    {
+      "name": "year-boundary",
+      "periodStart": "2026-12-20T18:00:00.000Z",
+      "periodEnd": "2026-12-27T18:00:00.000Z"
+    }
+  ],
+  "notes": [
+    "dst-autumn: 18 Oct 19:00 CEST -> 25 Oct 19:00 CET is 169 h; dst-spring: 22 Mar 19:00 CET -> 29 Mar 19:00 CEST is 167 h.",
+    "exactly-at-card-time: a card time equal to now counts (<= now).",
+    "new-york-dst-end: 25 Oct 19:00 EDT (23:00Z) -> 1 Nov 19:00 EST (00:00Z on 2 Nov)."
+  ]
+}

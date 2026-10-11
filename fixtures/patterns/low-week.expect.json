@@ -1,0 +1,11 @@
+{
+  "variant": "normal",
+  "isLowWeek": true,
+  "maxItemCount": 2,
+  "notes": [
+    "Card week Mon 12 - Fri 16, morning 09:00 and evening 20:00: 10 entries, 7 Low, 3 Okay.",
+    "Period entries 10 >= lowWeekMinEntries 4 and Low share 0.7 >= lowWeekShare 0.6 -> isLowWeek, max maxItemsLowWeek (2) items.",
+    "First entry 1 Sep -> normal variant.",
+    "Mornings mean 1.4, evenings 1.2 -> |diff| 0.2 < 0.4: no time candidate."
+  ]
+}

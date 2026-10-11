@@ -1,0 +1,17 @@
+{
+  "sameCluster": [
+    [
+      "65c7c803-b8a6-4c47-b9dc-3592cf30b6f8",
+      "03b05323-2716-4b05-9b01-877295326ad4",
+      "dc9dd293-1b8c-471e-ba2d-76677a4a6d63"
+    ]
+  ],
+  "unclustered": [
+    "e4d09433-de2b-472e-a034-6843dd228ce1",
+    "e6a09b46-7c1d-45cc-bfdf-ec6aaa6c7aba",
+    "c75f1c09-6c2b-4b69-942b-49838fa35754"
+  ],
+  "notes": [
+    "placeMaxAccuracyMeters 150 is inclusive: 10, 50 and 150 m are eligible; 151 and 400 m are not; an entry without location never has a cluster."
+  ]
+}

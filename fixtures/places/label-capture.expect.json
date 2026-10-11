@@ -1,0 +1,32 @@
+{
+  "sameCluster": [
+    [
+      "0f68507c-194a-4c33-a6d4-79e4602383a3",
+      "6b4dab4e-b1ff-410c-b56d-8acd80af4d4d",
+      "a73b64d2-83c3-4765-8b6d-69b1401a8b25"
+    ]
+  ],
+  "differentCluster": [
+    [
+      "0f68507c-194a-4c33-a6d4-79e4602383a3",
+      "f26182c3-7263-4d3a-9c05-475e3fbae71e"
+    ],
+    [
+      "6b4dab4e-b1ff-410c-b56d-8acd80af4d4d",
+      "f26182c3-7263-4d3a-9c05-475e3fbae71e"
+    ],
+    [
+      "0f68507c-194a-4c33-a6d4-79e4602383a3",
+      "0c4d6b52-6055-4e11-ae74-55c1e4e0cacc"
+    ],
+    [
+      "f26182c3-7263-4d3a-9c05-475e3fbae71e",
+      "0c4d6b52-6055-4e11-ae74-55c1e4e0cacc"
+    ]
+  ],
+  "unclustered": [],
+  "notes": [
+    "Named pass: centre (0 m), east90 and west90 (90 m) are within 100 m of the Home anchor -> one cluster p:<home id>, although east90 and west90 are 180 m apart.",
+    "north130 is 130 m from the anchor -> unnamed pass, its own cluster. far is 2.5 km away -> its own cluster."
+  ]
+}
