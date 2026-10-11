@@ -217,11 +217,11 @@
         <item quantity="other">Your %1$s %2$s check-ins were higher than the rest of your week (%3$d check-ins).</item>
     </plurals>
     <plurals name="week_observation_place_lower">
-        <item quantity="one">Your check-in at %1$s were lower than at your other places (%2$d check-in).</item>
+        <item quantity="one">Your check-ins at %1$s were lower than at your other places (%2$d check-in).</item>
         <item quantity="other">Your check-ins at %1$s were lower than at your other places (%2$d check-ins).</item>
     </plurals>
     <plurals name="week_observation_place_higher">
-        <item quantity="one">Your check-in at %1$s were higher than at your other places (%2$d check-in).</item>
+        <item quantity="one">Your check-ins at %1$s were higher than at your other places (%2$d check-in).</item>
         <item quantity="other">Your check-ins at %1$s were higher than at your other places (%2$d check-ins).</item>
     </plurals>
     <plurals name="week_observation_awayFromHome_lower">
@@ -244,7 +244,6 @@
     <!-- Support (gentle copy; contacts come only from content/support.json) -->
     <string name="support_title">Talk to someone</string>
     <string name="support_body">When things feel heavy, talking to someone you trust can make it a little lighter. That could be a friend, someone in your family, or someone whose job is to listen.</string>
-    <string name="support_body_later">You can come back here any time from the Week tab or Today.</string>
     <string name="support_contact_call">Call %1$s</string>
     <string name="support_contact_text">Text %1$s</string>
     <string name="support_contact_website">Open the %1$s website</string>
@@ -305,7 +304,7 @@
 
     <!-- Onboarding (5 screens) -->
     <string name="onboarding_privacy_title">Just for you</string>
-    <string name="onboarding_privacy_body">SmileProc keeps your check-ins on this phone. There\'s no account and nothing is sent anywhere.</string>
+    <string name="onboarding_privacy_body">SmileProc keeps your check-ins on this phone. There\'s no account, and they only leave it if you export them.</string>
     <string name="onboarding_privacy_backup">Your history isn\'t in backups or phone-to-phone transfers. Export to keep a copy.</string>
     <string name="onboarding_location_title">Notice places</string>
     <string name="onboarding_location_body">With location on, SmileProc can notice how places affect your mood. Your check-ins still save without it.</string>
@@ -320,7 +319,7 @@
     <string name="onboarding_start">Start</string>
 
     <!-- Permission rationale -->
-    <string name="rationale_location">SmileProc uses location only to notice places. It stays on this phone.</string>
+    <string name="rationale_location">SmileProc uses location only to notice places. Like your check-ins, it stays on this phone unless you export it.</string>
     <string name="rationale_notifications">So a check-in can appear at the times you pick.</string>
 
     <!-- Privacy screen -->
