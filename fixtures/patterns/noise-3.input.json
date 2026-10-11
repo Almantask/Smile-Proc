@@ -1,0 +1,254 @@
+{
+  "now": "2026-10-11T18:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "entries": [
+    {
+      "id": "11a05f94-1e60-5671-8011-0b86614cec8f",
+      "createdAt": "2026-09-20T08:00:00.000Z",
+      "updatedAt": "2026-09-20T08:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "ccd89a52-25e3-5e26-9a54-e70e418ebb74",
+      "createdAt": "2026-10-05T13:35:00.000Z",
+      "updatedAt": "2026-10-05T13:35:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "e3187572-8dea-5655-8b1d-a9eef3e0b8e3",
+      "createdAt": "2026-10-06T07:46:00.000Z",
+      "updatedAt": "2026-10-06T07:46:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "06eee885-bbf7-5773-8c6a-672caf64b4fc",
+      "createdAt": "2026-10-07T13:34:00.000Z",
+      "updatedAt": "2026-10-07T13:34:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "2e8b583b-4564-5ad5-ad5d-1f59597beb9d",
+      "createdAt": "2026-10-08T13:01:00.000Z",
+      "updatedAt": "2026-10-08T13:01:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "a20febc7-4f5e-53a5-9b94-919b29869991",
+      "createdAt": "2026-10-09T10:04:00.000Z",
+      "updatedAt": "2026-10-09T10:04:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "bd830087-26a2-5531-980e-3fc8b7a1f452",
+      "createdAt": "2026-10-10T16:28:00.000Z",
+      "updatedAt": "2026-10-10T16:28:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "cebe8d30-0a57-5734-b10f-63026034eedc",
+      "createdAt": "2026-10-11T04:57:00.000Z",
+      "updatedAt": "2026-10-11T04:57:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "0a9e0115-ea25-5d0b-8ce4-07b611116140",
+      "createdAt": "2026-10-05T10:37:00.000Z",
+      "updatedAt": "2026-10-05T10:37:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "d7bf2d4b-56ac-546a-a11f-3965828fac2b",
+      "createdAt": "2026-10-06T21:42:00.000Z",
+      "updatedAt": "2026-10-06T21:42:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "5e5e208f-54aa-5baa-ab32-487e7b78a2a1",
+      "createdAt": "2026-10-07T04:41:00.000Z",
+      "updatedAt": "2026-10-07T04:41:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "42557e19-4b5c-5fbf-8444-a679c4e7aee2",
+      "createdAt": "2026-10-08T21:34:00.000Z",
+      "updatedAt": "2026-10-08T21:34:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "72413d00-88e5-589d-8da9-eaa467ecdc9b",
+      "createdAt": "2026-10-09T04:20:00.000Z",
+      "updatedAt": "2026-10-09T04:20:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "c2bff838-7e24-5a47-96da-a351704a3aa3",
+      "createdAt": "2026-10-10T21:35:00.000Z",
+      "updatedAt": "2026-10-10T21:35:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "bd134d94-a087-57a4-bde1-a60ad5da0a5a",
+      "createdAt": "2026-10-11T04:08:00.000Z",
+      "updatedAt": "2026-10-11T04:08:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "3ed84493-37f8-5a2d-a13c-d6337226b1e4",
+      "createdAt": "2026-10-05T10:02:00.000Z",
+      "updatedAt": "2026-10-05T10:02:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 3,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "6f475485-918c-5267-8218-90c0375c97c5",
+      "createdAt": "2026-10-06T07:44:00.000Z",
+      "updatedAt": "2026-10-06T07:44:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "2b485a43-0d98-5df7-9e3a-54603dc726df",
+      "createdAt": "2026-10-07T04:17:00.000Z",
+      "updatedAt": "2026-10-07T04:17:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "ad1f628a-c56d-57b3-839e-ed7f28fae0dd",
+      "createdAt": "2026-10-08T07:54:00.000Z",
+      "updatedAt": "2026-10-08T07:54:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "c34a425d-1eb6-5515-bf25-3937a7cb7ac7",
+      "createdAt": "2026-10-09T13:27:00.000Z",
+      "updatedAt": "2026-10-09T13:27:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "1e5108ea-e113-5e1f-b2dd-c3294b1f5e4e",
+      "createdAt": "2026-10-10T07:48:00.000Z",
+      "updatedAt": "2026-10-10T07:48:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "d3f90f0c-2dea-5e07-a389-b5be2c97d6f1",
+      "createdAt": "2026-10-11T13:52:00.000Z",
+      "updatedAt": "2026-10-11T13:52:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 1,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    }
+  ],
+  "places": []
+}

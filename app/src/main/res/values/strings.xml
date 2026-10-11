@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmileProc</string>
+    <string name="hello_tagline">A private mood check-in. It stays on this phone.</string>
+
+    <!-- Faces -->
+    <string name="mood_low">Low</string>
+    <string name="mood_okay">Okay</string>
+    <string name="mood_good">Good</string>
+    <string name="cd_mood_low">Low</string>
+    <string name="cd_mood_okay">Okay</string>
+    <string name="cd_mood_good">Good</string>
+
+    <!-- Navigation -->
+    <string name="tab_today">Today</string>
+    <string name="tab_week">Week</string>
+    <string name="tab_settings">Settings</string>
+    <string name="cd_tab_today">Today</string>
+    <string name="cd_tab_week">Week</string>
+    <string name="cd_tab_week_unseen">Week, new card</string>
+    <string name="cd_tab_settings">Settings</string>
+
+    <!-- Today -->
+    <string name="today_prompt">How are you right now?</string>
+    <string name="today_saved_header">Saved</string>
+    <string name="today_all_entries">All entries</string>
+    <string name="today_empty">No check-ins yet.</string>
+    <string name="action_done">Done</string>
+    <string name="cd_done">Done</string>
+    <string name="comment_label">Comment</string>
+    <string name="comment_hint">Add a comment</string>
+    <string name="cd_comment">Comment</string>
+
+    <!-- Tag picker -->
+    <string name="tags_prompt">What\'s closest?</string>
+    <string name="tags_just_core">Just %1$s</string>
+    <string name="tags_mode_gradual">Gradual</string>
+    <string name="tags_mode_detailed">Detailed</string>
+    <string name="cd_tags_mode_gradual">Switch to gradual</string>
+    <string name="cd_tags_mode_detailed">Switch to detailed</string>
+    <string name="cd_tag_remove">Remove %1$s</string>
+    <string name="tags_selected_heading">Selected</string>
+
+    <!-- Core tags -->
+    <string name="tag_happy">Happy</string>
+    <string name="tag_calm">Calm</string>
+    <string name="tag_sad">Sad</string>
+    <string name="tag_anxious">Anxious</string>
+    <string name="tag_angry">Angry</string>
+    <string name="tag_tired">Tired</string>
+    <string name="tag_surprised">Surprised</string>
+
+    <!-- Fine tags -->
+    <string name="tag_happy_joyful">Joyful</string>
+    <string name="tag_happy_grateful">Grateful</string>
+    <string name="tag_happy_proud">Proud</string>
+    <string name="tag_happy_hopeful">Hopeful</string>
+    <string name="tag_happy_excited">Excited</string>
+    <string name="tag_calm_relaxed">Relaxed</string>
+    <string name="tag_calm_content">Content</string>
+    <string name="tag_calm_peaceful">Peaceful</string>
+    <string name="tag_calm_focused">Focused</string>
+    <string name="tag_calm_safe">Safe</string>
+    <string name="tag_sad_down">Down</string>
+    <string name="tag_sad_lonely">Lonely</string>
+    <string name="tag_sad_disappointed">Disappointed</string>
+    <string name="tag_sad_hurt">Hurt</string>
+    <string name="tag_sad_nostalgic">Nostalgic</string>
+    <string name="tag_anxious_stressed">Stressed</string>
+    <string name="tag_anxious_worried">Worried</string>
+    <string name="tag_anxious_overwhelmed">Overwhelmed</string>
+    <string name="tag_anxious_nervous">Nervous</string>
+    <string name="tag_anxious_insecure">Insecure</string>
+    <string name="tag_angry_frustrated">Frustrated</string>
+    <string name="tag_angry_irritated">Irritated</string>
+    <string name="tag_angry_resentful">Resentful</string>
+    <string name="tag_angry_jealous">Jealous</string>
+    <string name="tag_angry_impatient">Impatient</string>
+    <string name="tag_tired_drained">Drained</string>
+    <string name="tag_tired_sleepy">Sleepy</string>
+    <string name="tag_tired_bored">Bored</string>
+    <string name="tag_tired_unmotivated">Unmotivated</string>
+    <string name="tag_tired_numb">Numb</string>
+    <string name="tag_surprised_amazed">Amazed</string>
+    <string name="tag_surprised_confused">Confused</string>
+    <string name="tag_surprised_curious">Curious</string>
+    <string name="tag_surprised_startled">Startled</string>
+    <string name="tag_surprised_moved">Moved</string>
+
+    <!-- History and entry detail -->
+    <string name="history_title">History</string>
+    <string name="history_empty">No check-ins yet.</string>
+    <string name="entry_detail_title">Check-in</string>
+    <string name="entry_save">Save</string>
+    <string name="cd_entry_save">Save</string>
+    <string name="entry_delete">Delete</string>
+    <string name="cd_entry_delete">Delete this check-in</string>
+    <string name="entry_delete_title">Delete this check-in?</string>
+    <string name="entry_delete_body">This removes it from this phone.</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="cd_cancel">Cancel</string>
+    <string name="place_unnamed">Unnamed place</string>
+    <string name="place_gone">one of your places</string>
+
+    <!-- Notifications. Text is only ever one of these four. -->
+    <string name="notification_channel_checkin">Check-ins</string>
+    <string name="notification_prompt">How are you right now?</string>
+    <string name="notification_saved">Saved ✓</string>
+    <string name="notification_test_works">It works ✓</string>
+    <string name="notification_failed">Couldn\'t save. Open SmileProc.</string>
+    <string name="cd_notification_low">Low</string>
+    <string name="cd_notification_okay">Okay</string>
+    <string name="cd_notification_good">Good</string>
+
+    <!-- Week -->
+    <string name="week_title">Week</string>
+    <string name="week_empty_first">Your first weekly card arrives %1$s.</string>
+    <string name="week_default_time">Sunday at 19:00</string>
+    <string name="week_early_hint">Early hint</string>
+    <string name="week_not_enough">Patterns need a few more check-ins.</string>
+    <string name="week_first_weeks">Patterns get clearer after two or three weeks.</string>
+    <string name="week_past_heading">Earlier cards</string>
+    <string name="week_name_place">Name this place</string>
+    <string name="cd_week_name_place">Name this place</string>
+    <string name="week_low_title">This week looked heavy. That\'s worth noticing, and it\'s okay.</string>
+    <string name="week_low_body">Talking to someone you trust can make it lighter.</string>
+    <string name="week_talk_to_someone">Talk to someone</string>
+    <string name="cd_week_talk_to_someone">Talk to someone</string>
+
+    <string name="week_observation_timeOfDay_lower">Your %1$s check-ins were lower than the rest of your day (%2$d check-ins).</string>
+    <string name="week_observation_timeOfDay_higher">Your %1$s check-ins were higher than the rest of your day (%2$d check-ins).</string>
+    <string name="week_observation_weekday_lower">Your %1$s check-ins were lower than your other days (%2$d check-ins).</string>
+    <string name="week_observation_weekday_higher">Your %1$s check-ins were higher than your other days (%2$d check-ins).</string>
+    <string name="week_observation_weekdayDaypart_lower">Your %1$s %2$s check-ins were lower than the rest of your days (%3$d check-ins).</string>
+    <string name="week_observation_weekdayDaypart_higher">Your %1$s %2$s check-ins were higher than the rest of your days (%3$d check-ins).</string>
+    <string name="week_observation_place_lower">Check-ins at %1$s were lower than your other places (%2$d check-ins).</string>
+    <string name="week_observation_place_higher">Check-ins at %1$s were higher than your other places (%2$d check-ins).</string>
+    <string name="week_observation_awayFromHome_higher">Check-ins away from home were higher than at home (%1$d check-ins).</string>
+    <string name="week_observation_awayFromHome_lower">Check-ins away from home were lower than at home (%1$d check-ins).</string>
+    <string name="week_observation_tagOnLow">Feeling %1$s showed up on most low check-ins (%2$d check-ins).</string>
+    <string name="week_observation_tagAtPlace">Feeling %1$s tended to show up at %2$s (%3$d check-ins).</string>
+
+    <string name="daypart_morning">morning</string>
+    <string name="daypart_afternoon">afternoon</string>
+    <string name="daypart_evening">evening</string>
+    <string name="daypart_night">night</string>
+    <string name="weekday_1">Monday</string>
+    <string name="weekday_2">Tuesday</string>
+    <string name="weekday_3">Wednesday</string>
+    <string name="weekday_4">Thursday</string>
+    <string name="weekday_5">Friday</string>
+    <string name="weekday_6">Saturday</string>
+    <string name="weekday_7">Sunday</string>
+
+    <!-- Low run, in the app only -->
+    <string name="low_run_body">Your last few check-ins have been low. If it would help, talking to someone can make it lighter.</string>
+    <string name="low_run_see_support">See support options</string>
+    <string name="low_run_not_now">Not now</string>
+    <string name="cd_low_run_see_support">See support options</string>
+    <string name="cd_low_run_not_now">Not now</string>
+
+    <!-- Places -->
+    <string name="places_title">Places</string>
+    <string name="places_empty">No places yet.</string>
+    <string name="place_kind_home">Home</string>
+    <string name="place_kind_work">Work</string>
+    <string name="place_kind_other">Other</string>
+    <string name="place_name_hint">Name</string>
+    <string name="place_name_title">Name this place</string>
+    <string name="place_merge_question">Is this %1$s?</string>
+    <string name="place_merge_yes">Yes</string>
+    <string name="place_merge_no">No, it\'s a different place</string>
+    <string name="cd_place_merge_yes">Yes, this is %1$s</string>
+    <string name="cd_place_merge_no">No, it\'s a different place</string>
+    <string name="place_unnamed_detail">Unnamed place · %1$d check-ins · %2$s</string>
+    <string name="place_mostly_weekday_daypart">mostly weekday %1$s</string>
+    <string name="place_mostly_weekend_daypart">mostly weekend %1$s</string>
+    <string name="place_mostly_daypart">mostly %1$s</string>
+    <string name="place_delete_label">Delete place name</string>
+    <string name="place_delete_label_body">Check-ins stay. They go back to an unnamed place.</string>
+    <string name="place_remove_location">Remove location from all entries</string>
+    <string name="place_remove_location_title">Remove location from all entries?</string>
+    <string name="place_remove_location_body">This clears location from every check-in. Place names are removed. The ratings stay.</string>
+    <string name="place_remove_location_confirm">Remove location</string>
+    <string name="cd_place_remove_location">Remove location from all entries</string>
+
+    <!-- Support. No contacts are invented; support.json is human-owned. -->
+    <string name="support_title">Support</string>
+    <string name="support_body">Talking to someone you trust can make a heavy week lighter. You don\'t have to do it alone.</string>
+    <string name="support_region_empty">If you want, reach out to someone you know. Nothing is listed here for your region yet.</string>
+    <string name="cd_support_call">Call %1$s</string>
+    <string name="cd_support_sms">Text %1$s</string>
+    <string name="cd_support_url">Open %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_reminders">Reminders</string>
+    <string name="settings_keep_check_in">Keep a check-in on the lock screen</string>
+    <string name="settings_keep_check_in_body">The question stays on the lock screen between reminders, without a sound.</string>
+    <string name="settings_lock_screen_check">Lock-screen check-in</string>
+    <string name="settings_weekly_card_time">Weekly card time</string>
+    <string name="settings_places">Places</string>
+    <string name="settings_capture_location">Capture location</string>
+    <string name="settings_capture_location_body">Save where you are with each check-in, so places can form. A place is about 100 metres across. Approximate location is too coarse for that.</string>
+    <string name="settings_app_lock">App lock</string>
+    <string name="settings_app_lock_body">Ask for your fingerprint, face or phone code when SmileProc opens.</string>
+    <string name="settings_app_lock_unavailable">This phone has no screen lock, so app lock can\'t be turned on.</string>
+    <string name="settings_export">Export</string>
+    <string name="settings_import">Import</string>
+    <string name="settings_privacy">What\'s stored and where</string>
+    <string name="settings_delete_all">Delete all data</string>
+    <string name="settings_about">About</string>
+    <string name="cd_settings_reminders">Reminders</string>
+    <string name="cd_settings_keep_check_in">Keep a check-in on the lock screen</string>
+    <string name="cd_settings_lock_screen_check">Lock-screen check-in</string>
+    <string name="cd_settings_weekly_card_time">Weekly card time</string>
+    <string name="cd_settings_places">Places</string>
+    <string name="cd_settings_capture_location">Capture location</string>
+    <string name="cd_settings_app_lock">App lock</string>
+    <string name="cd_settings_export">Export</string>
+    <string name="cd_settings_import">Import</string>
+    <string name="cd_settings_privacy">What\'s stored and where</string>
+    <string name="cd_settings_delete_all">Delete all data</string>
+    <string name="cd_settings_about">About</string>
+
+    <!-- Reminders -->
+    <string name="reminders_title">Reminders</string>
+    <string name="reminders_limit">Up to 6 a day.</string>
+    <string name="reminders_add">Add a reminder</string>
+    <string name="cd_reminders_add">Add a reminder</string>
+    <string name="reminders_empty">No reminders yet. You can still check in from the app.</string>
+    <string name="reminders_delete">Remove reminder</string>
+    <string name="cd_reminders_delete">Remove reminder</string>
+    <string name="reminders_time">Time</string>
+    <string name="reminders_days">Days</string>
+
+    <!-- Lock-screen readiness -->
+    <string name="lock_check_title">Lock-screen check-in</string>
+    <string name="lock_check_notifications">Notifications allowed</string>
+    <string name="lock_check_notifications_problem">Notifications are off for SmileProc.</string>
+    <string name="lock_check_notifications_fix">Turn on notifications</string>
+    <string name="cd_lock_check_notifications_fix">Turn on notifications</string>
+    <string name="lock_check_channel">Check-in channel on</string>
+    <string name="lock_check_channel_problem">The Check-ins channel is off.</string>
+    <string name="lock_check_channel_fix">Open channel settings</string>
+    <string name="cd_lock_check_channel_fix">Open channel settings</string>
+    <string name="lock_check_visibility">Shown on the lock screen</string>
+    <string name="lock_check_visibility_problem">The Check-ins channel is hidden on the lock screen.</string>
+    <string name="lock_check_visibility_fix">Open channel settings</string>
+    <string name="lock_check_ok">Ready</string>
+    <string name="lock_check_test">Send a test check-in</string>
+    <string name="cd_lock_check_test">Send a test check-in</string>
+    <string name="lock_check_test_waiting">Lock your phone now.</string>
+    <string name="lock_check_test_hint">If you didn\'t see buttons, check that the phone\'s lock screen shows notifications. On Samsung, lock-screen notifications shouldn\'t be set to icons only.</string>
+    <string name="lock_check_rating_in_app_only">Notifications are off. You can still check in here in the app.</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_skip">Skip for now</string>
+    <string name="cd_onboarding_continue">Continue</string>
+    <string name="cd_onboarding_skip">Skip for now</string>
+    <string name="onboarding_privacy_title">Private, on this phone</string>
+    <string name="onboarding_privacy_body">SmileProc keeps your check-ins on this phone. There is no account and no server.</string>
+    <string name="onboarding_privacy_backup">History is not in backups or phone-to-phone transfer. If you lose this phone without an export, the history is gone.</string>
+    <string name="onboarding_privacy_export">Export a copy when you want one.</string>
+    <string name="onboarding_location_title">Places, if you want them</string>
+    <string name="onboarding_location_body">SmileProc can remember places from where you check in. A place is a spot about 100 metres across that you can name. If you skip this, check-ins still save.</string>
+    <string name="onboarding_location_approximate">Approximate location is too coarse to tell places apart.</string>
+    <string name="onboarding_location_allow">Allow location</string>
+    <string name="cd_onboarding_location_allow">Allow location</string>
+    <string name="onboarding_reminders_title">A gentle question</string>
+    <string name="onboarding_reminders_body">Reminders use one notification: “How are you right now?” You can answer from the lock screen.</string>
+    <string name="onboarding_notifications_allow">Allow notifications</string>
+    <string name="cd_onboarding_notifications_allow">Allow notifications</string>
+    <string name="onboarding_lock_title">App lock</string>
+    <string name="onboarding_lock_body">Ask for your fingerprint, face or phone code when SmileProc opens. The check-in buttons on the notification still work.</string>
+    <string name="onboarding_ready_title">Try it on the lock screen</string>
+
+    <!-- Export, import, delete, recovery -->
+    <string name="export_title">Export</string>
+    <string name="export_password">Password</string>
+    <string name="export_password_again">Enter the password again</string>
+    <string name="export_password_short">Use at least 8 characters.</string>
+    <string name="export_password_mismatch">Those passwords don\'t match.</string>
+    <string name="export_password_warning">If you forget this password, the export can\'t be opened.</string>
+    <string name="export_action">Export</string>
+    <string name="cd_export_action">Export</string>
+    <string name="export_progress">Exporting…</string>
+    <string name="import_title">Import</string>
+    <string name="import_password">Password for this export</string>
+    <string name="import_action">Import</string>
+    <string name="cd_import_action">Import</string>
+    <string name="import_progress">Importing…</string>
+    <string name="import_wrong_password">That password didn\'t open the file.</string>
+    <string name="import_failed">Couldn\'t read that file.</string>
+    <string name="delete_all_title">Delete all data?</string>
+    <string name="delete_all_body">This removes check-ins, places and settings from this phone. It can\'t be undone.</string>
+    <string name="delete_all_confirm">Delete all data</string>
+    <string name="cd_delete_all_confirm">Delete all data</string>
+    <string name="recovery_title">SmileProc can\'t open what\'s stored on this phone.</string>
+    <string name="recovery_import">Import an export</string>
+    <string name="recovery_fresh">Start fresh</string>
+    <string name="cd_recovery_import">Import an export</string>
+    <string name="cd_recovery_fresh">Start fresh</string>
+
+    <!-- Privacy screen -->
+    <string name="privacy_title">What\'s stored and where</string>
+    <string name="privacy_stays">Check-ins, place names and settings stay on this phone. SmileProc has no account and no server, and it doesn\'t send anything anywhere.</string>
+    <string name="privacy_leaves">Something leaves the phone only if you export a file, or if you tap a support contact and your phone opens the call, text or browser.</string>
+    <string name="privacy_backups">History is not in phone backups or phone-to-phone transfer. A lost phone means lost history, unless you exported a copy.</string>
+    <string name="privacy_location">If you allow it, a check-in can include where you were. You can turn that off, or remove location from every check-in.</string>
+
+    <!-- About and errors -->
+    <string name="about_title">About</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_body">No account. No server. History stays on this phone.</string>
+    <string name="error_save_failed">Couldn\'t save. Try again.</string>
+    <string name="error_location_denied">Location is off, so this check-in has no place. The rating is saved.</string>
+    <string name="error_notifications_denied">Notifications are off. You can still check in here.</string>
+
+    <!-- Permission rationales -->
+    <string name="rationale_notifications">SmileProc uses one notification to ask how you are. You can turn it off and still check in here.</string>
+    <string name="rationale_location">Location lets places form, about 100 metres across. Check-ins save either way.</string>
+</resources>

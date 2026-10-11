@@ -1,0 +1,25 @@
+{
+  "periodStart": "2026-10-04T17:00:00.000Z",
+  "periodEnd": "2026-10-11T17:00:00.000Z",
+  "windowKind": "twoWeeks",
+  "variant": "firstWeek",
+  "isLowWeek": false,
+  "maxItemCount": 1,
+  "entryCount": 6,
+  "moodCounts": [
+    0,
+    6,
+    0
+  ],
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": [],
+  "dayparts": {
+    "7c3f1dab-cfa5-5b15-b3ce-197133754b3b": "morning",
+    "6843a6ae-0e7f-50d2-a383-e5f610bc8179": "morning",
+    "7c9cee3d-8beb-5c79-982e-78fa0c362c9e": "morning",
+    "42df6c35-721c-5469-a107-54b225ebe544": "morning",
+    "2b8dacde-e759-5e75-a993-9775d4e3ce7d": "morning",
+    "1dab0638-1fae-5ac7-b585-d64b5bc25165": "morning"
+  }
+}

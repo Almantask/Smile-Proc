@@ -1,0 +1,57 @@
+{
+  "sameCluster": [
+    [
+      "0ac164a6-b7a8-5e39-bf87-c3c0bfae012a",
+      "4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+      "4b9eb8e2-c1f7-5513-96e9-9aa279e1ceda",
+      "a7385951-4be6-55fc-a33b-123c0bf60fa0",
+      "c2b84b0e-b65b-5a82-b21c-7314ec6bc612"
+    ],
+    [
+      "11368a4a-2c63-569a-9bff-0a760197cf5d",
+      "37cc8a15-08d8-5788-8eec-04acd3533593",
+      "68e22ef0-0b98-506a-a02c-b2496a90f31c",
+      "6de2af43-5e8f-5e2d-9426-95eda260eb60",
+      "94d3f7cb-b4bc-5253-9801-84d9329e44da"
+    ],
+    [
+      "1a9f4456-7920-5228-93ee-80e2b7706ea0",
+      "4118639f-c7ec-5bdc-9bb0-05829211f51e",
+      "80c80869-d11d-5d39-8139-da3b9f6bd6ae",
+      "c1543616-f44e-5f59-bca9-8a565807189b",
+      "eed413a8-e32c-5390-8f4a-e3c29e337b56"
+    ]
+  ],
+  "differentCluster": [
+    [
+      "0ac164a6-b7a8-5e39-bf87-c3c0bfae012a",
+      "11368a4a-2c63-569a-9bff-0a760197cf5d"
+    ],
+    [
+      "0ac164a6-b7a8-5e39-bf87-c3c0bfae012a",
+      "1a9f4456-7920-5228-93ee-80e2b7706ea0"
+    ],
+    [
+      "11368a4a-2c63-569a-9bff-0a760197cf5d",
+      "1a9f4456-7920-5228-93ee-80e2b7706ea0"
+    ]
+  ],
+  "unclustered": [],
+  "clusterOf": {
+    "0ac164a6-b7a8-5e39-bf87-c3c0bfae012a": "u:4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+    "11368a4a-2c63-569a-9bff-0a760197cf5d": "u:6de2af43-5e8f-5e2d-9426-95eda260eb60",
+    "1a9f4456-7920-5228-93ee-80e2b7706ea0": "u:80c80869-d11d-5d39-8139-da3b9f6bd6ae",
+    "37cc8a15-08d8-5788-8eec-04acd3533593": "u:6de2af43-5e8f-5e2d-9426-95eda260eb60",
+    "4118639f-c7ec-5bdc-9bb0-05829211f51e": "u:80c80869-d11d-5d39-8139-da3b9f6bd6ae",
+    "4400f391-e5d9-5d21-aa40-b46dc86b3e9d": "u:4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+    "4b9eb8e2-c1f7-5513-96e9-9aa279e1ceda": "u:4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+    "68e22ef0-0b98-506a-a02c-b2496a90f31c": "u:6de2af43-5e8f-5e2d-9426-95eda260eb60",
+    "6de2af43-5e8f-5e2d-9426-95eda260eb60": "u:6de2af43-5e8f-5e2d-9426-95eda260eb60",
+    "80c80869-d11d-5d39-8139-da3b9f6bd6ae": "u:80c80869-d11d-5d39-8139-da3b9f6bd6ae",
+    "94d3f7cb-b4bc-5253-9801-84d9329e44da": "u:6de2af43-5e8f-5e2d-9426-95eda260eb60",
+    "a7385951-4be6-55fc-a33b-123c0bf60fa0": "u:4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+    "c1543616-f44e-5f59-bca9-8a565807189b": "u:80c80869-d11d-5d39-8139-da3b9f6bd6ae",
+    "c2b84b0e-b65b-5a82-b21c-7314ec6bc612": "u:4400f391-e5d9-5d21-aa40-b46dc86b3e9d",
+    "eed413a8-e32c-5390-8f4a-e3c29e337b56": "u:80c80869-d11d-5d39-8139-da3b9f6bd6ae"
+  }
+}

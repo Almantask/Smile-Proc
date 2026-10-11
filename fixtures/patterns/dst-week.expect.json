@@ -1,0 +1,34 @@
+{
+  "periodStart": "2026-10-18T17:00:00.000Z",
+  "periodEnd": "2026-10-25T18:00:00.000Z",
+  "windowKind": "week",
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 3,
+  "entryCount": 14,
+  "moodCounts": [
+    0,
+    14,
+    0
+  ],
+  "firstItemLibraryID": null,
+  "itemsIncludeLibraryIDs": [],
+  "candidatesInclude": [],
+  "dayparts": {
+    "11a05f94-1e60-5671-8011-0b86614cec8f": "morning",
+    "cabedae9-8c52-5a13-97e1-ce3c2f876fc4": "night",
+    "8eaac515-e6e0-56d4-afd0-d413c8e38c1b": "night",
+    "612ee1d6-9c2d-5215-8d73-fc228e343e87": "night",
+    "9746facb-55d1-5526-83a9-b3e36481b040": "night",
+    "4136304a-8adc-58c6-8e7c-97f15c333a0f": "morning",
+    "d84a260b-619f-5973-9283-f3af0e119e69": "afternoon",
+    "8ea5ec92-886c-596d-af7c-924451c92819": "evening",
+    "c45e9cf1-f07c-56bf-ba3c-b7426a96dec1": "morning",
+    "1402b2eb-9366-54f7-8f41-6b3301106de9": "morning",
+    "6a7e3b87-c70f-5cdb-88d3-2cc41e53642a": "morning",
+    "59b8c409-1bee-53b7-bcab-29644ab88b78": "morning",
+    "a3ed4596-2021-50c0-9d1d-276edb302260": "morning",
+    "f1247a35-f048-5f3d-b67e-cca0661fb756": "morning",
+    "e016485d-09ab-521d-a8e2-9a38ff95bd2b": "morning"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "sameCluster": [
+    [
+      "16dfeb77-87a9-5a64-ac2f-8c2e34c04d55",
+      "49dce334-e7ef-5a0e-b8ed-04b65a6f8a18",
+      "6aed4193-7d37-5256-a86f-f456a8d8c2c4",
+      "c4cfaa17-9c27-5c22-af6a-4eb07348430c"
+    ]
+  ],
+  "differentCluster": [],
+  "unclustered": [
+    "453f218a-057d-5101-96a9-7d4fa982914e",
+    "aeb5badc-a912-5740-befa-f1ae4dc05445"
+  ],
+  "clusterOf": {
+    "16dfeb77-87a9-5a64-ac2f-8c2e34c04d55": "u:6aed4193-7d37-5256-a86f-f456a8d8c2c4",
+    "49dce334-e7ef-5a0e-b8ed-04b65a6f8a18": "u:6aed4193-7d37-5256-a86f-f456a8d8c2c4",
+    "6aed4193-7d37-5256-a86f-f456a8d8c2c4": "u:6aed4193-7d37-5256-a86f-f456a8d8c2c4",
+    "c4cfaa17-9c27-5c22-af6a-4eb07348430c": "u:6aed4193-7d37-5256-a86f-f456a8d8c2c4"
+  }
+}
