@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "cores": [
+    {
+      "id": "happy",
+      "color": "#F2C14E",
+      "fine": ["happy.joyful", "happy.grateful", "happy.proud", "happy.hopeful", "happy.excited"]
+    },
+    {
+      "id": "calm",
+      "color": "#3F8F86",
+      "fine": ["calm.relaxed", "calm.content", "calm.peaceful", "calm.focused", "calm.safe"]
+    },
+    {
+      "id": "sad",
+      "color": "#5E86B8",
+      "fine": ["sad.down", "sad.lonely", "sad.disappointed", "sad.hurt", "sad.nostalgic"]
+    },
+    {
+      "id": "anxious",
+      "color": "#C47D8E",
+      "fine": ["anxious.stressed", "anxious.worried", "anxious.overwhelmed", "anxious.nervous", "anxious.insecure"]
+    },
+    {
+      "id": "angry",
+      "color": "#D4724E",
+      "fine": ["angry.frustrated", "angry.irritated", "angry.resentful", "angry.jealous", "angry.impatient"]
+    },
+    {
+      "id": "tired",
+      "color": "#8B84B5",
+      "fine": ["tired.drained", "tired.sleepy", "tired.bored", "tired.unmotivated", "tired.numb"]
+    },
+    {
+      "id": "surprised",
+      "color": "#D4923A",
+      "fine": ["surprised.amazed", "surprised.confused", "surprised.curious", "surprised.startled", "surprised.moved"]
+    }
+  ]
+}

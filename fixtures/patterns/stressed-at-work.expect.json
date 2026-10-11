@@ -1,0 +1,43 @@
+{
+  "periodStart": "2026-10-04T17:00:00.000Z",
+  "periodEnd": "2026-10-11T17:00:00.000Z",
+  "windowKind": "week",
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 3,
+  "entryCount": 12,
+  "moodCounts": [
+    0,
+    12,
+    0
+  ],
+  "firstItemLibraryID": "stress-at-place",
+  "itemsIncludeLibraryIDs": [
+    "stress-at-place"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagAtPlace.anxious.stressed.p:1fd384f3-4237-59b9-841f-aaf895b536d7",
+      "confidence": "pattern"
+    },
+    {
+      "id": "tagAtPlace.calm.relaxed.u:2af600c2-f783-5231-a67c-fd6068097064",
+      "confidence": "pattern"
+    }
+  ],
+  "dayparts": {
+    "11a05f94-1e60-5671-8011-0b86614cec8f": "morning",
+    "541a0d31-6cba-5370-94de-52da4798f702": "morning",
+    "2af600c2-f783-5231-a67c-fd6068097064": "afternoon",
+    "c779c33c-f073-5867-a4c0-d19cb641ef8b": "afternoon",
+    "7e76aae6-0962-50cd-ba64-4f39928376d0": "evening",
+    "538f5788-7bff-55a2-aa50-b1b728f48691": "evening",
+    "553ebf02-74e7-56f4-9cfb-736f2abf3cfa": "night",
+    "b264204c-c89a-51cd-9d0a-8f816267f634": "night",
+    "ecedb195-0de8-5fc3-9e10-2e555dabfe4d": "morning",
+    "cfcba04a-808e-523f-bb58-94e83d9a5319": "morning",
+    "1ad2611b-1f8a-5612-948c-efa647db9ceb": "afternoon",
+    "e52c6d35-0b08-51c5-9cf1-79753fb4ec2c": "afternoon",
+    "adfdaf6e-d532-5262-b6b9-b6e2bc797b66": "morning"
+  }
+}

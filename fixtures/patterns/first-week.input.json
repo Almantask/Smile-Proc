@@ -1,0 +1,78 @@
+{
+  "now": "2026-10-11T18:00:00.000Z",
+  "timeZoneID": "Europe/Rome",
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "entries": [
+    {
+      "id": "7c3f1dab-cfa5-5b15-b3ce-197133754b3b",
+      "createdAt": "2026-10-06T09:00:00.000Z",
+      "updatedAt": "2026-10-06T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "6843a6ae-0e7f-50d2-a383-e5f610bc8179",
+      "createdAt": "2026-10-07T09:00:00.000Z",
+      "updatedAt": "2026-10-07T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "7c9cee3d-8beb-5c79-982e-78fa0c362c9e",
+      "createdAt": "2026-10-08T09:00:00.000Z",
+      "updatedAt": "2026-10-08T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "42df6c35-721c-5469-a107-54b225ebe544",
+      "createdAt": "2026-10-09T09:00:00.000Z",
+      "updatedAt": "2026-10-09T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "2b8dacde-e759-5e75-a993-9775d4e3ce7d",
+      "createdAt": "2026-10-10T09:00:00.000Z",
+      "updatedAt": "2026-10-10T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    },
+    {
+      "id": "1dab0638-1fae-5ac7-b585-d64b5bc25165",
+      "createdAt": "2026-10-11T09:00:00.000Z",
+      "updatedAt": "2026-10-11T09:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": null,
+      "source": "app"
+    }
+  ],
+  "places": []
+}

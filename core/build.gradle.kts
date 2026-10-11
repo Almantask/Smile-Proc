@@ -1,0 +1,21 @@
+plugins {
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnit()
+    systemProperty("smileproc.contentDir", rootProject.file("content").absolutePath)
+    systemProperty("smileproc.fixturesDir", rootProject.file("fixtures").absolutePath)
+}

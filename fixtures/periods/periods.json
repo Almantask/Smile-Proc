@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "cardTime": {
+    "weekday": 7,
+    "hour": 19,
+    "minute": 0
+  },
+  "cases": [
+    {
+      "name": "sunday-after",
+      "now": "2026-10-11T18:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "sunday-before",
+      "now": "2026-10-11T16:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-09-27T17:00:00.000Z",
+      "periodEnd": "2026-10-04T17:00:00.000Z"
+    },
+    {
+      "name": "sunday-exact",
+      "now": "2026-10-11T17:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "monday-morning",
+      "now": "2026-10-12T06:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-04T17:00:00.000Z",
+      "periodEnd": "2026-10-11T17:00:00.000Z"
+    },
+    {
+      "name": "saturday-night",
+      "now": "2026-10-10T21:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-09-27T17:00:00.000Z",
+      "periodEnd": "2026-10-04T17:00:00.000Z"
+    },
+    {
+      "name": "dst-sunday-after",
+      "now": "2026-10-25T19:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-18T17:00:00.000Z",
+      "periodEnd": "2026-10-25T18:00:00.000Z"
+    },
+    {
+      "name": "dst-sunday-before",
+      "now": "2026-10-25T16:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "dst-early-morning",
+      "now": "2026-10-25T01:30:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "periodStart": "2026-10-11T17:00:00.000Z",
+      "periodEnd": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "name": "new-york-sunday-after",
+      "now": "2026-10-12T00:00:00.000Z",
+      "timeZoneID": "America/New_York",
+      "periodStart": "2026-10-04T23:00:00.000Z",
+      "periodEnd": "2026-10-11T23:00:00.000Z"
+    }
+  ]
+}

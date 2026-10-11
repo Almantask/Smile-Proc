@@ -1,0 +1,42 @@
+{
+  "periodStart": "2026-10-04T17:00:00.000Z",
+  "periodEnd": "2026-10-11T17:00:00.000Z",
+  "windowKind": "week",
+  "variant": "normal",
+  "isLowWeek": false,
+  "maxItemCount": 3,
+  "entryCount": 11,
+  "moodCounts": [
+    6,
+    0,
+    5
+  ],
+  "firstItemLibraryID": "afternoon-dip",
+  "itemsIncludeLibraryIDs": [
+    "afternoon-dip"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.higher.morning",
+      "confidence": "earlyHint"
+    }
+  ],
+  "dayparts": {
+    "11a05f94-1e60-5671-8011-0b86614cec8f": "morning",
+    "6fdbaf8b-f887-569f-ab6a-5c90913f3cbd": "afternoon",
+    "b149ea9f-4641-52b2-8371-4587f1ebf97e": "afternoon",
+    "d15737d6-ba86-5842-b7b8-0ed14cd7579a": "afternoon",
+    "bfca2bcd-9755-59ba-b6f7-06c9c7708424": "afternoon",
+    "4fb04a01-ae91-557c-a740-14664cf19829": "afternoon",
+    "05725ed2-6ab1-5d99-ab5b-8cb136bd282d": "afternoon",
+    "80963971-c612-57c7-8027-f36d36137678": "morning",
+    "229c8a8d-481c-50d3-af31-e5ff4976df9d": "morning",
+    "380be186-1572-58e0-95e6-d30c7870eda1": "morning",
+    "a9386867-acb1-5dad-a4d8-b5e076be4065": "evening",
+    "0bdb8666-055d-50ff-b598-2f5be61c3b81": "evening"
+  }
+}
