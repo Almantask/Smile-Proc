@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew *)",
+      "Bash(scripts/*)",
+      "Bash(python3 tools/generate_fixtures.py *)",
+      "Bash(python3 scripts/emu/*)",
+      "Bash(adb -s emulator-* *)",
+      "Bash(adb devices *)",
+      "Bash(emulator *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git tag *)"
+    ],
+    "ask": [
+      "Bash(adb * uninstall *)",
+      "Bash(adb * pm clear *)",
+      "Bash(git reset *)",
+      "Bash(git checkout -- *)"
+    ],
+    "deny": [
+      "Bash(*uninstall com.example.smileproc)",
+      "Bash(*pm clear com.example.smileproc)",
+      "Bash(git push *)",
+      "Read(**/*.jks)",
+      "Read(**/*.keystore)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/py.sh \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard_edit.py" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop_check.sh", "timeout": 300 }
+        ]
+      }
+    ]
+  }
+}
