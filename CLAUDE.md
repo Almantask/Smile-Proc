@@ -10,7 +10,7 @@ Private mood check-in app: Kotlin, Jetpack Compose, Room, no network.
 - Fast guard (no Gradle): `scripts/privacy-guard.sh`
 - Core tests: `./gradlew :core:test` (one class: `--tests '*PlaceResolverTest'`)
 - Everything: `scripts/check.sh` (guard, fixtures, unit tests, lint, debug + dogfood builds, manifest and dependency checks)
-- Fixtures: `python3 tools/generate_fixtures.py` (`--check` to verify)
+- Fixtures: `scripts/py tools/generate_fixtures.py` (`--check` to verify). `scripts/py` runs python3, or `py -3` where python3 is a Windows Store stub.
 - Goldens: `WRITE_GOLDENS=1 ./gradlew :core:test` — only when the human asks
 - Emulator: `scripts/emu/*` — see the android-emulator skill
 
@@ -33,6 +33,7 @@ Private mood check-in app: Kotlin, Jetpack Compose, Room, no network.
 ## Devices
 - Debug builds are `com.example.smileproc.debug` ("SmileProc (debug)"). Never install over, clear or uninstall `com.example.smileproc`: it is the human's daily app.
 - Scripts in scripts/emu target `$SMILEPROC_SERIAL` (default: the running emulator). Don't call plain `adb` without `-s`.
+- Local Windows machine: scripts run in Git Bash; `JAVA_HOME` (JDK 17+) and `ANDROID_HOME` come from `.claude/settings.local.json` (not committed). In Bash heredocs `\\` collapses to `\`: write files with backslashes through Write/Edit.
 - Cloud sessions have no Android SDK, adb or emulator. There, do only pure-Kotlin work (`:core`, fixtures, content, docs): M2 and the non-Android steps of M0. Record every `:app` build and emulator scenario you couldn't run as "not run (cloud)" in docs/progress.md. Push before stopping: the container is discarded.
 
 ## Workflow
