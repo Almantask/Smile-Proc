@@ -472,40 +472,77 @@ def build_patterns():
     })
 
     # low-week --------------------------------------------------------------
-    scn = Scenario("low-week", "7 of 10 check-ins in the card week are Low.")
+    scn = Scenario("low-week", "7 of 10 check-ins in the card week are Low; patterns in three families compete for two slots.")
     add_history(scn, [1])
-    morning = [1, 2, 1, 2, 1]
-    evening = [1, 1, 2, 1, 1]
-    for d, m, e in zip(range(12, 17), morning, evening):
-        scn.add(rome(d, 9), ROME, m, MILAN_HOME)
-        scn.add(rome(d, 20), ROME, e, MILAN_HOME)
+    morning_tags = ["tired.drained", "tired.sleepy", "tired", "tired.drained", "tired.sleepy"]
+    for d, tag in zip(range(12, 17), morning_tags):  # mornings at place A: all Low, tagged tired
+        scn.add(rome(d, 9), ROME, 1, MILAN_A, tags=[tag], handle=f"morning{d}")
+    evenings = [(1, []), (2, ["calm.relaxed"]), (1, []), (2, ["calm.content"]), (2, ["calm.peaceful"])]
+    for d, (mood, tags) in zip(range(12, 17), evenings):  # evenings at place B: 2 Low, 3 Okay
+        scn.add(rome(d, 20), ROME, mood, MILAN_B, tags=tags, handle=f"evening{d}")
     assert period_counts(scn, ROME, NOW_OCT18) == (10, 7)
     files |= pattern_files(scn, NOW_OCT18, ROME, {
         "variant": "normal",
         "isLowWeek": True,
         "maxItemCount": CONFIG["maxItemsLowWeek"],
+        "firstItemLibraryID": "tag-at-place",
+        "itemsIncludeLibraryIDs": ["tag-at-place", "place-higher"],
+        "candidatesInclude": [
+            {"id": f"tagAtPlace.tired.u:{scn.ids['morning12']}", "confidence": "pattern"},
+            {"id": "tagOnLow.tired", "confidence": "pattern"},
+            {"id": f"place.higher.u:{scn.ids['evening12']}", "confidence": "pattern"},
+            {"id": "timeOfDay.lower.morning", "confidence": "pattern"},
+        ],
         "notes": [
-            "Card week Mon 12 - Fri 16, morning 09:00 and evening 20:00: 10 entries, 7 Low, 3 Okay.",
-            "Period entries 10 >= lowWeekMinEntries 4 and Low share 0.7 >= lowWeekShare 0.6 -> isLowWeek, max maxItemsLowWeek (2) items.",
-            "First entry 1 Sep -> normal variant.",
-            "Mornings mean 1.4, evenings 1.2 -> |diff| 0.2 < 0.4: no time candidate.",
+            "Card week Mon 12 - Fri 16: mornings 09:00 at place A (all Low, tagged tired: drained x2, sleepy x2, tired),"
+            " evenings 20:00 at place B (Low, Okay, Low, Okay, Okay; the Okays tagged calm). 10 entries, 7 Low.",
+            "Period entries 10 >= lowWeekMinEntries 4 and Low share 0.7 >= lowWeekShare 0.6 -> isLowWeek, limit maxItemsLowWeek 2.",
+            "10 entries is not fewer than shortWeekThreshold 10 -> week window (the 14-day window holds the same 10 anyway).",
+            "time and place split the entries the same way (A = mornings, B = evenings): seg 5 Low vs rest mean 1.6;"
+            " diff -0.6, pooled sd 0.387, z = -2.45 -> patterns timeOfDay.lower.morning / timeOfDay.higher.evening"
+            " and place.lower.u:<A> / place.higher.u:<B>, each score 0.6 * 0.5 + 0.2 = 0.5.",
+            "tagOnLow.tired: 5 tagged Low entries, tired on all 5 (share 1.0, count 5); never on the 3 tagged Okays (gap 1.0)"
+            " -> pattern, score 1.0 * 0.5 + 0.2 = 0.7. No fine tag reaches 0.7 of the hits -> core 'tired'.",
+            "tagAtPlace.tired.u:<A>: tired on 5/5 tagged entries at A, 0/3 at B -> pattern, score 0.7.",
+            "tagAtPlace.calm.u:<B>: 3/3 at B, 0/5 at A, count 3 < tagPatternCount -> earlyHint only.",
+            "Order: score 0.7 tie -> id ascending: 'tagAtPlace...' < 'tagOnLow...'. Score 0.5 tie: 'place.higher' < 'place.lower'"
+            " < 'timeOfDay.higher' < 'timeOfDay.lower'.",
+            "Picks, one per family, limit 2: tagAtPlace.tired (tag), place.higher.u:<B> (place). It is `higher`, so no balance swap.",
+            "Library: tag-at-place (stress-at-place needs anxious.stressed); place-higher.",
         ],
     })
 
     # not-enough-data -------------------------------------------------------
-    scn = Scenario("not-enough-data", "Only 4 check-ins in the card week.")
+    scn = Scenario("not-enough-data", "Only 4 check-ins in the card week; the detectors read the 14 days before periodEnd.")
     add_history(scn, [1, 5])
-    for (d, h, mood) in ((12, 9, 1), (14, 20, 3), (16, 13, 1), (17, 10, 3)):
-        scn.add(rome(d, h), ROME, mood, MILAN_HOME)
+    for d in (5, 7, 9, 12, 15):  # Low afternoons, 14:30
+        scn.add(rome(d, 14, 30), ROME, 1, MILAN_HOME)
+    for d in (6, 8, 10, 13, 16):  # Good mornings, 09:30
+        scn.add(rome(d, 9, 30), ROME, 3, MILAN_HOME)
     assert period_counts(scn, ROME, NOW_OCT18) == (4, 2)
     files |= pattern_files(scn, NOW_OCT18, ROME, {
         "variant": "notEnoughData",
         "isLowWeek": False,
         "maxItemCount": 1,
+        "firstItemLibraryID": "time-higher",
+        "itemsIncludeLibraryIDs": ["time-higher"],
+        "candidatesInclude": [
+            {"id": "timeOfDay.higher.morning", "confidence": "pattern"},
+            {"id": "timeOfDay.lower.afternoon", "confidence": "pattern"},
+        ],
         "notes": [
+            "Card week: 4 entries (Mon 12 and Thu 15 Low afternoons, Tue 13 and Fri 16 Good mornings).",
             "Period entries 4 < notEnoughDataBelow 5 -> notEnoughData, max 1 item (hints allowed).",
             "Low share 2/4 = 0.5 < 0.6 -> not a low week (4 >= lowWeekMinEntries, but the share is too small).",
-            "4 < shortWeekThreshold 10 -> detectors read the 14 days ending at periodEnd; it holds the same 4 entries.",
+            "4 < shortWeekThreshold 10 -> detectors read the 14 days [Sun 4 Oct 19:00, Sun 18 Oct 19:00): 10 entries,"
+            " 5 Low afternoons and 5 Good mornings. In the card week alone each segment has 2 entries -> no candidate,"
+            " so these candidates only exist with the two-week window.",
+            "afternoon vs morning: diff -2 / +2, variances 0 -> sdFloor, |z| = 2 / (0.3 * sqrt(1/5 + 1/5)) = 10.5,"
+            " nSeg = nRest = 5 -> both patterns, both score 2 * 0.5 + 0.2 = 1.2.",
+            "Equal confidence and score -> id ascending: 'timeOfDay.higher.morning' < 'timeOfDay.lower.afternoon'."
+            " The one slot goes to the morning pattern; limit 1 < 2, so the balance rule doesn't apply.",
+            "Weekday window: every weekday segment has <= 2 entries -> no weekday candidate.",
+            "Library: time-higher is the only timeOfDay + higher entry.",
         ],
     })
 
@@ -717,6 +754,29 @@ def build_places():
             "centre starts u:centre. east90 is 90 m from its centroid -> joins; centroid moves 45 m east.",
             "west90 is 135 m from that centroid -> new cluster. north130 is 137 m and 158 m from the two centroids -> new cluster.",
             "Stabilise: centre is 45 m from its own centroid and 90 m from west90's -> stays. Nothing moves.",
+        ],
+    }
+
+    # centroid-drift --------------------------------------------------------
+    scn = Scenario("centroid-drift", "Points on a north-south line; the stabilise step moves one point to the cluster it is nearest to.")
+    t = at(ROME, 2026, 10, 5, 9, 0)
+    ids = {}
+    for handle, metres in (("a", 0), ("b", 85), ("c", 140), ("d", 215), ("e", 185)):
+        t += timedelta(hours=6)
+        ids[handle] = scn.add(t, ROME, 2, offset_point(MILAN_HOME, metres, 0), exact=True)
+    files["places/centroid-drift.input.json"] = {
+        "scenario": scn.name, "description": scn.description, "labels": [], "entries": scn.sorted_entries()}
+    files["places/centroid-drift.expect.json"] = {
+        "sameCluster": [[ids["a"], ids["b"]], [ids["c"], ids["d"], ids["e"]]],
+        "differentCluster": [[ids["b"], ids["c"]], [ids["a"], ids["c"]]],
+        "unclustered": [],
+        "notes": [
+            "Positions are metres north of one point, in createdAt order: a 0, b 85, c 140, d 215, e 185.",
+            "Unnamed pass: a starts u:a. b is 85 m from centroid 0 -> joins (centroid 42.5). c is 97.5 m away -> joins"
+            " (centroid 75). d is 140 m away -> new cluster u:d. e is 110 m from u:a and 30 m from u:d -> joins u:d (centroid 200).",
+            "Stabilise: c is 65 m from u:a's centroid (75) but 60 m from u:d's (200) -> c moves. Result {a, b} and {c, d, e};"
+            " the second keeps the id of its earliest member, u:<c>.",
+            "Without the stabilise step c would stay with a and b.",
         ],
     }
     return files

@@ -2,9 +2,28 @@
   "variant": "notEnoughData",
   "isLowWeek": false,
   "maxItemCount": 1,
+  "firstItemLibraryID": "time-higher",
+  "itemsIncludeLibraryIDs": [
+    "time-higher"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "timeOfDay.higher.morning",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern"
+    }
+  ],
   "notes": [
+    "Card week: 4 entries (Mon 12 and Thu 15 Low afternoons, Tue 13 and Fri 16 Good mornings).",
     "Period entries 4 < notEnoughDataBelow 5 -> notEnoughData, max 1 item (hints allowed).",
     "Low share 2/4 = 0.5 < 0.6 -> not a low week (4 >= lowWeekMinEntries, but the share is too small).",
-    "4 < shortWeekThreshold 10 -> detectors read the 14 days ending at periodEnd; it holds the same 4 entries."
+    "4 < shortWeekThreshold 10 -> detectors read the 14 days [Sun 4 Oct 19:00, Sun 18 Oct 19:00): 10 entries, 5 Low afternoons and 5 Good mornings. In the card week alone each segment has 2 entries -> no candidate, so these candidates only exist with the two-week window.",
+    "afternoon vs morning: diff -2 / +2, variances 0 -> sdFloor, |z| = 2 / (0.3 * sqrt(1/5 + 1/5)) = 10.5, nSeg = nRest = 5 -> both patterns, both score 2 * 0.5 + 0.2 = 1.2.",
+    "Equal confidence and score -> id ascending: 'timeOfDay.higher.morning' < 'timeOfDay.lower.afternoon'. The one slot goes to the morning pattern; limit 1 < 2, so the balance rule doesn't apply.",
+    "Weekday window: every weekday segment has <= 2 entries -> no weekday candidate.",
+    "Library: time-higher is the only timeOfDay + higher entry."
   ]
 }

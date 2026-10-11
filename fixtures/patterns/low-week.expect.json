@@ -2,10 +2,39 @@
   "variant": "normal",
   "isLowWeek": true,
   "maxItemCount": 2,
+  "firstItemLibraryID": "tag-at-place",
+  "itemsIncludeLibraryIDs": [
+    "tag-at-place",
+    "place-higher"
+  ],
+  "candidatesInclude": [
+    {
+      "id": "tagAtPlace.tired.u:aa92845b-802f-4c53-ab4c-1413986e2b15",
+      "confidence": "pattern"
+    },
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern"
+    },
+    {
+      "id": "place.higher.u:ee0e3e07-1321-457c-ad41-5815ffab9df0",
+      "confidence": "pattern"
+    },
+    {
+      "id": "timeOfDay.lower.morning",
+      "confidence": "pattern"
+    }
+  ],
   "notes": [
-    "Card week Mon 12 - Fri 16, morning 09:00 and evening 20:00: 10 entries, 7 Low, 3 Okay.",
-    "Period entries 10 >= lowWeekMinEntries 4 and Low share 0.7 >= lowWeekShare 0.6 -> isLowWeek, max maxItemsLowWeek (2) items.",
-    "First entry 1 Sep -> normal variant.",
-    "Mornings mean 1.4, evenings 1.2 -> |diff| 0.2 < 0.4: no time candidate."
+    "Card week Mon 12 - Fri 16: mornings 09:00 at place A (all Low, tagged tired: drained x2, sleepy x2, tired), evenings 20:00 at place B (Low, Okay, Low, Okay, Okay; the Okays tagged calm). 10 entries, 7 Low.",
+    "Period entries 10 >= lowWeekMinEntries 4 and Low share 0.7 >= lowWeekShare 0.6 -> isLowWeek, limit maxItemsLowWeek 2.",
+    "10 entries is not fewer than shortWeekThreshold 10 -> week window (the 14-day window holds the same 10 anyway).",
+    "time and place split the entries the same way (A = mornings, B = evenings): seg 5 Low vs rest mean 1.6; diff -0.6, pooled sd 0.387, z = -2.45 -> patterns timeOfDay.lower.morning / timeOfDay.higher.evening and place.lower.u:<A> / place.higher.u:<B>, each score 0.6 * 0.5 + 0.2 = 0.5.",
+    "tagOnLow.tired: 5 tagged Low entries, tired on all 5 (share 1.0, count 5); never on the 3 tagged Okays (gap 1.0) -> pattern, score 1.0 * 0.5 + 0.2 = 0.7. No fine tag reaches 0.7 of the hits -> core 'tired'.",
+    "tagAtPlace.tired.u:<A>: tired on 5/5 tagged entries at A, 0/3 at B -> pattern, score 0.7.",
+    "tagAtPlace.calm.u:<B>: 3/3 at B, 0/5 at A, count 3 < tagPatternCount -> earlyHint only.",
+    "Order: score 0.7 tie -> id ascending: 'tagAtPlace...' < 'tagOnLow...'. Score 0.5 tie: 'place.higher' < 'place.lower' < 'timeOfDay.higher' < 'timeOfDay.lower'.",
+    "Picks, one per family, limit 2: tagAtPlace.tired (tag), place.higher.u:<B> (place). It is `higher`, so no balance swap.",
+    "Library: tag-at-place (stress-at-place needs anxious.stressed); place-higher."
   ]
 }

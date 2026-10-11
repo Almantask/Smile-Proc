@@ -24,11 +24,15 @@ dependencies {
 
 val fixturesDir = rootProject.layout.projectDirectory.dir("fixtures")
 val contentDir = rootProject.layout.projectDirectory.dir("content")
+val stringsFile = rootProject.layout.projectDirectory.file("app/src/main/res/values/strings.xml")
 
 tasks.test {
-    // Shared test data (docs/spec/data.md › Fixtures) and the runtime content JSON.
+    // Shared test data (docs/spec/data.md › Fixtures), the runtime content JSON, and the app's
+    // strings (checked against the ids and copy the spec names).
     inputs.dir(fixturesDir).withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.dir(contentDir).withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file(stringsFile).withPathSensitivity(PathSensitivity.RELATIVE)
     systemProperty("smileproc.fixtures", fixturesDir.asFile.absolutePath)
     systemProperty("smileproc.content", contentDir.asFile.absolutePath)
+    systemProperty("smileproc.strings", stringsFile.asFile.absolutePath)
 }

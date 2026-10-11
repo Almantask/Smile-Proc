@@ -1,0 +1,92 @@
+{
+  "scenario": "centroid-drift",
+  "description": "Points on a north-south line; the stabilise step moves one point to the cluster it is nearest to.",
+  "labels": [],
+  "entries": [
+    {
+      "id": "d7ccee76-b6cf-407f-9018-4d1b97ac84cd",
+      "createdAt": "2026-10-05T13:00:00.000Z",
+      "updatedAt": "2026-10-05T13:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.4642,
+        "longitude": 9.19,
+        "horizontalAccuracy": 20.0,
+        "capturedAt": "2026-10-05T12:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "b2d501da-48e4-47b9-9ac6-93cde4409392",
+      "createdAt": "2026-10-05T19:00:00.000Z",
+      "updatedAt": "2026-10-05T19:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.464964,
+        "longitude": 9.19,
+        "horizontalAccuracy": 14.0,
+        "capturedAt": "2026-10-05T18:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "37ea6b78-c4d5-46be-8945-2ae3cbd578bd",
+      "createdAt": "2026-10-06T01:00:00.000Z",
+      "updatedAt": "2026-10-06T01:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.465459,
+        "longitude": 9.19,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-06T00:56:00.000Z",
+        "kind": "cached"
+      },
+      "source": "notification"
+    },
+    {
+      "id": "678769a0-5c82-4548-b04f-596dcd6ad253",
+      "createdAt": "2026-10-06T07:00:00.000Z",
+      "updatedAt": "2026-10-06T07:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.466134,
+        "longitude": 9.19,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-06T07:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    },
+    {
+      "id": "ff379106-eeb9-4366-930b-0ba51766c09a",
+      "createdAt": "2026-10-06T13:00:00.000Z",
+      "updatedAt": "2026-10-06T13:00:00.000Z",
+      "timeZoneID": "Europe/Rome",
+      "mood": 2,
+      "tags": [],
+      "comment": null,
+      "location": {
+        "latitude": 45.465864,
+        "longitude": 9.19,
+        "horizontalAccuracy": 17.0,
+        "capturedAt": "2026-10-06T13:00:03.000Z",
+        "kind": "fresh"
+      },
+      "source": "app"
+    }
+  ]
+}

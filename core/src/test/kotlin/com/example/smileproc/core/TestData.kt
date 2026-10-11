@@ -8,6 +8,7 @@ import java.io.File
 object TestData {
     val fixtures: File = dir("smileproc.fixtures")
     val content: File = dir("smileproc.content")
+    val strings: File = File(System.getProperty("smileproc.strings") ?: error("smileproc.strings is not set"))
 
     fun json(file: File): JsonElement = Json.parseToJsonElement(file.readText(Charsets.UTF_8))
 

@@ -1,0 +1,30 @@
+{
+  "sameCluster": [
+    [
+      "d7ccee76-b6cf-407f-9018-4d1b97ac84cd",
+      "b2d501da-48e4-47b9-9ac6-93cde4409392"
+    ],
+    [
+      "37ea6b78-c4d5-46be-8945-2ae3cbd578bd",
+      "678769a0-5c82-4548-b04f-596dcd6ad253",
+      "ff379106-eeb9-4366-930b-0ba51766c09a"
+    ]
+  ],
+  "differentCluster": [
+    [
+      "b2d501da-48e4-47b9-9ac6-93cde4409392",
+      "37ea6b78-c4d5-46be-8945-2ae3cbd578bd"
+    ],
+    [
+      "d7ccee76-b6cf-407f-9018-4d1b97ac84cd",
+      "37ea6b78-c4d5-46be-8945-2ae3cbd578bd"
+    ]
+  ],
+  "unclustered": [],
+  "notes": [
+    "Positions are metres north of one point, in createdAt order: a 0, b 85, c 140, d 215, e 185.",
+    "Unnamed pass: a starts u:a. b is 85 m from centroid 0 -> joins (centroid 42.5). c is 97.5 m away -> joins (centroid 75). d is 140 m away -> new cluster u:d. e is 110 m from u:a and 30 m from u:d -> joins u:d (centroid 200).",
+    "Stabilise: c is 65 m from u:a's centroid (75) but 60 m from u:d's (200) -> c moves. Result {a, b} and {c, d, e}; the second keeps the id of its earliest member, u:<c>.",
+    "Without the stabilise step c would stay with a and b."
+  ]
+}
