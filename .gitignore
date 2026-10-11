@@ -1,0 +1,27 @@
+# Build outputs
+build/
+**/build/
+.gradle/
+.kotlin/
+captures/
+*.apk
+*.aab
+
+# Machine-specific
+local.properties
+CLAUDE.local.md
+.claude/settings.local.json
+.idea/
+*.iml
+.DS_Store
+
+# Emulator evidence (kept out of git; paths are listed in progress.md)
+build/emu-shots/
+
+# Python
+__pycache__/
+*.pyc
+
+# Signing keys are never committed
+*.jks
+*.keystore
