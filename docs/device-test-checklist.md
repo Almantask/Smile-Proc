@@ -15,6 +15,8 @@ From docs/spec/testing.md. Claude runs the emulator scenarios (E) and records ev
 | H8 | Daily use of the dogfood build from M5 on | M5 | open | |
 
 ## Emulator scenarios (Claude)
+Emulators (created in M0 by `scripts/emu/create-avds.sh`): `sp36` = API 36 AOSP image without Google Play, `emulator-5554` (API 37 has no Play-free image); `sp29` = API 29, `emulator-5556`. M0 smoke check: the debug build installs and shows the hello screen on both (`build/emu-shots/m0-hello.png`, `m0-hello-sp29.png`).
+
 | Id | Scenario | Milestone | sp36 | sp29 |
 |---|---|---|---|---|
 | E1 | Standing notification on the lock screen; tap Okay → "Saved ✓" | M5, M10 | — | M5 (E19) |
