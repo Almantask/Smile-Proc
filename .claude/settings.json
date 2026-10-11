@@ -24,7 +24,6 @@
     "deny": [
       "Bash(*uninstall com.example.smileproc)",
       "Bash(*pm clear com.example.smileproc)",
-      "Bash(git push *)",
       "Read(**/*.jks)",
       "Read(**/*.keystore)"
     ]

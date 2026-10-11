@@ -42,7 +42,7 @@ Status values: not started · in progress · partly verified · claude-verified 
   1. The plan stays at the repo root as `android-implementation-plan.md` (CLAUDE.md), not `docs/plan.md`.
   2. **Python resolver.** On this PC `python3` is a Windows Store stub.
      - `scripts/py` and `.claude/hooks/py.sh` try python3, then `py -3`, then python. `py.sh` exits 2 when none works, so the guard fails closed.
-     - The PreToolUse command runs `guard_edit.py` through `py.sh`; the rest of `settings.json` is B.3.
+     - The PreToolUse command runs `guard_edit.py` through `py.sh`. Otherwise `settings.json` is B.3, minus the `Bash(git push *)` deny rule, which the human had removed on 2026-10-11 so Claude can push.
      - CLAUDE.md and the android-emulator skill say `scripts/py` instead of `python3`.
   3. `privacy-guard.sh` runs `scripts/lib/privacy_guard.py`, which uses the hook's own regexes on whole files. A line-based grep let a `.notify(` call split over several lines through.
   4. **sp36 is API 36** (`system-images;android-36;default;x86_64`): API 37 has no image without Google APIs or Play. The app compiles and targets 37.
