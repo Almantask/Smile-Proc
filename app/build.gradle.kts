@@ -41,7 +41,7 @@ android {
 
     sourceSets {
         getByName("main") {
-            assets.srcDir(rootProject.file("content"))
+            assets.directories.add(rootProject.file("content").absolutePath)
         }
     }
 

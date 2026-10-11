@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Copy for later screens lives here from M0. Drop this ignore once those screens use it. -->
+    <issue id="UnusedResources">
+        <ignore path="**/values/strings.xml" />
+    </issue>
+    <!-- Observation lines follow the plan's "%d check-ins" wording. -->
+    <issue id="PluralsCandidate">
+        <ignore path="**/values/strings.xml" />
+    </issue>
+    <!-- AGP 9.4's Gradle is 9.6.0. Kotlin 2.4.21's supported ceiling is 9.7.0. -->
+    <issue id="AndroidGradlePluginVersion" severity="ignore" />
+</lint>

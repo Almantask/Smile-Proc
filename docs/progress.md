@@ -40,6 +40,10 @@ Goldens (`*.golden.json`) are not written yet. M2 writes them with `WRITE_GOLDEN
   - Low-run span is the count of distinct local dates.
   - `expect.json` keys are exact, including `candidatesInclude` and `itemsIncludeLibraryIDs`.
 
+## Checks
+
+`scripts/check-fixtures.sh`, `scripts/test.sh`, and `scripts/privacy-guard.sh` passed. The debug APK contains the four content JSON files and does not request `INTERNET`. Lint reported no issues.
+
 ## Device
 
 Nothing in M0 can be confirmed only on a phone. `assembleDebug` is the build check. Lock screen, notifications, biometrics, GPS, and alarms are still ahead; they are listed in `docs/device-test-checklist.md` for the milestone that builds them.
