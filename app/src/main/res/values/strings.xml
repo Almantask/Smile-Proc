@@ -137,8 +137,8 @@
     <string name="entry_delete_confirm_title">Delete this check-in?</string>
     <string name="entry_delete_confirm_body">This can\'t be undone.</string>
     <string name="entry_deleted">Check-in deleted</string>
-    <string name="entry_source_app">Checked in in the app</string>
-    <string name="entry_source_notification">Checked in from the notification</string>
+    <string name="entry_source_app">Saved in the app</string>
+    <string name="entry_source_notification">Saved from the notification</string>
 
     <!-- Places -->
     <string name="places_title">Places</string>
@@ -183,7 +183,7 @@
     <string name="week_new_card_cd">New weekly card</string>
     <string name="week_period">%1$s – %2$s</string>
     <string name="week_past_cards">Past weeks</string>
-    <string name="week_strip_day_cd">%1$s: %2$d low, %3$d okay, %4$d good</string>
+    <string name="week_strip_day_cd">%1$s: Low %2$d, Okay %3$d, Good %4$d</string>
     <string name="week_early_hint">Early hint</string>
     <string name="week_name_this_place">Name this place</string>
     <string name="week_not_enough_data">Patterns need a few more check-ins.</string>
@@ -191,19 +191,55 @@
     <string name="week_low_acknowledgment">This week looked heavy. That\'s worth noticing, and it\'s okay.</string>
     <string name="week_low_talk">Talking to someone you trust can make it lighter.</string>
     <string name="week_low_talk_action">Talk to someone</string>
-    <!-- Observation lines: week_observation_<detector>_<dir>. Counts only; never raw averages. -->
-    <string name="week_observation_timeOfDay_lower">Your %1$s check-ins were lower than the rest of your day (%2$d check-ins).</string>
-    <string name="week_observation_timeOfDay_higher">Your %1$s check-ins were higher than the rest of your day (%2$d check-ins).</string>
-    <string name="week_observation_weekday_lower">Your %1$s check-ins were lower than on other days (%2$d check-ins).</string>
-    <string name="week_observation_weekday_higher">Your %1$s check-ins were higher than on other days (%2$d check-ins).</string>
-    <string name="week_observation_weekdayDaypart_lower">Your %1$s %2$s check-ins were lower than the rest of your week (%3$d check-ins).</string>
-    <string name="week_observation_weekdayDaypart_higher">Your %1$s %2$s check-ins were higher than the rest of your week (%3$d check-ins).</string>
-    <string name="week_observation_place_lower">Your check-ins at %1$s were lower than at your other places (%2$d check-ins).</string>
-    <string name="week_observation_place_higher">Your check-ins at %1$s were higher than at your other places (%2$d check-ins).</string>
-    <string name="week_observation_awayFromHome_lower">Your check-ins away from home were lower than at home (%1$d check-ins).</string>
-    <string name="week_observation_awayFromHome_higher">Your check-ins away from home were higher than at home (%1$d check-ins).</string>
-    <string name="week_observation_tagOnLow">You picked %1$s on %2$d of your low check-ins.</string>
-    <string name="week_observation_tagAtPlace">You picked %1$s on %2$d check-ins at %3$s.</string>
+    <!-- Observation lines: week_observation_<detector>_<dir>, plurals on the check-in count. Counts only; never raw averages. -->
+    <plurals name="week_observation_timeOfDay_lower">
+        <item quantity="one">Your %1$s check-ins were lower than the rest of your day (%2$d check-in).</item>
+        <item quantity="other">Your %1$s check-ins were lower than the rest of your day (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_timeOfDay_higher">
+        <item quantity="one">Your %1$s check-ins were higher than the rest of your day (%2$d check-in).</item>
+        <item quantity="other">Your %1$s check-ins were higher than the rest of your day (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_weekday_lower">
+        <item quantity="one">Your %1$s check-ins were lower than on other days (%2$d check-in).</item>
+        <item quantity="other">Your %1$s check-ins were lower than on other days (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_weekday_higher">
+        <item quantity="one">Your %1$s check-ins were higher than on other days (%2$d check-in).</item>
+        <item quantity="other">Your %1$s check-ins were higher than on other days (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_weekdayDaypart_lower">
+        <item quantity="one">Your %1$s %2$s check-ins were lower than the rest of your week (%3$d check-in).</item>
+        <item quantity="other">Your %1$s %2$s check-ins were lower than the rest of your week (%3$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_weekdayDaypart_higher">
+        <item quantity="one">Your %1$s %2$s check-ins were higher than the rest of your week (%3$d check-in).</item>
+        <item quantity="other">Your %1$s %2$s check-ins were higher than the rest of your week (%3$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_place_lower">
+        <item quantity="one">Your check-in at %1$s were lower than at your other places (%2$d check-in).</item>
+        <item quantity="other">Your check-ins at %1$s were lower than at your other places (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_place_higher">
+        <item quantity="one">Your check-in at %1$s were higher than at your other places (%2$d check-in).</item>
+        <item quantity="other">Your check-ins at %1$s were higher than at your other places (%2$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_awayFromHome_lower">
+        <item quantity="one">Your check-ins away from home were lower than at home (%1$d check-in).</item>
+        <item quantity="other">Your check-ins away from home were lower than at home (%1$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_awayFromHome_higher">
+        <item quantity="one">Your check-ins away from home were higher than at home (%1$d check-in).</item>
+        <item quantity="other">Your check-ins away from home were higher than at home (%1$d check-ins).</item>
+    </plurals>
+    <plurals name="week_observation_tagOnLow">
+        <item quantity="one">You picked %1$s on %2$d of your low check-ins.</item>
+        <item quantity="other">You picked %1$s on %2$d of your low check-ins.</item>
+    </plurals>
+    <plurals name="week_observation_tagAtPlace">
+        <item quantity="one">You picked %1$s on %2$d check-in at %3$s.</item>
+        <item quantity="other">You picked %1$s on %2$d check-ins at %3$s.</item>
+    </plurals>
 
     <!-- Support (gentle copy; contacts come only from content/support.json) -->
     <string name="support_title">Talk to someone</string>
