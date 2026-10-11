@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "minSegment": 3, "minRest": 3, "patternMinSegment": 5, "patternMinRest": 5,
+  "minAbsDiff": 0.4, "zHint": 1.5, "zPattern": 2.0, "sdFloor": 0.3,
+  "weekdayMinSegment": 4, "weekdayMinDistinctDates": 2, "weekdayMinAbsDiff": 0.5, "weekdayMinDataDays": 14,
+  "tagMinLowTagged": 4, "tagMinCount": 3, "tagMinShare": 0.5, "tagMinShareGap": 0.25, "tagPatternCount": 5,
+  "tagAtPlaceMinShare": 0.4, "fineTagDominance": 0.7,
+  "shortWeekThreshold": 10, "maxItems": 3, "maxItemsLowWeek": 2,
+  "notEnoughDataBelow": 5, "firstWeekDays": 14, "firstCardMinEntries": 5,
+  "lowWeekMinEntries": 4, "lowWeekShare": 0.6, "lowRunLength": 5, "lowRunMinDays": 2,
+  "placeRadiusMeters": 100, "placeMaxAccuracyMeters": 150
+}

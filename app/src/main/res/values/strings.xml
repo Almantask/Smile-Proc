@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">SmileProc</string>
+    <string name="hello_body">This is the start of SmileProc.</string>
+
+    <!-- Common -->
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
+    <string name="action_save">Save</string>
+    <string name="action_done">Done</string>
+    <string name="action_next">Next</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_back">Back</string>
+    <string name="action_close">Close</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_try_again">Try again</string>
+    <string name="action_open_settings">Open settings</string>
+    <string name="action_not_now">Not now</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
+
+    <!-- Faces: 1 = Low, 2 = Okay, 3 = Good. Every face is a valid answer. -->
+    <string name="face_low">Low</string>
+    <string name="face_okay">Okay</string>
+    <string name="face_good">Good</string>
+
+    <!-- The one check-in notification. Its text is only ever one of the four below. -->
+    <string name="notification_channel_name">Check-ins</string>
+    <string name="notification_channel_description">Your check-in reminders and the check-in on your lock screen.</string>
+    <string name="notification_title">SmileProc</string>
+    <string name="notification_text_ask">How are you right now?</string>
+    <string name="notification_text_saved">Saved ✓</string>
+    <string name="notification_text_test_done">It works ✓</string>
+    <string name="notification_text_failed">Couldn\'t save. Open SmileProc.</string>
+
+    <!-- Navigation -->
+    <string name="tab_today">Today</string>
+    <string name="tab_week">Week</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Today -->
+    <string name="today_question">How are you right now?</string>
+    <string name="today_saved_header">Saved</string>
+    <string name="today_followup_hint">Add a feeling or a note, if you like.</string>
+    <string name="today_comment_label">Note</string>
+    <string name="today_comment_hint">Anything you want to remember about this moment</string>
+    <string name="today_entries_title">Today</string>
+    <string name="today_entries_empty">Your check-ins from today show up here.</string>
+    <string name="today_all_entries">All entries</string>
+    <string name="today_save_failed">Couldn\'t save. Try again.</string>
+
+    <!-- Low-run card on Today -->
+    <string name="lowrun_text">Your last few check-ins have been low. If it would help, talking to someone can make it lighter.</string>
+    <string name="lowrun_see_support">See support options</string>
+
+    <!-- Tag pickers -->
+    <string name="tags_mode_gradual">Gradual</string>
+    <string name="tags_mode_detailed">Detailed</string>
+    <string name="tags_mode_switch_cd">Switch between gradual and detailed feelings</string>
+    <string name="tags_step_core">What\'s closest?</string>
+    <string name="tags_just_core">Just %1$s</string>
+    <string name="tags_limit">You can pick up to 3.</string>
+    <string name="tags_remove_cd">Remove %1$s</string>
+    <string name="tags_wheel_cd">Feelings wheel</string>
+    <string name="tags_list_title">Feelings</string>
+
+    <!-- Tag labels: tag_<core> and tag_<core>_<fine> (ids in content/emotion-tags.json) -->
+    <string name="tag_happy">Happy</string>
+    <string name="tag_happy_joyful">Joyful</string>
+    <string name="tag_happy_grateful">Grateful</string>
+    <string name="tag_happy_proud">Proud</string>
+    <string name="tag_happy_hopeful">Hopeful</string>
+    <string name="tag_happy_excited">Excited</string>
+    <string name="tag_calm">Calm</string>
+    <string name="tag_calm_relaxed">Relaxed</string>
+    <string name="tag_calm_content">Content</string>
+    <string name="tag_calm_peaceful">Peaceful</string>
+    <string name="tag_calm_focused">Focused</string>
+    <string name="tag_calm_safe">Safe</string>
+    <string name="tag_sad">Sad</string>
+    <string name="tag_sad_down">Down</string>
+    <string name="tag_sad_lonely">Lonely</string>
+    <string name="tag_sad_disappointed">Disappointed</string>
+    <string name="tag_sad_hurt">Hurt</string>
+    <string name="tag_sad_nostalgic">Nostalgic</string>
+    <string name="tag_anxious">Anxious</string>
+    <string name="tag_anxious_stressed">Stressed</string>
+    <string name="tag_anxious_worried">Worried</string>
+    <string name="tag_anxious_overwhelmed">Overwhelmed</string>
+    <string name="tag_anxious_nervous">Nervous</string>
+    <string name="tag_anxious_insecure">Insecure</string>
+    <string name="tag_angry">Angry</string>
+    <string name="tag_angry_frustrated">Frustrated</string>
+    <string name="tag_angry_irritated">Irritated</string>
+    <string name="tag_angry_resentful">Resentful</string>
+    <string name="tag_angry_jealous">Jealous</string>
+    <string name="tag_angry_impatient">Impatient</string>
+    <string name="tag_tired">Tired</string>
+    <string name="tag_tired_drained">Drained</string>
+    <string name="tag_tired_sleepy">Sleepy</string>
+    <string name="tag_tired_bored">Bored</string>
+    <string name="tag_tired_unmotivated">Unmotivated</string>
+    <string name="tag_tired_numb">Numb</string>
+    <string name="tag_surprised">Surprised</string>
+    <string name="tag_surprised_amazed">Amazed</string>
+    <string name="tag_surprised_confused">Confused</string>
+    <string name="tag_surprised_curious">Curious</string>
+    <string name="tag_surprised_startled">Startled</string>
+    <string name="tag_surprised_moved">Moved</string>
+
+    <!-- Dayparts and weekdays, as used in {segment} and {weekday} -->
+    <string name="daypart_morning">morning</string>
+    <string name="daypart_afternoon">afternoon</string>
+    <string name="daypart_evening">evening</string>
+    <string name="daypart_night">night</string>
+    <string name="weekday_1">Monday</string>
+    <string name="weekday_2">Tuesday</string>
+    <string name="weekday_3">Wednesday</string>
+    <string name="weekday_4">Thursday</string>
+    <string name="weekday_5">Friday</string>
+    <string name="weekday_6">Saturday</string>
+    <string name="weekday_7">Sunday</string>
+
+    <!-- History and entry detail -->
+    <string name="history_title">All entries</string>
+    <string name="history_empty">Your check-ins will show up here.</string>
+    <string name="history_today">Today</string>
+    <string name="history_yesterday">Yesterday</string>
+    <string name="entry_title">Check-in</string>
+    <string name="entry_mood">Mood</string>
+    <string name="entry_feelings">Feelings</string>
+    <string name="entry_note">Note</string>
+    <string name="entry_no_location">No location</string>
+    <string name="entry_name_place">Name this place</string>
+    <string name="entry_delete">Delete check-in</string>
+    <string name="entry_delete_confirm_title">Delete this check-in?</string>
+    <string name="entry_delete_confirm_body">This can\'t be undone.</string>
+    <string name="entry_deleted">Check-in deleted</string>
+    <string name="entry_source_app">Checked in in the app</string>
+    <string name="entry_source_notification">Checked in from the notification</string>
+
+    <!-- Places -->
+    <string name="places_title">Places</string>
+    <string name="places_empty">Places show up here once you\'ve checked in with location on.</string>
+    <string name="place_kind_home">Home</string>
+    <string name="place_kind_work">Work</string>
+    <string name="place_kind_other">Other</string>
+    <string name="place_unnamed_title">Unnamed place</string>
+    <!-- Used for {place} in the weekly card -->
+    <string name="place_unnamed_inline">an unnamed place</string>
+    <string name="place_gone_inline">one of your places</string>
+    <plurals name="place_unnamed_count">
+        <item quantity="one">%1$d check-in</item>
+        <item quantity="other">%1$d check-ins</item>
+    </plurals>
+    <!-- "Unnamed place · 8 check-ins · mostly weekday mornings" -->
+    <string name="place_unnamed_description">Unnamed place · %1$s · %2$s</string>
+    <!-- %1$s is one of daypart_*_plural -->
+    <string name="place_mostly_weekday">mostly weekday %1$s</string>
+    <string name="place_mostly_weekend">mostly weekend %1$s</string>
+    <string name="daypart_morning_plural">mornings</string>
+    <string name="daypart_afternoon_plural">afternoons</string>
+    <string name="daypart_evening_plural">evenings</string>
+    <string name="daypart_night_plural">nights</string>
+    <string name="place_name_title">Name this place</string>
+    <string name="place_name_custom_hint">Another name</string>
+    <string name="place_name_merge">Is this %1$s?</string>
+    <string name="places_rename">Rename</string>
+    <string name="places_change_kind">Change kind</string>
+    <string name="places_forget_name">Forget this name</string>
+    <string name="places_forget_name_confirm">Forget the name %1$s? Its check-ins stay and show as an unnamed place again.</string>
+    <string name="places_remove_location">Remove location from all entries</string>
+    <string name="places_remove_location_confirm_title">Remove location from every check-in?</string>
+    <string name="places_remove_location_confirm_body">Your moods, feelings and notes stay. Places and place names go away. This can\'t be undone.</string>
+    <string name="places_remove_location_confirm_action">Remove location</string>
+
+    <!-- Week -->
+    <string name="week_title">Week</string>
+    <string name="week_first_card">Your first weekly card arrives %1$s.</string>
+    <!-- "Sunday at 19:00" -->
+    <string name="week_card_time">%1$s at %2$s</string>
+    <string name="week_new_card_cd">New weekly card</string>
+    <string name="week_period">%1$s – %2$s</string>
+    <string name="week_past_cards">Past weeks</string>
+    <string name="week_strip_day_cd">%1$s: %2$d low, %3$d okay, %4$d good</string>
+    <string name="week_early_hint">Early hint</string>
+    <string name="week_name_this_place">Name this place</string>
+    <string name="week_not_enough_data">Patterns need a few more check-ins.</string>
+    <string name="week_first_week">Patterns get clearer after two or three weeks.</string>
+    <string name="week_low_acknowledgment">This week looked heavy. That\'s worth noticing, and it\'s okay.</string>
+    <string name="week_low_talk">Talking to someone you trust can make it lighter.</string>
+    <string name="week_low_talk_action">Talk to someone</string>
+    <!-- Observation lines: week_observation_<detector>_<dir>. Counts only; never raw averages. -->
+    <string name="week_observation_timeOfDay_lower">Your %1$s check-ins were lower than the rest of your day (%2$d check-ins).</string>
+    <string name="week_observation_timeOfDay_higher">Your %1$s check-ins were higher than the rest of your day (%2$d check-ins).</string>
+    <string name="week_observation_weekday_lower">Your %1$s check-ins were lower than on other days (%2$d check-ins).</string>
+    <string name="week_observation_weekday_higher">Your %1$s check-ins were higher than on other days (%2$d check-ins).</string>
+    <string name="week_observation_weekdayDaypart_lower">Your %1$s %2$s check-ins were lower than the rest of your week (%3$d check-ins).</string>
+    <string name="week_observation_weekdayDaypart_higher">Your %1$s %2$s check-ins were higher than the rest of your week (%3$d check-ins).</string>
+    <string name="week_observation_place_lower">Your check-ins at %1$s were lower than at your other places (%2$d check-ins).</string>
+    <string name="week_observation_place_higher">Your check-ins at %1$s were higher than at your other places (%2$d check-ins).</string>
+    <string name="week_observation_awayFromHome_lower">Your check-ins away from home were lower than at home (%1$d check-ins).</string>
+    <string name="week_observation_awayFromHome_higher">Your check-ins away from home were higher than at home (%1$d check-ins).</string>
+    <string name="week_observation_tagOnLow">You picked %1$s on %2$d of your low check-ins.</string>
+    <string name="week_observation_tagAtPlace">You picked %1$s on %2$d check-ins at %3$s.</string>
+
+    <!-- Support (gentle copy; contacts come only from content/support.json) -->
+    <string name="support_title">Talk to someone</string>
+    <string name="support_body">When things feel heavy, talking to someone you trust can make it a little lighter. That could be a friend, someone in your family, or someone whose job is to listen.</string>
+    <string name="support_body_later">You can come back here any time from the Week tab or Today.</string>
+    <string name="support_contact_call">Call %1$s</string>
+    <string name="support_contact_text">Text %1$s</string>
+    <string name="support_contact_website">Open the %1$s website</string>
+
+    <!-- Lock-screen check-in (readiness) -->
+    <string name="lockscreen_title">Lock-screen check-in</string>
+    <string name="lockscreen_intro">Check in from your lock screen without unlocking. These checks make sure the check-in can show up there.</string>
+    <string name="lockscreen_ok_cd">Ready</string>
+    <string name="lockscreen_problem_cd">Needs a fix</string>
+    <string name="lockscreen_row_notifications">Notifications allowed</string>
+    <string name="lockscreen_row_notifications_fix">SmileProc can\'t show notifications yet. Allow them to check in from your lock screen.</string>
+    <string name="lockscreen_row_notifications_action">Allow notifications</string>
+    <string name="lockscreen_row_channel">Check-ins turned on</string>
+    <string name="lockscreen_row_channel_fix">Check-ins are turned off in Android settings.</string>
+    <string name="lockscreen_row_visibility">Shown on the lock screen</string>
+    <string name="lockscreen_row_visibility_fix">Your lock screen hides SmileProc check-ins.</string>
+    <string name="lockscreen_row_keep">Keep a check-in on the lock screen</string>
+    <string name="lockscreen_row_keep_summary">A quiet check-in stays on your lock screen between reminders.</string>
+    <string name="lockscreen_app_only">Without notifications, you can still check in here in the app.</string>
+    <string name="lockscreen_send_test">Send a test check-in</string>
+    <string name="lockscreen_test_explainer">A test check-in appears in about 10 seconds. Tap any face. Nothing is saved.</string>
+    <string name="lockscreen_lock_now">Lock your phone now</string>
+    <string name="lockscreen_test_works">It works ✓</string>
+    <string name="lockscreen_test_hint">No tap came through. Check that your lock screen shows notifications. On Samsung, make sure they aren\'t set to icons only.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_reminders">Reminders</string>
+    <string name="settings_keep_checkin">Keep a check-in on the lock screen</string>
+    <string name="settings_lockscreen">Lock-screen check-in</string>
+    <string name="settings_weekly_card_time">Weekly card time</string>
+    <string name="settings_places">Places</string>
+    <string name="settings_capture_location">Capture location</string>
+    <string name="settings_capture_location_summary">Save where you are with each check-in, so places can show up in your weekly card.</string>
+    <string name="settings_capture_location_approximate">Approximate location is too rough to tell places apart. Allow precise location to see places.</string>
+    <string name="settings_app_lock">App lock</string>
+    <string name="settings_app_lock_summary">Ask for your fingerprint, face or screen lock when SmileProc opens.</string>
+    <string name="settings_app_lock_no_screen_lock">Set a screen lock on your phone to use App lock.</string>
+    <string name="settings_export">Export</string>
+    <string name="settings_import">Import</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_summary">What\'s stored and where</string>
+    <string name="settings_delete_all">Delete all data</string>
+    <string name="settings_about">About</string>
+
+    <!-- Reminders -->
+    <string name="reminders_title">Reminders</string>
+    <string name="reminders_add">Add a reminder</string>
+    <string name="reminders_max">You can have up to 6 reminders.</string>
+    <string name="reminders_empty">No reminders set. You can check in from the app any time.</string>
+    <string name="reminders_days">Days</string>
+    <string name="reminders_every_day">Every day</string>
+    <string name="reminders_time_cd">Reminder at %1$s</string>
+    <string name="reminders_delete_cd">Delete the reminder at %1$s</string>
+
+    <!-- Weekly card time -->
+    <string name="weekly_card_time_summary">Your weekly card is ready %1$s.</string>
+
+    <!-- Onboarding (5 screens) -->
+    <string name="onboarding_privacy_title">Just for you</string>
+    <string name="onboarding_privacy_body">SmileProc keeps your check-ins on this phone. There\'s no account and nothing is sent anywhere.</string>
+    <string name="onboarding_privacy_backup">Your history isn\'t in backups or phone-to-phone transfers. Export to keep a copy.</string>
+    <string name="onboarding_location_title">Notice places</string>
+    <string name="onboarding_location_body">With location on, SmileProc can notice how places affect your mood. Your check-ins still save without it.</string>
+    <string name="onboarding_location_action">Allow location</string>
+    <string name="onboarding_reminders_title">Gentle reminders</string>
+    <string name="onboarding_reminders_body">Pick the times you\'d like a check-in. You can tap a face right on the notification.</string>
+    <string name="onboarding_reminders_action">Allow notifications</string>
+    <string name="onboarding_applock_title">App lock</string>
+    <string name="onboarding_applock_body">Ask for your fingerprint, face or screen lock when SmileProc opens. The check-in on your lock screen keeps working.</string>
+    <string name="onboarding_test_title">Try it from your lock screen</string>
+    <string name="onboarding_test_body">Send a test check-in, lock your phone and tap a face. Nothing is saved.</string>
+    <string name="onboarding_start">Start</string>
+
+    <!-- Permission rationale -->
+    <string name="rationale_location">SmileProc uses location only to notice places. It stays on this phone.</string>
+    <string name="rationale_notifications">So a check-in can appear at the times you pick.</string>
+
+    <!-- Privacy screen -->
+    <string name="privacy_title">What\'s stored and where</string>
+    <string name="privacy_on_phone">Your check-ins, feelings, notes and places are stored only on this phone, encrypted.</string>
+    <string name="privacy_nothing_leaves">Nothing leaves the phone unless you export a file or tap a support contact.</string>
+    <string name="privacy_no_backup">Your history isn\'t included in backups or phone-to-phone transfers.</string>
+    <string name="privacy_lost_phone">If this phone is lost, your history goes with it unless you\'ve exported a copy.</string>
+    <string name="privacy_no_account">There\'s no account, no analytics and no ads.</string>
+
+    <!-- Export and import -->
+    <string name="export_title">Export</string>
+    <string name="export_body">Save an encrypted copy of your history to a file. You choose where it goes.</string>
+    <string name="export_password">Password</string>
+    <string name="export_password_again">Password again</string>
+    <string name="export_password_min">Use at least 8 characters.</string>
+    <string name="export_password_mismatch">The passwords don\'t match.</string>
+    <string name="export_password_warning">If you forget this password, the export can\'t be opened.</string>
+    <string name="export_in_progress">Encrypting…</string>
+    <string name="export_done">Export saved</string>
+    <string name="export_failed">Couldn\'t export. Try again.</string>
+    <string name="import_title">Import</string>
+    <string name="import_body">Open a SmileProc export. Check-ins you already have stay, and newer edits win.</string>
+    <string name="import_password">Export password</string>
+    <string name="import_in_progress">Opening…</string>
+    <string name="import_wrong_password">That password didn\'t open this file.</string>
+    <string name="import_failed">Couldn\'t import this file.</string>
+    <plurals name="import_done">
+        <item quantity="one">Imported %1$d check-in</item>
+        <item quantity="other">Imported %1$d check-ins</item>
+    </plurals>
+
+    <!-- Recovery (database present, key missing) -->
+    <string name="recovery_title">Your history can\'t be opened</string>
+    <string name="recovery_body">SmileProc can\'t find the key that unlocks your history on this phone. You can bring it back from an export, or start fresh.</string>
+    <string name="recovery_import">Import an export</string>
+    <string name="recovery_start_fresh">Start fresh</string>
+    <string name="recovery_start_fresh_confirm">Start fresh? The history on this phone can\'t be opened and will be removed.</string>
+
+    <!-- Delete all -->
+    <string name="delete_all_title">Delete all data?</string>
+    <string name="delete_all_body">This removes every check-in, place, weekly card and setting from this phone. It can\'t be undone. Export first if you want a copy.</string>
+    <string name="delete_all_action">Delete everything</string>
+
+    <!-- App lock prompt -->
+    <string name="app_lock_prompt_title">Unlock SmileProc</string>
+</resources>
