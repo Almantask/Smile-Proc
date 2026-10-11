@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Runs Python 3 with the first interpreter that works: python3, then the Windows launcher
+# (py -3), then python. On Windows, python3 and python can be Microsoft Store stubs.
+for candidate in "python3" "py -3" "python"; do
+  if $candidate -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 1)' >/dev/null 2>&1; then
+    exec $candidate "$@"
+  fi
+done
+echo "scripts/py: no working Python 3 (tried python3, py -3, python)" >&2
+exit 127
