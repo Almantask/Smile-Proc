@@ -5,7 +5,7 @@ One section per milestone (android-implementation-plan.md, Part D). Read this at
 Status values: not started · in progress · partly verified · claude-verified · accepted.
 
 ## M0 — Repo, Claude Code setup, scaffold
-- **Status:** claude-verified (2026-10-11, tag `m0-claude-verified`)
+- **Status:** accepted (2026-10-17; claude-verified 2026-10-11, tag `m0-claude-verified`)
 - **Built:**
   - `docs/spec/*.md` split verbatim from Part C; this file, `docs/spikes.md`, `docs/device-test-checklist.md`.
   - `content/`: `pattern-config.json`, `pattern-library.en.json` and `support.json` verbatim from data.md; `emotion-tags.json` (7 cores × 5 fine ids, one colour per core).
