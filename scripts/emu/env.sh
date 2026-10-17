@@ -1,14 +1,19 @@
 # Shared setup for scripts/emu/*. Source it.
 #   SMILEPROC_SERIAL  device to drive (default: the first running emulator)
-#   PKG               the debug build; never the dogfood app com.example.smileproc
+#   PKG               the app under test: the debug build unless set (M1: com.example.smileproc.spikes);
+#                     never the dogfood app com.example.smileproc
 #   PIN               lock-screen PIN set on the emulators
 . "$(dirname "${BASH_SOURCE[0]}")/../lib/env.sh"
 
 # Git Bash rewrites arguments that look like POSIX paths (/sdcard/x -> C:/Program Files/Git/sdcard/x).
 is_windows && export MSYS_NO_PATHCONV=1
 
-PKG=com.example.smileproc.debug
+PKG=${PKG:-com.example.smileproc.debug}
 DOGFOOD_PKG=com.example.smileproc
+if [ "$PKG" = "$DOGFOOD_PKG" ]; then
+  echo "Refusing PKG=$DOGFOOD_PKG (the human's daily app)." >&2
+  return 1 2>/dev/null || exit 1
+fi
 PIN=1111
 DEBUG_RECEIVERS=com.example.smileproc.debug   # Kotlin package of the debug-only receivers
 

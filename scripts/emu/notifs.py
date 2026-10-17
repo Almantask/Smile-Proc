@@ -28,15 +28,23 @@ def section(lines, header):
     return []
 
 
+def ongoing(flags):
+    """Notification flags as dumpsys prints them: hex up to Android 15 (flags=0x62),
+    names from Android 16 (flags=ONGOING_EVENT|ONLY_ALERT_ONCE)."""
+    if flags.startswith("0x"):
+        return bool(int(flags, 16) & FLAG_ONGOING_EVENT)
+    return "ONGOING_EVENT" in flags.split("|")
+
+
 def parse(dump):
     records, current = [], None
-    for line in section(dump.splitlines(), "Notification List:"):
+    lines = section(dump.splitlines(), "Notification List:")
+    for line in lines:
         head = re.search(r"NotificationRecord\(0x[0-9a-f]+: pkg=(\S+) user=\S+ id=(-?\d+) .*?"
-                         r"Notification\(channel=(\S+) .*?flags=(0x[0-9a-f]+)", line)
+                         r"Notification\(channel=(\S+) .*?flags=([\w|]+)", line)
         if head:
             current = {"pkg": head.group(1), "id": int(head.group(2)), "channel": head.group(3),
-                       "ongoing": bool(int(head.group(4), 16) & FLAG_ONGOING_EVENT),
-                       "title": None, "text": None, "actions": []}
+                       "ongoing": ongoing(head.group(4)), "title": None, "text": None, "actions": []}
             records.append(current)
             continue
         if current is None:
@@ -50,7 +58,13 @@ def parse(dump):
         m = re.match(r'\s*\[\d+\] "(.*)" -> ', line)
         if m:
             current["actions"].append(m.group(1))
-    return [r for r in records if r["pkg"] == PKG]
+    found = [r for r in records if r["pkg"] == PKG]
+    # A dumpsys format this parser doesn't know must fail, not read as "no notifications".
+    listed = sum(1 for line in lines if re.search(rf"NotificationRecord\(.*\bpkg={re.escape(PKG)} ", line))
+    if listed != len(found):
+        sys.exit(f"notifs.py: dumpsys lists {listed} {PKG} notification(s) but only {len(found)} parsed; "
+                 "update the parser for this Android version")
+    return found
 
 
 def main():

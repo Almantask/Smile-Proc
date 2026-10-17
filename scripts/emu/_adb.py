@@ -7,8 +7,16 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PKG = "com.example.smileproc.debug"
+
+# Notification text has "✓", which a Windows console's default code page can't print.
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        _stream.reconfigure(encoding="utf-8", errors="replace")
 DOGFOOD_PKG = "com.example.smileproc"
+# The app under test: the debug build unless PKG is set (M1: com.example.smileproc.spikes).
+PKG = os.environ.get("PKG") or "com.example.smileproc.debug"
+if PKG == DOGFOOD_PKG:
+    sys.exit(f"Refusing PKG={DOGFOOD_PKG} (the human's daily app).")
 
 
 def _sdk_candidates():
