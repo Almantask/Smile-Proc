@@ -82,7 +82,75 @@ Status values: not started · in progress · partly verified · claude-verified 
   5. **Version pairing (for information).** AGP 9.4.1 is newer than the AGP range Kotlin 2.4.21 lists as tested (up to 9.3.1). It builds cleanly. KSP 2.3.12 with Kotlin 2.4.21 gets proven when Room arrives in M3.
 
 ## M1 — Spikes
-- **Status:** not started
+- **Status:** claude-verified (2026-10-17, tag `m1-claude-verified`). The milestone is done only once the human has decided A2 (decision 1 below).
+- **Built:**
+  - `:spikes` (`com.example.smileproc.spikes`, never shipped, not in check.sh), under `spikes/src/main/java/com/example/smileproc/spikes/`:
+    - `SpikeNotifier`: the spec's check-in notification: channel `checkin`, ID 1, Low/Okay/Good, silent and alerting, ongoing when standing; resting state and `dismissed` per logic.md.
+    - `SpikeSealer` + `SpikeDb`: Keystore AES-256-GCM, Room one-table DB.
+    - `FaceReceiver`, `LocationFgs`, `ReminderReceiver`, `BootReceiver`.
+    - `ControlReceiver`: adb control, DUMP-guarded.
+    - `SpikeActivity`: readout and controls for phone runs.
+  - Gradle: `include(":spikes")` and the KSP plugin (`apply false`) at the root.
+  - Emulator scripts:
+    - `scripts/emu/spikes.sh` (install / probe / ctl / app).
+    - `PKG` override in `env.sh` and `_adb.py`.
+    - `tap.py --swipe` and `--pull`.
+  - `docs/spikes.md`: steps, results and the results table for A1–A4.
+- **Evidence:**
+  - Spike runs, on sp36 (API 36) and sp29 (API 29): every step of A1–A4 has a recorded result (docs/spikes.md).
+    - Screenshots: `build/emu-shots/m1-a1-sp36-*`, `m1-a1-sp29-*`, `m1-a2-sp36-*`, `m1-a2-sp29-*`, `m1-a3-sp36-*`, `m1-a3r-sp36-*`, `m1-a3-sp29-*`, `m1-a4-sp36-*`, `m1-a4-sp29-*`.
+    - A1: faces visible on the lock screen. A tap saves while locked (`dumpsys trust` deviceLocked before and after; tap records `locked: true`). One notification at every step (`notifs.py --expect-max 1`).
+    - A2: last known in the receiver gave none in 9 of 9 taps (both API levels). The location service started from a locked face tap gave a fresh gps fix (sp36 ±5 m in 4.6 s, sp29 ±20 m in 80 ms) with one notification throughout.
+    - A3 (sp36): ongoing never dismissed while locked (0 of 10). Dismissed while unlocked 2 of 8, with the delete intent. A non-ongoing control was dismissed 3 of 10 and 1 of 5 under the same `adb input swipe`. Reboot: none before unlock, back after unlock on both.
+    - A4: 135 s late (sp36) and 0.2 s late (sp29) under forced deep idle.
+  - KSP 2.3.12 + Room 2.8.5 compile with Kotlin 2.4.21 and AGP 9.4.1 (`:spikes:assembleDebug`, M0 decision 5).
+  - The spike APK's permissions: location, notifications, boot, FOREGROUND_SERVICE(_LOCATION). No INTERNET.
+  - `scripts/check.sh`, after the last code change: privacy-guard, fixtures, json, gradle, dogfood-classpath, dogfood-permissions and dogfood-manifest all PASS → `check.sh: PASS`.
+  - Spec review (product.md, android.md; range `m0-claude-verified..HEAD`): nothing breaks the spec or a non-negotiable in the shipped app; `:app`, `:core`, the guards and check.sh are unchanged. Fixed from its findings:
+    - `env.sh` refusal (see Deviations);
+    - notifs.py zero-count guard;
+    - plaintext probe file deleted after reading;
+    - resting state and `dismissed`;
+    - a location or lock-state exception can't fail a tap;
+    - the service's start-failure record.
+  - Research (AOSP 15/16 source and Android 14 behaviour changes): an ongoing notification from an ordinary app is dismissible whenever SystemUI sees the device unlocked, unless it has `FLAG_NO_DISMISS`. This agrees with the sp36 re-test.
+- **Left:** the human checks and decision 1 below. Copy-reviewer not needed: no strings.xml or content changes.
+- **Deviations:**
+  1. **Two M0 tooling bugs fixed:**
+     - On Android 16 `dumpsys` prints notification flags as names, not hex, so notifs.py skipped every record and `--expect-max` could never fail on sp36. It now parses both, and exits with an error if it finds a record it can't parse, or no Notification List.
+     - The emulator scripts printed "✓" through cp1252 and crashed; they now use UTF-8.
+  2. `env.sh` refusal: with `PKG` set to the daily app, every emu script now stops (`. env.sh || exit 1`), and the guarded `adb()` refuses as well.
+  3. **The spike's own differences from android.md, none of which affect its results:**
+     - SharedPreferences instead of DataStore;
+     - the channel is created at render and at activity start;
+     - the boot receiver handles BOOT_COMPLETED only;
+     - one-shot reminders;
+     - no Test state;
+     - a plaintext `kind` column;
+     - the service's fix is stored as a separate `fgs` record linked to the tap, not as an update of the tap.
+- **Not run:** none.
+- **Not fixed:** `.claude/hooks/guard_edit.py` exempts any path containing `/spikes/`, for example `app/src/main/.../spikes/X.kt`, not just the repo's `spikes/` module. The hook is human-owned. `privacy_guard.py` (check.sh, Stop hook) still scans `app/src/main`, so such a file would still fail check.sh. Suggested change for the human: match `<repo>/spikes/` only.
+- **Human checks** (spike APK: docs/spikes.md › Running it; separate app id, the daily app is untouched):
+  1. **A1 / H1:** on your phone(s), with the readout's "Keep it on the lock screen" on:
+     - post silent, lock, check the card is on the lock screen, reach the faces without unlocking, tap one;
+     - the readout should list a `tap … locked`;
+     - on Samsung, do it once with lock-screen notifications as icons only and once as details;
+     - repeat with alerting.
+  2. **A2 / H2 (real GPS):**
+     - with the switch off (last known): tap a face on the lock screen a few times through the day; does any tap show `cached` or `fresh`?
+     - with the switch on: the `fgs` line: fresh/cached/none, accuracy and seconds.
+  3. **A3 (Android 14+ phone):** unlocked, swipe the ongoing card away. Does it go, and does a `dismiss` line appear? Locked, it should stay.
+  4. **A4 / H3:** set a reminder for tomorrow morning (HH:MM), leave the phone overnight, and read the delay in the readout.
+- **Decisions needed:**
+  1. **A2: location from a notification tap (Appendix 3; M1 is done once this is decided).**
+     - **Last known only** (the spec today): on both emulators every notification tap saved with no location, because the platform hides location from a background receiver. Places would then come almost only from in-app check-ins. H2 will show whether a real phone differs.
+     - **Short location foreground service:** a fresh fix within about 5 s, after the save, with no second notification.
+       - The manifest needs `FOREGROUND_SERVICE` and `FOREGROUND_SERVICE_LOCATION` (out of v1 unless you approve: product.md › Scope).
+       - You'd remove the FOREGROUND_SERVICE rule from `guard_edit.py`, `privacy_guard.py` and check.sh.
+       - Google Play asks for a declaration of foreground-service use.
+     - (`ACCESS_BACKGROUND_LOCATION` would also make last known work, but the spec forbids it.)
+  2. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
+  3. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
 
 ## M2 — Core logic
 - **Status:** not started

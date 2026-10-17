@@ -5,14 +5,24 @@ From docs/spec/testing.md. Claude runs the emulator scenarios (E) and records ev
 ## Human checks (real phone)
 | Id | Check | First milestone | Status | Device / notes |
 |---|---|---|---|---|
-| H1 | Real lock screen (Pixel and/or Samsung): standing notification visible with default settings and silent; each face saves without unlocking; on Samsung, with lock-screen notifications as icons only and as details | M1 (spike A1), M5 | open | |
-| H2 | Real GPS: fresh fix in the app within ~10 s; result of a notification tap (fresh / cached / none) | M1 (spike A2), M4 | open | |
-| H3 | Reminders within a few minutes of the set time after an overnight idle | M1 (spike A4), M5 | open | |
+| H1 | Real lock screen (Pixel and/or Samsung): standing notification visible with default settings and silent; each face saves without unlocking; on Samsung, with lock-screen notifications as icons only and as details | M1 (spike A1), M5 | open | M1: use the spike APK (docs/spikes.md › Running it); on the emulators the faces sit one expand gesture away on the lock screen |
+| H2 | Real GPS: fresh fix in the app within ~10 s; result of a notification tap (fresh / cached / none) | M1 (spike A2), M4 | open | M1: spike APK, both A2 modes; on the emulators last known gave none on every notification tap, the location service gave fresh |
+| H3 | Reminders within a few minutes of the set time after an overnight idle | M1 (spike A4), M5 | open | M1: spike APK, reminder at HH:MM overnight; emulators: 135 s (API 36) and 0.2 s (API 29) late under forced idle |
 | H4 | TalkBack through check-in, the tag list, the weekly card and the notification buttons | M6, M10 | open | |
 | H5 | Real fingerprint or face unlock for the app lock | M9 | open | |
 | H6 | Export → uninstall the debug app → reinstall → import (SAF picker) → history restored | M9 | open | |
 | H7 | Phone-to-phone transfer or backup doesn't carry SmileProc data | M9 | open | |
 | H8 | Daily use of the dogfood build from M5 on | M5 | open | |
+
+## Spike runs (M1, Claude)
+Results in docs/spikes.md; screenshots `build/emu-shots/m1-*`.
+
+| Spike | sp36 | sp29 |
+|---|---|---|
+| A1 Faces on the lock screen, save while locked | pass (2026-10-17) | pass (2026-10-17) |
+| A2 Location from a tap: last known / location service | none / fresh | none / fresh |
+| A3 Swipe-away and reboot | locked: stays; unlocked: dismissed, delete intent fires; back after reboot | stays (API < 34); back after reboot |
+| A4 Reminder 3 min ahead under forced idle | 135 s late | 0.2 s late |
 
 ## Emulator scenarios (Claude)
 Emulators (created in M0 by `scripts/emu/create-avds.sh`): `sp36` = API 36 AOSP image without Google Play, `emulator-5554` (API 37 has no Play-free image); `sp29` = API 29, `emulator-5556`. M0 smoke check: the debug build installs and shows the hello screen on both (`build/emu-shots/m0-hello.png`, `m0-hello-sp29.png`).
