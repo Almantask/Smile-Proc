@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "smileproc"
 include(":core", ":app")
+// M1 spike app (docs/spikes.md): own applicationId, never shipped.
+include(":spikes")
