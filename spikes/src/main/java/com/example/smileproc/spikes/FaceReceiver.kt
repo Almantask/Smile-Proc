@@ -22,8 +22,12 @@ class FaceReceiver : BroadcastReceiver() {
             try {
                 when (intent.action) {
                     ACTION_RATE -> rate(context, intent.getIntExtra(EXTRA_MOOD, 0))
-                    ACTION_RESTORE -> SpikeNotifier.render(context, SpikeNotifier.State.FACES_SILENT)
-                    ACTION_DISMISSED -> Records.add(context, "dismiss", JSONObject().put("locked", locked(context)))
+                    ACTION_RESTORE -> SpikeNotifier.rest(context)
+                    ACTION_DISMISSED -> {
+                        val prefs = SpikePrefs(context)
+                        if (prefs.standing) prefs.dismissed = true
+                        Records.add(context, "dismiss", JSONObject().put("locked", runCatching { locked(context) }.getOrNull()))
+                    }
                 }
             } catch (e: Exception) {
                 runCatching { Records.add(context, "error", JSONObject().put("exception", e.javaClass.simpleName)) }
@@ -35,12 +39,17 @@ class FaceReceiver : BroadcastReceiver() {
 
     private suspend fun rate(context: Context, mood: Int) {
         val started = SystemClock.elapsedRealtime()
-        val wasLocked = locked(context)
+        // Neither of these may stop or fail the save (product.md non-negotiables 6 and 7).
+        val wasLocked = runCatching { locked(context) }.getOrNull()
+        val location = try {
+            Locator.lastKnown(context)
+        } catch (e: Exception) {
+            JSONObject().put("source", "lastKnown").put("outcome", "none").put("exception", e.javaClass.simpleName)
+        }
         val tapId = try {
-            val location = Locator.lastKnown(context)
             val data = JSONObject()
                 .put("mood", mood)
-                .put("locked", wasLocked)
+                .put("locked", wasLocked ?: JSONObject.NULL)
                 .put("location", location)
                 .put("lastKnownMs", SystemClock.elapsedRealtime() - started)
             val id = Records.add(context, "tap", data)
@@ -53,18 +62,20 @@ class FaceReceiver : BroadcastReceiver() {
             }
             null
         }
+        scheduleRestore(context)
         if (tapId != null && SpikePrefs(context).mode == SpikePrefs.MODE_FGS) {
             try {
                 ContextCompat.startForegroundService(context, LocationFgs.intent(context, tapId, "tap"))
             } catch (e: Exception) {
-                Records.add(
-                    context, "fgs",
-                    JSONObject().put("tapId", tapId).put("origin", "tap").put("started", false)
-                        .put("exception", e.javaClass.simpleName).put("locked", locked(context)),
-                )
+                runCatching {
+                    Records.add(
+                        context, "fgs",
+                        JSONObject().put("tapId", tapId).put("origin", "tap").put("started", false)
+                            .put("exception", e.javaClass.simpleName).put("locked", wasLocked ?: JSONObject.NULL),
+                    )
+                }
             }
         }
-        scheduleRestore(context)
     }
 
     private fun scheduleRestore(context: Context) {

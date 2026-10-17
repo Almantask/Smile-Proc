@@ -54,6 +54,7 @@ object Records {
         return JSONObject()
             .put("api", Build.VERSION.SDK_INT)
             .put("standing", prefs.standing)
+            .put("dismissed", prefs.dismissed)
             .put("mode", prefs.mode)
             .put("lastState", prefs.lastState ?: JSONObject.NULL)
             .put("reminderAt", prefs.reminderAt)

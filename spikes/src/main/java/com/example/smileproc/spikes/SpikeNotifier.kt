@@ -91,6 +91,20 @@ object SpikeNotifier {
         }
     }
 
+    /** A reminder or an explicit post: clears `dismissed`, then shows the faces. */
+    fun postFaces(context: Context, alerting: Boolean): Boolean {
+        SpikePrefs(context).dismissed = false
+        return render(context, if (alerting) State.FACES_ALERTING else State.FACES_SILENT)
+    }
+
+    /** logic.md's resting state: silent faces if standing and not dismissed, else nothing. */
+    fun rest(context: Context): Boolean {
+        val prefs = SpikePrefs(context)
+        if (prefs.standing && !prefs.dismissed) return render(context, State.FACES_SILENT)
+        cancel(context)
+        return false
+    }
+
     fun cancel(context: Context) {
         SpikePrefs(context).lastState = null
         NotificationManagerCompat.from(context).cancel(ID_CHECKIN)

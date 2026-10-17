@@ -26,14 +26,17 @@ class ReminderReceiver : BroadcastReceiver() {
                 val prefs = SpikePrefs(context)
                 val scheduledAt = prefs.reminderAt
                 prefs.reminderAt = 0
-                Records.add(
-                    context, "reminder",
-                    JSONObject().put("scheduledAt", scheduledAt).put("firedAt", firedAt)
-                        .put("delayS", if (scheduledAt > 0) (firedAt - scheduledAt) / 1000.0 else JSONObject.NULL)
-                        .put("idle", context.getSystemService(PowerManager::class.java).isDeviceIdleMode)
-                        .put("locked", locked(context)),
-                )
-                SpikeNotifier.render(context, SpikeNotifier.State.FACES_ALERTING)
+                runCatching {
+                    Records.add(
+                        context, "reminder",
+                        JSONObject().put("scheduledAt", scheduledAt).put("firedAt", firedAt)
+                            .put("delayS", if (scheduledAt > 0) (firedAt - scheduledAt) / 1000.0 else JSONObject.NULL)
+                            .put("idle", context.getSystemService(PowerManager::class.java).isDeviceIdleMode)
+                            .put("locked", locked(context)),
+                    )
+                }
+                // ReminderFired: alerting faces, dismissed cleared (logic.md).
+                SpikeNotifier.postFaces(context, alerting = true)
             } finally {
                 pending.finish()
             }

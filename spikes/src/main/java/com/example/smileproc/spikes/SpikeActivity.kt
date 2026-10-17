@@ -146,12 +146,16 @@ class SpikeActivity : ComponentActivity() {
             HorizontalDivider()
             Text("A1 / A3: the check-in notification", style = MaterialTheme.typography.titleMedium)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Switch(checked = standing, onCheckedChange = { standing = it; prefs.standing = it })
+                Switch(checked = standing, onCheckedChange = {
+                    standing = it
+                    prefs.standing = it
+                    if (it) prefs.dismissed = false
+                })
                 Text("  Keep it on the lock screen (ongoing)")
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { SpikeNotifier.render(this@SpikeActivity, SpikeNotifier.State.FACES_SILENT) }) { Text("Post silent") }
-                Button(onClick = { SpikeNotifier.render(this@SpikeActivity, SpikeNotifier.State.FACES_ALERTING) }) { Text("Post alerting") }
+                Button(onClick = { SpikeNotifier.postFaces(this@SpikeActivity, alerting = false) }) { Text("Post silent") }
+                Button(onClick = { SpikeNotifier.postFaces(this@SpikeActivity, alerting = true) }) { Text("Post alerting") }
             }
             OutlinedButton(onClick = { SpikeNotifier.cancel(this@SpikeActivity) }) { Text("Remove it") }
 

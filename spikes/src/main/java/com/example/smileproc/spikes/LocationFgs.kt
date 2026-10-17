@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.os.SystemClock
 import androidx.core.app.ServiceCompat
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 
 /**
@@ -29,12 +30,15 @@ class LocationFgs : Service() {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION,
             )
         } catch (e: Exception) {
-            spikeScope.launch {
-                Records.add(
-                    this@LocationFgs, "fgs",
-                    JSONObject().put("tapId", tapId ?: JSONObject.NULL).put("origin", origin).put("started", false)
-                        .put("locked", wasLocked).put("exception", e.javaClass.simpleName),
-                )
+            // Written before stopSelf: the system may kill a service that stops without going foreground.
+            runBlocking {
+                runCatching {
+                    Records.add(
+                        this@LocationFgs, "fgs",
+                        JSONObject().put("tapId", tapId ?: JSONObject.NULL).put("origin", origin).put("started", false)
+                            .put("locked", wasLocked).put("exception", e.javaClass.simpleName),
+                    )
+                }
             }
             stopSelf(startId)
             return START_NOT_STICKY

@@ -30,14 +30,13 @@ class ControlReceiver : BroadcastReceiver() {
     private suspend fun handle(context: Context, action: String, intent: Intent) {
         val prefs = SpikePrefs(context)
         when (action) {
-            "POST" -> SpikeNotifier.render(
-                context,
-                if (intent.getStringExtra("variant") == "alerting") SpikeNotifier.State.FACES_ALERTING
-                else SpikeNotifier.State.FACES_SILENT,
-            )
+            "POST" -> SpikeNotifier.postFaces(context, alerting = intent.getStringExtra("variant") == "alerting")
             "CANCEL" -> SpikeNotifier.cancel(context)
             "SET" -> {
-                if (intent.hasExtra("standing")) prefs.standing = intent.getBooleanExtra("standing", true)
+                if (intent.hasExtra("standing")) {
+                    prefs.standing = intent.getBooleanExtra("standing", true)
+                    if (prefs.standing) prefs.dismissed = false
+                }
                 intent.getStringExtra("mode")?.let { prefs.mode = it }
             }
             "SCHEDULE_REMINDER" -> {
@@ -45,7 +44,10 @@ class ControlReceiver : BroadcastReceiver() {
                 if (at != null) ReminderReceiver.scheduleAt(context, at)
                 else ReminderReceiver.scheduleIn(context, intent.getLongExtra("seconds", 180))
             }
-            "CLEAR" -> Records.clear(context)
+            "CLEAR" -> {
+                Records.clear(context)
+                context.deleteFile("probe.json")
+            }
             "PROBE" -> context.openFileOutput("probe.json", Context.MODE_PRIVATE).use {
                 it.write(Records.probe(context).toString(2).toByteArray())
             }

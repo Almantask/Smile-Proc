@@ -14,7 +14,8 @@ class BootReceiver : BroadcastReceiver() {
         spikeScope.launch {
             try {
                 val prefs = SpikePrefs(context)
-                val posted = prefs.standing && SpikeNotifier.render(context, SpikeNotifier.State.FACES_SILENT)
+                // Booted: the resting state (logic.md).
+                val posted = SpikeNotifier.rest(context)
                 // Alarms don't survive a reboot.
                 if (prefs.reminderAt > System.currentTimeMillis()) ReminderReceiver.schedule(context, prefs.reminderAt)
                 Records.add(context, "boot", JSONObject().put("locked", locked(context)).put("posted", posted))
