@@ -5,9 +5,9 @@ From docs/spec/testing.md. Claude runs the emulator scenarios (E) and records ev
 ## Human checks (real phone)
 | Id | Check | First milestone | Status | Device / notes |
 |---|---|---|---|---|
-| H1 | Real lock screen (Pixel and/or Samsung): standing notification visible with default settings and silent; each face saves without unlocking; on Samsung, with lock-screen notifications as icons only and as details | M1 (spike A1), M5 | open | M1: use the spike APK (docs/spikes.md › Running it); on the emulators the faces sit one expand gesture away on the lock screen |
-| H2 | Real GPS: fresh fix in the app within ~10 s; result of a notification tap (fresh / cached / none) | M1 (spike A2), M4 | open | M1: spike APK, both A2 modes; on the emulators last known gave none on every notification tap, the location service gave fresh |
-| H3 | Reminders within a few minutes of the set time after an overnight idle | M1 (spike A4), M5 | open | M1: spike APK, reminder at HH:MM overnight; emulators: 135 s (API 36) and 0.2 s (API 29) late under forced idle |
+| H1 | Real lock screen (Pixel and/or Samsung): standing notification visible with default settings and silent; each face saves without unlocking; on Samsung, with lock-screen notifications as icons only and as details | M1 (spike A1), M5 | partly | M1, Samsung (2026-10-17): visible on the lock screen, saves while locked; icons-only and details not reported. M1: use the spike APK (docs/spikes.md › Running it); on the emulators the faces sit one expand gesture away on the lock screen |
+| H2 | Real GPS: fresh fix in the app within ~10 s; result of a notification tap (fresh / cached / none) | M1 (spike A2), M4 | partly | M1, Samsung (2026-10-17): lock-screen taps got a location from last known; the in-app fix time not reported. M1: spike APK, both A2 modes; on the emulators last known gave none on every notification tap, the location service gave fresh |
+| H3 | Reminders within a few minutes of the set time after an overnight idle | M1 (spike A4), M5 | partly | M1, Samsung (2026-10-17): reminders arrive; under DND the alarm fires but gives no alert; overnight delay not recorded. M1: spike APK, reminder at HH:MM overnight; emulators: 135 s (API 36) and 0.2 s (API 29) late under forced idle |
 | H4 | TalkBack through check-in, the tag list, the weekly card and the notification buttons | M6, M10 | open | |
 | H5 | Real fingerprint or face unlock for the app lock | M9 | open | |
 | H6 | Export → uninstall the debug app → reinstall → import (SAF picker) → history restored | M9 | open | |

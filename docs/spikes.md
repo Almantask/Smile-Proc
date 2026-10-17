@@ -50,6 +50,7 @@ The spike app is `:spikes` (`com.example.smileproc.spikes`), throwaway and never
   - **Flags:**
     - API 36: silent `ONGOING_EVENT|ONLY_ALERT_ONCE|LOCAL_ONLY|SILENT`, alerting `ONGOING_EVENT|LOCAL_ONLY`; importance 3, visibility PUBLIC.
     - API 29: silent `0x10a` plus group "silent" with GROUP_ALERT_SUMMARY (how `setSilent` works there), alerting `0x102`.
+  - **Human's phone (Samsung, 2026-10-17):** visible on the lock screen; a face tap saves while locked.
   - **Not tested:** whether the faces could sit on the collapsed card itself (a custom collapsed layout). See Decisions.
 
 ## A2 — Location from a notification tap
@@ -77,7 +78,8 @@ The spike app is `:spikes` (`com.example.smileproc.spikes`), throwaway and never
   - **In-app current location** (the spec's in-app path): fresh in 4.3–4.4 s on sp36 and 0.2 s on sp29.
     - Spike bug, fixed: the callback ran on the main executor. On a cold start the main thread was busy for over 10 s, so the timeout dropped a fix that had arrived after 4 s. The product's in-app path should deliver off the main thread too.
   - **Emulator note:** on sp36, `adb emu geo fix` didn't move the reported coordinates (they stayed near 39.2, −123.15). sp29 took them. Outcome, accuracy and age were unaffected, and nothing records coordinates.
-- **Human decision (2026-10-17):** a short location foreground service, started after the save (Appendix 3). It stands once the human's phone checks (H2) confirm it. The follow-ups are in progress.md › M1 › Decisions.
+  - **Human's phone (Samsung, 2026-10-17):** with the switch off, lock-screen taps got a location from last known. That differs from the AOSP emulators; other phones (likely Pixels) may behave like the emulators.
+- **Human decision (2026-10-17, after the phone checks):** last known only, no location foreground service. The spec stays as it is.
 
 ## A3 — Swipe-away and reboot
 - **Question:** can the ongoing notification be swiped away while locked; on API 34+ while unlocked (does the delete intent fire); does it come back after reboot via `BOOT_COMPLETED`?
@@ -97,6 +99,8 @@ The spike app is `:spikes` (`com.example.smileproc.spikes`), throwaway and never
     | Ongoing, unlocked | 2 of 8, each with a `dismiss` record `locked: false`: the delete intent fired |
     | Not ongoing, unlocked (control) | 1 of 5 in the same run |
 
+    The human's Samsung agrees (2026-10-17): unlocked, the ongoing card can be swiped away and a `dismiss` line appears.
+
     This matches the spec: no swipe-away while locked; from Android 14, swipe-away while unlocked → Dismissed. The first sp36 run had reported "not swipeable while unlocked". That came from a slow swipe and too few attempts, and was re-tested on 2026-10-17. AOSP source agrees: SystemUI blocks dismissal only for `FLAG_NO_DISMISS` or while locked, and our record never had `FLAG_NO_DISMISS`.
   - **sp29 (API 29):** the ongoing notification can't be swiped away, locked or unlocked (expected below API 34). The non-ongoing control was dismissed in the unlocked shade and in the pulled-down locked shade, but not on the collapsed lock-screen card.
   - **Reboot, both API levels:**
@@ -115,6 +119,7 @@ The spike app is `:spikes` (`com.example.smileproc.spikes`), throwaway and never
   - **sp36:** fired 135 s late (`delayS` 135.0, `idle: true`), at the very end of the alarm's inexact window: `window=+2m15s`, `maxWhenElapsed` = scheduled + 5 m 15 s. Deep IDLE throughout.
   - **sp29:** fired 0.2 s late under deep IDLE, with the same window.
   - Both are within the spec's "a few minutes of drift". A real overnight idle is human check H3.
+  - **Human's phone (Samsung, 2026-10-17):** reminders arrive. During Do Not Disturb the alarm still fires (a `reminder` line in the readout), but the notification gives no alert.
 
 ## Results table
 | Spike | Device / API | Variant | Result | Notes |
