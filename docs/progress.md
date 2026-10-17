@@ -148,16 +148,16 @@ Status values: not started · in progress · partly verified · claude-verified 
   4. **A4:**
      - Reminders arrive.
      - During Do Not Disturb the alarm still fires (the readout lists the `reminder` line), but the notification gives no alert. That is DND doing its job; the spec doesn't ask SmileProc to break through DND.
-     - Delay: not recorded yet; see the open question on "every 4 h" below.
+     - Delay: not recorded.
 - **Decided:**
   1. **A2 (human, 2026-10-17, after the phone checks): last known only.** No location foreground service.
      - This replaces the provisional choice of the location service made earlier the same day.
      - Nothing changes: the spec (android.md › Location: last known from a notification tap, else none) and the guards stay as they are; no Play declaration.
      - Caveat: on the AOSP emulators, last known gave none on every notification tap, so some phones (likely Pixels) may save notification taps without location. Not tested on a Pixel.
+  2. **Default reminders every 4 hours (human, 2026-10-17):** for M5; see M5 › Decided before M5.
 - **Decisions needed:**
-  1. **A4 "every 4 h":** what should change? (Asked 2026-10-17.)
-  2. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
-  3. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
+  1. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
+  2. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
 
 ## M2 — Core logic
 - **Status:** not started
@@ -170,6 +170,17 @@ Status values: not started · in progress · partly verified · claude-verified 
 
 ## M5 — Check-in notification and reminders → dogfood build 1
 - **Status:** not started
+- **Decided before M5:**
+  1. **Default reminders: every 4 hours** (human, 2026-10-17, after the M1 phone checks). Today the spec has no defaults: reminders are "at user-set times", picked in onboarding step 3.
+     - **Proposed:**
+       - 08:00, 12:00, 16:00 and 20:00, every day (ISO 1–7). This leaves 2 of the 6 slots free. Around the clock would take all 6 and alert at 00:00 and 04:00.
+       - In place from first run, so skipping onboarding keeps them; onboarding step 3 shows them pre-filled and editable; Delete all brings them back. The times wait for the human's OK.
+     - **Spec changes, not made yet:**
+       - product.md › What we're building: "Reminders at user-set times" → reminders every 4 hours by default (the four times), which the person can change.
+       - screens.md › Onboarding (3): "pick times" → the four default times pre-filled, editable.
+       - android.md › Reminders: the first-run default (four times, every day), kept in DataStore like any other reminder.
+       - testing.md: Compose UI, first run shows the four reminders; Robolectric, a fresh install schedules the next default reminder.
+     - **Copy (M5, copy-reviewer):** `onboarding_reminders_body` ("Pick the times you'd like a check-in…") changes to say the times are suggested and can be changed.
 
 ## M6 — Detailed emotion wheel
 - **Status:** not started
