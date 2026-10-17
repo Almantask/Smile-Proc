@@ -2,7 +2,7 @@
 # Wakes the emulator, opens the PIN pad and types the PIN. Emulators only: never type the
 # human's PIN on a real phone; ask them to unlock it.
 set -uo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 case "$SMILEPROC_SERIAL" in
   emulator-*) ;;

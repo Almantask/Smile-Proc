@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # spikes.sh: the M1 spike app (com.example.smileproc.spikes, docs/spikes.md) on $SMILEPROC_SERIAL.
 #   install                      build :spikes, install, grant location (and notifications on 13+)
-#   probe                        print files/probe.json: device state and the last 40 records
+#   probe                        print the probe (device state and the last 40 records, opened);
+#                                the plaintext files/probe.json is deleted right after reading
 #   ctl ACTION [am extras...]    POST|CANCEL|SET|SCHEDULE_REMINDER|CLEAR|PROBE (see ControlReceiver)
 #                                e.g. ctl POST --es variant alerting · ctl SET --es mode fgs
 #                                     ctl SCHEDULE_REMINDER --el seconds 180
@@ -9,7 +10,7 @@
 # notifs.py and tap.py follow PKG: PKG=com.example.smileproc.spikes scripts/py scripts/emu/notifs.py
 set -euo pipefail
 export PKG=com.example.smileproc.spikes
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 cd "$ROOT"
 
 ctl() { # ACTION [extras...]
@@ -34,6 +35,7 @@ case "${1:-}" in
     ctl PROBE
     sleep 1
     adb exec-out run-as "$PKG" cat files/probe.json
+    adb shell run-as "$PKG" rm -f files/probe.json
     echo
     ;;
   ctl)
@@ -49,7 +51,7 @@ case "${1:-}" in
     echo "ok"
     ;;
   *)
-    sed -n '2,9p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
     exit 2
     ;;
 esac

@@ -2,8 +2,10 @@
 """Taps the centre of the on-screen node whose text or content description is TEXT
 (exact match first, then substring). Works on the lock screen.
 
-  tap.py "<text>" [--shade] [--swipe]
-    --shade   opens the notification shade first
+  tap.py "<text>" [--shade | --pull] [--swipe]
+    --shade   opens the notification shade first (cmd statusbar)
+    --pull    opens it with a slow pull-down instead; on the API 29 lock screen this is the only
+              way found to reach notification buttons without unlocking
     --swipe   swipes the node to the right edge instead of tapping it (dismissing a notification)
 """
 import argparse
@@ -39,12 +41,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("text")
     parser.add_argument("--shade", action="store_true")
+    parser.add_argument("--pull", action="store_true")
     parser.add_argument("--swipe", action="store_true")
     args = parser.parse_args()
 
     if args.shade:
         adb("shell", "cmd", "statusbar", "expand-notifications")
         time.sleep(1.5)
+    if args.pull:
+        width, height = map(int, re.search(r"(\d+)x(\d+)", adb("shell", "wm", "size")).groups())
+        adb("shell", "input", "swipe", str(width // 2), str(height // 4), str(width // 2), str(height * 3 // 4), "800")
+        time.sleep(3)
 
     found = nodes()
     labels = lambda n: (n.get("text") or "", n.get("content-desc") or "")

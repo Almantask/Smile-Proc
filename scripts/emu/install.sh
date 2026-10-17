@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds and installs the debug build (com.example.smileproc.debug) on $SMILEPROC_SERIAL.
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 cd "$ROOT"
 
 ./gradlew -q :app:assembleDebug

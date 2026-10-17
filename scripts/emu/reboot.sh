@@ -2,7 +2,7 @@
 # Reboots and waits for boot. The device is then locked before its first unlock, when the app
 # (not direct-boot aware) doesn't run and has no notification.
 set -uo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 adb reboot
 sleep 5

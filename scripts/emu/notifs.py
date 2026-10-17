@@ -38,6 +38,8 @@ def ongoing(flags):
 
 def parse(dump):
     records, current = [], None
+    if not any(line.strip() == "Notification List:" for line in dump.splitlines()):
+        sys.exit("notifs.py: no 'Notification List:' in dumpsys output; update the parser for this Android version")
     lines = section(dump.splitlines(), "Notification List:")
     for line in lines:
         head = re.search(r"NotificationRecord\(0x[0-9a-f]+: pkg=(\S+) user=\S+ id=(-?\d+) .*?"
@@ -60,7 +62,8 @@ def parse(dump):
             current["actions"].append(m.group(1))
     found = [r for r in records if r["pkg"] == PKG]
     # A dumpsys format this parser doesn't know must fail, not read as "no notifications".
-    listed = sum(1 for line in lines if re.search(rf"NotificationRecord\(.*\bpkg={re.escape(PKG)} ", line))
+    # Any record header (`<Name>(0x<hash>: pkg=<PKG> `), so a renamed record class still counts.
+    listed = sum(1 for line in lines if re.match(rf"\s*\w+\(0x[0-9a-f]+: pkg={re.escape(PKG)}\s", line))
     if listed != len(found):
         sys.exit(f"notifs.py: dumpsys lists {listed} {PKG} notification(s) but only {len(found)} parsed; "
                  "update the parser for this Android version")

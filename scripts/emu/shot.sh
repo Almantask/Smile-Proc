@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shot.sh <name>: saves a screenshot to build/emu-shots/<name>.png and prints the path.
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 name=${1:?usage: shot.sh <name>}
 mkdir -p "$ROOT/build/emu-shots"

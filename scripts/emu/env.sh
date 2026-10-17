@@ -10,10 +10,6 @@ is_windows && export MSYS_NO_PATHCONV=1
 
 PKG=${PKG:-com.example.smileproc.debug}
 DOGFOOD_PKG=com.example.smileproc
-if [ "$PKG" = "$DOGFOOD_PKG" ]; then
-  echo "Refusing PKG=$DOGFOOD_PKG (the human's daily app)." >&2
-  return 1 2>/dev/null || exit 1
-fi
 PIN=1111
 DEBUG_RECEIVERS=com.example.smileproc.debug   # Kotlin package of the debug-only receivers
 
@@ -35,8 +31,14 @@ if [ -z "${SMILEPROC_SERIAL:-}" ]; then
 fi
 export SMILEPROC_SERIAL PKG PIN
 
-# Every adb call goes to one device, and never touches the human's daily app.
+# Every adb call goes to one device, and never touches the human's daily app. The PKG check lives
+# here, not at source time: scripts without `set -e` would carry on past a failed source and call
+# the real adb without -s.
 adb() {
+  if [ "$PKG" = "$DOGFOOD_PKG" ]; then
+    echo "Refusing PKG=$DOGFOOD_PKG (the human's daily app)." >&2
+    return 1
+  fi
   if [ -z "${SMILEPROC_SERIAL:-}" ]; then
     echo "No emulator running and SMILEPROC_SERIAL is not set. Start one: scripts/emu/start.sh sp36" >&2
     return 1
@@ -73,3 +75,9 @@ wait_for_boot() { # timeout seconds (default 300)
 device_locked() {
   sh_out dumpsys trust | grep -m 1 -oE 'deviceLocked=[a-z0-9]+' | grep -qE '=(true|1)$'
 }
+
+# Last, so the guarded adb() above exists even if a caller ignores the failure.
+if [ "$PKG" = "$DOGFOOD_PKG" ]; then
+  echo "Refusing PKG=$DOGFOOD_PKG (the human's daily app)." >&2
+  return 1
+fi

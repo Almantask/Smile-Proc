@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Turns the screen off; with the PIN set, the emulator is locked at once.
 set -uo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 adb shell input keyevent KEYCODE_SLEEP
 for _ in 1 2 3 4 5; do

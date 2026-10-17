@@ -2,7 +2,7 @@
 # idle.sh on|off: forces Doze (unplugged, screen off) or leaves it. Emulators ship with Doze
 # disabled, so `on` enables it first and checks that the device reached deep idle.
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 case "${1:-}" in
   on)

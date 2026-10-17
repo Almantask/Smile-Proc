@@ -91,9 +91,10 @@ object SpikeNotifier {
         }
     }
 
-    /** A reminder or an explicit post: clears `dismissed`, then shows the faces. */
+    /** A reminder or an explicit post: clears `dismissed`, cancels a pending restore, shows the faces. */
     fun postFaces(context: Context, alerting: Boolean): Boolean {
         SpikePrefs(context).dismissed = false
+        FaceReceiver.cancelRestore(context)
         return render(context, if (alerting) State.FACES_ALERTING else State.FACES_SILENT)
     }
 

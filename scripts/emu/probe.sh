@@ -2,7 +2,7 @@
 # Prints the debug probe JSON (counts only, never content): asks ProbeReceiver to write
 # files/probe.json, then reads it with run-as.
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 adb shell am broadcast --include-stopped-packages \
   -n "$PKG/$DEBUG_RECEIVERS.ProbeReceiver" -a com.example.smileproc.debug.PROBE >/dev/null

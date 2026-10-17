@@ -2,7 +2,7 @@
 # fire.sh reminder|restore|seed-demo|clear-demo: debug broadcasts that run the same code paths
 # as the real triggers (wired up in M5 and M8).
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 case "${1:-}" in
   reminder) action=FIRE_REMINDER ;;

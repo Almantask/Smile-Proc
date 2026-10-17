@@ -29,6 +29,9 @@ All scripts read scripts/emu/env.sh: `SMILEPROC_SERIAL` (default: the first runn
 - `scripts/py` stands in for python3 (Windows Store stubs). `env.sh` sets `MSYS_NO_PATHCONV=1` so Git Bash leaves device paths like /sdcard alone.
 - Before the first unlock after a reboot, the app doesn't run and has no notification. That is correct.
 - uiautomator dumps can be stale right after a tap: sleep 1 s before the next dump.
+- Notification buttons on the lock screen (M1): the card is collapsed. API 36: `tap.py Expand`, then `tap.py Okay`. API 29: Expand and `--shade` do nothing there; `tap.py Okay --pull` (slow pull-down) works. Neither unlocks.
+- `tap.py <text> --swipe` dismisses with a fast swipe from the left; slow swipes from the centre don't dismiss on API 36.
+- `PKG=com.example.smileproc.spikes` points notifs.py, tap.py and the shell scripts at the M1 spike app (`scripts/emu/spikes.sh`).
 - Inexact alarms can be late; for logic checks use `fire.sh`, and run the real-alarm scenario (E13) only where the milestone asks.
 - Screenshots are evidence: name them by scenario (e1-locked-faces.png) and list the paths in your report.
 - Real phone: only if the human connected it and set SMILEPROC_SERIAL. Every adb command to it asks for approval. Don't type the human's PIN; ask them to unlock.

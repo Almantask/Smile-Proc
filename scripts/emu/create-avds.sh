@@ -4,7 +4,7 @@
 #         Google APIs / Play images). Proves nothing depends on Play Services.
 #   sp29  API 29, minSdk behaviour.
 set -euo pipefail
-. "$(dirname "$0")/env.sh"
+. "$(dirname "$0")/env.sh" || exit 1
 
 abi=x86_64
 case "$(uname -m)" in arm64 | aarch64) abi=arm64-v8a ;; esac

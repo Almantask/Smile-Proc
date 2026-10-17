@@ -95,6 +95,9 @@ class FaceReceiver : BroadcastReceiver() {
         private const val REQUEST_RESTORE = 21
         private const val RESTORE_MS = 60_000L
 
+        fun cancelRestore(context: Context) =
+            context.getSystemService(AlarmManager::class.java).cancel(pending(context, ACTION_RESTORE, REQUEST_RESTORE))
+
         fun pending(context: Context, action: String, requestCode: Int): PendingIntent =
             PendingIntent.getBroadcast(
                 context, requestCode, Intent(context, FaceReceiver::class.java).setAction(action),
