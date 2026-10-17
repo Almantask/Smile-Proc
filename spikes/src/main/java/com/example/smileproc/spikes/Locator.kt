@@ -7,8 +7,9 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.CancellationSignal
 import android.os.SystemClock
-import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import org.json.JSONObject
@@ -71,8 +72,10 @@ object Locator {
                 suspendCancellableCoroutine<Location?> { cont ->
                     val signal = CancellationSignal()
                     cont.invokeOnCancellation { signal.cancel() }
+                    // Not the main executor: on a cold start the main thread can be busy for longer
+                    // than the timeout, and a fix that arrived in time was then dropped (sp36, A2).
                     LocationManagerCompat.getCurrentLocation(
-                        lm, provider, signal, ContextCompat.getMainExecutor(context),
+                        lm, provider, signal, Dispatchers.Default.asExecutor(),
                     ) { result -> if (cont.isActive) cont.resume(result) }
                 }
             }

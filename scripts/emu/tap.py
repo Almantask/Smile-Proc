@@ -57,9 +57,11 @@ def main():
         return 1
     x, y = centre(match.get("bounds"))
     if args.swipe:
+        # Fast and wide: a 300 ms swipe from the node's centre doesn't dismiss on Android 16.
         width = int(re.search(r"(\d+)x(\d+)", adb("shell", "wm", "size")).group(1))
-        adb("shell", "input", "swipe", str(x), str(y), str(width - 5), str(y), "300")
-        print(f'swiped "{args.text}" from {x},{y} to the right edge')
+        start = width // 8
+        adb("shell", "input", "swipe", str(start), str(y), str(width - 10), str(y), "150")
+        print(f'swiped "{args.text}" from {start},{y} to the right edge')
         return 0
     adb("shell", "input", "tap", str(x), str(y))
     print(f'tapped "{args.text}" at {x},{y}')
