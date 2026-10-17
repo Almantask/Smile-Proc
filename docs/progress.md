@@ -82,7 +82,7 @@ Status values: not started · in progress · partly verified · claude-verified 
   5. **Version pairing (for information).** AGP 9.4.1 is newer than the AGP range Kotlin 2.4.21 lists as tested (up to 9.3.1). It builds cleanly. KSP 2.3.12 with Kotlin 2.4.21 gets proven when Room arrives in M3.
 
 ## M1 — Spikes
-- **Status:** claude-verified (2026-10-17, tag `m1-claude-verified`). The milestone is done only once the human has decided A2 (decision 1 below).
+- **Status:** claude-verified (2026-10-17, tag `m1-claude-verified`). A2 is decided (decision 1 below), pending the human's phone checks.
 - **Built:**
   - `:spikes` (`com.example.smileproc.spikes`, never shipped, not in check.sh), under `spikes/src/main/java/com/example/smileproc/spikes/`:
     - `SpikeNotifier`: the spec's check-in notification: channel `checkin`, ID 1, Low/Okay/Good, silent and alerting, ongoing when standing; resting state and `dismissed` per logic.md.
@@ -141,16 +141,16 @@ Status values: not started · in progress · partly verified · claude-verified 
      - with the switch on: the `fgs` line: fresh/cached/none, accuracy and seconds.
   3. **A3 (Android 14+ phone):** unlocked, swipe the ongoing card away. Does it go, and does a `dismiss` line appear? Locked, it should stay.
   4. **A4 / H3:** set a reminder for tomorrow morning (HH:MM), leave the phone overnight, and read the delay in the readout.
+- **Decided:**
+  1. **A2 (human, 2026-10-17): a short location foreground service after the save**, once the phone checks (human check 2, H2) confirm it.
+     - What the spikes showed: on both emulators last known gave no location on any notification tap; the service gave a fresh fix within about 5 s with no second notification.
+     - Not done yet; these follow once the phone checks confirm:
+       - **Spec:** android.md › Location (the notification-tap path: last known at save, then the service updates the entry) and › Manifest (`FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_LOCATION`, the service with `foregroundServiceType="location"`); product.md › Scope ("location foreground service" moves into v1).
+       - **Guards (Appendix 3, the human):** remove the FOREGROUND_SERVICE rule from `.claude/hooks/guard_edit.py` (human-owned), `scripts/lib/privacy_guard.py` and the dogfood-permissions step of `scripts/check.sh`. Claude won't weaken a guard on its own.
+       - **Release (M10):** Google Play's foreground-service declaration for the location type.
 - **Decisions needed:**
-  1. **A2: location from a notification tap (Appendix 3; M1 is done once this is decided).**
-     - **Last known only** (the spec today): on both emulators every notification tap saved with no location, because the platform hides location from a background receiver. Places would then come almost only from in-app check-ins. H2 will show whether a real phone differs.
-     - **Short location foreground service:** a fresh fix within about 5 s, after the save, with no second notification.
-       - The manifest needs `FOREGROUND_SERVICE` and `FOREGROUND_SERVICE_LOCATION` (out of v1 unless you approve: product.md › Scope).
-       - You'd remove the FOREGROUND_SERVICE rule from `guard_edit.py`, `privacy_guard.py` and check.sh.
-       - Google Play asks for a declaration of foreground-service use.
-     - (`ACCESS_BACKGROUND_LOCATION` would also make last known work, but the spec forbids it.)
-  2. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
-  3. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
+  1. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
+  2. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
 
 ## M2 — Core logic
 - **Status:** not started

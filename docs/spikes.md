@@ -77,7 +77,7 @@ The spike app is `:spikes` (`com.example.smileproc.spikes`), throwaway and never
   - **In-app current location** (the spec's in-app path): fresh in 4.3–4.4 s on sp36 and 0.2 s on sp29.
     - Spike bug, fixed: the callback ran on the main executor. On a cold start the main thread was busy for over 10 s, so the timeout dropped a fix that had arrived after 4 s. The product's in-app path should deliver off the main thread too.
   - **Emulator note:** on sp36, `adb emu geo fix` didn't move the reported coordinates (they stayed near 39.2, −123.15). sp29 took them. Outcome, accuracy and age were unaffected, and nothing records coordinates.
-- **Human decision:** last known only, or a short location foreground service (Appendix 3). **Pending.** See progress.md › M1 › Decisions.
+- **Human decision (2026-10-17):** a short location foreground service, started after the save (Appendix 3). It stands once the human's phone checks (H2) confirm it. The follow-ups are in progress.md › M1 › Decisions.
 
 ## A3 — Swipe-away and reboot
 - **Question:** can the ongoing notification be swiped away while locked; on API 34+ while unlocked (does the delete intent fire); does it come back after reboot via `BOOT_COMPLETED`?
