@@ -11,7 +11,7 @@
 - **Support:** gentle copy, then `support.json` contacts for the device region (if any); taps open the phone, SMS or browser app.
 - **Lock-screen check-in:** android.md › Lock-screen check-in.
 - **Settings:** Reminders · Keep a check-in on the lock screen · Lock-screen check-in · Weekly card time · Places · Capture location · App lock · Export · Import · Privacy ("What's stored and where") · Delete all data · About.
-- **Onboarding (5 screens):** (1) privacy promise, including "not in backups — export to keep a copy"; (2) location → permission (skippable; ratings still save without it); (3) reminders → notification permission, pick times, **Keep a check-in on the lock screen** (pre-selected); (4) App lock toggle (pre-selected ON); (5) Lock-screen check-in with **Send a test check-in**.
+- **Onboarding (5 screens):** (1) privacy promise, including "not in backups — export to keep a copy"; (2) location → permission (skippable; ratings still save without it); (3) reminders → notification permission, the default times (08:00, 12:00, 16:00, 20:00, every day) shown and editable, **Keep a check-in on the lock screen** (pre-selected); (4) App lock toggle (pre-selected ON); (5) Lock-screen check-in with **Send a test check-in**.
 
 **Copy**
 - Faces: **Low / Okay / Good**.

@@ -58,6 +58,7 @@ An in-app rating sends `RatedInApp`.
 
 #### Reminders
 - Up to 6 times a day, each with its own ISO weekday selection, in DataStore.
+- **Defaults:** 08:00, 12:00, 16:00 and 20:00, every day (ISO 1–7). Onboarding step 3 shows them pre-filled. They are stored, and the next one scheduled, when onboarding is finished or skipped: on first run, and again after Delete all (which returns to onboarding with no alarms). So skipping onboarding keeps them. They are ordinary reminders: the person can change or delete any of them, and deleting them all leaves none (not the defaults).
 - One pending alarm: the next occurrence across all reminders, in the device's current zone. `AlarmManager.setAndAllowWhileIdle(RTC_WAKEUP, …)`, inexact. On fire: `ReminderFired`, then schedule the next.
 - `SystemEventsReceiver` (exported; `BOOT_COMPLETED`, `TIME_SET`, `TIMEZONE_CHANGED`, `MY_PACKAGE_REPLACED`): reschedule; boot and update also send `Booted` / `AppUpdated`.
 - A few minutes of drift is fine.

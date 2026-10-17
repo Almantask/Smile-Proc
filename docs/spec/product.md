@@ -3,7 +3,7 @@
 #### What we're building
 - **3-face scale:** 1 = Low, 2 = Okay, 3 = Good. Every face is a valid answer.
 - **Two ways to rate, and only these:** the **check-in notification** (three face buttons, usable from the lock screen without unlocking) and **the app**. A tap saves immediately; emotion tags and a comment are an optional follow-up in the app.
-- **One notification at most, ever.** Its text is "How are you right now?". Reminders at user-set times use it. With **Keep a check-in on the lock screen** on (pre-selected), it stays there silently between reminders.
+- **One notification at most, ever.** Its text is "How are you right now?". Reminders use it: by default at 08:00, 12:00, 16:00 and 20:00 every day, and the person can change, add or delete them. With **Keep a check-in on the lock screen** on (pre-selected), it stays there silently between reminders.
 - **Location:** raw GPS on every entry when permitted. Entries within ~100 m form one place the user can name. No permission or location off → the rating is saved without location.
 - **Emotion tags:** *Gradual* (core feeling → finer one, default) and *Detailed* (full wheel, plus a plain list for TalkBack). The app remembers the last mode.
 - **Weekly card:** 2–3 patterns from time of day, weekday, place and tags. Each has a "many people notice…" line, one small tip and a question, from a hand-written library shipped in the app. On-device rules only. Shown in the app; no notification.

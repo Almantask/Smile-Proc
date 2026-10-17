@@ -171,15 +171,17 @@ Status values: not started · in progress · partly verified · claude-verified 
 ## M5 — Check-in notification and reminders → dogfood build 1
 - **Status:** not started
 - **Decided before M5:**
-  1. **Default reminders: every 4 hours** (human, 2026-10-17, after the M1 phone checks). Today the spec has no defaults: reminders are "at user-set times", picked in onboarding step 3.
-     - **Proposed:**
-       - 08:00, 12:00, 16:00 and 20:00, every day (ISO 1–7). This leaves 2 of the 6 slots free. Around the clock would take all 6 and alert at 00:00 and 04:00.
-       - In place from first run, so skipping onboarding keeps them; onboarding step 3 shows them pre-filled and editable; Delete all brings them back. The times wait for the human's OK.
-     - **Spec changes, not made yet:**
-       - product.md › What we're building: "Reminders at user-set times" → reminders every 4 hours by default (the four times), which the person can change.
-       - screens.md › Onboarding (3): "pick times" → the four default times pre-filled, editable.
-       - android.md › Reminders: the first-run default (four times, every day), kept in DataStore like any other reminder.
-       - testing.md: Compose UI, first run shows the four reminders; Robolectric, a fresh install schedules the next default reminder.
+  1. **Default reminders: 08:00, 12:00, 16:00 and 20:00, every day** (human, 2026-10-17, after the M1 phone checks: "every 4 hours").
+     - The spec was updated on 2026-10-17:
+       - product.md › What we're building;
+       - screens.md › Onboarding (3): pre-filled and editable;
+       - android.md › Reminders › Defaults;
+       - testing.md: Robolectric and Compose UI lines.
+     - How it works:
+       - Onboarding step 3 shows the four times pre-filled.
+       - They are stored, and the next one is scheduled, when onboarding is finished or skipped. That happens on first run, and again after Delete all, so skipping keeps them.
+       - E16 stays as written: right after Delete all there are no alarms, because the app is back in onboarding.
+       - Deleting every reminder leaves none, not the defaults.
      - **Copy (M5, copy-reviewer):** `onboarding_reminders_body` ("Pick the times you'd like a check-in…") changes to say the times are suggested and can be changed.
 
 ## M6 — Detailed emotion wheel

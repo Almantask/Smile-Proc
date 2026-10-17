@@ -2,8 +2,8 @@
 
 #### Automated tests
 - **`:core` (JVM):** every fixture's `expect` and every golden; library coverage; config completeness; noise guard (100 seeded random weeks of 25 entries → average `pattern` items per card ≤ 0.3; if it fails, tell the human, don't change thresholds); DST and time zones (`dst-week`, `travel`, `periods/`); `no-location`; low-run cases (5 Low on one day → no card; across 2 days → card; dismiss and re-arm); every `CheckInMachine` row plus the one-notification property test; export crypto and `vector-1.json`.
-- **Robolectric (`:app`):** Room and repositories; seal/open, tamper and wrong-id failure; `CheckInReceiver` save / fail / restore / dismiss / test paths; `ShadowNotificationManager` never holds more than one SmileProc notification; alarm rescheduling on boot, time and time-zone change; building a weekly card posts no notification.
-- **Compose UI:** onboarding skip path; tap face → saved → follow-up optional; edit and delete; reminders CRUD; Lock-screen check-in rows; Week tab with demo data.
+- **Robolectric (`:app`):** Room and repositories; seal/open, tamper and wrong-id failure; `CheckInReceiver` save / fail / restore / dismiss / test paths; `ShadowNotificationManager` never holds more than one SmileProc notification; alarm rescheduling on boot, time and time-zone change; finishing or skipping onboarding (fresh install, and after Delete all) stores the four default reminders and schedules the next one (e.g. 12:00 when it's 10:00); building a weekly card posts no notification.
+- **Compose UI:** onboarding skip path (the default reminders are stored); tap face → saved → follow-up optional; edit and delete; reminders CRUD (first run shows the four defaults; deleting all leaves none); Lock-screen check-in rows; Week tab with demo data.
 - **Instrumented (emulator):** `KeystoreSealer` seal/open; migration tests after M5.
 
 #### Emulator scenarios (Claude runs them; evidence = command output + screenshots)
