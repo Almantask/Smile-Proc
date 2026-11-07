@@ -25,7 +25,7 @@ Results in docs/spikes.md; screenshots `build/emu-shots/m1-*`.
 | A4 Reminder 3 min ahead under forced idle | 135 s late | 0.2 s late |
 
 ## Emulator scenarios (Claude)
-Emulators (created in M0 by `scripts/emu/create-avds.sh`): `sp36` = API 36 AOSP image without Google Play, `emulator-5554` (API 37 has no Play-free image); `sp29` = API 29, `emulator-5556`. M0 smoke check: the debug build installs and shows the hello screen on both (`build/emu-shots/m0-hello.png`, `m0-hello-sp29.png`).
+Emulators (created in M0 / M3 by `scripts/emu/create-avds.sh`): `sp36` = API 36 AOSP image without Google Play, `emulator-5554`; `sp29` = API 29, `emulator-5556`; `sp37` = API 37.0 Play-free default image, `emulator-5558`. M0 smoke check: the debug build installs and shows the hello screen on both (`build/emu-shots/m0-hello.png`, `m0-hello-sp29.png`).
 
 | Id | Scenario | Milestone | sp36 | sp29 |
 |---|---|---|---|---|

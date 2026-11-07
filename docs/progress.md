@@ -192,10 +192,58 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M3 — Storage and crypto
-- **Status:** not started
+- **Status:** claude-verified (2026-11-07, tag `m3-claude-verified`)
 - **Decided before M3:**
   1. **Room 3 (`androidx.room3` `3.0.3`, human, 2026-11-07):** switch `:app` to `androidx.room3` `3.0.3` (KSP Kotlin generation, coroutines-only DAOs, `AndroidSQLiteDriver` via `androidx.sqlite:sqlite-framework`, `room3` schema plugin exporting to `app/schemas/`). Keep `:spikes` on its existing M1 dependencies or migrate seamlessly without touching shipped code.
   2. **Android 17 AVD (`sp37`, human, 2026-11-07):** add an API 37 Google APIs AVD alongside `sp36` (API 36 Play-free AOSP) and `sp29` (API 29) for Android 17 verification.
+- **Built:**
+  - `:core`:
+    - `Sealer` interface (`seal`, `open`, `sealUtf8`, `openUtf8`, `isKeyAvailable()`), `SealException` (`Reason`: `PAYLOAD_TOO_SHORT`, `KEY_UNAVAILABLE`, `AUTHENTICATION_OR_DECRYPT_FAILED`, `SEAL_FAILED`).
+    - `JcaSealer` (pure-JVM AES-GCM-256 implementation, `TRANSFORMATION = "AES/GCM/NoPadding"`, `IV_BYTES = 12`, `TAG_BITS = 128`, validated row ID UTF-8 AAD).
+    - `CanonicalJson`: weekly card canonical encoder and decoder helpers (`encodeWeeklyCard`, `decodeWeeklyCard`).
+    - `SealerTest`: JVM unit tests for IV randomness, round-trip, AAD authentication check, ciphertext tampering rejection, payload truncation rejection.
+  - `:app`:
+    - Migrated `:app` to Room 3 (`androidx.room3` `3.0.3`, KSP `2.3.12`, `AndroidSQLiteDriver` via `androidx.sqlite:sqlite-framework`, `room3` gradle plugin).
+    - Exported Room schema v1: `app/schemas/com.example.smileproc.data.db.SmileProcDatabase/1.json`.
+    - Room entities (`EntryRow` with index on `createdAt`, `PlaceRow`, `WeeklyCardRow`).
+    - DAOs (`EntryDao`, `PlaceDao`, `WeeklyCardDao`) with suspend queries and Flow streams.
+    - `SmileProcDatabase` (`open(context, dbName, driver)`).
+    - `ManagedSealer` interface + `KeystoreSealer` (`AndroidKeyStore` alias `smileproc-db-v1`, AES-256-GCM, no auth/unlock requirements, randomized IV, `ensureKeyExists()`, `deleteKeyIfPresent()`).
+    - Sealed repositories (`EntryRepository`, `PlaceRepository`, `WeeklyCardRepository`) validating `row.id` against decrypted payload `id` and enforcing UTF-8 row ID AAD.
+    - `AppContainer` and `SmileProcApplication` (`android:name=".SmileProcApplication"` in manifest) managing storage lifecycle (`StorageState`: `Loading`, `Ready`, `NeedsRecovery`). Detects existing DB with missing/unusable key, transitions to `NeedsRecovery` without auto-generating replacement keys or wiping data silently, handles coroutine cancellation gracefully, and implements `startFresh()`.
+    - `RecoveryScreen` Composable (`R.string.recovery_title`, `recovery_body`, `recovery_import`, `recovery_start_fresh`, `recovery_start_fresh_confirm`, `action_cancel`) with accessible touch targets, 200% font scale scroll support, dark mode, and confirmation dialog for `startFresh`. Wired into `MainActivity`.
+    - Backup & extraction rules: `allowBackup="false"`, `backup_rules.xml`, and `data_extraction_rules.xml` verified via `BackupRulesTest`.
+    - Debug receivers: `ProbeReceiver` (exports non-sensitive counts `{"stub": false, "storageState": "ready", "entries": ..., "perMood": ..., "perSource": ..., "located": ...}` to `files/probe.json`), `DebugEventsReceiver` (`SEAL_TEST_ENTRY` action to seal and store entry while locked).
+  - Scripts & AVDs:
+    - Updated `scripts/emu/env.sh`, `scripts/emu/start.sh`, `scripts/emu/create-avds.sh`, and `scripts/emu/fire.sh` (`seal-test`).
+    - Created `sp36` (API 36), `sp29` (API 29), and `sp37` (API 37.0 Android 17) Play-free AVDs.
+    - Fixed Windows path conversion in `scripts/emu/install.sh` (`MSYS_NO_PATHCONV=0`).
+  - Tests:
+    - `:core:test`: `SealerTest`.
+    - `:app:testDebugUnitTest`: `RoomRepositoriesTest`, `RecoveryStateTest`, `RecoveryScreenTest` (Compose UI), `BackupRulesTest`.
+    - `:app:connectedDebugAndroidTest`: `KeystoreSealerAndroidTest` on `sp36`.
+- **Evidence:**
+  - `scripts/check.sh`: all 7 gates PASS (`privacy-guard`, `fixtures`, `json`, `gradle`, `dogfood-classpath`, `dogfood-permissions`, `dogfood-manifest`).
+  - Instrumented test: `KeystoreSealerAndroidTest` passed on `sp36` (`AVD sp36 - 16`).
+  - Emulator scenario `M3-locked-seal` passed via `emulator-tester-runner`:
+    - Fresh debug install launched unlocked (`deviceLocked=0`, `m3-app-ready.png`), initial probe: `entries: 0`, `storageState: ready`.
+    - Locked device (`deviceLocked=1`, `m3-locked-before-seal.png`).
+    - Fired `fire.sh seal-test` twice while locked (`deviceLocked=1` maintained throughout); `probe.sh` incremented to `entries: 1` then `entries: 2` (`perMood.okay: 2`, `perSource.notification: 2`).
+    - Cold process test while locked (`am force-stop`, then `fire.sh seal-test`) succeeded (`entries: 3`).
+    - `logcat -d -s SmileProc:*` showed only fixed `SafeLog.Event` names (`PROBE_WRITTEN`, `DEBUG_SEAL_SAVED`), zero sensitive data.
+  - Subagent reviews:
+    - `copy-reviewer`: "No copy issues".
+    - `spec-reviewer`: Two error-handling findings in `AppContainer` (rethrowing exception on `startFresh` and handling `CancellationException` in `initialize`) were resolved and verified with unit tests in commit `b80d415`.
+- **Left:** nothing.
+- **Deviations:**
+  1. Room 3 (`androidx.room3` `3.0.3`): Used `AndroidSQLiteDriver` from `androidx.sqlite:sqlite-framework` instead of `sqlite-bundled` (which lacks Windows DLLs for Robolectric).
+  2. Robolectric OpenJDK 25 compatibility: Added `--add-opens=java.base/jdk.internal.access=ALL-UNNAMED` and `--add-opens=java.base/java.io=ALL-UNNAMED` to `testOptions.unitTests.all`.
+  3. Espresso Core `3.7.0`: Added explicit test dependency in `:app` for Android 16/17 Robolectric input manager compatibility.
+  4. Android 17 Play-free AVD (`sp37`): Created using `system-images;android-37.0;default;x86_64` alongside `sp36` and `sp29`.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Human checks:** none.
+- **Decisions needed:** none.
 
 ## M4 — Check-in in the app
 - **Status:** not started
