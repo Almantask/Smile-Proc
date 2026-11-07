@@ -11,13 +11,19 @@ SMILEPROC_SERIAL=emulator-$port
 if ! command adb devices 2>/dev/null | tr -d '\r' | grep -q "^$SMILEPROC_SERIAL[[:space:]]device"; then
   mkdir -p "$ROOT/build/emu-logs"
   log="$ROOT/build/emu-logs/$avd.log"
-  args=(-avd "$avd" -port "$port" -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect)
+  if [ "${GUI:-0}" = "1" ] || [ "${WINDOW:-0}" = "1" ]; then
+    args=(-avd "$avd" -port "$port" -no-boot-anim -no-snapshot -gpu host)
+    win_style="Normal"
+  else
+    args=(-avd "$avd" -port "$port" -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect)
+    win_style="Hidden"
+  fi
   if is_windows; then
     # A detached process, so the emulator outlives this script. PowerShell's own stdio goes to
     # /dev/null: the emulator inherits those handles, and inheriting a caller's pipe would keep
     # that pipe open for as long as the emulator runs.
     powershell.exe -NoProfile -NonInteractive -Command \
-      "Start-Process -WindowStyle Hidden -FilePath '$(cygpath -w "$ANDROID_HOME/emulator/emulator.exe")' -ArgumentList '${args[*]}' -RedirectStandardOutput '$(cygpath -w "$log")' -RedirectStandardError '$(cygpath -w "$log.err")'" \
+      "Start-Process -WindowStyle $win_style -FilePath '$(cygpath -w "$ANDROID_HOME/emulator/emulator.exe")' -ArgumentList '${args[*]}' -RedirectStandardOutput '$(cygpath -w "$log")' -RedirectStandardError '$(cygpath -w "$log.err")'" \
       </dev/null >/dev/null 2>&1
   else
     nohup "$ANDROID_HOME/emulator/emulator" "${args[@]}" >"$log" 2>&1 &
