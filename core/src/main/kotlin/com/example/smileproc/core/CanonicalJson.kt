@@ -96,4 +96,8 @@ object CanonicalJson {
     fun encodePlaceLabel(label: PlaceLabel): String = json.encodeToString(PlaceLabel.serializer(), label)
 
     fun decodePlaceLabel(raw: String): PlaceLabel = json.decodeFromString(PlaceLabel.serializer(), raw)
+
+    fun encodeWeeklyCard(card: WeeklyCard): String = json.encodeToString(WeeklyCard.serializer(), card)
+
+    fun decodeWeeklyCard(raw: String): WeeklyCard = json.decodeFromString(WeeklyCard.serializer(), raw)
 }
