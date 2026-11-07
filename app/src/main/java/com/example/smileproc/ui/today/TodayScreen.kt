@@ -69,6 +69,7 @@ fun TodayScreen(
     onTagPickerModeToggle: () -> Unit,
     onSaveEntry: (Entry) -> Unit,
     onUpdateEntry: (Entry) -> Unit,
+    onUpdateEntryDetails: (id: String, tags: List<String>, comment: String?) -> Unit = { _, _, _ -> },
     onDeleteEntry: (String) -> Unit,
     onSavePlaceLabel: (PlaceLabel) -> Unit,
     onDismissLowRun: (String?) -> Unit,
@@ -219,12 +220,7 @@ fun TodayScreen(
             tagPickerMode = tagPickerMode,
             onTagPickerModeToggle = onTagPickerModeToggle,
             onSaveDetails = { tags, comment ->
-                val updated = entry.copy(
-                    tags = tags,
-                    comment = comment,
-                    updatedAt = Instant.now(),
-                )
-                onUpdateEntry(updated)
+                onUpdateEntryDetails(entry.id, tags, comment)
             },
             onDismiss = { activeFollowUpEntry = null },
         )

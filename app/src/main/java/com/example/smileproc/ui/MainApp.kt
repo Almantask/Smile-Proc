@@ -126,7 +126,13 @@ fun MainApp(
                             },
                             onSaveEntry = { entry ->
                                 container.applicationScope.launch {
-                                    storage.entryRepository.save(entry)
+                                    val existing = storage.entryRepository.getById(entry.id)
+                                    val toSave = if (existing?.location != null && entry.location == null) {
+                                        entry.copy(location = existing.location)
+                                    } else {
+                                        entry
+                                    }
+                                    storage.entryRepository.save(toSave)
                                 }
                             },
                             onDeleteEntry = { id ->
@@ -155,12 +161,38 @@ fun MainApp(
                             },
                             onSaveEntry = { entry ->
                                 container.applicationScope.launch {
-                                    storage.entryRepository.save(entry)
+                                    val existing = storage.entryRepository.getById(entry.id)
+                                    val toSave = if (existing?.location != null && entry.location == null) {
+                                        entry.copy(location = existing.location)
+                                    } else {
+                                        entry
+                                    }
+                                    storage.entryRepository.save(toSave)
                                 }
                             },
                             onUpdateEntry = { entry ->
                                 container.applicationScope.launch {
-                                    storage.entryRepository.save(entry)
+                                    val existing = storage.entryRepository.getById(entry.id)
+                                    val toSave = if (existing?.location != null && entry.location == null) {
+                                        entry.copy(location = existing.location)
+                                    } else {
+                                        entry
+                                    }
+                                    storage.entryRepository.save(toSave)
+                                }
+                            },
+                            onUpdateEntryDetails = { id, tags, comment ->
+                                container.applicationScope.launch {
+                                    val existing = storage.entryRepository.getById(id)
+                                    if (existing != null) {
+                                        storage.entryRepository.save(
+                                            existing.copy(
+                                                tags = tags,
+                                                comment = comment,
+                                                updatedAt = Instant.now(),
+                                            )
+                                        )
+                                    }
                                 }
                             },
                             onDeleteEntry = { id ->
