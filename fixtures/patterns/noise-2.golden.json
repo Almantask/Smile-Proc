@@ -11,14 +11,14 @@
   ],
   "items": [
     {
-      "patternID": "weekdayDaypart.higher.3.afternoon",
-      "libraryID": "weekday-segment-higher",
-      "confidence": "pattern"
-    },
-    {
       "patternID": "timeOfDay.higher.morning",
       "libraryID": "time-higher",
       "confidence": "pattern"
+    },
+    {
+      "patternID": "weekdayDaypart.higher.3.afternoon",
+      "libraryID": "weekday-segment-higher",
+      "confidence": "earlyHint"
     },
     {
       "patternID": "tagOnLow.anxious",
@@ -27,15 +27,6 @@
     }
   ],
   "candidates": [
-    {
-      "id": "weekdayDaypart.higher.3.afternoon",
-      "confidence": "pattern",
-      "nSegment": 7,
-      "nRest": 93,
-      "diff": 0.65745,
-      "z": 2.125732,
-      "score": 0.660215
-    },
     {
       "id": "timeOfDay.higher.morning",
       "confidence": "pattern",
@@ -46,22 +37,31 @@
       "score": 0.6
     },
     {
+      "id": "weekdayDaypart.higher.3.afternoon",
+      "confidence": "earlyHint",
+      "nSegment": 7,
+      "nRest": 93,
+      "diff": 0.65745,
+      "z": 2.125732,
+      "score": 0.460215
+    },
+    {
       "id": "weekdayDaypart.lower.5.afternoon",
-      "confidence": "pattern",
+      "confidence": "earlyHint",
       "nSegment": 5,
       "nRest": 95,
       "diff": -0.8,
       "z": -2.213594,
-      "score": 0.6
+      "score": 0.4
     },
     {
       "id": "weekdayDaypart.higher.6.morning",
-      "confidence": "pattern",
+      "confidence": "earlyHint",
       "nSegment": 4,
       "nRest": 96,
       "diff": 0.822917,
       "z": 2.039945,
-      "score": 0.529167
+      "score": 0.329167
     },
     {
       "id": "weekdayDaypart.lower.3.evening",

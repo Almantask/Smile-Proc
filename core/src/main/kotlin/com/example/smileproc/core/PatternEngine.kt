@@ -111,6 +111,7 @@ object PatternEngine {
                 minSegForHint = config.minSegment,
                 minSegForPattern = config.patternMinSegment,
                 minAbsDiff = config.minAbsDiff,
+                zPattern = config.zPattern,
                 config = config,
                 detector = Detector.TIME_OF_DAY,
                 idForDirection = { dir -> "timeOfDay.${dir.wireName}.${daypart.wireName}" },
@@ -134,6 +135,7 @@ object PatternEngine {
                 minSegForHint = config.weekdayMinSegment,
                 minSegForPattern = config.weekdayMinSegment,
                 minAbsDiff = config.weekdayMinAbsDiff,
+                zPattern = config.weekdayZPattern,
                 config = config,
                 detector = Detector.WEEKDAY,
                 idForDirection = { dir -> "weekday.${dir.wireName}.$isoDay" },
@@ -160,6 +162,7 @@ object PatternEngine {
                     minSegForHint = config.weekdayMinSegment,
                     minSegForPattern = config.weekdayMinSegment,
                     minAbsDiff = config.weekdayMinAbsDiff,
+                    zPattern = config.weekdayZPattern,
                     config = config,
                     detector = Detector.WEEKDAY_DAYPART,
                     idForDirection = { dir -> "weekdayDaypart.${dir.wireName}.$isoDay.${daypart.wireName}" },
@@ -190,6 +193,7 @@ object PatternEngine {
                 minSegForHint = config.minSegment,
                 minSegForPattern = config.patternMinSegment,
                 minAbsDiff = config.minAbsDiff,
+                zPattern = config.zPattern,
                 config = config,
                 detector = Detector.PLACE,
                 idForDirection = { dir -> "place.${dir.wireName}.${clusterId.value}" },
@@ -218,6 +222,7 @@ object PatternEngine {
             minSegForHint = config.minSegment,
             minSegForPattern = config.patternMinSegment,
             minAbsDiff = config.minAbsDiff,
+            zPattern = config.zPattern,
             config = config,
             detector = Detector.AWAY_FROM_HOME,
             idForDirection = { dir -> "awayFromHome.${dir.wireName}" },
@@ -357,6 +362,7 @@ object PatternEngine {
         minSegForHint: Int,
         minSegForPattern: Int,
         minAbsDiff: Double,
+        zPattern: Double,
         config: PatternConfig,
         detector: Detector,
         idForDirection: (Direction) -> String,
@@ -386,7 +392,7 @@ object PatternEngine {
 
         val isPattern = nSeg >= minSegForPattern &&
             nRest >= config.patternMinRest &&
-            absZ >= config.zPattern
+            absZ >= zPattern
         val confidence = if (isPattern) Confidence.PATTERN else Confidence.EARLY_HINT
         val direction = if (diff < 0.0) Direction.LOWER else Direction.HIGHER
         val score = absDiff * (min(nSeg, 10).toDouble() / 10.0) + (if (isPattern) 0.2 else 0.0)

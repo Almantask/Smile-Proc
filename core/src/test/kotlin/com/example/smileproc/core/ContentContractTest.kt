@@ -58,7 +58,7 @@ class ContentContractTest {
         val expected = setOf(
             "version", "minSegment", "minRest", "patternMinSegment", "patternMinRest",
             "minAbsDiff", "zHint", "zPattern", "sdFloor",
-            "weekdayMinSegment", "weekdayMinDistinctDates", "weekdayMinAbsDiff", "weekdayMinDataDays",
+            "weekdayMinSegment", "weekdayMinDistinctDates", "weekdayMinAbsDiff", "weekdayMinDataDays", "weekdayZPattern",
             "tagMinLowTagged", "tagMinCount", "tagMinShare", "tagMinShareGap", "tagPatternCount",
             "tagAtPlaceMinShare", "fineTagDominance",
             "shortWeekThreshold", "maxItems", "maxItemsLowWeek",

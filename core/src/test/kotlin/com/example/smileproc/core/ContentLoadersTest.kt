@@ -22,7 +22,7 @@ class ContentLoadersTest {
         val raw = file.readText(Charsets.UTF_8)
         val base = PatternConfig.fromJson(raw)
         val root = TestData.json(file).jsonObject
-        assertEquals(32, root.size)
+        assertEquals(33, root.size)
 
         // Mutating each threshold key produces a distinct PatternConfig (every key is read).
         for ((key, value) in root) {

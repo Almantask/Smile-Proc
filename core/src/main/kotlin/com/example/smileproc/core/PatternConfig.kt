@@ -23,6 +23,7 @@ data class PatternConfig(
     val weekdayMinDistinctDates: Int,
     val weekdayMinAbsDiff: Double,
     val weekdayMinDataDays: Int,
+    val weekdayZPattern: Double,
     val tagMinLowTagged: Int,
     val tagMinCount: Int,
     val tagMinShare: Double,
@@ -50,6 +51,7 @@ data class PatternConfig(
             "patternMinSegment/patternMinRest must be >= minSegment/minRest"
         }
         require(sdFloor > 0.0) { "sdFloor must be > 0" }
+        require(weekdayZPattern >= zHint) { "weekdayZPattern must be >= zHint" }
         require(placeRadiusMeters > 0.0 && placeMaxAccuracyMeters > 0.0) {
             "Place thresholds must be > 0"
         }

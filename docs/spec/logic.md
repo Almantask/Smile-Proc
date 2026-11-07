@@ -46,7 +46,7 @@ earlyHint : nSeg ≥ minSegment,        nRest ≥ minRest,        |diff| ≥ min
 score     = |diff| · min(nSeg, 10)/10 + (pattern ? 0.2 : 0)
 direction = diff < 0 ? lower : higher
 ```
-Weekday detectors use `weekdayMinSegment`, `weekdayMinAbsDiff`, and require the segment to span ≥ `weekdayMinDistinctDates` local dates.
+Weekday detectors use `weekdayMinSegment`, `weekdayMinAbsDiff`, `weekdayZPattern`, and require the segment to span ≥ `weekdayMinDistinctDates` local dates.
 
 **Mean-comparison detectors**
 | Detector | Family | Segment | Rest | Window | Pattern id |

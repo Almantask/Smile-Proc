@@ -128,6 +128,46 @@ class PatternEngineTest {
         assertEquals(listOf("a.id", "b.id"), sorted.map { it.id })
     }
 
+    @Test
+    fun weekdayZPatternDemotesBorderlineTwoSigmaWeekdayCandidateToEarlyHint() {
+        val now = ZonedDateTime.of(2026, 10, 18, 20, 0, 0, 0, rome).toInstant()
+        val period = CardPeriod.resolve(now, rome)
+        // History entry before the 28-day window so weekday detectors are active (>= 14 days).
+        // Within the 28-day window [20 Sep 19:00, 18 Oct 19:00):
+        // - 4 Tuesdays (22 Sep, 29 Sep, 6 Oct, 13 Oct) with moods [LOW, LOW, OKAY, OKAY] -> mean = 1.5
+        // - 16 non-Tuesday entries: 2 LOW, 6 OKAY, 8 GOOD -> mean = 2.375, diff = -0.875, z = -2.245
+        val nonTuesdayDates = listOf(
+            2026 to (9 to 23), 2026 to (9 to 24), 2026 to (9 to 25), 2026 to (9 to 26),
+            2026 to (9 to 30), 2026 to (10 to 1), 2026 to (10 to 2), 2026 to (10 to 3),
+            2026 to (10 to 7), 2026 to (10 to 8), 2026 to (10 to 9), 2026 to (10 to 10),
+            2026 to (10 to 14), 2026 to (10 to 15), 2026 to (10 to 16), 2026 to (10 to 17),
+        )
+        val nonTuesdayMoods = List(2) { Mood.LOW } + List(6) { Mood.OKAY } + List(8) { Mood.GOOD }
+        val entries = buildList {
+            add(entry(1, 2026, 9, 1, 12, Mood.OKAY))
+            add(entry(2, 2026, 9, 22, 10, Mood.LOW))
+            add(entry(3, 2026, 9, 29, 10, Mood.LOW))
+            add(entry(4, 2026, 10, 6, 10, Mood.OKAY))
+            add(entry(5, 2026, 10, 13, 10, Mood.OKAY))
+            nonTuesdayDates.forEachIndexed { i, (y, md) ->
+                add(entry(10 + i, y, md.first, md.second, 10, nonTuesdayMoods[i]))
+            }
+        }
+        val strict = PatternEngine.analyze(entries, emptyList(), period, config, emotionTags)
+            .candidates.first { it.id == "weekday.lower.2" }
+        assertTrue("Expected 2.0 <= |z| < 2.5, got z=${strict.z}", kotlin.math.abs(strict.z!!) in 2.0..2.49)
+        assertEquals(Confidence.EARLY_HINT, strict.confidence)
+
+        val relaxed = PatternEngine.analyze(
+            entries,
+            emptyList(),
+            period,
+            config.copy(weekdayZPattern = 2.0),
+            emotionTags,
+        ).candidates.first { it.id == "weekday.lower.2" }
+        assertEquals(Confidence.PATTERN, relaxed.confidence)
+    }
+
     private fun entry(num: Int, y: Int, m: Int, d: Int, h: Int, mood: Mood): Entry {
         val hex = num.toString().padStart(8, '0')
         val ts: Instant = ZonedDateTime.of(y, m, d, h, 0, 0, 0, rome).toInstant()
