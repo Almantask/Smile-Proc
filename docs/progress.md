@@ -246,7 +246,36 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M4 — Check-in in the app
-- **Status:** in progress
+- **Status:** claude-verified (2026-11-07, tag `m4-claude-verified`)
+- **Built:**
+  - `FaceView` (`components/FaceView.kt`): 3 large custom-drawn accessible faces (Low, Okay, Good) with accessible content descriptions, light haptic feedback on tap, >= 48dp touch targets, and high contrast styling in light and dark themes. Supports selectable state for editing.
+  - `TodayScreen` (`today/TodayScreen.kt`): Single tap saves immediately (`source = EntrySource.APP`, `location = null`), starts async GPS fix (`LocationClient.captureInAppFix()`), and opens `FollowUpSheet`. Lists today's entries with timestamp, mood face, tags, note, and place name.
+  - `FollowUpSheet` (`today/FollowUpSheet.kt`): "Saved" header, `GradualTagPicker` (Step 1: 7 core chips; Step 2: 5 finer chips + "Just {core}"; max 3 tags), note field (up to 1,000 characters), "Done" action, saves details on dismiss/done without clobbering background location fix.
+  - `LowRunCard` (`today/LowRunCard.kt`): Evaluated via `LowMoodMonitor` (>= 5 Low check-ins over >= 2 days), displays gentle supportive copy, "See support options" button (opens `SupportDialog`), and dismissible "Not now" button.
+  - `HistoryScreen` & `EntryDetailSheet` (`history/`): All check-ins grouped by day (Today, Yesterday, date); displays time, mood face, tags, place name, and note snippet. `EntryDetailSheet` allows editing mood, tags, and note, naming unnamed places (`PlaceLabel`), and deleting check-in with confirmation dialog.
+  - `SettingsScreen` & `SettingsRepository` (`settings/`, `data/SettingsRepository.kt`): Capture location toggle, Tag picker mode toggle, App lock toggle placeholder, Reminders placeholder, Privacy explanation, About dialog, and Delete all data dialog placeholder.
+  - `OnboardingScreen` (`onboarding/OnboardingScreen.kt`): 2-step onboarding covering privacy promise (not in backups, export to keep copy) and location permission (skippable).
+  - `PlatformLocationClient` (`data/PlatformLocationClient.kt`): Fresh GPS fix (<= 100m or best fix at 10s timeout <= 200m) or cached fix (<= 10 min, <= 200m). Respects runtime permissions and user settings.
+  - Vector drawables: `ic_arrow_back.xml`, `ic_close.xml`, `ic_mode_switch.xml`, `ic_tab_today.xml`, `ic_tab_week.xml`, `ic_tab_settings.xml`.
+  - Compose UI and Robolectric Unit Tests: `TodayScreenTest`, `LowRunCardTest`, `HistoryScreenTest`, `OnboardingSettingsTest`, `PlatformLocationClientTest`.
+- **Evidence:**
+  - `scripts/check.sh`: PASS (all 7 gates: privacy-guard, fixtures, JSON check, Gradle tests & lint, dogfood classpath, permissions, and manifest).
+  - Test suites: `:core:test` 100% pass; `:app:testDebugUnitTest` 18 tests pass.
+  - Emulator scenarios (API 36 `sp36` / `emulator-5554`):
+    - **E10 (In-app tap with GPS fix):** `PASS`. Set geo to Milan `45.4642 9.19`. Good face tapped -> immediate save -> 10s async fix -> `probe.sh` reported `entries: 1, located: 1`. Captured screenshots: `e10-sheet-open.png`, `e10-today-with-entry.png`, `e10-located-entry.png`, `e10-today-list.png`.
+    - **E12 (In-app location revoked):** `PASS`. `pm revoke ... ACCESS_FINE_LOCATION`. Okay face tapped -> `probe.sh` reported `entries: 2, located: 1` (`located` count unchanged). Captured screenshot: `e12-revoked-saved.png`.
+    - **E17 (Font scale 2.0x):** `PASS`. `settings put system font_scale 2.0`. Captured screenshots across Today, FollowUpSheet, Week, Settings, and History (`e17-today-200.png`, `e17-sheet-200.png`, `e17-settings-200.png`, `e17-history-200.png`, `e17-week-200.png`). Verified clean layouts with no clipping or overlapping controls.
+    - **E18 (Night mode):** `PASS`. `cmd uimode night yes`. Captured screenshots (`e18-today-night.png`, `e18-sheet-night.png`, `e18-history-night.png`). Verified dark surfaces, high contrast outlines, and clear readability.
+  - Subagent reviews:
+    - `spec-reviewer`: Verified against `docs/spec/` (screens.md, data.md, product.md). Addressed string resource extractions, selected states on `FaceButton`, and test coverage.
+    - `copy-reviewer`: Verified against copy guidelines and non-negotiables. Verified zero clinical language, zero guilt/scores/streaks, no exclamation marks on low mood screens, proper support emergency notice, and resource-composed text.
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Human checks:**
+  - H2: Real GPS fresh fix in the app within ~10 s (can be tested on phone anytime; verified on emulator in E10).
+- **Decisions needed:** none.
 
 ## M5 — Check-in notification and reminders → dogfood build 1
 - **Status:** not started
