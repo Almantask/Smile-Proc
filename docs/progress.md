@@ -246,7 +246,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M4 — Check-in in the app
-- **Status:** not started
+- **Status:** in progress
 
 ## M5 — Check-in notification and reminders → dogfood build 1
 - **Status:** not started
