@@ -10,8 +10,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.smileproc.ui.HelloScreen
+import com.example.smileproc.ui.MainApp
 import com.example.smileproc.ui.RecoveryScreen
+import com.example.smileproc.ui.onboarding.OnboardingScreen
 import com.example.smileproc.ui.theme.SmileProcTheme
 import kotlinx.coroutines.launch
 
@@ -22,8 +23,10 @@ class MainActivity : ComponentActivity() {
         val container = SmileProcApplication.container(this)
         setContent {
             val storageState by container.storageState.collectAsStateWithLifecycle()
+            val onboardingCompleted by container.settingsRepository.onboardingCompleted.collectAsStateWithLifecycle(initialValue = null)
+
             SmileProcTheme {
-                when (storageState) {
+                when (val state = storageState) {
                     StorageState.Loading -> {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
@@ -43,7 +46,29 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     is StorageState.Ready -> {
-                        HelloScreen()
+                        when (onboardingCompleted) {
+                            null -> {
+                                Surface(
+                                    modifier = Modifier.fillMaxSize(),
+                                    color = MaterialTheme.colorScheme.background,
+                                ) {}
+                            }
+                            false -> {
+                                OnboardingScreen(
+                                    onComplete = {
+                                        container.applicationScope.launch {
+                                            container.settingsRepository.setOnboardingCompleted(true)
+                                        }
+                                    },
+                                )
+                            }
+                            true -> {
+                                MainApp(
+                                    container = container,
+                                    storage = state.storage,
+                                )
+                            }
+                        }
                     }
                 }
             }

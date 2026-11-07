@@ -100,15 +100,18 @@ class PlatformLocationClientTest {
         private val _onboarding = MutableStateFlow(false)
         private val _tagPicker = MutableStateFlow(TagPickerMode.GRADUAL)
         private val _lowRun = MutableStateFlow(false)
+        private val _lowRunDismissedEntryId = MutableStateFlow<String?>(null)
 
         override val captureLocation: Flow<Boolean> = _capture
         override val onboardingCompleted: Flow<Boolean> = _onboarding
         override val tagPickerMode: Flow<TagPickerMode> = _tagPicker
         override val lowRunDismissed: Flow<Boolean> = _lowRun
+        override val lowRunDismissedEntryId: Flow<String?> = _lowRunDismissedEntryId
 
         override suspend fun setCaptureLocation(enabled: Boolean) { _capture.value = enabled }
         override suspend fun setOnboardingCompleted(completed: Boolean) { _onboarding.value = completed }
         override suspend fun setTagPickerMode(mode: TagPickerMode) { _tagPicker.value = mode }
         override suspend fun setLowRunDismissed(dismissed: Boolean) { _lowRun.value = dismissed }
+        override suspend fun setLowRunDismissedEntryId(entryId: String?) { _lowRunDismissedEntryId.value = entryId }
     }
 }
