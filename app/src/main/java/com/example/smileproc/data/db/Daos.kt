@@ -16,6 +16,9 @@ interface EntryDao {
     @Query("SELECT * FROM entry WHERE id = :id LIMIT 1")
     suspend fun getById(id: String): EntryRow?
 
+    @Query("SELECT * FROM entry LIMIT 1")
+    suspend fun peekOne(): EntryRow?
+
     @Query("SELECT * FROM entry ORDER BY createdAt DESC, id ASC")
     suspend fun getAllNewestFirst(): List<EntryRow>
 
@@ -49,6 +52,9 @@ interface PlaceDao {
     @Query("SELECT * FROM place WHERE id = :id LIMIT 1")
     suspend fun getById(id: String): PlaceRow?
 
+    @Query("SELECT * FROM place LIMIT 1")
+    suspend fun peekOne(): PlaceRow?
+
     @Query("SELECT * FROM place ORDER BY id ASC")
     suspend fun getAll(): List<PlaceRow>
 
@@ -72,6 +78,9 @@ interface WeeklyCardDao {
 
     @Query("SELECT * FROM weekly_card WHERE periodStart = :periodStart LIMIT 1")
     suspend fun getByPeriodStart(periodStart: Long): WeeklyCardRow?
+
+    @Query("SELECT * FROM weekly_card LIMIT 1")
+    suspend fun peekOne(): WeeklyCardRow?
 
     @Query("SELECT * FROM weekly_card ORDER BY periodStart DESC")
     suspend fun getAllNewestFirst(): List<WeeklyCardRow>

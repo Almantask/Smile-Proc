@@ -13,19 +13,30 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 /**
+ * Lifecycle extension of [Sealer] for key provisioning on fresh install and explicit deletion on
+ * *Start fresh* / *Delete all data*.
+ */
+interface ManagedSealer : Sealer {
+    @Throws(SealException::class)
+    fun ensureKeyExists()
+
+    fun deleteKeyIfPresent()
+}
+
+/**
  * Android Keystore [Sealer] (`docs/spec/android.md` › Storage and encryption).
  *
  * - Key alias: [KEY_ALIAS] (`smileproc-db-v1`), AES-256-GCM, no padding, randomized encryption.
  * - Deliberately sets **neither** `setUserAuthenticationRequired` nor `setUnlockedDeviceRequired`
  *   so notification face taps can seal and persist entries while the phone is locked (after the
  *   first unlock since boot).
- * - Never auto-creates a replacement key inside [open] or [hasUsableKey], so a present database
+ * - Never auto-creates a replacement key inside [open] or [isKeyAvailable], so a present database
  *   with a missing/invalidated key routes to the recovery screen instead of silently stranding or
  *   wiping existing history.
  */
 class KeystoreSealer(
     private val alias: String = KEY_ALIAS,
-) : Sealer {
+) : ManagedSealer {
 
     @Synchronized
     override fun isKeyAvailable(): Boolean = loadExistingKey() != null
@@ -36,7 +47,7 @@ class KeystoreSealer(
      */
     @Synchronized
     @Throws(SealException::class)
-    fun ensureKeyExists() {
+    override fun ensureKeyExists() {
         if (loadExistingKey() != null) return
         try {
             val generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE_PROVIDER)
@@ -59,7 +70,7 @@ class KeystoreSealer(
 
     /** Deletes the Keystore entry if present (used by *Start fresh* and *Delete all data*). */
     @Synchronized
-    fun deleteKeyIfPresent() {
+    override fun deleteKeyIfPresent() {
         val store = openKeyStore()
         if (store.containsAlias(alias)) {
             store.deleteEntry(alias)
