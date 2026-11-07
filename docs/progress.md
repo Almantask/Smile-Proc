@@ -58,7 +58,7 @@ Status values: not started · in progress · partly verified · claude-verified 
   11. Backup and data-extraction rules (on M3's list) came forward to M0: `allowBackup="false"`, `dataExtractionRules` and `fullBackupContent` exclude every domain.
   12. `.gitattributes` keeps scripts, JSON, Kotlin, Gradle and XML files LF on every platform. Git here has `core.autocrlf=true`, which would break the bash scripts.
 - **Not run:** none.
-- **Not fixed (for M2):** logic.md rules no fixture can fail yet. M2 adds unit tests for:
+- **Not fixed (for M2):** logic.md rules no fixture could fail in M0 (all 5 covered by unit tests in M2):
   - weekday detectors skipped while the first entry is under `weekdayMinDataDays` before periodEnd;
   - `weekdayMinDistinctDates`;
   - the balance swap (see decision 3);
@@ -160,9 +160,41 @@ Status values: not started · in progress · partly verified · claude-verified 
   1. Still open from M0: the Room line (before M3), Android 17 coverage, the Support emergency line (before M8).
 
 ## M2 — Core logic
-- **Status:** not started
+- **Status:** claude-verified (2026-11-07, tag `m2-claude-verified`)
 - **Decided before M2:**
   1. **Balance rule (human, 2026-11-07):** respect max one per family on the final card. When `limit >= 2`, at least 2 items were picked, and nothing picked has `direction == higher`, replace the last pick with the highest-scoring `higher` candidate with `pattern` confidence whose `family` is not among the remaining kept picks (`picked.dropLast(1)`).
+- **Built:**
+  - `:core` (`core/src/main/kotlin/com/example/smileproc/core/`, pure Kotlin/JVM, zero `android.*` / `androidx.*` imports):
+    - `CanonicalJson` (`IsoInstantSerializer` enforcing millisecond `.000Z` UTC ISO-8601, strict `json`, `prettyJson`, `contentJson`), `Models` (`Mood` 1..3 int serializer, `EntrySource`, `LocationKind`, `Daypart`, `PlaceKind`, `LocationSample`, `Entry` with validation and entry-zone `localDate`/`isoWeekday`/`daypart`/`hasCore`, `PlaceLabel`), `LocationAcceptance`.
+    - Content loaders: `PatternConfig` (all 32 keys from `content/pattern-config.json`, zero fallback defaults), `EmotionTags`, `PatternLibrary` (`LibraryMatchCriteria`, `LibraryEntry`, placeholder rendering), `SupportCatalog` (`verified` region filtering).
+    - `Geo` (Haversine `R = 6,371,000 m`, arithmetic `centroid`), `PlaceResolver` (5-step deterministic clustering, single stabilise pass, lower-`ClusterID` tie-breaker, `findMergeCandidate`, `mergedAnchor`, `summarizeUnnamed`), `CardPeriod` (DST-safe 7/14/28-day calendar windows and `previousDueCardPeriod`).
+    - `PatternModels` and `PatternEngine`: all 7 detectors (`timeOfDay`, `weekday`, `weekdayDaypart` excluding `night`, `place`, `awayFromHome`, `tagOnLow`, `tagAtPlace`), `sdFloor`, `fineTagDominance`, deterministic comparator rounding `score` to 9 decimals.
+    - `LibraryMatcher`, `WeeklyCardBuilder` (`Variant`, `CardItem`, `WeeklyCard`, greedy one-per-family selection, early-hint slot filling, balance swap per decision 1, `dueCardPeriod`), `LowMoodMonitor` (last `lowRunCount` entries across `>= lowRunMinDistinctDays`, dismiss and non-Low re-arm), `CheckInMachine` (pure reducer across all states/events, `ID_CHECKIN = 1`, `NotificationCopyKey` mapping to `strings.xml`), `SyntheticDataGenerator`.
+  - `:core` unit tests (`core/src/test/kotlin/com/example/smileproc/core/`, 43 tests across 15 test classes including M0's 3 contract suites): `ModelsAndCodecTest`, `LocationAcceptanceTest`, `ContentLoadersTest`, `PlaceResolverTest`, `CardPeriodTest`, `PatternEngineTest`, `LibraryMatcherTest`, `WeeklyCardBuilderTest`, `LowMoodMonitorTest`, `CheckInMachineTest`, `PatternFixturesTest`, `NoiseGuardTest`.
+  - `core/build.gradle.kts`: forwards `WRITE_GOLDENS` to `smileproc.writeGoldens`.
+  - `fixtures/patterns/*.golden.json`: 14 golden snapshots generated via `WRITE_GOLDENS=1 ./gradlew :core:test`.
+- **Evidence:**
+  - `scripts/check.sh`: `privacy-guard`, `fixtures`, `json`, `gradle` (`:core:test :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDogfood`), `dogfood-classpath`, `dogfood-permissions` and `dogfood-manifest` all PASS → `check.sh: PASS`.
+  - `:core:test` covers every `:core` item in `docs/spec/testing.md` (except M9's `.smileproc` export crypto and `vector-1.json`) plus all five M0 `Not fixed (for M2)` rules:
+    - All 14 `fixtures/patterns/*` expectations and golden snapshots (`afternoon-dip`, `low-week`, `sunday-evening`, `out-lifts`, `tired-on-low`, `stressed-at-work`, `first-week`, `not-enough-data`, `dst-week`, `travel`, `no-location`, `noise-1..3`), 5 `fixtures/places/*` scenarios (including `centroid-drift` and lower-`ClusterID` tie-breaking), and 10 `fixtures/periods/card-periods` cases.
+    - Exhaustive `LibraryMatcherTest` across all 7 detectors × directions × dayparts/weekdays/placeKinds/42 tags; `ContentLoadersTest` mutates and omits every one of the 32 keys in `content/pattern-config.json`.
+    - `PatternEngineTest` covers `weekdayMinDataDays` skip, `weekdayMinDistinctDates`, `weekdayDaypart` `night` exclusion, and 9-decimal score tie-breaking; `WeeklyCardBuilderTest` covers early hints filling free slots and the one-per-family balance swap.
+    - `NoiseGuardTest`: 100 seeded random single weeks of 25 entries (`Variant.NORMAL`, `maxItems = 3`) → average `0.26` `pattern` items per card (`<= 0.3`).
+    - `LowMoodMonitorTest`: 5 Low on one day → no card; across 2 days → card; dismiss stays off until a non-Low entry re-arms.
+    - `CheckInMachineTest`: every spec transition row plus 1,000 × 50 seeded random event sequences verifying at most one `ID_CHECKIN` notification action per transition and only `strings.xml`'s four safe `NotificationCopyKey` strings.
+  - `spec-reviewer` (`product.md`, `data.md`, `logic.md`, `testing.md`; range `m1-claude-verified..HEAD`): `"No gaps"`.
+  - `copy-reviewer` (`m1-claude-verified..HEAD`): flagged hard-coded English notification string constants in `CheckInMachine`; fixed (`3dd648f`) by replacing them with `NotificationCopyKey` resource keys backed solely by `strings.xml`.
+- **Left:** nothing for M2 beyond the human checks below.
+- **Deviations:**
+  1. Host SDK / JDK setup (machine-only, zero repo script edits): installed Android SDK `cmdline-tools/latest` (23.0.0) into `%LOCALAPPDATA%\Android\Sdk` for `apkanalyzer` and ran Gradle with OpenJDK 25 (`C:\Users\ITWORK\.jdks\openjdk-25.0.1`) since the system `JAVA_HOME` pointed to a missing JBR path.
+  2. Added `AGENTS.md` and `.agents/` mirroring `.claude/` (committed on `main` per human decision on 2026-11-07) so Antigravity and Claude Code share identical rules, skills, and subagents.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Human checks:**
+  1. Skim `fixtures/patterns/afternoon-dip.golden.json` and `fixtures/patterns/low-week.golden.json` and reply `"goldens accepted"` / `"M2 accepted"`.
+- **Decisions needed:**
+  1. **Multi-week weekday noise rate (optional, before M8):** On 100 seeded single weeks of 25 uniform random entries (`testing.md` › Noise guard), average `pattern` items per card is `0.26` (`<= 0.3`, passes). Across **4-week (100-entry) uniform random histories**, `weekday` (7 segments) + `weekdayDaypart` (21 segments) tests 28 segments at unadjusted `zPattern = 2.0`, yielding ~`0.55` weekday false positives per card (~`0.84` total across all families). `content/pattern-config.json` was left untouched; decide before M8 whether to keep `zPattern = 2.0` for weekday detectors or introduce a stricter weekday z-threshold.
+  2. Still open from M0: the Room line (before M3), Android 17 coverage, and the Support emergency line (before M8).
 
 ## M3 — Storage and crypto
 - **Status:** not started
