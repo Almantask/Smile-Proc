@@ -278,7 +278,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M5 — Check-in notification and reminders → dogfood build 1
-- **Status:** claude-verified (2026-11-07, tag `m5-claude-verified`)
+- **Status:** accepted (2026-11-07; claude-verified 2026-11-07, tag `m5-claude-verified`)
 - **Decided before M5:**
   1. **Default reminders: 08:00, 12:00, 16:00 and 20:00, every day** (human, 2026-10-17, after the M1 phone checks: "every 4 hours").
      - The spec was updated on 2026-10-17:
