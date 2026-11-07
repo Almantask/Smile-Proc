@@ -220,6 +220,12 @@ fun TodayScreen(
             tagPickerMode = tagPickerMode,
             onTagPickerModeToggle = onTagPickerModeToggle,
             onSaveDetails = { tags, comment ->
+                val updated = entry.copy(
+                    tags = tags,
+                    comment = comment,
+                    updatedAt = Instant.now(),
+                )
+                onUpdateEntry(updated)
                 onUpdateEntryDetails(entry.id, tags, comment)
             },
             onDismiss = { activeFollowUpEntry = null },
