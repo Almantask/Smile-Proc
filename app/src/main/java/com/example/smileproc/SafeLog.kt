@@ -11,8 +11,15 @@ object SafeLog {
 
     enum class Event {
         DEBUG_EVENT_NOT_WIRED,
+        DEBUG_SEAL_SAVED,
+        DEBUG_SEAL_FAILED,
         PROBE_WRITTEN,
         PROBE_FAILED,
+        STORAGE_KEY_MISSING,
+        STORAGE_SEAL_FAILED,
+        STORAGE_OPEN_FAILED,
+        STORAGE_START_FRESH,
+        STORAGE_START_FRESH_FAILED,
     }
 
     fun event(event: Event) {
