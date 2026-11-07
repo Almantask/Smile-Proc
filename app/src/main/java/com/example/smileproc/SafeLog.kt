@@ -25,6 +25,13 @@ object SafeLog {
         ENTRY_SAVED,
         ENTRY_UPDATED,
         ENTRY_DELETED,
+        NOTIFY_FAILED,
+        ALARM_SCHEDULE_FAILED,
+        NOTIFICATION_TAP_SAVED,
+        NOTIFICATION_TAP_FAILED,
+        REMINDER_FIRED,
+        TEST_REQUESTED,
+        TEST_COMPLETED,
     }
 
     fun event(event: Event) {

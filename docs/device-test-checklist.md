@@ -29,22 +29,22 @@ Emulators (created in M0 / M3 by `scripts/emu/create-avds.sh`): `sp36` = API 36 
 
 | Id | Scenario | Milestone | sp36 | sp29 |
 |---|---|---|---|---|
-| E1 | Standing notification on the lock screen; tap Okay → "Saved ✓" | M5, M10 | — | M5 (E19) |
-| E2 | Restore after "Saved ✓" | M5, M10 | — | |
-| E3 | Never more than one SmileProc notification | M5, M10 | — | M5 (E19) |
-| E4 | API 34+ swipe-away while unlocked → `dismissed`; back after reminder | M5, M10 | — | n/a |
-| E5 | Locked: can't swipe away | M5, M10 | — | |
-| E6 | Reboot: none before unlock; standing back after; next alarm scheduled | M5, M10 | — | |
-| E7 | Standing off: faces → "Saved ✓" → gone | M5, M10 | — | |
-| E8 | API 33+: revoke POST_NOTIFICATIONS → problem row, grant → ✓ | M5, M10 | — | n/a |
-| E9 | Test check-in → "It works ✓", no entry | M5, M10 | — | |
+| E1 | Standing notification on the lock screen; tap Okay → "Saved ✓" | M5, M10 | pass (2026-11-07) | pass (2026-11-07) |
+| E2 | Restore after "Saved ✓" | M5, M10 | pass (2026-11-07) | |
+| E3 | Never more than one SmileProc notification | M5, M10 | pass (2026-11-07) | pass (2026-11-07) |
+| E4 | API 34+ swipe-away while unlocked → `dismissed`; back after reminder | M5, M10 | pass (2026-11-07) | n/a |
+| E5 | Locked: can't swipe away | M5, M10 | pass (2026-11-07) | |
+| E6 | Reboot: none before unlock; standing back after; next alarm scheduled | M5, M10 | pass (2026-11-07) | |
+| E7 | Standing off: faces → "Saved ✓" → gone | M5, M10 | pass (2026-11-07) | |
+| E8 | API 33+: revoke POST_NOTIFICATIONS → problem row, grant → ✓ | M5, M10 | pass (2026-11-07) | n/a |
+| E9 | Test check-in → "It works ✓", no entry | M5, M10 | pass (2026-11-07) | |
 | E10 | In-app tap with GPS fix → located +1 | M4, M10 | pass (2026-11-07) | |
-| E11 | Lock-screen tap with a 1-min-old fix → saved, record located | M5, M10 | — | |
-| E12 | Location revoked: app and lock-screen taps both save, located unchanged | M4, M5, M10 | pass (app tap, 2026-11-07) | |
-| E13 | Reminder 3 min ahead under forced idle (record delay) | M5, M10 | — | |
+| E11 | Lock-screen tap with a 1-min-old fix → saved, record located | M5, M10 | pass (2026-11-07) | |
+| E12 | Location revoked: app and lock-screen taps both save, located unchanged | M4, M5, M10 | pass (app and lock tap, 2026-11-07) | |
+| E13 | Reminder 3 min ahead under forced idle (record delay) | M5, M10 | pass (~120s late, 2026-11-07) | |
 | E14 | App lock after 61 s in background; recents show no content | M9, M10 | — | M9 (E19) |
 | E15 | Seeded demo: Week variants render; low week leads with acknowledgment | M8, M10 | — | |
 | E16 | Delete all: 0 entries, no notification, no alarms | M9, M10 | — | |
 | E17 | Font scale 2.0: nothing clipped (Today, sheet, Week, Settings) | M4, M6, M10 | pass (2026-11-07) | |
 | E18 | Night mode: readable, sufficient contrast | M4, M6, M10 | pass (2026-11-07) | |
-| E19 | On sp29: E1, E3, E14 | M5, M9, M10 | n/a | — |
+| E19 | On sp29: E1, E3, E14 | M5, M9, M10 | n/a | pass (E1, E3, 2026-11-07) |

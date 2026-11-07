@@ -40,6 +40,10 @@ fun SettingsScreen(
     captureLocation: Boolean,
     onCaptureLocationChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    standing: Boolean = true,
+    onStandingChanged: (Boolean) -> Unit = {},
+    onNavigateToReminders: () -> Unit = {},
+    onNavigateToLockScreenCheckIn: () -> Unit = {},
 ) {
     var showPrivacyDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
@@ -60,6 +64,70 @@ fun SettingsScreen(
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            // Reminders row
+            val remindersLabel = stringResource(R.string.settings_reminders)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onNavigateToReminders() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = remindersLabel,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Keep a check-in on the lock screen row
+            val standingLabel = stringResource(R.string.settings_keep_checkin)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onStandingChanged(!standing) }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = standingLabel,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f),
+                )
+                Switch(
+                    checked = standing,
+                    onCheckedChange = onStandingChanged,
+                    modifier = Modifier.semantics { contentDescription = standingLabel },
+                )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Lock-screen check-in readiness row
+            val lockscreenLabel = stringResource(R.string.settings_lockscreen)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onNavigateToLockScreenCheckIn() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = lockscreenLabel,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
             // Location toggle row
             val captureLocationLabel = stringResource(R.string.settings_capture_location)
             Row(

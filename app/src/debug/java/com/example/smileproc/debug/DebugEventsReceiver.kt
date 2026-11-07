@@ -6,9 +6,11 @@ import android.content.Intent
 import com.example.smileproc.SafeLog
 import com.example.smileproc.SmileProcApplication
 import com.example.smileproc.StorageState
+import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.Entry
 import com.example.smileproc.core.EntrySource
 import com.example.smileproc.core.Mood
+import com.example.smileproc.notify.CheckInReceiver
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
@@ -27,7 +29,33 @@ class DebugEventsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_SEAL_TEST_ENTRY -> handleSealTestEntry(context.applicationContext)
+            ACTION_FIRE_REMINDER -> handleFireReminder(context.applicationContext)
+            ACTION_FIRE_RESTORE -> handleFireRestore(context.applicationContext)
             else -> SafeLog.event(SafeLog.Event.DEBUG_EVENT_NOT_WIRED)
+        }
+    }
+
+    private fun handleFireReminder(appContext: Context) {
+        val container = SmileProcApplication.container(appContext)
+        val pending = goAsync()
+        container.applicationScope.launch {
+            try {
+                CheckInReceiver.dispatchMachineEvent(appContext, CheckInMachine.Event.ReminderFired)
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+
+    private fun handleFireRestore(appContext: Context) {
+        val container = SmileProcApplication.container(appContext)
+        val pending = goAsync()
+        container.applicationScope.launch {
+            try {
+                CheckInReceiver.dispatchMachineEvent(appContext, CheckInMachine.Event.RestoreTimer)
+            } finally {
+                pending.finish()
+            }
         }
     }
 
@@ -67,5 +95,7 @@ class DebugEventsReceiver : BroadcastReceiver() {
 
     companion object {
         const val ACTION_SEAL_TEST_ENTRY = "com.example.smileproc.debug.SEAL_TEST_ENTRY"
+        const val ACTION_FIRE_REMINDER = "com.example.smileproc.debug.FIRE_REMINDER"
+        const val ACTION_FIRE_RESTORE = "com.example.smileproc.debug.FIRE_RESTORE"
     }
 }

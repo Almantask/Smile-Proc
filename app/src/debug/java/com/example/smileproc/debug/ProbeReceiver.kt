@@ -8,6 +8,7 @@ import com.example.smileproc.SmileProcApplication
 import com.example.smileproc.StorageState
 import com.example.smileproc.core.EntrySource
 import com.example.smileproc.core.Mood
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -21,6 +22,11 @@ class ProbeReceiver : BroadcastReceiver() {
         val pending = goAsync()
         container.applicationScope.launch {
             try {
+                val machineState = container.settingsRepository.machineState.first().toString()
+                val lastTestSuccess = container.settingsRepository.lastTestSuccess.first() != null
+                val dismissed = container.settingsRepository.dismissed.first()
+                val standing = container.settingsRepository.standing.first()
+
                 val probeJson = when (val state = container.awaitState()) {
                     is StorageState.Ready -> {
                         val entries = state.storage.entryRepository.getAllOldestFirst()
@@ -40,19 +46,23 @@ class ProbeReceiver : BroadcastReceiver() {
                             append(", \"perSource\": {\"app\": ").append(fromApp)
                             append(", \"notification\": ").append(fromNotif).append('}')
                             append(", \"located\": ").append(located)
-                            append(", \"machineState\": null")
-                            append(", \"lastTestResult\": null}")
+                            append(", \"machineState\": \"").append(machineState).append('"')
+                            append(", \"lastTestResult\": ").append(lastTestSuccess)
+                            append(", \"dismissed\": ").append(dismissed)
+                            append(", \"standing\": ").append(standing).append('}')
                         }
                     }
                     StorageState.NeedsRecovery -> {
                         "{\"stub\": false, \"storageState\": \"needs_recovery\", \"entries\": null, " +
                             "\"perMood\": null, \"perSource\": null, \"located\": null, " +
-                            "\"machineState\": null, \"lastTestResult\": null}"
+                            "\"machineState\": \"$machineState\", \"lastTestResult\": $lastTestSuccess, " +
+                            "\"dismissed\": $dismissed, \"standing\": $standing}"
                     }
                     StorageState.Loading -> {
                         "{\"stub\": false, \"storageState\": \"loading\", \"entries\": null, " +
                             "\"perMood\": null, \"perSource\": null, \"located\": null, " +
-                            "\"machineState\": null, \"lastTestResult\": null}"
+                            "\"machineState\": \"$machineState\", \"lastTestResult\": $lastTestSuccess, " +
+                            "\"dismissed\": $dismissed, \"standing\": $standing}"
                     }
                 }
                 appContext.openFileOutput(FILE, Context.MODE_PRIVATE).use {

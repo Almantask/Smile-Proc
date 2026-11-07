@@ -29,9 +29,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.smileproc.AppContainer
 import com.example.smileproc.R
 import com.example.smileproc.StorageBundle
+import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.data.TagPickerMode
+import com.example.smileproc.notify.CheckInReceiver
 import com.example.smileproc.ui.history.HistoryScreen
 import com.example.smileproc.ui.places.resolvePlaces
+import com.example.smileproc.ui.settings.LockScreenCheckInScreen
+import com.example.smileproc.ui.settings.RemindersScreen
 import com.example.smileproc.ui.settings.SettingsScreen
 import com.example.smileproc.ui.today.TodayScreen
 import kotlinx.coroutines.launch
@@ -52,6 +56,7 @@ fun MainApp(
     val context = LocalContext.current
     var currentTab by rememberSaveable { mutableStateOf(AppTab.TODAY) }
     var showingHistory by rememberSaveable { mutableStateOf(false) }
+    var activeSubScreen by rememberSaveable { mutableStateOf<String?>(null) } // "reminders", "lockscreen"
 
     val entries by storage.entryRepository.observeAllNewestFirst().collectAsStateWithLifecycle(initialValue = emptyList())
     val placeLabels by storage.placeRepository.observeAll().collectAsStateWithLifecycle(initialValue = emptyList())
@@ -61,11 +66,12 @@ fun MainApp(
 
     val lowRunDismissedEntryId by container.settingsRepository.lowRunDismissedEntryId.collectAsStateWithLifecycle(initialValue = null)
     val captureLocation by container.settingsRepository.captureLocation.collectAsStateWithLifecycle(initialValue = true)
+    val standing by container.settingsRepository.standing.collectAsStateWithLifecycle(initialValue = true)
     val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.GRADUAL)
 
     Scaffold(
         bottomBar = {
-            if (!showingHistory) {
+            if (!showingHistory && activeSubScreen == null) {
                 NavigationBar {
                     NavigationBarItem(
                         selected = currentTab == AppTab.TODAY,
@@ -133,6 +139,7 @@ fun MainApp(
                                         entry
                                     }
                                     storage.entryRepository.save(toSave)
+                                    CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.RatedInApp)
                                 }
                             },
                             onDeleteEntry = { id ->
@@ -168,6 +175,7 @@ fun MainApp(
                                         entry
                                     }
                                     storage.entryRepository.save(toSave)
+                                    CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.RatedInApp)
                                 }
                             },
                             onUpdateEntry = { entry ->
@@ -236,14 +244,42 @@ fun MainApp(
                     WeekPlaceholderScreen()
                 }
                 AppTab.SETTINGS -> {
-                    SettingsScreen(
-                        captureLocation = captureLocation,
-                        onCaptureLocationChanged = { enabled ->
-                            container.applicationScope.launch {
-                                container.settingsRepository.setCaptureLocation(enabled)
-                            }
-                        },
-                    )
+                    when (activeSubScreen) {
+                        "reminders" -> {
+                            RemindersScreen(
+                                container = container,
+                                onNavigateBack = { activeSubScreen = null },
+                            )
+                        }
+                        "lockscreen" -> {
+                            LockScreenCheckInScreen(
+                                container = container,
+                                onNavigateBack = { activeSubScreen = null },
+                            )
+                        }
+                        else -> {
+                            SettingsScreen(
+                                captureLocation = captureLocation,
+                                onCaptureLocationChanged = { enabled ->
+                                    container.applicationScope.launch {
+                                        container.settingsRepository.setCaptureLocation(enabled)
+                                    }
+                                },
+                                standing = standing,
+                                onStandingChanged = { enabled ->
+                                    container.applicationScope.launch {
+                                        container.settingsRepository.setStanding(enabled)
+                                        CheckInReceiver.dispatchMachineEvent(
+                                            context,
+                                            if (enabled) CheckInMachine.Event.StandingTurnedOn else CheckInMachine.Event.StandingTurnedOff,
+                                        )
+                                    }
+                                },
+                                onNavigateToReminders = { activeSubScreen = "reminders" },
+                                onNavigateToLockScreenCheckIn = { activeSubScreen = "lockscreen" },
+                            )
+                        }
+                    }
                 }
             }
         }

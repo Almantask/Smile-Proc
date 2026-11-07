@@ -10,6 +10,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.smileproc.core.CheckInMachine
+import com.example.smileproc.notify.CheckInNotifier
+import com.example.smileproc.notify.ReminderScheduler
 import com.example.smileproc.ui.MainApp
 import com.example.smileproc.ui.RecoveryScreen
 import com.example.smileproc.ui.onboarding.OnboardingScreen
@@ -55,9 +58,18 @@ class MainActivity : ComponentActivity() {
                             }
                             false -> {
                                 OnboardingScreen(
-                                    onComplete = {
+                                    container = container,
+                                    onComplete = { reminders, standing ->
                                         container.applicationScope.launch {
+                                            container.settingsRepository.setReminders(reminders)
+                                            container.settingsRepository.setStanding(standing)
                                             container.settingsRepository.setOnboardingCompleted(true)
+                                            ReminderScheduler.scheduleNext(this@MainActivity)
+                                            if (standing) {
+                                                val nextState = CheckInMachine.State.Faces(alerting = false)
+                                                container.settingsRepository.setMachineState(nextState)
+                                                CheckInNotifier.render(this@MainActivity, nextState, ongoing = true)
+                                            }
                                         }
                                     },
                                 )

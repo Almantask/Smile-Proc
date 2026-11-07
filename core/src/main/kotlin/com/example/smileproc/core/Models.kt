@@ -14,6 +14,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.util.Locale
+import java.util.UUID
 
 private val LOWERCASE_UUID = Regex("""^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$""")
 
@@ -224,5 +226,29 @@ data class PlaceLabel(
         require(anchorLongitude.isFinite() && anchorLongitude in -180.0..180.0) {
             "Invalid anchorLongitude: $anchorLongitude"
         }
+    }
+}
+
+/** Check-in reminder schedule (`docs/spec/android.md` › Reminders). */
+@Serializable
+data class Reminder(
+    val id: String = UUID.randomUUID().toString().lowercase(Locale.ROOT),
+    val hour: Int,
+    val minute: Int,
+    val days: Set<Int> = (1..7).toSet(),
+) {
+    init {
+        require(hour in 0..23) { "Hour must be in 0..23, got $hour" }
+        require(minute in 0..59) { "Minute must be in 0..59, got $minute" }
+        require(days.all { it in 1..7 }) { "Days must be ISO weekdays 1..7, got $days" }
+    }
+
+    companion object {
+        val DEFAULT_REMINDERS = listOf(
+            Reminder(id = "default-0800", hour = 8, minute = 0, days = (1..7).toSet()),
+            Reminder(id = "default-1200", hour = 12, minute = 0, days = (1..7).toSet()),
+            Reminder(id = "default-1600", hour = 16, minute = 0, days = (1..7).toSet()),
+            Reminder(id = "default-2000", hour = 20, minute = 0, days = (1..7).toSet()),
+        )
     }
 }

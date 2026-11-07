@@ -161,6 +161,22 @@ class ModelsAndCodecTest {
         assertFalse(entry.hasCore("sad"))
     }
 
+    @Test
+    fun reminderValidationAndSerialization() {
+        val reminder = Reminder(id = "test-1", hour = 14, minute = 30, days = setOf(1, 2, 3, 4, 5))
+        val encoded = CanonicalJson.json.encodeToString(Reminder.serializer(), reminder)
+        val decoded = CanonicalJson.json.decodeFromString(Reminder.serializer(), encoded)
+        assertEquals(reminder, decoded)
+
+        assertEquals(4, Reminder.DEFAULT_REMINDERS.size)
+        assertEquals(listOf(8, 12, 16, 20), Reminder.DEFAULT_REMINDERS.map { it.hour })
+        assertTrue(Reminder.DEFAULT_REMINDERS.all { it.minute == 0 && it.days == (1..7).toSet() })
+
+        assertThrows(IllegalArgumentException::class.java) { Reminder(hour = 24, minute = 0) }
+        assertThrows(IllegalArgumentException::class.java) { Reminder(hour = 12, minute = 60) }
+        assertThrows(IllegalArgumentException::class.java) { Reminder(hour = 12, minute = 0, days = setOf(0, 8)) }
+    }
+
     private fun <T : Throwable> assertThrows(expected: Class<T>, block: () -> Unit) {
         try {
             block()

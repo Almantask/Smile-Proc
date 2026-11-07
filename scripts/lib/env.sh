@@ -38,6 +38,8 @@ _java=""
 [ -n "${JAVA_HOME:-}" ] && _java=$(java_major "$(unix_path "$JAVA_HOME")")
 if [ -z "$_java" ] || [ "$_java" -lt 17 ]; then
   for jbr in "/c/Program Files/Android/Android Studio/jbr" \
+             "/c/Users/ITWORK/.jdks/openjdk-25.0.1" \
+             "$HOME/.jdks/openjdk-25.0.1" \
              "/Applications/Android Studio.app/Contents/jbr/Contents/Home" \
              "/opt/android-studio/jbr" "$HOME/android-studio/jbr"; do
     if [ -n "$(java_major "$jbr")" ]; then export JAVA_HOME="$jbr"; break; fi

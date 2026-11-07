@@ -5,7 +5,9 @@ import android.content.Context
 import android.location.Location
 import android.location.LocationManager
 import androidx.test.core.app.ApplicationProvider
+import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.LocationKind
+import com.example.smileproc.core.Reminder
 import com.example.smileproc.data.SettingsRepository
 import com.example.smileproc.data.TagPickerMode
 import kotlinx.coroutines.flow.Flow
@@ -107,11 +109,23 @@ class PlatformLocationClientTest {
         override val tagPickerMode: Flow<TagPickerMode> = _tagPicker
         override val lowRunDismissed: Flow<Boolean> = _lowRun
         override val lowRunDismissedEntryId: Flow<String?> = _lowRunDismissedEntryId
+        override val standing: Flow<Boolean> = MutableStateFlow(true)
+        override val dismissed: Flow<Boolean> = MutableStateFlow(false)
+        override val machineState: Flow<CheckInMachine.State> = MutableStateFlow(CheckInMachine.State.Hidden)
+        override val reminders: Flow<List<Reminder>> = MutableStateFlow(Reminder.DEFAULT_REMINDERS)
+        override val lastTestSuccess: Flow<Instant?> = MutableStateFlow(null)
 
         override suspend fun setCaptureLocation(enabled: Boolean) { _capture.value = enabled }
         override suspend fun setOnboardingCompleted(completed: Boolean) { _onboarding.value = completed }
         override suspend fun setTagPickerMode(mode: TagPickerMode) { _tagPicker.value = mode }
         override suspend fun setLowRunDismissed(dismissed: Boolean) { _lowRun.value = dismissed }
         override suspend fun setLowRunDismissedEntryId(entryId: String?) { _lowRunDismissedEntryId.value = entryId }
+        override suspend fun setStanding(enabled: Boolean) {}
+        override suspend fun setDismissed(dismissed: Boolean) {}
+        override suspend fun setMachineState(state: CheckInMachine.State) {}
+        override suspend fun setReminders(reminders: List<Reminder>) {}
+        override suspend fun recordTestSuccess(completedAt: Instant) {}
+        override suspend fun clearLastTestSuccess() {}
+        override suspend fun clearAll() {}
     }
 }

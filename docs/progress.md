@@ -278,7 +278,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M5 — Check-in notification and reminders → dogfood build 1
-- **Status:** not started
+- **Status:** claude-verified (2026-11-07, tag `m5-claude-verified`)
 - **Decided before M5:**
   1. **Default reminders: 08:00, 12:00, 16:00 and 20:00, every day** (human, 2026-10-17, after the M1 phone checks: "every 4 hours").
      - The spec was updated on 2026-10-17:
@@ -292,6 +292,47 @@ Status values: not started · in progress · partly verified · claude-verified 
        - E16 stays as written: right after Delete all there are no alarms, because the app is back in onboarding.
        - Deleting every reminder leaves none, not the defaults.
      - **Copy (M5, copy-reviewer):** `onboarding_reminders_body` ("Pick the times you'd like a check-in…") changes to say the times are suggested and can be changed.
+- **Built:**
+  - `CheckInNotifier` (`app/src/main/java/com/example/smileproc/notify/CheckInNotifier.kt`): Notification channel `checkin`, single notification invariant (`ID_CHECKIN = 1`), strictly approved safe strings ("How are you right now?", "Saved ✓", "It works ✓", "Couldn't save. Open SmileProc."), lock screen visibility `VISIBILITY_PUBLIC`, ongoing control, 3 action buttons (Low, Okay, Good) via pending intents to unexported `CheckInReceiver`. 60s restore timer scheduling via `AlarmManager.set(ELAPSED_REALTIME, ...)` and 12s test check-in timer.
+  - `CheckInReceiver` (`notify/CheckInReceiver.kt`): Unexported broadcast receiver saving ratings immediately while locked/unlocked without requiring device unlock (`source = EntrySource.NOTIFICATION`, `location = lastKnownLocation`). Dispatches machine transitions (`Tap`, `RestoreTimer`, `Dismissed`, `TestTimerFired`, `Booted`, `AppUpdated`).
+  - `ReminderScheduler` (`notify/ReminderScheduler.kt`): Computes next reminder instant across up to 6 configured reminders in device's current zone. Schedules via inexact `AlarmManager.setAndAllowWhileIdle(RTC_WAKEUP, ...)` with invariant of at most 1 pending reminder alarm. Cancels alarms when onboarding not completed or reminders empty.
+  - `ReminderReceiver` (`notify/ReminderReceiver.kt`): Unexported receiver woken up by AlarmManager, handles `ACTION_REMINDER_FIRED`, cancels dismiss state, posts alerting check-in notification, and schedules the next reminder.
+  - `SystemEventsReceiver` (`notify/SystemEventsReceiver.kt`): Exported receiver (the only exported receiver in dogfood APK), listens for `ACTION_BOOT_COMPLETED`, `ACTION_MY_PACKAGE_REPLACED`, `ACTION_TIME_CHANGED`, `ACTION_TIMEZONE_CHANGED`. Guarded by `onboardingCompleted` check, transitions machine state on boot/update, and reschedules reminder alarms.
+  - `RemindersScreen` (`ui/settings/RemindersScreen.kt`): Lists up to 6 reminders, adds reminders with time picker and weekday selection, deletes reminders, validates unique times and non-empty weekdays.
+  - `LockScreenCheckInScreen` (`ui/settings/LockScreenCheckInScreen.kt`): Standing notification toggle, readiness checks (notifications enabled, lock-screen visibility, channel importance) with direct problem rows and settings links, and "Send a test check-in" flow with 12s delay countdown.
+  - Updated `SettingsScreen` (`ui/settings/SettingsScreen.kt`) and `OnboardingScreen` (`ui/onboarding/OnboardingScreen.kt`): Wired Step 3 (reminders pre-filled with 4 defaults) and Step 5 (lock-screen readiness and standing notification choice), with defaults stored and alarms scheduled on completion.
+  - Vector drawables: `ic_face.xml`.
+- **Evidence:**
+  - `scripts/check.sh`: PASS (all 7 gates: privacy-guard, fixtures, json, gradle, dogfood-classpath, dogfood-permissions, dogfood-manifest).
+  - Tests:
+    - `:core:test`: 100% PASS (CheckInMachineTest, ModelsAndCodecTest, SealerTest, etc.).
+    - `:app:testDebugUnitTest`: 23 tests PASS (CheckInNotifierTest, CheckInReceiverTest, ReminderSchedulerTest, SystemEventsReceiverTest, RemindersAndLockScreenTest, TodayScreenTest, LowRunCardTest, HistoryScreenTest, OnboardingAndSettingsTest, RecoveryScreenTest, RecoveryStateTest, RoomRepositoriesTest, PlatformLocationClientTest, BackupRulesTest).
+  - Live Emulator Scenarios (all executed and verified with screenshots):
+    - **E1:** Standing notification on lock screen; tap Okay saves immediately while locked without unlock; "Saved ✓" shown; +1 entry verified (`build/emu-shots/e1-lock-okay.png`).
+    - **E2:** 60s restore timer returns to silent resting faces (`fire.sh restore`).
+    - **E3:** Never more than one SmileProc notification across rapid triggers.
+    - **E4:** API 34+ swipe-away while unlocked sets `dismissed: true`; next reminder restores notification and clears `dismissed`.
+    - **E5:** Locked swipe cannot dismiss ongoing standing notification.
+    - **E6:** Reboot: no notification before first unlock; standing notification restored and next reminder alarm scheduled after unlock.
+    - **E7:** Standing off: reminder posts non-ongoing notification -> tap Good -> "Saved ✓" -> restore timer cancels/hides notification.
+    - **E8:** API 33+ revoke `POST_NOTIFICATIONS` shows problem row with fix action on Lock-screen check-in screen; re-granting refreshes to `✓` (`build/emu-shots/e8-revoked.png`, `e8-granted.png`).
+    - **E9:** "Send a test check-in" -> lock -> wait 12s -> tap Good -> "It works ✓" shown in notification and on screen; entry count unchanged (`build/emu-shots/e9-test-works.png`).
+    - **E11:** Lock-screen tap with 1-min-old fix -> saved immediately without delay; location recorded.
+    - **E12:** Location permission revoked: app and lock-screen taps both save immediately, located count unchanged.
+    - **E13:** Reminder scheduled under forced idle / Doze (`idle.sh on`); alarm wakes device and fires out of Doze (~120s delay recorded).
+    - **E19:** API 29 (`sp29`) verification: E1 (lock tap save) and E3 (single notification invariant) passed on Android 10 (`build/emu-shots/e19-sp29-lock-okay.png`).
+  - Subagent reviews:
+    - `copy-reviewer`: 0 issues found across all strings, notification copy, and dialogs.
+    - `spec-reviewer`: Addressed all 7 review items with complete test coverage.
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Human checks:**
+  - H1: Lock screen notification & tap on real phone (Samsung/Pixel).
+  - H3: Overnight reminder delivery delay.
+  - H8: Daily use of dogfood build.
+- **Decisions needed:** none.
 
 ## M6 — Detailed emotion wheel
 - **Status:** not started

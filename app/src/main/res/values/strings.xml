@@ -313,7 +313,7 @@
     <string name="onboarding_location_body">With location on, SmileProc can notice how places affect your mood. Your check-ins still save without it.</string>
     <string name="onboarding_location_action">Allow location</string>
     <string name="onboarding_reminders_title">Gentle reminders</string>
-    <string name="onboarding_reminders_body">Pick the times you\'d like a check-in. You can tap a face right on the notification.</string>
+    <string name="onboarding_reminders_body">These times are suggested for you and can be changed any time. You can tap a face right on the notification.</string>
     <string name="onboarding_reminders_action">Allow notifications</string>
     <string name="onboarding_applock_title">App lock</string>
     <string name="onboarding_applock_body">Ask for your fingerprint, face or screen lock when SmileProc opens. The check-in on your lock screen keeps working.</string>
