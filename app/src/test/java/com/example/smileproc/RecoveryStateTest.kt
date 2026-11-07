@@ -8,6 +8,7 @@ import com.example.smileproc.core.Mood
 import com.example.smileproc.core.crypto.JcaSealer
 import com.example.smileproc.core.crypto.SealException
 import com.example.smileproc.data.ManagedSealer
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -131,6 +132,36 @@ class RecoveryStateTest {
         assertTrue(context.getDatabasePath(dbName).exists())
     }
 
+    @Test
+    fun startFreshFailureReturnsNeedsRecoveryWithoutThrowing() = runTest {
+        val failingSealer = FakeManagedSealer().apply { failNextEnsureKey = true }
+        val container = newContainer(failingSealer)
+
+        val result = container.startFresh()
+        assertEquals(StorageState.NeedsRecovery, result)
+        assertEquals(StorageState.NeedsRecovery, container.storageState.value)
+    }
+
+    @Test
+    fun cancellingCallerDuringInitializeDoesNotPoisonStateIntoNeedsRecovery() = runTest {
+        val sealer = FakeManagedSealer().apply { cancelNextEnsureKey = true }
+        val container = newContainer(sealer)
+
+        var caughtCancellation = false
+        try {
+            container.awaitState()
+        } catch (_: CancellationException) {
+            caughtCancellation = true
+        }
+        assertTrue(caughtCancellation)
+        assertEquals(StorageState.Loading, container.storageState.value)
+
+        // Subsequent caller succeeds cleanly and transitions to Ready.
+        val settled = container.awaitState()
+        assertTrue(settled is StorageState.Ready)
+        assertEquals(settled, container.storageState.value)
+    }
+
     private fun newContainer(sealer: ManagedSealer): AppContainer =
         AppContainer(
             context = context,
@@ -141,10 +172,20 @@ class RecoveryStateTest {
 
     private class FakeManagedSealer : ManagedSealer {
         private var delegate: JcaSealer? = null
+        var failNextEnsureKey: Boolean = false
+        var cancelNextEnsureKey: Boolean = false
 
         override fun isKeyAvailable(): Boolean = delegate?.isKeyAvailable() == true
 
         override fun ensureKeyExists() {
+            if (cancelNextEnsureKey) {
+                cancelNextEnsureKey = false
+                throw CancellationException("Caller cancelled")
+            }
+            if (failNextEnsureKey) {
+                failNextEnsureKey = false
+                throw SealException(SealException.Reason.SEAL_FAILED)
+            }
             if (delegate == null) {
                 delegate = JcaSealer.withNewKey()
             }

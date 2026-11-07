@@ -8,6 +8,7 @@ import com.example.smileproc.data.ManagedSealer
 import com.example.smileproc.data.PlaceRepository
 import com.example.smileproc.data.WeeklyCardRepository
 import com.example.smileproc.data.db.SmileProcDatabase
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -89,6 +90,9 @@ class AppContainer(
                     _storageState.value = ready
                     ready
                 }
+            } catch (e: CancellationException) {
+                openedDb?.close()
+                throw e
             } catch (e: Exception) {
                 openedDb?.close()
                 SafeLog.failure(SafeLog.Event.STORAGE_SEAL_FAILED, e)
@@ -117,6 +121,9 @@ class AppContainer(
             val ready = StorageState.Ready(bundle)
             _storageState.value = ready
             ready
+        } catch (e: CancellationException) {
+            openedDb?.close()
+            throw e
         } catch (e: SealException) {
             openedDb?.close()
             SafeLog.failure(SafeLog.Event.STORAGE_KEY_MISSING, e)
@@ -142,6 +149,8 @@ class AppContainer(
     /**
      * Explicit user recovery action (*Start fresh*): deletes the unopenable database, replaces the
      * Keystore key, and opens an empty encrypted database.
+     *
+     * Never throws non-cancellation exceptions, so launching from UI scopes cannot crash the app.
      */
     suspend fun startFresh(): StorageState = mutex.withLock {
         var openedDb: SmileProcDatabase? = null
@@ -150,18 +159,27 @@ class AppContainer(
             appContext.deleteDatabase(dbName)
             sealer.deleteKeyIfPresent()
             sealer.ensureKeyExists()
-            val db = SmileProcDatabase.open(appContext, dbName)
-            openedDb = db
-            db.entryDao().count()
-            val ready = StorageState.Ready(buildBundle(db))
-            _storageState.value = ready
-            SafeLog.event(SafeLog.Event.STORAGE_START_FRESH)
-            ready
+            if (!verifyKeyUsable()) {
+                SafeLog.event(SafeLog.Event.STORAGE_START_FRESH_FAILED)
+                _storageState.value = StorageState.NeedsRecovery
+                StorageState.NeedsRecovery
+            } else {
+                val db = SmileProcDatabase.open(appContext, dbName)
+                openedDb = db
+                db.entryDao().count()
+                val ready = StorageState.Ready(buildBundle(db))
+                _storageState.value = ready
+                SafeLog.event(SafeLog.Event.STORAGE_START_FRESH)
+                ready
+            }
+        } catch (e: CancellationException) {
+            openedDb?.close()
+            throw e
         } catch (e: Exception) {
             openedDb?.close()
             SafeLog.failure(SafeLog.Event.STORAGE_START_FRESH_FAILED, e)
             _storageState.value = StorageState.NeedsRecovery
-            throw e
+            StorageState.NeedsRecovery
         }
     }
 
