@@ -1,0 +1,30 @@
+{
+  "scenario": "noise-1",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 25,
+  "moodCounts": [
+    3,
+    13,
+    9
+  ],
+  "items": [
+    {
+      "patternID": "weekdayDaypart.higher.5.afternoon",
+      "libraryID": "weekday-segment-higher",
+      "confidence": "earlyHint"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "weekdayDaypart.higher.5.afternoon",
+      "confidence": "earlyHint",
+      "nSegment": 5,
+      "nRest": 95,
+      "diff": 0.589474,
+      "z": 1.696668,
+      "score": 0.294737
+    }
+  ]
+}

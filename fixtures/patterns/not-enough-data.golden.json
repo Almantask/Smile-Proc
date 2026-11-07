@@ -1,0 +1,39 @@
+{
+  "scenario": "not-enough-data",
+  "variant": "notEnoughData",
+  "isLowWeek": false,
+  "windowKind": "twoWeeks",
+  "entryCount": 4,
+  "moodCounts": [
+    2,
+    0,
+    2
+  ],
+  "items": [
+    {
+      "patternID": "timeOfDay.higher.morning",
+      "libraryID": "time-higher",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "timeOfDay.higher.morning",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": 2.0,
+      "z": 10.540926,
+      "score": 1.2
+    },
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": -2.0,
+      "z": -10.540926,
+      "score": 1.2
+    }
+  ]
+}

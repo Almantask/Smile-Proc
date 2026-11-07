@@ -1,0 +1,30 @@
+{
+  "scenario": "tired-on-low",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 13,
+  "moodCounts": [
+    6,
+    1,
+    6
+  ],
+  "items": [
+    {
+      "patternID": "tagOnLow.tired",
+      "libraryID": "tired-on-low",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 6,
+      "diff": null,
+      "z": null,
+      "score": 0.616667
+    }
+  ]
+}

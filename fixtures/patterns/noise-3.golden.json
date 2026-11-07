@@ -1,0 +1,30 @@
+{
+  "scenario": "noise-3",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 25,
+  "moodCounts": [
+    7,
+    6,
+    12
+  ],
+  "items": [
+    {
+      "patternID": "timeOfDay.lower.evening",
+      "libraryID": "time-lower",
+      "confidence": "earlyHint"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "timeOfDay.lower.evening",
+      "confidence": "earlyHint",
+      "nSegment": 4,
+      "nRest": 21,
+      "diff": -0.833333,
+      "z": -1.850819,
+      "score": 0.333333
+    }
+  ]
+}

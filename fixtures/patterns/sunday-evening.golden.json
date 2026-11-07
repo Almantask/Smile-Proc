@@ -1,0 +1,30 @@
+{
+  "scenario": "sunday-evening",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 15,
+  "moodCounts": [
+    1,
+    14,
+    0
+  ],
+  "items": [
+    {
+      "patternID": "weekdayDaypart.lower.7.evening",
+      "libraryID": "sunday-evening",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "weekdayDaypart.lower.7.evening",
+      "confidence": "pattern",
+      "nSegment": 4,
+      "nRest": 56,
+      "diff": -1.0,
+      "z": -6.440612,
+      "score": 0.6
+    }
+  ]
+}

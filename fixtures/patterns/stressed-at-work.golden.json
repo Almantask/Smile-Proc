@@ -1,0 +1,30 @@
+{
+  "scenario": "stressed-at-work",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 17,
+  "moodCounts": [
+    0,
+    17,
+    0
+  ],
+  "items": [
+    {
+      "patternID": "tagAtPlace.anxious.stressed.p:77455678-4cf5-49c7-91b1-7e399e570d68",
+      "libraryID": "stress-at-place",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "tagAtPlace.anxious.stressed.p:77455678-4cf5-49c7-91b1-7e399e570d68",
+      "confidence": "pattern",
+      "nSegment": 6,
+      "nRest": 7,
+      "diff": null,
+      "z": null,
+      "score": 0.474286
+    }
+  ]
+}

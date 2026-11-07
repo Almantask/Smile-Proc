@@ -63,7 +63,6 @@ class PatternFixturesTest {
 
         val writeGoldens = System.getProperty("smileproc.writeGoldens") == "1" ||
             System.getenv("WRITE_GOLDENS") == "1"
-        val anyGoldenExists = patternsDir.listFiles().orEmpty().any { it.name.endsWith(".golden.json") }
 
         for (inputFile in inputFiles) {
             val name = inputFile.name.removeSuffix(".input.json")
@@ -168,7 +167,7 @@ class PatternFixturesTest {
 
             if (writeGoldens) {
                 goldenFile.writeText(renderedGolden, Charsets.UTF_8)
-            } else if (anyGoldenExists) {
+            } else {
                 assertTrue("Missing golden file: ${goldenFile.name}", goldenFile.isFile)
                 val existing = goldenFile.readText(Charsets.UTF_8).replace("\r\n", "\n")
                 assertEquals("$name golden mismatch", existing, renderedGolden)

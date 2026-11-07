@@ -1,0 +1,48 @@
+{
+  "scenario": "travel",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 14,
+  "moodCounts": [
+    7,
+    0,
+    7
+  ],
+  "items": [
+    {
+      "patternID": "timeOfDay.lower.afternoon",
+      "libraryID": "afternoon-dip",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "timeOfDay.lower.afternoon",
+      "confidence": "pattern",
+      "nSegment": 7,
+      "nRest": 7,
+      "diff": -2.0,
+      "z": -12.472191,
+      "score": 1.6
+    },
+    {
+      "id": "timeOfDay.higher.morning",
+      "confidence": "earlyHint",
+      "nSegment": 4,
+      "nRest": 10,
+      "diff": 1.4,
+      "z": 2.828427,
+      "score": 0.56
+    },
+    {
+      "id": "timeOfDay.higher.evening",
+      "confidence": "earlyHint",
+      "nSegment": 3,
+      "nRest": 11,
+      "diff": 1.272727,
+      "z": 2.12132,
+      "score": 0.381818
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "scenario": "low-week",
+  "variant": "normal",
+  "isLowWeek": true,
+  "windowKind": "week",
+  "entryCount": 10,
+  "moodCounts": [
+    7,
+    3,
+    0
+  ],
+  "items": [
+    {
+      "patternID": "tagAtPlace.tired.u:aa92845b-802f-4c53-ab4c-1413986e2b15",
+      "libraryID": "tag-at-place",
+      "confidence": "pattern"
+    },
+    {
+      "patternID": "place.higher.u:ee0e3e07-1321-457c-ad41-5815ffab9df0",
+      "libraryID": "place-higher",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "tagAtPlace.tired.u:aa92845b-802f-4c53-ab4c-1413986e2b15",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 3,
+      "diff": null,
+      "z": null,
+      "score": 0.7
+    },
+    {
+      "id": "tagOnLow.tired",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 3,
+      "diff": null,
+      "z": null,
+      "score": 0.7
+    },
+    {
+      "id": "place.higher.u:ee0e3e07-1321-457c-ad41-5815ffab9df0",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": 0.6,
+      "z": 2.44949,
+      "score": 0.5
+    },
+    {
+      "id": "place.lower.u:aa92845b-802f-4c53-ab4c-1413986e2b15",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": -0.6,
+      "z": -2.44949,
+      "score": 0.5
+    },
+    {
+      "id": "timeOfDay.higher.evening",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": 0.6,
+      "z": 2.44949,
+      "score": 0.5
+    },
+    {
+      "id": "timeOfDay.lower.morning",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 5,
+      "diff": -0.6,
+      "z": -2.44949,
+      "score": 0.5
+    },
+    {
+      "id": "tagAtPlace.calm.u:ee0e3e07-1321-457c-ad41-5815ffab9df0",
+      "confidence": "earlyHint",
+      "nSegment": 3,
+      "nRest": 5,
+      "diff": null,
+      "z": null,
+      "score": 0.3
+    }
+  ]
+}

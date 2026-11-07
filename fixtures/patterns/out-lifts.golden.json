@@ -1,0 +1,57 @@
+{
+  "scenario": "out-lifts",
+  "variant": "normal",
+  "isLowWeek": false,
+  "windowKind": "week",
+  "entryCount": 18,
+  "moodCounts": [
+    0,
+    8,
+    10
+  ],
+  "items": [
+    {
+      "patternID": "awayFromHome.higher",
+      "libraryID": "out-lifts",
+      "confidence": "pattern"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "awayFromHome.higher",
+      "confidence": "pattern",
+      "nSegment": 10,
+      "nRest": 8,
+      "diff": 1.0,
+      "z": 7.027284,
+      "score": 1.2
+    },
+    {
+      "id": "place.lower.p:dbe9c250-1ce1-462c-90de-80e8b288c4e8",
+      "confidence": "pattern",
+      "nSegment": 8,
+      "nRest": 10,
+      "diff": -1.0,
+      "z": -7.027284,
+      "score": 1.0
+    },
+    {
+      "id": "place.higher.u:20b06b93-66a6-4523-b89e-bf47583412ea",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 13,
+      "diff": 0.615385,
+      "z": 2.666667,
+      "score": 0.507692
+    },
+    {
+      "id": "place.higher.u:bbb54194-10d1-4eda-8cae-74e7aeb08272",
+      "confidence": "pattern",
+      "nSegment": 5,
+      "nRest": 13,
+      "diff": 0.615385,
+      "z": 2.666667,
+      "score": 0.507692
+    }
+  ]
+}
