@@ -192,7 +192,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M3 — Storage and crypto
-- **Status:** claude-verified (2026-11-07, tag `m3-claude-verified`)
+- **Status:** accepted (2026-11-07; claude-verified 2026-11-07, tag `m3-claude-verified`)
 - **Decided before M3:**
   1. **Room 3 (`androidx.room3` `3.0.3`, human, 2026-11-07):** switch `:app` to `androidx.room3` `3.0.3` (KSP Kotlin generation, coroutines-only DAOs, `AndroidSQLiteDriver` via `androidx.sqlite:sqlite-framework`, `room3` schema plugin exporting to `app/schemas/`). Keep `:spikes` on its existing M1 dependencies or migrate seamlessly without touching shipped code.
   2. **Android 17 AVD (`sp37`, human, 2026-11-07):** add an API 37 Google APIs AVD alongside `sp36` (API 36 Play-free AOSP) and `sp29` (API 29) for Android 17 verification.
