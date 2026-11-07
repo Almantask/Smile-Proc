@@ -82,6 +82,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.room3.runtime)
     implementation(libs.androidx.sqlite.framework)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.coroutines.android)
     ksp(libs.androidx.room3.compiler)
 

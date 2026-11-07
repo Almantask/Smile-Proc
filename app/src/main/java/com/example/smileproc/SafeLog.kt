@@ -20,6 +20,11 @@ object SafeLog {
         STORAGE_OPEN_FAILED,
         STORAGE_START_FRESH,
         STORAGE_START_FRESH_FAILED,
+        LOCATION_FIX_RECEIVED,
+        LOCATION_FIX_FAILED,
+        ENTRY_SAVED,
+        ENTRY_UPDATED,
+        ENTRY_DELETED,
     }
 
     fun event(event: Event) {

@@ -2,12 +2,17 @@ package com.example.smileproc
 
 import android.content.Context
 import com.example.smileproc.core.crypto.SealException
+import com.example.smileproc.data.DataStoreSettingsRepository
 import com.example.smileproc.data.EntryRepository
 import com.example.smileproc.data.KeystoreSealer
 import com.example.smileproc.data.ManagedSealer
 import com.example.smileproc.data.PlaceRepository
+import com.example.smileproc.data.SettingsRepository
 import com.example.smileproc.data.WeeklyCardRepository
 import com.example.smileproc.data.db.SmileProcDatabase
+import com.example.smileproc.data.settingsDataStore
+import com.example.smileproc.location.LocationClient
+import com.example.smileproc.location.PlatformLocationClient
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,10 +56,13 @@ class AppContainer(
     context: Context,
     val sealer: ManagedSealer = KeystoreSealer(),
     val dbName: String = SmileProcDatabase.DB_NAME,
+    val settingsRepository: SettingsRepository = DataStoreSettingsRepository(context.applicationContext.settingsDataStore),
+    locationClientFactory: (Context, SettingsRepository) -> LocationClient = { ctx, settings -> PlatformLocationClient(ctx, settings) },
     val applicationScope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
     autoInitialize: Boolean = true,
 ) {
     private val appContext: Context = context.applicationContext
+    val locationClient: LocationClient = locationClientFactory(appContext, settingsRepository)
     private val mutex = Mutex()
     private val _storageState = MutableStateFlow<StorageState>(StorageState.Loading)
     val storageState: StateFlow<StorageState> = _storageState.asStateFlow()
@@ -157,6 +165,7 @@ class AppContainer(
         try {
             (_storageState.value as? StorageState.Ready)?.storage?.database?.close()
             appContext.deleteDatabase(dbName)
+            settingsRepository.setLowRunDismissed(false)
             sealer.deleteKeyIfPresent()
             sealer.ensureKeyExists()
             if (!verifyKeyUsable()) {
