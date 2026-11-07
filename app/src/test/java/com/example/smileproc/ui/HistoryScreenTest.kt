@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
 import com.example.smileproc.core.Entry
 import com.example.smileproc.core.EntrySource
 import com.example.smileproc.core.Mood
@@ -76,5 +77,51 @@ class HistoryScreenTest {
         composeTestRule.onNodeWithContentDescription("Delete").performClick()
 
         assertEquals(entry.id, deletedId)
+    }
+
+    @Test
+    fun editsMoodAndComment_savesOnSaveClick() {
+        val entry = Entry(
+            id = UUID.randomUUID().toString(),
+            createdAt = Instant.now(),
+            updatedAt = Instant.now(),
+            timeZoneID = "UTC",
+            mood = Mood.GOOD,
+            tags = emptyList(),
+            comment = "Initial note",
+            location = null,
+            source = EntrySource.APP,
+        )
+
+        var savedEntry: Entry? = null
+
+        composeTestRule.setContent {
+            HistoryScreen(
+                entries = listOf(entry),
+                places = null,
+                tagPickerMode = TagPickerMode.GRADUAL,
+                onTagPickerModeToggle = {},
+                onSaveEntry = { savedEntry = it },
+                onDeleteEntry = {},
+                onSavePlaceLabel = {},
+                onNavigateBack = {},
+            )
+        }
+
+        // Tap entry to open EntryDetailSheet
+        composeTestRule.onNodeWithText("Initial note").performClick()
+        composeTestRule.onNodeWithText("Check-in").assertIsDisplayed()
+
+        // Change mood to Okay
+        composeTestRule.onNodeWithContentDescription("Okay").performClick()
+
+        // Tap Save
+        composeTestRule.onNodeWithContentDescription("Save")
+            .performScrollTo()
+            .performClick()
+
+        assertNotNull(savedEntry)
+        assertEquals(entry.id, savedEntry?.id)
+        assertEquals(Mood.OKAY, savedEntry?.mood)
     }
 }

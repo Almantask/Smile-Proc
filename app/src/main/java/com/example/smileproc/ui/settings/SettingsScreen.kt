@@ -197,11 +197,11 @@ fun SettingsScreen(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        text = "Private mood check-in app.",
+                        text = stringResource(R.string.about_tagline),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Text(
-                        text = "Encrypted storage on this phone. Zero network.",
+                        text = stringResource(R.string.about_body),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

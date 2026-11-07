@@ -72,7 +72,7 @@ fun SupportDialog(
                 )
 
                 Text(
-                    text = "If you're in danger right now, contact your local emergency number.",
+                    text = stringResource(R.string.support_emergency),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

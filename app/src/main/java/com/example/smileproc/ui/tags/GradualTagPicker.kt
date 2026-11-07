@@ -169,7 +169,13 @@ fun GradualTagPicker(
                         onClick = { selectedCoreId = null },
                         modifier = Modifier.heightIn(min = 48.dp),
                     ) {
-                        Text("← ${stringResource(R.string.action_back)}")
+                        Icon(
+                            painter = painterResource(R.drawable.ic_arrow_back),
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(stringResource(R.string.action_back))
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.example.smileproc.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -33,53 +36,70 @@ import com.example.smileproc.R
 import com.example.smileproc.core.Mood
 
 /**
- * Custom-drawn accessible face representation for Moods:
- * 1 = Low, 2 = Okay, 3 = Good. Every face is an equally valid answer.
+ * Three accessible custom-drawn faces:
+ * - Low: gentle downturned mouth
+ * - Okay: gentle horizontal neutral line
+ * - Good: gentle upturned smile
+ *
+ * Drawn with high-contrast colors adapted to light/dark themes.
  */
 @Composable
 fun FaceIcon(
     mood: Mood,
+    size: Dp = 64.dp,
     modifier: Modifier = Modifier,
-    size: Dp = 72.dp,
-    faceColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    featureColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
 ) {
+    val faceColor = when (mood) {
+        Mood.LOW -> MaterialTheme.colorScheme.secondaryContainer
+        Mood.OKAY -> MaterialTheme.colorScheme.tertiaryContainer
+        Mood.GOOD -> MaterialTheme.colorScheme.primaryContainer
+    }
+    val featureColor = when (mood) {
+        Mood.LOW -> MaterialTheme.colorScheme.onSecondaryContainer
+        Mood.OKAY -> MaterialTheme.colorScheme.onTertiaryContainer
+        Mood.GOOD -> MaterialTheme.colorScheme.onPrimaryContainer
+    }
+    val outlineColor = MaterialTheme.colorScheme.outline
+
     Canvas(modifier = modifier.size(size)) {
         val radius = this.size.minDimension / 2f
         val center = Offset(this.size.width / 2f, this.size.height / 2f)
 
-        // Face circle
+        // Face circle background
         drawCircle(
             color = faceColor,
             radius = radius - 2f,
             center = center,
         )
+
+        // Face outline
         drawCircle(
-            color = featureColor.copy(alpha = 0.35f),
+            color = outlineColor,
             radius = radius - 2f,
             center = center,
-            style = Stroke(width = radius * 0.06f),
+            style = Stroke(width = 2.dp.toPx()),
         )
 
-        // Eyes
-        val eyeRadius = radius * 0.10f
-        val eyeOffsetY = center.y - radius * 0.22f
+        // Eyes: two friendly dots
+        val eyeRadius = radius * 0.09f
         val eyeOffsetX = radius * 0.35f
+        val eyeOffsetY = radius * 0.22f
+
         drawCircle(
             color = featureColor,
             radius = eyeRadius,
-            center = Offset(center.x - eyeOffsetX, eyeOffsetY),
+            center = Offset(center.x - eyeOffsetX, center.y - eyeOffsetY),
         )
         drawCircle(
             color = featureColor,
             radius = eyeRadius,
-            center = Offset(center.x + eyeOffsetX, eyeOffsetY),
+            center = Offset(center.x + eyeOffsetX, center.y - eyeOffsetY),
         )
 
-        // Mouth
-        val mouthStrokeWidth = radius * 0.08f
-        val mouthWidth = radius * 0.70f
-        val mouthCenterY = center.y + radius * 0.30f
+        // Mouth based on mood
+        val mouthWidth = radius * 0.7f
+        val mouthCenterY = center.y + radius * 0.32f
+        val mouthStrokeWidth = 3.dp.toPx()
 
         when (mood) {
             Mood.LOW -> {
@@ -145,6 +165,7 @@ fun FaceButton(
     modifier: Modifier = Modifier,
     size: Dp = 72.dp,
     showLabel: Boolean = true,
+    selected: Boolean = false,
 ) {
     val haptic = LocalHapticFeedback.current
     val label = when (mood) {
@@ -153,31 +174,42 @@ fun FaceButton(
         Mood.GOOD -> stringResource(R.string.face_good)
     }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    val selectedBorder = if (selected) {
+        BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+    } else null
+
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f) else Color.Transparent,
+        border = selectedBorder,
         modifier = modifier
             .semantics(mergeDescendants = true) {
                 contentDescription = label
+                this.selected = selected
             }
             .clickable(
                 role = Role.Button,
                 interactionSource = remember { MutableInteractionSource() },
-                indication = ripple(bounded = false, radius = size),
+                indication = ripple(bounded = true),
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     onClick()
                 },
-            )
-            .padding(8.dp),
+            ),
     ) {
-        FaceIcon(mood = mood, size = size)
-        if (showLabel) {
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(8.dp),
+        ) {
+            FaceIcon(mood = mood, size = size)
+            if (showLabel) {
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
         }
     }
 }

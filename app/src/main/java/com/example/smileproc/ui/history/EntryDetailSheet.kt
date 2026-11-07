@@ -127,6 +127,7 @@ fun EntryDetailSheet(
                         mood = m,
                         onClick = { mood = m },
                         size = 56.dp,
+                        selected = mood == m,
                     )
                 }
             }
@@ -271,7 +272,7 @@ fun EntryDetailSheet(
                     OutlinedTextField(
                         value = placeNameInput,
                         onValueChange = { placeNameInput = it },
-                        label = { Text("Name") },
+                        label = { Text(stringResource(R.string.place_name_custom_hint)) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

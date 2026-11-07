@@ -244,6 +244,7 @@
     <!-- Support (gentle copy; contacts come only from content/support.json) -->
     <string name="support_title">Talk to someone</string>
     <string name="support_body">When things feel heavy, talking to someone you trust can make it a little lighter. That could be a friend, someone in your family, or someone whose job is to listen.</string>
+    <string name="support_emergency">If you\'re in danger right now, contact your local emergency number.</string>
     <string name="support_contact_call">Call %1$s</string>
     <string name="support_contact_text">Text %1$s</string>
     <string name="support_contact_website">Open the %1$s website</string>
@@ -288,6 +289,8 @@
     <string name="settings_privacy_summary">What\'s stored and where</string>
     <string name="settings_delete_all">Delete all data</string>
     <string name="settings_about">About</string>
+    <string name="about_tagline">Private mood check-in app.</string>
+    <string name="about_body">Encrypted storage on this phone. Zero network.</string>
 
     <!-- Reminders -->
     <string name="reminders_title">Reminders</string>

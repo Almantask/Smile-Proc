@@ -268,8 +268,13 @@ private fun WeekPlaceholderScreen(modifier: Modifier = Modifier) {
                 .padding(24.dp),
             contentAlignment = Alignment.Center,
         ) {
+            val defaultCardTime = stringResource(
+                R.string.week_card_time,
+                stringResource(R.string.weekday_7),
+                "19:00",
+            )
             Text(
-                text = stringResource(R.string.week_first_card, "Sunday at 19:00"),
+                text = stringResource(R.string.week_first_card, defaultCardTime),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
