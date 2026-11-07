@@ -35,4 +35,5 @@ tasks.test {
     systemProperty("smileproc.fixtures", fixturesDir.asFile.absolutePath)
     systemProperty("smileproc.content", contentDir.asFile.absolutePath)
     systemProperty("smileproc.strings", stringsFile.asFile.absolutePath)
+    System.getenv("WRITE_GOLDENS")?.let { systemProperty("smileproc.writeGoldens", it) }
 }
