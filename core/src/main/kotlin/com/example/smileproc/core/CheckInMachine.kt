@@ -16,10 +16,12 @@ object CheckInMachine {
     const val RESTORE_DELAY_SECONDS: Long = 60L
     const val TEST_DELAY_SECONDS: Long = 10L
 
-    const val TEXT_ASK = "How are you right now?"
-    const val TEXT_SAVED = "Saved ✓"
-    const val TEXT_TEST_DONE = "It works ✓"
-    const val TEXT_FAILED = "Couldn't save. Open SmileProc."
+    enum class NotificationCopyKey(val resourceName: String) {
+        ASK("notification_text_ask"),
+        SAVED("notification_text_saved"),
+        TEST_DONE("notification_text_test_done"),
+        FAILED("notification_text_failed"),
+    }
 
     @Serializable
     sealed interface State {
@@ -116,13 +118,13 @@ object CheckInMachine {
             State.Hidden
         }
 
-    /** Exact lock-screen-safe text for [state], or `null` when [State.Hidden]. */
-    fun notificationText(state: State): String? = when (state) {
+    /** Lock-screen-safe `strings.xml` resource key for [state], or `null` when [State.Hidden]. */
+    fun notificationCopyKey(state: State): NotificationCopyKey? = when (state) {
         State.Hidden -> null
-        is State.Faces, State.Test -> TEXT_ASK
-        State.Saved -> TEXT_SAVED
-        State.TestDone -> TEXT_TEST_DONE
-        State.Failed -> TEXT_FAILED
+        is State.Faces, State.Test -> NotificationCopyKey.ASK
+        State.Saved -> NotificationCopyKey.SAVED
+        State.TestDone -> NotificationCopyKey.TEST_DONE
+        State.Failed -> NotificationCopyKey.FAILED
     }
 
     fun reduce(

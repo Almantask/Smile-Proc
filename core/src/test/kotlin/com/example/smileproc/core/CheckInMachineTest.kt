@@ -3,18 +3,37 @@ package com.example.smileproc.core
 import com.example.smileproc.core.CheckInMachine.Effect
 import com.example.smileproc.core.CheckInMachine.Event
 import com.example.smileproc.core.CheckInMachine.ID_CHECKIN
+import com.example.smileproc.core.CheckInMachine.NotificationCopyKey
 import com.example.smileproc.core.CheckInMachine.Settings
 import com.example.smileproc.core.CheckInMachine.State
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.w3c.dom.Element
 import java.time.Instant
+import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.random.Random
 
 class CheckInMachineTest {
 
     private val now: Instant = Instant.parse("2026-10-12T13:05:00.000Z")
+    private val stringsByName: Map<String, String> = run {
+        val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(TestData.strings)
+        val out = mutableMapOf<String, String>()
+        val nodes = doc.documentElement.childNodes
+        for (i in 0 until nodes.length) {
+            val node = nodes.item(i) as? Element ?: continue
+            if (node.tagName == "string") {
+                out[node.getAttribute("name")] = node.textContent
+                    .replace("\\'", "'")
+                    .replace("\\\"", "\"")
+            }
+        }
+        out
+    }
     private val allowedTexts = setOf(
         "How are you right now?",
         "Saved ✓",
@@ -154,6 +173,14 @@ class CheckInMachineTest {
             Event.AppUpdated,
         )
 
+        assertNull(CheckInMachine.notificationCopyKey(State.Hidden))
+        assertEquals(NotificationCopyKey.ASK, CheckInMachine.notificationCopyKey(State.Faces(false)))
+        assertEquals(NotificationCopyKey.ASK, CheckInMachine.notificationCopyKey(State.Faces(true)))
+        assertEquals(NotificationCopyKey.ASK, CheckInMachine.notificationCopyKey(State.Test))
+        assertEquals(NotificationCopyKey.SAVED, CheckInMachine.notificationCopyKey(State.Saved))
+        assertEquals(NotificationCopyKey.TEST_DONE, CheckInMachine.notificationCopyKey(State.TestDone))
+        assertEquals(NotificationCopyKey.FAILED, CheckInMachine.notificationCopyKey(State.Failed))
+
         repeat(1_000) {
             var state: State = if (rng.nextBoolean()) State.Hidden else State.Faces(alerting = false)
             var settings = Settings(standing = rng.nextBoolean(), dismissed = rng.nextBoolean())
@@ -172,8 +199,10 @@ class CheckInMachineTest {
                 for (ne in notifEffects) {
                     assertEquals(ID_CHECKIN, ne.notificationId)
                     if (ne is Effect.PostNotification) {
-                        val copy = CheckInMachine.notificationText(ne.state)
-                        assertTrue("Unexpected notification text: $copy", copy in allowedTexts)
+                        val copyKey = CheckInMachine.notificationCopyKey(ne.state)
+                        assertNotNull("Expected non-null copy key for ${ne.state}", copyKey)
+                        val resolvedText = stringsByName[copyKey!!.resourceName]
+                        assertTrue("Unexpected notification text: $resolvedText", resolvedText in allowedTexts)
                     }
                 }
 
