@@ -20,6 +20,7 @@
                 <action android:name="com.example.smileproc.debug.FIRE_RESTORE" />
                 <action android:name="com.example.smileproc.debug.SEED_DEMO" />
                 <action android:name="com.example.smileproc.debug.CLEAR_DEMO" />
+                <action android:name="com.example.smileproc.debug.SEAL_TEST_ENTRY" />
             </intent-filter>
         </receiver>
     </application>

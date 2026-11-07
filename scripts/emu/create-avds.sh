@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Creates the two SmileProc AVDs once (plan B.8). Leaves every other AVD alone.
-#   sp36  API 36, AOSP image without Google Play (the newest Play-free image; API 37 ships only
-#         Google APIs / Play images). Proves nothing depends on Play Services.
+# Creates the three SmileProc AVDs once (plan B.8 + Android 17 addition). Leaves every other AVD alone.
+#   sp36  API 36, AOSP image without Google Play (default target for Play-free verification).
 #   sp29  API 29, minSdk behaviour.
+#   sp37  API 37.0 (Android 17), Play-free default image matching compileSdk/targetSdk 37.
 set -euo pipefail
 . "$(dirname "$0")/env.sh" || exit 1
 
@@ -28,3 +28,4 @@ create() { # name api
 
 create sp36 36
 create sp29 29
+create sp37 37.0

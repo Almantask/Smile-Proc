@@ -21,20 +21,21 @@ On **Linux / macOS**, run via `bash -c '<command>'`. For slow commands (`start.s
 
 ## Emulators
 
-- `sp36` (`emulator-5554`): API 36, AOSP x86_64/arm64 image without Google Play (proves zero Play Services dependency). Default AVD; app compiles and targets API 37.
+- `sp36` (`emulator-5554`): API 36, AOSP x86_64/arm64 image without Google Play (proves zero Play Services dependency). Default AVD.
 - `sp29` (`emulator-5556`): API 29, for `minSdk` behaviour (no `POST_NOTIFICATIONS`, Android 10 biometric rules, no swipe-away of ongoing notifications).
-- `scripts/emu/create-avds.sh`: creates both AVDs once (Pixel 7 profile) without touching other AVDs.
+- `sp37` (`emulator-5558`): API 37.0 (Android 17), Play-free AOSP `default` image matching `compileSdk`/`targetSdk` 37.
+- `scripts/emu/create-avds.sh`: creates all three AVDs once (Pixel 7 profile) without touching other AVDs.
 
 ## Scripts
 
-- `scripts/emu/start.sh [sp36|sp29]` — boots headless if needed, waits for boot, disables animations, sets lock-screen PIN `1111` once.
+- `scripts/emu/start.sh [sp36|sp29|sp37]` — boots headless if needed, waits for boot, disables animations, sets lock-screen PIN `1111` once.
 - `scripts/emu/install.sh` — builds/installs the `debug` APK (`com.example.smileproc.debug`).
 - `scripts/emu/lock.sh`, `scripts/emu/wake.sh` (screen on, still locked), `scripts/emu/unlock.sh` (opens PIN pad and enters `1111`; emulators only).
 - `scripts/py scripts/emu/notifs.py [--expect-max 1]` — prints SmileProc notifications as JSON (`id`, `channel`, `ongoing`, `text`, action titles) from `dumpsys notification --noredact`; exits `1` if count exceeds `--expect-max`.
 - `scripts/py scripts/emu/tap.py "<text>" [--shade|--pull|--swipe]` — locates a node by text or content description via `uiautomator` and taps/swipes it (works while locked).
 - `scripts/emu/shot.sh <name>` — saves `build/emu-shots/<name>.png` and prints the path. Inspect the PNG directly with `read_file` using its absolute path.
 - `scripts/emu/probe.sh` — prints debug probe JSON (entry count, counts per mood/source, located count, notification machine state, last test result; never user content).
-- `scripts/emu/fire.sh reminder|restore|seed-demo|clear-demo` — sends debug broadcasts exercising the exact alarm/demo code paths.
+- `scripts/emu/fire.sh reminder|restore|seed-demo|clear-demo|seal-test` — sends debug broadcasts exercising the exact alarm/demo/locked-seal code paths.
 - `scripts/emu/geo.sh <lat> <lon>` — sets emulator GPS (`adb emu geo fix <lon> <lat>`).
 - `scripts/emu/idle.sh on|off` — forces or exits deep Doze (`dumpsys deviceidle enable` + `force-idle` / `unforce`).
 - `scripts/emu/reboot.sh` — reboots and waits for boot completion (device comes back locked before first unlock).

@@ -18,6 +18,7 @@ avd_port() {
   case "$1" in
     sp36) echo 5554 ;;
     sp29) echo 5556 ;;
+    sp37) echo 5558 ;;
     *) return 1 ;;
   esac
 }

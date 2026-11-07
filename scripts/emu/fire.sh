@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# fire.sh reminder|restore|seed-demo|clear-demo: debug broadcasts that run the same code paths
-# as the real triggers (wired up in M5 and M8).
+# fire.sh reminder|restore|seed-demo|clear-demo|seal-test: debug broadcasts that run the same code
+# paths as the real triggers (seal-test in M3; reminder/restore in M5; demo in M8).
 set -euo pipefail
 . "$(dirname "$0")/env.sh" || exit 1
 
@@ -9,7 +9,8 @@ case "${1:-}" in
   restore) action=FIRE_RESTORE ;;
   seed-demo) action=SEED_DEMO ;;
   clear-demo) action=CLEAR_DEMO ;;
-  *) echo "usage: fire.sh reminder|restore|seed-demo|clear-demo" >&2; exit 2 ;;
+  seal-test) action=SEAL_TEST_ENTRY ;;
+  *) echo "usage: fire.sh reminder|restore|seed-demo|clear-demo|seal-test" >&2; exit 2 ;;
 esac
 
 sh_out am broadcast --include-stopped-packages \

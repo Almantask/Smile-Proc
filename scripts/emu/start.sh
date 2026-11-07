@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# start.sh [sp36|sp29]: boots the AVD headless if it isn't running, waits for boot, turns
-# animations off and sets the lock-screen PIN once. sp36 is emulator-5554, sp29 emulator-5556.
+# start.sh [sp36|sp29|sp37]: boots the AVD headless if it isn't running, waits for boot, turns
+# animations off and sets the lock-screen PIN once. sp36 is 5554, sp29 is 5556, sp37 is 5558.
 set -uo pipefail
 . "$(dirname "$0")/env.sh" || exit 1
 
 avd=${1:-sp36}
-port=$(avd_port "$avd") || { echo "usage: start.sh [sp36|sp29]" >&2; exit 2; }
+port=$(avd_port "$avd") || { echo "usage: start.sh [sp36|sp29|sp37]" >&2; exit 2; }
 SMILEPROC_SERIAL=emulator-$port
 
 if ! command adb devices 2>/dev/null | tr -d '\r' | grep -q "^$SMILEPROC_SERIAL[[:space:]]device"; then
