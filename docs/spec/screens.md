@@ -8,7 +8,7 @@
 - **History:** grouped by day; face, time, tags, place name, comment snippet. **Entry detail:** change mood/tags/comment, name this place, delete (confirmation).
 - **Week:** latest card (7-day strip of face counts → optional low-week block → 2–3 items with title, observation, "many people notice…", tip, question, "Name this place" when unnamed) and past cards. Before the first card: "Your first weekly card arrives {Sunday at 19:00}." A dot on the tab until a new card is seen.
 - **Places:** rename, change kind, delete label (entries fall back to unnamed clusters), **Remove location from all entries** (confirmation).
-- **Support:** gentle copy, then `support.json` contacts for the device region (if any); taps open the phone, SMS or browser app.
+- **Support:** gentle copy (including a generic "If you're in danger right now, contact your local emergency number." line, naming no phone numbers), then `support.json` contacts for the device region (if any); taps open the phone, SMS or browser app.
 - **Lock-screen check-in:** android.md › Lock-screen check-in.
 - **Settings:** Reminders · Keep a check-in on the lock screen · Lock-screen check-in · Weekly card time · Places · Capture location · App lock · Export · Import · Privacy ("What's stored and where") · Delete all data · About.
 - **Onboarding (5 screens):** (1) privacy promise, including "not in backups — export to keep a copy"; (2) location → permission (skippable; ratings still save without it); (3) reminders → notification permission, the default times (08:00, 12:00, 16:00, 20:00, every day) shown and editable, **Keep a check-in on the lock screen** (pre-selected); (4) App lock toggle (pre-selected ON); (5) Lock-screen check-in with **Send a test check-in**.
