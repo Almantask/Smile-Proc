@@ -77,12 +77,12 @@ Status values: not started · in progress · partly verified · claude-verified 
      - `androidx.room` 2.8.5 is what's pinned now.
      - Room 3 (`androidx.room3` 3.0.3) is coroutines-only and generates Kotlin.
   2. **Android 17 coverage.** sp36 runs API 36. Is that enough, or should I add an API 37 Google APIs AVD (about 2.2 GB, includes Play Services) to check Android 17 behaviour?
-  3. **Balance rule**, before M2 builds `WeeklyCardBuilder` (logic.md › Selection). When a `higher` pattern replaces the last pick, may it come from a family already picked, which gives two items from one family? Or must it respect one-per-family?
+  3. **Balance rule**, before M2 builds `WeeklyCardBuilder` (logic.md › Selection): **decided 2026-11-07** — see M2 › Decided before M2.
   4. **Support screen emergency line**, before M8: should it include a generic "if you're in danger right now, contact your local emergency number" line? Today's copy names no contacts.
   5. **Version pairing (for information).** AGP 9.4.1 is newer than the AGP range Kotlin 2.4.21 lists as tested (up to 9.3.1). It builds cleanly. KSP 2.3.12 with Kotlin 2.4.21 gets proven when Room arrives in M3.
 
 ## M1 — Spikes
-- **Status:** claude-verified (2026-10-17, tag `m1-claude-verified`). A2 is decided: last known only (see Decided).
+- **Status:** accepted (2026-11-07; claude-verified 2026-10-17, tag `m1-claude-verified`). A1 and A2 are decided (see Decided).
 - **Built:**
   - `:spikes` (`com.example.smileproc.spikes`, never shipped, not in check.sh), under `spikes/src/main/java/com/example/smileproc/spikes/`:
     - `SpikeNotifier`: the spec's check-in notification: channel `checkin`, ID 1, Low/Okay/Good, silent and alerting, ongoing when standing; resting state and `dismissed` per logic.md.
@@ -114,7 +114,7 @@ Status values: not started · in progress · partly verified · claude-verified 
     - a location or lock-state exception can't fail a tap;
     - the service's start-failure record.
   - Research (AOSP 15/16 source and Android 14 behaviour changes): an ongoing notification from an ordinary app is dismissible whenever SystemUI sees the device unlocked, unless it has `FLAG_NO_DISMISS`. This agrees with the sp36 re-test.
-- **Left:** the human checks and decision 1 below. Copy-reviewer not needed: no strings.xml or content changes.
+- **Left:** nothing. Copy-reviewer not needed: no strings.xml or content changes.
 - **Deviations:**
   1. **Two M0 tooling bugs fixed:**
      - On Android 16 `dumpsys` prints notification flags as names, not hex, so notifs.py skipped every record and `--expect-max` could never fail on sp36. It now parses both, and exits with an error if it finds a record it can't parse, or no Notification List.
@@ -155,12 +155,14 @@ Status values: not started · in progress · partly verified · claude-verified 
      - Nothing changes: the spec (android.md › Location: last known from a notification tap, else none) and the guards stay as they are; no Play declaration.
      - Caveat: on the AOSP emulators, last known gave none on every notification tap, so some phones (likely Pixels) may save notification taps without location. Not tested on a Pixel.
   2. **Default reminders every 4 hours (human, 2026-10-17):** for M5; see M5 › Decided before M5.
+  3. **A1: standard collapsed lock-screen card accepted (human, 2026-11-07).** Reaching the faces with one expand gesture on the lock screen without unlocking is accepted; no custom collapsed layout spike needed.
 - **Decisions needed:**
-  1. **A1: faces one gesture away on the lock screen.** On both API levels the card is collapsed on the lock screen, and the faces need an expand gesture. They work without unlocking. Accept that? Or should a later spike try faces on the collapsed card itself (a custom collapsed layout; untested whether its buttons work while locked)?
-  2. Still open from M0: the Room line (before M3), Android 17 coverage, the balance rule (before M2), the Support emergency line (before M8).
+  1. Still open from M0: the Room line (before M3), Android 17 coverage, the Support emergency line (before M8).
 
 ## M2 — Core logic
 - **Status:** not started
+- **Decided before M2:**
+  1. **Balance rule (human, 2026-11-07):** respect max one per family on the final card. When `limit >= 2`, at least 2 items were picked, and nothing picked has `direction == higher`, replace the last pick with the highest-scoring `higher` candidate with `pattern` confidence whose `family` is not among the remaining kept picks (`picked.dropLast(1)`).
 
 ## M3 — Storage and crypto
 - **Status:** not started
