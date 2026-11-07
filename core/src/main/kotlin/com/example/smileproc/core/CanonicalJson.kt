@@ -80,6 +80,15 @@ object CanonicalJson {
         prettyPrintIndent = "  "
     }
 
+    /** Strict JSON codec for runtime content files that omit optional nullable fields. */
+    @OptIn(ExperimentalSerializationApi::class)
+    val contentJson: Json = Json {
+        encodeDefaults = true
+        explicitNulls = false
+        ignoreUnknownKeys = false
+        allowSpecialFloatingPointValues = false
+    }
+
     fun encodeEntry(entry: Entry): String = json.encodeToString(Entry.serializer(), entry)
 
     fun decodeEntry(raw: String): Entry = json.decodeFromString(Entry.serializer(), raw)
