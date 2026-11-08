@@ -1,6 +1,7 @@
 package com.example.smileproc.ui.support
 
 import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,6 +41,8 @@ fun SupportScreen(
     val context = LocalContext.current
     val contacts = remember(context) { SupportContactsHelper.loadVerifiedContacts(context) }
     val backLabel = stringResource(R.string.action_back)
+
+    BackHandler(onBack = onNavigateBack)
 
     Scaffold(
         topBar = {

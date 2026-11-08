@@ -181,7 +181,12 @@ fun MainApp(
                 .padding(innerPadding),
             color = MaterialTheme.colorScheme.background,
         ) {
-            when (currentTab) {
+            if (activeSubScreen == "support") {
+                SupportScreen(
+                    onNavigateBack = { activeSubScreen = null },
+                )
+            } else {
+                when (currentTab) {
                 AppTab.TODAY -> {
                     if (showingHistory) {
                         HistoryScreen(
@@ -357,11 +362,6 @@ fun MainApp(
                                 onNavigateBack = { activeSubScreen = null },
                             )
                         }
-                        "support" -> {
-                            SupportScreen(
-                                onNavigateBack = { activeSubScreen = null },
-                            )
-                        }
                         else -> {
                             SettingsScreen(
                                 captureLocation = captureLocation,
@@ -396,6 +396,7 @@ fun MainApp(
             }
         }
     }
+}
 
     if (namingClusterId != null) {
         val clusterIdStr = namingClusterId!!
