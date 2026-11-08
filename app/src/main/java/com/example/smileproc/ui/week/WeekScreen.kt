@@ -249,8 +249,15 @@ private fun DayStrip(
     days: List<List<Int>>,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    val weekdayLetters = listOf("M", "T", "W", "T", "F", "S", "S")
+    val weekdayLetters = listOf(
+        stringResource(R.string.weekday_1).take(1),
+        stringResource(R.string.weekday_2).take(1),
+        stringResource(R.string.weekday_3).take(1),
+        stringResource(R.string.weekday_4).take(1),
+        stringResource(R.string.weekday_5).take(1),
+        stringResource(R.string.weekday_6).take(1),
+        stringResource(R.string.weekday_7).take(1),
+    )
 
     Card(
         modifier = modifier.fillMaxWidth(),

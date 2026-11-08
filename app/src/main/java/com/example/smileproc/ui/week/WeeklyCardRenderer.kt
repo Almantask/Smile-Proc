@@ -122,8 +122,8 @@ object WeeklyCardRenderer {
         labels: List<PlaceLabel>,
         places: PlaceAssignment?,
     ): Pair<String, String?> {
-        val unnamedPlaceFallback = "an unnamed place"
-        val clusterGoneFallback = "one of your places"
+        val unnamedPlaceFallback = context.getString(R.string.place_unnamed_inline)
+        val clusterGoneFallback = context.getString(R.string.place_gone_inline)
 
         val clusterID = pattern.params.clusterID ?: return Pair(clusterGoneFallback, null)
         val clusterVal = clusterID.value
@@ -198,7 +198,7 @@ object WeeklyCardRenderer {
                 }
             }
             Detector.PLACE -> {
-                val pl = placeStr ?: "an unnamed place"
+                val pl = placeStr ?: res.getString(R.string.place_unnamed_inline)
                 if (pattern.direction == Direction.HIGHER) {
                     res.getQuantityString(R.plurals.week_observation_place_higher, count, pl, count)
                 } else {
@@ -218,7 +218,7 @@ object WeeklyCardRenderer {
             }
             Detector.TAG_AT_PLACE -> {
                 val tag = tagStr ?: ""
-                val pl = placeStr ?: "an unnamed place"
+                val pl = placeStr ?: res.getString(R.string.place_unnamed_inline)
                 res.getQuantityString(R.plurals.week_observation_tagAtPlace, count, tag, count, pl)
             }
         }

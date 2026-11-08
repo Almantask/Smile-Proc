@@ -6,8 +6,10 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import com.example.smileproc.core.WeeklyCardTime
 import com.example.smileproc.ui.onboarding.OnboardingScreen
 import com.example.smileproc.ui.settings.SettingsScreen
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -59,5 +61,29 @@ class OnboardingAndSettingsTest {
         composeTestRule.onNodeWithContentDescription("Capture location").performScrollTo().performClick()
 
         assertFalse(captureLocation)
+    }
+
+    @Test
+    fun settings_opensWeeklyCardTimeDialog_andUpdates() {
+        var weeklyCardTime = WeeklyCardTime(weekday = 7, hour = 19, minute = 0)
+
+        composeTestRule.setContent {
+            SettingsScreen(
+                captureLocation = true,
+                onCaptureLocationChanged = {},
+                weeklyCardTime = weeklyCardTime,
+                onWeeklyCardTimeChanged = { weeklyCardTime = it },
+            )
+        }
+
+        composeTestRule.onNodeWithText("Weekly card time").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Your weekly card is ready Sunday at 19:00.").performScrollTo().assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Weekly card time").performClick()
+
+        composeTestRule.onNodeWithText("Fri").performClick()
+        composeTestRule.onNodeWithText("Save").performClick()
+
+        assertEquals(5, weeklyCardTime.weekday)
     }
 }

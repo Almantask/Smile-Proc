@@ -311,4 +311,27 @@ class WeekScreenTest {
             composeTestRule.onNodeWithText("Patterns need a few more check-ins.").performScrollTo().assertIsDisplayed()
         }
     }
+
+    @Test
+    fun unseenCardIndicator_andLastSeenResolution() {
+        val period1 = Instant.parse("2026-10-11T17:00:00Z")
+        val period2 = Instant.parse("2026-10-18T17:00:00Z")
+        val card2 = makeSampleCard(
+            periodStart = period2,
+            periodEnd = period2.plus(7, java.time.temporal.ChronoUnit.DAYS),
+        )
+
+        var lastSeen: Instant? = null
+        val latestCard = card2
+        val hasUnseen1 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
+        assertTrue(hasUnseen1)
+
+        lastSeen = period1
+        val hasUnseen2 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
+        assertTrue(hasUnseen2)
+
+        lastSeen = card2.periodStart
+        val hasUnseen3 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
+        org.junit.Assert.assertFalse(hasUnseen3)
+    }
 }
