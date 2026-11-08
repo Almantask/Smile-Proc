@@ -386,7 +386,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M7 — Places UI
-- **Status:** claude-verified (2026-11-08, tag `m7-claude-verified`)
+- **Status:** accepted (2026-11-08; claude-verified 2026-11-08, tag `m7-claude-verified`)
 - **Built:**
   - `PlaceFormatters` (`app/src/main/java/com/example/smileproc/ui/places/PlaceFormatters.kt`):
     - Plural check-in counter formatting using `R.plurals.place_unnamed_count`.
