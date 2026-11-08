@@ -45,6 +45,9 @@ object DeleteAllManager {
             // 6. Start fresh storage (deletes DB, replaces key, creates clean empty DB)
             container.startFresh()
 
+            // 7. Clear error logs
+            container.errorLogStore.clear()
+
             SafeLog.event(SafeLog.Event.DELETE_ALL_COMPLETED)
         } catch (e: Exception) {
             SafeLog.failure(SafeLog.Event.DELETE_ALL_FAILED, e)

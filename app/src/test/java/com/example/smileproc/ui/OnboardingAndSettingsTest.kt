@@ -96,4 +96,23 @@ class OnboardingAndSettingsTest {
 
         assertEquals(5, weeklyCardTime.weekday)
     }
+
+    @Test
+    fun settings_aboutDialog_showsExportErrorLogsButton_andInvokesCallback() {
+        var exportErrorLogsClicked = false
+
+        composeTestRule.setContent {
+            SettingsScreen(
+                captureLocation = true,
+                onCaptureLocationChanged = {},
+                onExportErrorLogsClick = { exportErrorLogsClicked = true },
+            )
+        }
+
+        composeTestRule.onNodeWithText("About").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Error logs").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Export error logs").assertIsDisplayed().performClick()
+
+        assertTrue(exportErrorLogsClicked)
+    }
 }

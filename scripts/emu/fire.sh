@@ -10,7 +10,8 @@ case "${1:-}" in
   seed-demo) action=SEED_DEMO ;;
   clear-demo) action=CLEAR_DEMO ;;
   seal-test) action=SEAL_TEST_ENTRY ;;
-  *) echo "usage: fire.sh reminder|restore|seed-demo|clear-demo|seal-test" >&2; exit 2 ;;
+  export-logs) action=EXPORT_ERROR_LOGS ;;
+  *) echo "usage: fire.sh reminder|restore|seed-demo|clear-demo|seal-test|export-logs" >&2; exit 2 ;;
 esac
 
 sh_out am broadcast --include-stopped-packages \

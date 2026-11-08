@@ -291,6 +291,11 @@
     <string name="settings_about">About</string>
     <string name="about_tagline">Private mood check-in app.</string>
     <string name="about_body">Encrypted storage on this phone. Zero network.</string>
+    <string name="about_error_logs">Error logs</string>
+    <string name="export_error_logs">Export error logs</string>
+    <string name="export_error_logs_cd">Export decrypted error logs to a file</string>
+    <string name="error_logs_exported">Error logs exported</string>
+    <string name="error_logs_export_failed">Couldn\'t export error logs</string>
 
     <!-- Reminders -->
     <string name="reminders_title">Reminders</string>

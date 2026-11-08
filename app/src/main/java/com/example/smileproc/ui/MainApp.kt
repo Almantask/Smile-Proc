@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.smileproc.AppContainer
 import com.example.smileproc.R
+import com.example.smileproc.SafeLog
 import com.example.smileproc.StorageBundle
 import com.example.smileproc.core.CardPeriod
 import com.example.smileproc.core.CheckInMachine
@@ -108,6 +109,8 @@ fun MainApp(
     val exportFailedMessage = stringResource(R.string.export_failed)
     val importWrongPasswordMessage = stringResource(R.string.import_wrong_password)
     val importFailedMessage = stringResource(R.string.import_failed)
+    val errorLogsExportedMessage = stringResource(R.string.error_logs_exported)
+    val errorLogsExportFailedMessage = stringResource(R.string.error_logs_export_failed)
 
     val snackbarHostState = remember { SnackbarHostState() }
     val exportImportManager = remember(context, container) { ExportImportManager(context, container) }
@@ -159,6 +162,25 @@ fun MainApp(
             pendingImportUri = uri
             showImportDialog = true
             importErrorMessage = null
+        }
+    }
+
+    val createErrorLogsLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri ->
+        if (uri != null) {
+            container.applicationScope.launch {
+                try {
+                    context.contentResolver.openOutputStream(uri)?.use { stream ->
+                        container.errorLogStore.exportDecrypted(stream)
+                    }
+                    SafeLog.event(SafeLog.Event.ERROR_LOGS_EXPORTED)
+                    snackbarHostState.showSnackbar(errorLogsExportedMessage)
+                } catch (e: Exception) {
+                    SafeLog.failure(SafeLog.Event.ERROR_LOGS_EXPORT_FAILED, e)
+                    snackbarHostState.showSnackbar(errorLogsExportFailedMessage)
+                }
+            }
         }
     }
 
@@ -476,6 +498,10 @@ fun MainApp(
                                 onExportClick = { showExportDialog = true },
                                 onImportClick = { openDocumentLauncher.launch(arrayOf("*/*")) },
                                 onDeleteAllClick = { showDeleteAllDialog = true },
+                                onExportErrorLogsClick = {
+                                    val today = LocalDate.now().toString()
+                                    createErrorLogsLauncher.launch("smileproc-error-logs-$today.json")
+                                },
                             )
                         }
                     }

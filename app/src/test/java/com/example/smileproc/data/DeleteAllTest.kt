@@ -95,6 +95,10 @@ class DeleteAllTest {
         )
         assertTrue(nm.activeNotifications.any { it.id == CheckInNotifier.ID_CHECKIN })
 
+        // Seed error log
+        container.errorLogStore.record(com.example.smileproc.SafeLog.Event.NOTIFY_FAILED, RuntimeException("Test"))
+        assertTrue(container.errorLogStore.count() > 0)
+
         // Act: Delete all data
         DeleteAllManager.deleteAll(context, container)
 
@@ -111,6 +115,9 @@ class DeleteAllTest {
         val stateAfter = container.awaitState() as StorageState.Ready
         assertEquals(0, stateAfter.storage.entryRepository.getAllOldestFirst().size)
         assertEquals(0, stateAfter.storage.placeRepository.getAll().size)
+
+        // Assert 5: Error logs cleared
+        assertEquals(0, container.errorLogStore.count())
     }
 
     private class FakeManagedSealer : ManagedSealer {

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.smileproc.core.crypto.SealException
 import com.example.smileproc.data.DataStoreSettingsRepository
 import com.example.smileproc.data.EntryRepository
+import com.example.smileproc.data.ErrorLogStore
 import com.example.smileproc.data.KeystoreSealer
 import com.example.smileproc.data.ManagedSealer
 import com.example.smileproc.data.PlaceRepository
@@ -63,11 +64,13 @@ class AppContainer(
 ) {
     private val appContext: Context = context.applicationContext
     val locationClient: LocationClient = locationClientFactory(appContext, settingsRepository)
+    val errorLogStore: ErrorLogStore = ErrorLogStore(appContext, sealer)
     private val mutex = Mutex()
     private val _storageState = MutableStateFlow<StorageState>(StorageState.Loading)
     val storageState: StateFlow<StorageState> = _storageState.asStateFlow()
 
     init {
+        SafeLog.init(errorLogStore)
         if (autoInitialize) {
             applicationScope.launch {
                 initialize()

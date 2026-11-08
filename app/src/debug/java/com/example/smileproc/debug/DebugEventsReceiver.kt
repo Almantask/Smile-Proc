@@ -51,6 +51,7 @@ class DebugEventsReceiver : BroadcastReceiver() {
             ACTION_FIRE_RESTORE -> handleFireRestore(context.applicationContext)
             ACTION_SEED_DEMO -> handleSeedDemo(context.applicationContext)
             ACTION_CLEAR_DEMO -> handleClearDemo(context.applicationContext)
+            ACTION_EXPORT_ERROR_LOGS -> handleExportErrorLogs(context.applicationContext)
             else -> SafeLog.event(SafeLog.Event.DEBUG_EVENT_NOT_WIRED)
         }
     }
@@ -413,11 +414,29 @@ class DebugEventsReceiver : BroadcastReceiver() {
         }
     }
 
+    private fun handleExportErrorLogs(appContext: Context) {
+        val container = SmileProcApplication.container(appContext)
+        val pending = goAsync()
+        container.applicationScope.launch {
+            try {
+                appContext.openFileOutput("error_logs_decrypted.json", Context.MODE_PRIVATE).use { stream ->
+                    container.errorLogStore.exportDecrypted(stream)
+                }
+                SafeLog.event(SafeLog.Event.ERROR_LOGS_EXPORTED)
+            } catch (e: Exception) {
+                SafeLog.failure(SafeLog.Event.ERROR_LOGS_EXPORT_FAILED, e)
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+
     companion object {
         const val ACTION_SEAL_TEST_ENTRY = "com.example.smileproc.debug.SEAL_TEST_ENTRY"
         const val ACTION_FIRE_REMINDER = "com.example.smileproc.debug.FIRE_REMINDER"
         const val ACTION_FIRE_RESTORE = "com.example.smileproc.debug.FIRE_RESTORE"
         const val ACTION_SEED_DEMO = "com.example.smileproc.debug.SEED_DEMO"
         const val ACTION_CLEAR_DEMO = "com.example.smileproc.debug.CLEAR_DEMO"
+        const val ACTION_EXPORT_ERROR_LOGS = "com.example.smileproc.debug.EXPORT_ERROR_LOGS"
     }
 }

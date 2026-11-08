@@ -27,6 +27,8 @@ class ProbeReceiver : BroadcastReceiver() {
                 val dismissed = container.settingsRepository.dismissed.first()
                 val standing = container.settingsRepository.standing.first()
 
+                val errorLogsCount = container.errorLogStore.count()
+
                 val probeJson = when (val state = container.awaitState()) {
                     is StorageState.Ready -> {
                         val entries = state.storage.entryRepository.getAllOldestFirst()
@@ -40,6 +42,7 @@ class ProbeReceiver : BroadcastReceiver() {
                             append("{\"stub\": false")
                             append(", \"storageState\": \"ready\"")
                             append(", \"entries\": ").append(entries.size)
+                            append(", \"errorLogsCount\": ").append(errorLogsCount)
                             append(", \"perMood\": {\"low\": ").append(low)
                             append(", \"okay\": ").append(okay)
                             append(", \"good\": ").append(good).append('}')
@@ -54,12 +57,14 @@ class ProbeReceiver : BroadcastReceiver() {
                     }
                     StorageState.NeedsRecovery -> {
                         "{\"stub\": false, \"storageState\": \"needs_recovery\", \"entries\": null, " +
+                            "\"errorLogsCount\": $errorLogsCount, " +
                             "\"perMood\": null, \"perSource\": null, \"located\": null, " +
                             "\"machineState\": \"$machineState\", \"lastTestResult\": $lastTestSuccess, " +
                             "\"dismissed\": $dismissed, \"standing\": $standing}"
                     }
                     StorageState.Loading -> {
                         "{\"stub\": false, \"storageState\": \"loading\", \"entries\": null, " +
+                            "\"errorLogsCount\": $errorLogsCount, " +
                             "\"perMood\": null, \"perSource\": null, \"located\": null, " +
                             "\"machineState\": \"$machineState\", \"lastTestResult\": $lastTestSuccess, " +
                             "\"dismissed\": $dismissed, \"standing\": $standing}"

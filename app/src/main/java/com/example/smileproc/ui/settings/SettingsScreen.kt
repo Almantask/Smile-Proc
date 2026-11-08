@@ -17,6 +17,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -57,6 +58,7 @@ fun SettingsScreen(
     onExportClick: () -> Unit = {},
     onImportClick: () -> Unit = {},
     onDeleteAllClick: () -> Unit = {},
+    onExportErrorLogsClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
     var showAboutDialog by remember { mutableStateOf(false) }
@@ -392,6 +394,7 @@ fun SettingsScreen(
     // About Dialog
     if (showAboutDialog) {
         val closeLabel = stringResource(R.string.action_close)
+        val exportLogsCd = stringResource(R.string.export_error_logs_cd)
         AlertDialog(
             onDismissRequest = { showAboutDialog = false },
             title = { Text(stringResource(R.string.app_name)) },
@@ -406,6 +409,34 @@ fun SettingsScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 4.dp),
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.about_error_logs),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        OutlinedButton(
+                            onClick = {
+                                showAboutDialog = false
+                                onExportErrorLogsClick()
+                            },
+                            modifier = Modifier
+                                .heightIn(min = 48.dp)
+                                .semantics { contentDescription = exportLogsCd },
+                        ) {
+                            Text(stringResource(R.string.export_error_logs))
+                        }
+                    }
                 }
             },
             confirmButton = {
