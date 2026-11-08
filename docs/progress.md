@@ -429,7 +429,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M8 — Weekly card and support
-- **Status:** claude-verified (2026-11-08, tag `m8-claude-verified`)
+- **Status:** accepted (2026-11-08; claude-verified 2026-11-08, tag `m8-claude-verified`)
 - **Decided before M8:**
   1. **Support screen generic emergency line (human, 2026-11-07):** include a generic `"If you're in danger right now, contact your local emergency number."` line on the Support screen (naming no phone numbers or contacts; `screens.md` › Support updated; add string to `strings.xml` and run `copy-reviewer` in M8).
 - **Built:**
