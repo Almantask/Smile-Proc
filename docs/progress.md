@@ -487,7 +487,60 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M9 — Privacy and security
-- **Status:** not started
+- **Status:** claude-verified (2026-11-08, tag `m9-claude-verified`)
+- **Built:**
+  - Export and Import (`.smileproc` format):
+    - `:core` crypto (`core/src/main/kotlin/com/example/smileproc/core/export/`): `ExportEnvelope`, `ExportPayload`, `ExportSettings`, `ExportCrypto`, `ExportException` (`Reason`: `WRONG_PASSWORD_OR_CORRUPT`, `INVALID_PAYLOAD`, `UNSUPPORTED_VERSION`, `PASSWORD_TOO_SHORT`, `PASSWORDS_DO_NOT_MATCH`).
+    - PBKDF2-HMAC-SHA256 (600,000 iterations default, 16-byte random salt, 32-byte key) with AES-256-GCM cipher (`12-byte IV || ciphertext || 16-byte tag`). Off-main-thread key derivation.
+    - Test vector: `fixtures/export/vector-1.json` verified in `:core:test`.
+    - `ExportImportManager` (`app/src/main/java/com/example/smileproc/data/ExportImportManager.kt`): Stream export/import coordinating SAF `CreateDocument` and `OpenDocument`. Merges entries and places by `id`, keeping whichever record has newer `updatedAt` / `createdAt`. Replaces reminders, standing, weeklyCard schedule, tagPickerMode, captureLocation. Rebuilds weekly cards after import per `docs/spec/android.md:102` and reschedules reminder alarms.
+    - UI Dialogs: `ExportDialog` (password >= 8 chars entered twice, progress spinner, warning), `ImportPasswordDialog` (password prompt, wrong password / corrupt file error messaging).
+  - Delete all data:
+    - `DeleteAllManager` (`app/src/main/java/com/example/smileproc/data/DeleteAllManager.kt`): Coordinator cancelling standing notification (`ID_CHECKIN`), cancelling reminder alarms (`ReminderScheduler.cancelAll`), clearing DB repositories, resetting DataStore preferences, resetting AppLock in memory, calling `AppContainer.startFresh()` (deletes SQLite DB, replaces Keystore key, initializes clean schema).
+    - `DeleteAllDialog` (`app/src/main/java/com/example/smileproc/ui/settings/DeleteAllDialog.kt`): Warning title (`R.string.delete_all_title`), explanation body (`R.string.delete_all_body`), destructive action button (`R.string.delete_all_action`), cancel action (`R.string.action_cancel`). Resets app back to fresh Onboarding step 1.
+  - App lock & recents protection:
+    - `AppLockManager` (`app/src/main/java/com/example/smileproc/security/AppLockManager.kt`): Observes `ProcessLifecycleOwner`, locks on launch and after 60s in background. Uses `BiometricPrompt` with authenticators `BIOMETRIC_STRONG or DEVICE_CREDENTIAL` on Android 11+ (API 30+) and `BIOMETRIC_WEAK or DEVICE_CREDENTIAL` on Android 10 (API 29). Disables toggle with explanation when no screen lock credential exists on device (`AppLockManager.canAuthenticate(context)`).
+    - `MainActivity` (`app/src/main/java/com/example/smileproc/MainActivity.kt`): Extends `FragmentActivity`, provides `AppLockScreen` overlay when locked, implements recents protection via `setRecentsScreenshotEnabled(!appLock)` on Android 13+ (API 33+) and `window.setFlags(FLAG_SECURE)` on Android 10–12 (<33). Lock-screen notification buttons are never blocked by App lock.
+  - Screens & navigation:
+    - `PrivacyScreen` (`app/src/main/java/com/example/smileproc/ui/privacy/PrivacyScreen.kt`): Accessible cards explaining zero network access, local Keystore encryption, exclusion from OS backups/transfers, and export recommendations.
+    - `SettingsScreen` (`app/src/main/java/com/example/smileproc/ui/settings/SettingsScreen.kt`): Exactly 12 items in required spec order (`docs/spec/screens.md:13`): Reminders, Keep a check-in on the lock screen, Lock-screen check-in, Weekly card time, Places, Capture location, App lock, Export, Import, Privacy, Delete all data, About.
+    - `OnboardingScreen` (`app/src/main/java/com/example/smileproc/ui/onboarding/OnboardingScreen.kt`): Full 5-screen onboarding: (1) privacy promise; (2) location permission (skippable); (3) gentle reminders (default 4 times pre-filled, lock-screen standing choice); (4) App lock switch (pre-selected ON); (5) lock-screen check-in test. Reset scroll to top on each step advance.
+- **Evidence:**
+  - Full verification gate `scripts/check.sh`: all 7 gates PASS (`privacy-guard`, `fixtures`, `json`, `gradle`, `dogfood-classpath`, `dogfood-permissions`, `dogfood-manifest`).
+  - Unit and UI tests (`./gradlew :core:test :app:testDebugUnitTest`, 80 tests total across `:core` and `:app`):
+    - `ExportCryptoTest`: 600,000 PBKDF2 iterations, AES-256-GCM round trip, wrong password failure, tamper detection, `vector-1.json` golden validation.
+    - `ExportImportTest`: round-trip export and import restoring entries, places, and settings; merge by newer `updatedAt`; importing twice does not duplicate; wrong password rejection; corrupt JSON file rejection.
+    - `DeleteAllTest`: complete wipe cancelling notification `ID_CHECKIN`, cancelling reminder alarms, wiping entities, resetting settings, and returning to fresh storage state.
+    - `AppLockManagerTest`: 60-second background timeout enforcement, lock state transitions, authentication capability detection.
+    - `OnboardingAndSettingsTest`, `PlatformLocationClientTest`, `RemindersAndLockScreenTest`: updated and verified against 5-screen onboarding, App lock toggle, and 12-item settings layout.
+  - Live Emulator Scenarios:
+    - **E14 (App lock on `sp36`, API 36):**
+      - Toggled App lock to ON in Settings.
+      - Backgrounded app via Home key (`KEYCODE_HOME`), waited 62 seconds.
+      - Reopened app: `BiometricPrompt` system screen "Unlock SmileProc" appeared automatically (`e14-locked-prompt.png`).
+      - Entered PIN `1111`: app immediately unlocked and resumed Today screen (`e14-unlocked.png`).
+      - Opened recents: recents switcher preview card is completely masked with zero content visible (`e14-recents-masked.png`).
+    - **E16 (Delete all on `sp36`, API 36):**
+      - Seeded 47 check-in entries across 4 weeks with `fire.sh seed-demo`. Verified probe reported `entries: 47`.
+      - In Settings, tapped "Delete all data" -> opened confirmation dialog `e16-delete-dialog.png` -> confirmed "Delete everything".
+      - Verified probe reported `entries: 0`, `located: 0`, `machineState: Hidden`.
+      - Verified notifications cancelled: `notifs.py` reported `[]` (0 notifications).
+      - Verified alarms cancelled: `dumpsys alarm` reported `alarm_cancelled` (0 pending smileproc alarms).
+      - Reopened app: directly returned to clean Onboarding Screen 1 ("Just for you" privacy promise, `e16-after-delete-all.png`).
+    - **E19 (Android 10 `sp29` verification):**
+      - Completed 5-screen onboarding on `sp29` with App lock enabled (`e19-sp29-screen1.png`, `e19-sp29-onboarding-applock.png`).
+      - Backgrounded app, waited 62s timeout.
+      - Reopened app: Android 10 ConfirmDeviceCredential system dialog "Unlock SmileProc" / "Enter your device PIN to continue" appeared.
+      - Entered PIN `1111`: unlocked successfully.
+      - Opened recents: task switcher preview is completely blank white/masked via `FLAG_SECURE` (`e19-sp29-recents.png`).
+  - Subagent audits:
+    - `copy-reviewer`: "No copy issues".
+    - `spec-reviewer`: identified clearing weekly cards on import per `android.md:102` and testing importing twice does not duplicate; both resolved and verified with unit tests.
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** H5, H6, H7 (real-phone human checks).
+- **Not fixed:** none.
+- **Decisions needed:** none.
 
 ## M10 — Polish and release prep
 - **Status:** not started
