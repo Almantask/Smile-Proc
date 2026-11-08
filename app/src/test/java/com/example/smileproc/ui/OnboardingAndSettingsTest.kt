@@ -1,6 +1,7 @@
 package com.example.smileproc.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -33,15 +34,24 @@ class OnboardingAndSettingsTest {
 
         // Screen 1: Just for you
         composeTestRule.onNodeWithText("Just for you").assertIsDisplayed()
-
-        // Tap Next
         composeTestRule.onNodeWithContentDescription("Next").performClick()
 
         // Screen 2: Notice places
         composeTestRule.onNodeWithText("Notice places").assertIsDisplayed()
-
-        // Tap Skip
         composeTestRule.onNodeWithContentDescription("Skip").performClick()
+
+        // Screen 3: Gentle reminders
+        composeTestRule.onNodeWithText("Gentle reminders").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Skip").performScrollTo().performClick()
+        composeTestRule.waitForIdle()
+
+        // Screen 4: App lock
+        composeTestRule.onAllNodes(hasText("App lock"))[0].assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Next").performScrollTo().performClick()
+
+        // Screen 5: Try it from your lock screen
+        composeTestRule.onNodeWithText("Try it from your lock screen").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Start").performScrollTo().performClick()
 
         assertTrue(completed)
     }

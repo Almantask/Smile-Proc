@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -68,7 +69,7 @@ fun OnboardingScreen(
 ) {
     OnboardingScreen(
         container = null,
-        onComplete = { _, _ -> onComplete() },
+        onComplete = { _, _, _ -> onComplete() },
         modifier = modifier,
     )
 }
@@ -76,6 +77,19 @@ fun OnboardingScreen(
 @Composable
 fun OnboardingScreen(
     onComplete: (reminders: List<Reminder>, standing: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    container: AppContainer? = null,
+) {
+    OnboardingScreen(
+        onComplete = { r, s, _ -> onComplete(r, s) },
+        modifier = modifier,
+        container = container,
+    )
+}
+
+@Composable
+fun OnboardingScreen(
+    onComplete: (reminders: List<Reminder>, standing: Boolean, appLock: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     container: AppContainer? = null,
 ) {
@@ -100,7 +114,13 @@ fun OnboardingScreen(
     }
 
     fun finishOnboarding() {
-        onComplete(configuredReminders, standingEnabled)
+        val canAuth = com.example.smileproc.security.AppLockManager.canAuthenticate(context)
+        onComplete(configuredReminders, standingEnabled, appLockEnabled && canAuth)
+    }
+
+    val scrollState = rememberScrollState()
+    LaunchedEffect(step) {
+        scrollState.scrollTo(0)
     }
 
     Scaffold(modifier = modifier) { innerPadding ->
@@ -108,7 +128,7 @@ fun OnboardingScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
                 .padding(horizontal = 24.dp, vertical = 32.dp),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -253,6 +273,7 @@ fun OnboardingScreen(
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
+                        val canAuth = remember(context) { com.example.smileproc.security.AppLockManager.canAuthenticate(context) }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -266,8 +287,9 @@ fun OnboardingScreen(
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             Switch(
-                                checked = appLockEnabled,
+                                checked = appLockEnabled && canAuth,
                                 onCheckedChange = { appLockEnabled = it },
+                                enabled = canAuth,
                             )
                         }
                     }
@@ -419,7 +441,7 @@ fun OnboardingScreen(
 
                         val skipLabel = stringResource(R.string.action_skip)
                         TextButton(
-                            onClick = { finishOnboarding() },
+                            onClick = { step = 2 },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
@@ -448,7 +470,7 @@ fun OnboardingScreen(
 
                         val skipLabel = stringResource(R.string.action_skip)
                         TextButton(
-                            onClick = { finishOnboarding() },
+                            onClick = { step = 3 },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
@@ -467,17 +489,6 @@ fun OnboardingScreen(
                                 .semantics { contentDescription = nextLabel },
                         ) {
                             Text(nextLabel)
-                        }
-
-                        val skipLabel = stringResource(R.string.action_skip)
-                        TextButton(
-                            onClick = { finishOnboarding() },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .heightIn(min = 48.dp)
-                                .semantics { contentDescription = skipLabel },
-                        ) {
-                            Text(skipLabel)
                         }
                     }
                     4 -> {

@@ -34,6 +34,14 @@ object SafeLog {
         TEST_COMPLETED,
         DEBUG_DEMO_SEEDED,
         DEBUG_DEMO_CLEARED,
+        EXPORT_SAVED,
+        EXPORT_FAILED,
+        IMPORT_RESTORED,
+        IMPORT_FAILED,
+        DELETE_ALL_COMPLETED,
+        DELETE_ALL_FAILED,
+        APP_LOCK_AUTHENTICATED,
+        APP_LOCK_FAILED,
     }
 
     fun event(event: Event) {

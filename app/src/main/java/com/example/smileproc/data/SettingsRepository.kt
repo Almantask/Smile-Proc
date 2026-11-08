@@ -42,6 +42,7 @@ interface SettingsRepository {
     val lastTestSuccess: Flow<Instant?>
     val weeklyCardTime: Flow<WeeklyCardTime>
     val lastSeenWeeklyCardPeriodStart: Flow<Instant?>
+    val appLock: Flow<Boolean>
 
     suspend fun setCaptureLocation(enabled: Boolean)
     suspend fun setOnboardingCompleted(completed: Boolean)
@@ -56,6 +57,7 @@ interface SettingsRepository {
     suspend fun clearLastTestSuccess()
     suspend fun setWeeklyCardTime(time: WeeklyCardTime)
     suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?)
+    suspend fun setAppLock(enabled: Boolean)
     suspend fun clearAll()
 }
 
@@ -162,6 +164,14 @@ class DataStoreSettingsRepository(
             }
         }
 
+    override val appLock: Flow<Boolean> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs -> prefs[KEY_APP_LOCK] ?: false }
+
+    override suspend fun setAppLock(enabled: Boolean) {
+        dataStore.edit { it[KEY_APP_LOCK] = enabled }
+    }
+
     override suspend fun setCaptureLocation(enabled: Boolean) {
         dataStore.edit { it[KEY_CAPTURE_LOCATION] = enabled }
     }
@@ -256,5 +266,6 @@ class DataStoreSettingsRepository(
         val KEY_LAST_TEST_SUCCESS = stringPreferencesKey("last_test_success")
         val KEY_WEEKLY_CARD_TIME = stringPreferencesKey("weekly_card_time")
         val KEY_LAST_SEEN_WEEKLY_CARD = stringPreferencesKey("last_seen_weekly_card")
+        val KEY_APP_LOCK = booleanPreferencesKey("app_lock")
     }
 }

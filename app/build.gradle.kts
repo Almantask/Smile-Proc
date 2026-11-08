@@ -85,6 +85,8 @@ dependencies {
     implementation(libs.androidx.sqlite.framework)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
     ksp(libs.androidx.room3.compiler)

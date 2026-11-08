@@ -369,4 +369,6 @@
 
     <!-- App lock prompt -->
     <string name="app_lock_prompt_title">Unlock SmileProc</string>
+    <string name="app_lock_locked_title">SmileProc is locked</string>
+    <string name="app_lock_unlock">Unlock</string>
 </resources>

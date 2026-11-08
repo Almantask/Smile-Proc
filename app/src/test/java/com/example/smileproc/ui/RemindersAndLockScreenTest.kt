@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import com.example.smileproc.AppContainer
 import com.example.smileproc.SmileProcApplication
@@ -123,12 +124,21 @@ class RemindersAndLockScreenTest {
         }
 
         // Step 1 -> Next
-        composeTestRule.onNodeWithContentDescription("Next").performClick()
+        composeTestRule.onNodeWithContentDescription("Next").performScrollTo().performClick()
 
         // Step 2 -> Skip
-        composeTestRule.onNodeWithContentDescription("Skip").performClick()
+        composeTestRule.onNodeWithContentDescription("Skip").performScrollTo().performClick()
 
-        // Skipping onboarding on step 2 completes with defaults preserved
+        // Step 3 -> Skip
+        composeTestRule.onNodeWithContentDescription("Skip").performScrollTo().performClick()
+
+        // Step 4 -> Next
+        composeTestRule.onNodeWithContentDescription("Next").performScrollTo().performClick()
+
+        // Step 5 -> Start
+        composeTestRule.onNodeWithText("Start").performScrollTo().performClick()
+
+        // Completing onboarding preserves defaults
         assertEquals(4, completedReminders?.size)
         assertEquals(true, completedStanding)
     }
@@ -187,9 +197,15 @@ class RemindersAndLockScreenTest {
         }
 
         // Step 1 -> Next
-        composeTestRule.onNodeWithContentDescription("Next").performClick()
+        composeTestRule.onNodeWithContentDescription("Next").performScrollTo().performClick()
         // Step 2 -> Skip
-        composeTestRule.onNodeWithContentDescription("Skip").performClick()
+        composeTestRule.onNodeWithContentDescription("Skip").performScrollTo().performClick()
+        // Step 3 -> Skip
+        composeTestRule.onNodeWithContentDescription("Skip").performScrollTo().performClick()
+        // Step 4 -> Next
+        composeTestRule.onNodeWithContentDescription("Next").performScrollTo().performClick()
+        // Step 5 -> Start
+        composeTestRule.onNodeWithText("Start").performScrollTo().performClick()
 
         assertNotNull(completedReminders)
         assertEquals(Reminder.DEFAULT_REMINDERS, completedReminders)

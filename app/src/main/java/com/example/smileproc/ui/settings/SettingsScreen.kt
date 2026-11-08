@@ -28,12 +28,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.smileproc.R
 import com.example.smileproc.core.WeeklyCardTime
+import com.example.smileproc.security.AppLockManager
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,11 +48,17 @@ fun SettingsScreen(
     onStandingChanged: (Boolean) -> Unit = {},
     weeklyCardTime: WeeklyCardTime = WeeklyCardTime.DEFAULT,
     onWeeklyCardTimeChanged: (WeeklyCardTime) -> Unit = {},
+    appLock: Boolean = false,
+    onAppLockChanged: (Boolean) -> Unit = {},
     onNavigateToReminders: () -> Unit = {},
     onNavigateToLockScreenCheckIn: () -> Unit = {},
     onNavigateToPlaces: () -> Unit = {},
+    onNavigateToPrivacy: () -> Unit = {},
+    onExportClick: () -> Unit = {},
+    onImportClick: () -> Unit = {},
+    onDeleteAllClick: () -> Unit = {},
 ) {
-    var showPrivacyDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     var showAboutDialog by remember { mutableStateOf(false) }
     var showWeeklyCardTimeDialog by remember { mutableStateOf(false) }
 
@@ -228,13 +236,102 @@ fun SettingsScreen(
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
+            // App lock row
+            val appLockLabel = stringResource(R.string.settings_app_lock)
+            val canAuth = remember(context) { AppLockManager.canAuthenticate(context) }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable(enabled = canAuth) { onAppLockChanged(!appLock) }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text(
+                        text = appLockLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = if (canAuth) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                    )
+                    Text(
+                        text = if (canAuth) stringResource(R.string.settings_app_lock_summary) else stringResource(R.string.settings_app_lock_no_screen_lock),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(
+                    checked = appLock && canAuth,
+                    onCheckedChange = if (canAuth) onAppLockChanged else null,
+                    enabled = canAuth,
+                    modifier = Modifier.semantics { contentDescription = appLockLabel },
+                )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Export row
+            val exportLabel = stringResource(R.string.settings_export)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onExportClick() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = exportLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = stringResource(R.string.export_body),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Import row
+            val importLabel = stringResource(R.string.settings_import)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onImportClick() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = importLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = stringResource(R.string.import_body),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
             // Privacy row
             val privacyLabel = stringResource(R.string.settings_privacy)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 56.dp)
-                    .clickable { showPrivacyDialog = true }
+                    .clickable { onNavigateToPrivacy() }
                     .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -250,6 +347,25 @@ fun SettingsScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Delete all data row
+            val deleteAllLabel = stringResource(R.string.settings_delete_all)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onDeleteAllClick() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = deleteAllLabel,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -271,54 +387,6 @@ fun SettingsScreen(
                 )
             }
         }
-    }
-
-    // Privacy Dialog
-    if (showPrivacyDialog) {
-        val closeLabel = stringResource(R.string.action_close)
-        AlertDialog(
-            onDismissRequest = { showPrivacyDialog = false },
-            title = { Text(stringResource(R.string.privacy_title)) },
-            text = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.privacy_on_phone),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    Text(
-                        text = stringResource(R.string.privacy_nothing_leaves),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    Text(
-                        text = stringResource(R.string.privacy_no_backup),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    Text(
-                        text = stringResource(R.string.privacy_lost_phone),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    Text(
-                        text = stringResource(R.string.privacy_no_account),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = { showPrivacyDialog = false },
-                    modifier = Modifier
-                        .heightIn(min = 48.dp)
-                        .semantics { contentDescription = closeLabel },
-                ) {
-                    Text(closeLabel)
-                }
-            },
-        )
     }
 
     // About Dialog

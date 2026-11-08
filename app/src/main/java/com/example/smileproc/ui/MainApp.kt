@@ -1,5 +1,8 @@
 package com.example.smileproc.ui
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,6 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +43,9 @@ import com.example.smileproc.core.ClusterID
 import com.example.smileproc.core.PlaceKind
 import com.example.smileproc.core.WeeklyCardBuilder
 import com.example.smileproc.core.WeeklyCardTime
+import com.example.smileproc.core.export.ExportException
+import com.example.smileproc.data.DeleteAllManager
+import com.example.smileproc.data.ExportImportManager
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.notify.CheckInReceiver
 import com.example.smileproc.ui.history.HistoryScreen
@@ -45,6 +53,10 @@ import com.example.smileproc.ui.places.PatternConfigCatalog
 import com.example.smileproc.ui.places.PlaceNamingSheet
 import com.example.smileproc.ui.places.PlacesScreen
 import com.example.smileproc.ui.places.resolvePlaces
+import com.example.smileproc.ui.privacy.PrivacyScreen
+import com.example.smileproc.ui.settings.DeleteAllDialog
+import com.example.smileproc.ui.settings.ExportDialog
+import com.example.smileproc.ui.settings.ImportPasswordDialog
 import com.example.smileproc.ui.settings.LockScreenCheckInScreen
 import com.example.smileproc.ui.settings.RemindersScreen
 import com.example.smileproc.ui.settings.SettingsScreen
@@ -55,6 +67,7 @@ import com.example.smileproc.ui.week.PatternLibraryCatalog
 import com.example.smileproc.ui.week.WeekScreen
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 
 enum class AppTab {
@@ -89,6 +102,65 @@ fun MainApp(
     val captureLocation by container.settingsRepository.captureLocation.collectAsStateWithLifecycle(initialValue = true)
     val standing by container.settingsRepository.standing.collectAsStateWithLifecycle(initialValue = true)
     val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.GRADUAL)
+    val appLock by container.settingsRepository.appLock.collectAsStateWithLifecycle(initialValue = false)
+
+    val exportDoneMessage = stringResource(R.string.export_done)
+    val exportFailedMessage = stringResource(R.string.export_failed)
+    val importWrongPasswordMessage = stringResource(R.string.import_wrong_password)
+    val importFailedMessage = stringResource(R.string.import_failed)
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val exportImportManager = remember(context, container) { ExportImportManager(context, container) }
+
+    var showExportDialog by rememberSaveable { mutableStateOf(false) }
+    var isExporting by remember { mutableStateOf(false) }
+    var exportPassword by remember { mutableStateOf<CharArray?>(null) }
+
+    var showImportDialog by rememberSaveable { mutableStateOf(false) }
+    var isImporting by remember { mutableStateOf(false) }
+    var importErrorMessage by remember { mutableStateOf<String?>(null) }
+    var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
+
+    var showDeleteAllDialog by rememberSaveable { mutableStateOf(false) }
+
+    val createDocumentLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/octet-stream")
+    ) { uri ->
+        if (uri != null && exportPassword != null) {
+            val pwd = exportPassword!!
+            isExporting = true
+            container.applicationScope.launch {
+                try {
+                    context.contentResolver.openOutputStream(uri)?.use { stream ->
+                        exportImportManager.exportToStream(stream, pwd)
+                    }
+                    isExporting = false
+                    showExportDialog = false
+                    exportPassword = null
+                    snackbarHostState.showSnackbar(exportDoneMessage)
+                } catch (e: Exception) {
+                    isExporting = false
+                    showExportDialog = false
+                    exportPassword = null
+                    snackbarHostState.showSnackbar(exportFailedMessage)
+                }
+            }
+        } else {
+            isExporting = false
+            showExportDialog = false
+            exportPassword = null
+        }
+    }
+
+    val openDocumentLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            pendingImportUri = uri
+            showImportDialog = true
+            importErrorMessage = null
+        }
+    }
 
     // Build weekly card on first open after card time if not yet built
     LaunchedEffect(entries, weeklyCardTime) {
@@ -126,6 +198,7 @@ fun MainApp(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (!showingHistory && activeSubScreen == null) {
                 NavigationBar {
@@ -183,6 +256,10 @@ fun MainApp(
         ) {
             if (activeSubScreen == "support") {
                 SupportScreen(
+                    onNavigateBack = { activeSubScreen = null },
+                )
+            } else if (activeSubScreen == "privacy") {
+                PrivacyScreen(
                     onNavigateBack = { activeSubScreen = null },
                 )
             } else {
@@ -386,9 +463,19 @@ fun MainApp(
                                         container.settingsRepository.setWeeklyCardTime(newTime)
                                     }
                                 },
+                                appLock = appLock,
+                                onAppLockChanged = { enabled ->
+                                    container.applicationScope.launch {
+                                        container.settingsRepository.setAppLock(enabled)
+                                    }
+                                },
                                 onNavigateToReminders = { activeSubScreen = "reminders" },
                                 onNavigateToLockScreenCheckIn = { activeSubScreen = "lockscreen" },
                                 onNavigateToPlaces = { activeSubScreen = "places" },
+                                onNavigateToPrivacy = { activeSubScreen = "privacy" },
+                                onExportClick = { showExportDialog = true },
+                                onImportClick = { openDocumentLauncher.launch(arrayOf("*/*")) },
+                                onDeleteAllClick = { showDeleteAllDialog = true },
                             )
                         }
                     }
@@ -415,5 +502,81 @@ fun MainApp(
                 },
             )
         }
+    }
+
+    if (showExportDialog) {
+        ExportDialog(
+            isExporting = isExporting,
+            onDismiss = {
+                if (!isExporting) {
+                    showExportDialog = false
+                    exportPassword = null
+                }
+            },
+            onConfirm = { pwd ->
+                exportPassword = pwd
+                val today = LocalDate.now().toString()
+                createDocumentLauncher.launch("smileproc-$today.smileproc")
+            },
+        )
+    }
+
+    if (showImportDialog && pendingImportUri != null) {
+        val uri = pendingImportUri!!
+        ImportPasswordDialog(
+            isImporting = isImporting,
+            errorMessage = importErrorMessage,
+            onDismiss = {
+                if (!isImporting) {
+                    showImportDialog = false
+                    pendingImportUri = null
+                    importErrorMessage = null
+                }
+            },
+            onConfirm = { pwd ->
+                isImporting = true
+                importErrorMessage = null
+                container.applicationScope.launch {
+                    try {
+                        val result = context.contentResolver.openInputStream(uri)?.use { stream ->
+                            exportImportManager.importFromStream(stream, pwd)
+                        }
+                        if (result != null) {
+                            isImporting = false
+                            showImportDialog = false
+                            pendingImportUri = null
+                            val msg = context.applicationContext.resources.getQuantityString(
+                                R.plurals.import_done,
+                                result.entriesImported,
+                                result.entriesImported,
+                            )
+                            snackbarHostState.showSnackbar(msg)
+                        }
+                    } catch (e: ExportException) {
+                        isImporting = false
+                        importErrorMessage = if (e.reason == ExportException.Reason.WRONG_PASSWORD_OR_CORRUPT) {
+                            importWrongPasswordMessage
+                        } else {
+                            importFailedMessage
+                        }
+                    } catch (e: Exception) {
+                        isImporting = false
+                        importErrorMessage = importFailedMessage
+                    }
+                }
+            },
+        )
+    }
+
+    if (showDeleteAllDialog) {
+        DeleteAllDialog(
+            onDismiss = { showDeleteAllDialog = false },
+            onConfirm = {
+                showDeleteAllDialog = false
+                container.applicationScope.launch {
+                    DeleteAllManager.deleteAll(context, container)
+                }
+            },
+        )
     }
 }

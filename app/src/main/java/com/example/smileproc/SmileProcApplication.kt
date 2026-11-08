@@ -15,6 +15,7 @@ class SmileProcApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         CheckInNotifier.ensureChannel(this)
+        com.example.smileproc.security.AppLockManager.init(this)
         appContainer = AppContainer(this)
 
         appContainer.applicationScope.launch {

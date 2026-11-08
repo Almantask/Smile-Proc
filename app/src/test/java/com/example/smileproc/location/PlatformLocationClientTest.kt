@@ -116,6 +116,7 @@ class PlatformLocationClientTest {
         override val lastTestSuccess: Flow<Instant?> = MutableStateFlow(null)
         override val weeklyCardTime: Flow<com.example.smileproc.core.WeeklyCardTime> = MutableStateFlow(com.example.smileproc.core.WeeklyCardTime.DEFAULT)
         override val lastSeenWeeklyCardPeriodStart: Flow<Instant?> = MutableStateFlow(null)
+        override val appLock: Flow<Boolean> = MutableStateFlow(false)
 
         override suspend fun setCaptureLocation(enabled: Boolean) { _capture.value = enabled }
         override suspend fun setOnboardingCompleted(completed: Boolean) { _onboarding.value = completed }
@@ -130,6 +131,7 @@ class PlatformLocationClientTest {
         override suspend fun clearLastTestSuccess() {}
         override suspend fun setWeeklyCardTime(time: com.example.smileproc.core.WeeklyCardTime) {}
         override suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?) {}
+        override suspend fun setAppLock(enabled: Boolean) {}
         override suspend fun clearAll() {}
     }
 }
