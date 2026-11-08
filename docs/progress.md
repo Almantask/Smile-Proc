@@ -429,9 +429,62 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M8 — Weekly card and support
-- **Status:** not started
+- **Status:** claude-verified (2026-11-08, tag `m8-claude-verified`)
 - **Decided before M8:**
   1. **Support screen generic emergency line (human, 2026-11-07):** include a generic `"If you're in danger right now, contact your local emergency number."` line on the Support screen (naming no phone numbers or contacts; `screens.md` › Support updated; add string to `strings.xml` and run `copy-reviewer` in M8).
+- **Built:**
+  - `WeekScreen` (`app/src/main/java/com/example/smileproc/ui/week/WeekScreen.kt`):
+    - Pre-first-card view: `"Your first weekly card arrives {Sunday at 19:00}."` when no cards have been generated yet.
+    - Past weeks selector: horizontal filter chips showing period end date for older weekly reflection cards.
+    - Period header: localized date range (`MMM d, yyyy – MMM d, yyyy`).
+    - 7-day strip: 7 columns for ISO Monday through Sunday, face count summary in TalkBack content description, dots indicator for check-in distribution.
+    - Low-week block: when `isLowWeek == true`, leads with acknowledgment (`week_low_acknowledgment`: *"This week looked heavy. That's worth noticing, and it's okay."*) followed by reassurance (`week_low_talk`: *"Talking to someone you trust can make it lighter."*) and action button (`week_low_talk_action`: *"Talk to someone"*), placed before any tips or patterns.
+    - Pattern item cards: "Early hint" badge for low-confidence hints, title, observation with check-in counts and localized plurals (`week_observation_*`), common observation, actionable tip, and reflective question.
+    - Dynamic place name resolution: unnamed place items render a "Name this place" button opening `PlaceNamingSheet`. When named, the card immediately reflects the new place name without card rebuild.
+  - `WeeklyCardRenderer` (`app/src/main/java/com/example/smileproc/ui/week/WeeklyCardRenderer.kt`):
+    - Replaces `{segment}`, `{weekday}`, `{place}`, and `{tag}` in hand-written pattern library text.
+    - Maps 7 detector families to localized plural observation strings based on check-in count, never raw averages.
+    - Dynamically resolves place names from current labels or cluster assignment anchors (`p:<labelId>`), falling back to localized inline placeholders (`R.string.place_unnamed_inline`, `R.string.place_gone_inline`).
+  - `SupportScreen` (`app/src/main/java/com/example/smileproc/ui/support/SupportScreen.kt`):
+    - Gentle supportive body copy: *"When things feel heavy, talking to someone you trust can make it a little lighter. That could be a friend, someone in your family, or someone whose job is to listen."*
+    - Generic emergency notice without phone numbers: *"If you're in danger right now, contact your local emergency number."*
+    - Verified contact cards from `content/support.json` (phone, sms, url intent buttons) or calm empty contacts state.
+    - Integrated with `BackHandler` and TopAppBar back button.
+  - Settings & Scheduling:
+    - `WeeklyCardTimeDialog` (`app/src/main/java/com/example/smileproc/ui/settings/WeeklyCardTimeDialog.kt`): weekday filter chips (Mon–Sun) and hour/minute time wheel picker.
+    - `SettingsScreen`: added "Weekly card time" row displaying current schedule (default: "Sunday at 19:00").
+    - `SettingsRepository`: added `weeklyCardTime` Flow and preference keys, along with `lastSeenWeeklyCardPeriodStart` tracking.
+  - App navigation & auto-build:
+    - `MainApp`: automatic card build triggered on first open after card time when `entries.size >= config.firstCardMinEntries` (5 check-ins), posting **zero notifications**.
+    - Unseen card badge dot on Week navigation bar tab (`BadgedBox` + `Badge`) cleared upon viewing Week tab.
+    - Global routing to `SupportScreen` from both Today screen low-run card and Week screen low-week block.
+  - Debug tools:
+    - `SEED_DEMO` and `CLEAR_DEMO` debug events in `DebugEventsReceiver.kt`, seeding 4 weekly card variants across 4 periods (`normal`, `lowWeek`, `notEnoughData`, `firstWeek`) with unnamed and named place clusters.
+- **Evidence:**
+  - Full verification gate `scripts/check.sh`: all 7 gates PASS (`privacy-guard`, `fixtures`, `json`, `gradle`, `dogfood-classpath`, `dogfood-permissions`, `dogfood-manifest`).
+  - Unit and UI tests (`./gradlew :core:test :app:testDebugUnitTest`, 72 tests total):
+    - `WeeklyCardBuildTest`: card building posts zero notifications invariant, requires minimum 5 entries for auto-build.
+    - `WeekScreenTest`: arrival notice, normal card rendering, low-week acknowledgment leading before tips, "Name this place" callback, dynamic place renaming update, past weeks selector, and unseen badge state resolution.
+    - `SupportScreenTest`: gentle supportive copy, emergency line without phone numbers, back navigation.
+    - `OnboardingAndSettingsTest`: weekly card time row display, dialog opening, weekday selection, and settings persistence.
+  - Live emulator verification on `sp36` (API 36, Scenario E15):
+    - Seeded demo data with `scripts/emu/fire.sh seed-demo`.
+    - Captured screenshots in artifact directory `screenshots/`:
+      - `m8-week-normal.png`: normal card with 7-day strip, past weeks selector, afternoon dip pattern, and unnamed place pattern.
+      - `m8-week-low-week.png`: low week variant showing acknowledgment and "Talk to someone" leading before tips.
+      - `m8-week-not-enough-data.png`: "Patterns need a few more check-ins." with "Early hint" badge.
+      - `m8-week-first-week.png`: "Patterns get clearer after two or three weeks." variant.
+      - `m8-week-before-rename.png`: unnamed place item with "Name this place" button.
+      - `m8-week-after-rename.png`: dynamically updated card showing "Work Studio" immediately without card regeneration.
+      - `m8-support-screen.png`: Support screen opened from low-week "Talk to someone" button.
+  - Subagent reviews:
+    - `spec-reviewer`: verified M8 against `docs/spec/screens.md`, `logic.md`, `data.md`, and non-negotiables. All review items addressed with dedicated tests and localized strings.
+    - `copy-reviewer`: verified copy against non-negotiables (no streaks, no clinical terms, no 'You should...', no '!' on low mood screens, low-week leads with acknowledgment before tips, emergency line names no numbers). Resolved all hardcoded string findings.
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Decisions needed:** none.
 
 ## M9 — Privacy and security
 - **Status:** not started

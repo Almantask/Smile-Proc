@@ -43,7 +43,7 @@ Emulators (created in M0 / M3 by `scripts/emu/create-avds.sh`): `sp36` = API 36 
 | E12 | Location revoked: app and lock-screen taps both save, located unchanged | M4, M5, M10 | pass (app and lock tap, 2026-11-07) | |
 | E13 | Reminder 3 min ahead under forced idle (record delay) | M5, M10 | pass (~120s late, 2026-11-07) | |
 | E14 | App lock after 61 s in background; recents show no content | M9, M10 | — | M9 (E19) |
-| E15 | Seeded demo: Week variants render; low week leads with acknowledgment | M8, M10 | — | |
+| E15 | Seeded demo: Week variants render; low week leads with acknowledgment | M8, M10 | pass (2026-11-08) | |
 | E16 | Delete all: 0 entries, no notification, no alarms | M9, M10 | — | |
 | E17 | Font scale 2.0: nothing clipped (Today, sheet, Week, Settings) | M4, M6, M10 | pass (2026-11-08) | |
 | E18 | Night mode: readable, sufficient contrast | M4, M6, M10 | pass (2026-11-08) | |
