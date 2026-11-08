@@ -335,7 +335,7 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M6 — Detailed emotion wheel
-- **Status:** claude-verified (2026-11-08, tag `m6-claude-verified`)
+- **Status:** accepted (2026-11-08; claude-verified 2026-11-08, tag `m6-claude-verified`)
 - **Built:**
   - `EmotionWheel` (`app/src/main/java/com/example/smileproc/ui/tags/EmotionWheel.kt`):
     - Two concentric rings: inner core ring (7 wedges: Happy, Calm, Sad, Anxious, Angry, Tired, Surprised) and outer fine ring (35 fine wedges, 5 per core).
