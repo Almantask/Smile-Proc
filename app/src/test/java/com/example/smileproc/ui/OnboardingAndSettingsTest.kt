@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import com.example.smileproc.ui.onboarding.OnboardingScreen
 import com.example.smileproc.ui.settings.SettingsScreen
 import org.junit.Assert.assertFalse
@@ -54,8 +55,8 @@ class OnboardingAndSettingsTest {
             )
         }
 
-        composeTestRule.onNodeWithText("Capture location").assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("Capture location").performClick()
+        composeTestRule.onNodeWithText("Capture location").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Capture location").performScrollTo().performClick()
 
         assertFalse(captureLocation)
     }
