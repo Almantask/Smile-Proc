@@ -3,6 +3,8 @@ package com.example.smileproc.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -13,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,18 +32,30 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.smileproc.AppContainer
 import com.example.smileproc.R
 import com.example.smileproc.StorageBundle
+import com.example.smileproc.core.CardPeriod
 import com.example.smileproc.core.CheckInMachine
+import com.example.smileproc.core.ClusterID
+import com.example.smileproc.core.PlaceKind
+import com.example.smileproc.core.WeeklyCardBuilder
+import com.example.smileproc.core.WeeklyCardTime
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.notify.CheckInReceiver
 import com.example.smileproc.ui.history.HistoryScreen
+import com.example.smileproc.ui.places.PatternConfigCatalog
+import com.example.smileproc.ui.places.PlaceNamingSheet
 import com.example.smileproc.ui.places.PlacesScreen
 import com.example.smileproc.ui.places.resolvePlaces
 import com.example.smileproc.ui.settings.LockScreenCheckInScreen
 import com.example.smileproc.ui.settings.RemindersScreen
 import com.example.smileproc.ui.settings.SettingsScreen
+import com.example.smileproc.ui.support.SupportScreen
+import com.example.smileproc.ui.tags.EmotionTagsCatalog
 import com.example.smileproc.ui.today.TodayScreen
+import com.example.smileproc.ui.week.PatternLibraryCatalog
+import com.example.smileproc.ui.week.WeekScreen
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.time.ZoneId
 
 enum class AppTab {
     TODAY,
@@ -57,7 +72,8 @@ fun MainApp(
     val context = LocalContext.current
     var currentTab by rememberSaveable { mutableStateOf(AppTab.TODAY) }
     var showingHistory by rememberSaveable { mutableStateOf(false) }
-    var activeSubScreen by rememberSaveable { mutableStateOf<String?>(null) } // "reminders", "lockscreen"
+    var activeSubScreen by rememberSaveable { mutableStateOf<String?>(null) } // "reminders", "lockscreen", "places", "support"
+    var namingClusterId by rememberSaveable { mutableStateOf<String?>(null) }
 
     val entries by storage.entryRepository.observeAllNewestFirst().collectAsStateWithLifecycle(initialValue = emptyList())
     val placeLabels by storage.placeRepository.observeAll().collectAsStateWithLifecycle(initialValue = emptyList())
@@ -65,10 +81,49 @@ fun MainApp(
         resolvePlaces(context, entries, placeLabels)
     }
 
+    val weeklyCards by storage.weeklyCardRepository.observeAllNewestFirst().collectAsStateWithLifecycle(initialValue = emptyList())
+    val weeklyCardTime by container.settingsRepository.weeklyCardTime.collectAsStateWithLifecycle(initialValue = WeeklyCardTime.DEFAULT)
+    val lastSeenWeeklyCardPeriodStart by container.settingsRepository.lastSeenWeeklyCardPeriodStart.collectAsStateWithLifecycle(initialValue = null)
+
     val lowRunDismissedEntryId by container.settingsRepository.lowRunDismissedEntryId.collectAsStateWithLifecycle(initialValue = null)
     val captureLocation by container.settingsRepository.captureLocation.collectAsStateWithLifecycle(initialValue = true)
     val standing by container.settingsRepository.standing.collectAsStateWithLifecycle(initialValue = true)
     val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.GRADUAL)
+
+    // Build weekly card on first open after card time if not yet built
+    LaunchedEffect(entries, weeklyCardTime) {
+        val config = PatternConfigCatalog.get(context)
+        if (entries.size >= config.firstCardMinEntries) {
+            val now = Instant.now()
+            val zone = ZoneId.systemDefault()
+            val period = CardPeriod.resolve(now, zone, weeklyCardTime)
+            val existing = storage.weeklyCardRepository.getByPeriodStart(period.periodStart)
+            if (existing == null) {
+                val emotionTags = EmotionTagsCatalog.get(context)
+                val library = PatternLibraryCatalog.get(context)
+                val buildResult = WeeklyCardBuilder.build(
+                    entries = entries,
+                    labels = placeLabels,
+                    now = now,
+                    zone = zone,
+                    config = config,
+                    emotionTags = emotionTags,
+                    library = library,
+                    cardTime = weeklyCardTime,
+                )
+                storage.weeklyCardRepository.save(buildResult.card)
+            }
+        }
+    }
+
+    val latestCard = weeklyCards.firstOrNull()
+    val hasUnseenCard = latestCard != null && (lastSeenWeeklyCardPeriodStart == null || latestCard.periodStart.isAfter(lastSeenWeeklyCardPeriodStart))
+
+    if (currentTab == AppTab.WEEK && latestCard != null && hasUnseenCard) {
+        LaunchedEffect(latestCard.periodStart) {
+            container.settingsRepository.setLastSeenWeeklyCardPeriodStart(latestCard.periodStart)
+        }
+    }
 
     Scaffold(
         bottomBar = {
@@ -89,10 +144,18 @@ fun MainApp(
                         selected = currentTab == AppTab.WEEK,
                         onClick = { currentTab = AppTab.WEEK },
                         icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_tab_week),
-                                contentDescription = stringResource(R.string.tab_week),
-                            )
+                            BadgedBox(
+                                badge = {
+                                    if (hasUnseenCard) {
+                                        Badge()
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_tab_week),
+                                    contentDescription = stringResource(R.string.tab_week),
+                                )
+                            }
                         },
                         label = { Text(stringResource(R.string.tab_week)) },
                     )
@@ -240,11 +303,19 @@ fun MainApp(
                                 }
                             },
                             onNavigateToHistory = { showingHistory = true },
+                            onNavigateToSupport = { activeSubScreen = "support" },
                         )
                     }
                 }
                 AppTab.WEEK -> {
-                    WeekPlaceholderScreen()
+                    WeekScreen(
+                        cards = weeklyCards,
+                        labels = placeLabels,
+                        places = places,
+                        weeklyCardTime = weeklyCardTime,
+                        onNavigateToSupport = { activeSubScreen = "support" },
+                        onNamePlace = { clusterId -> namingClusterId = clusterId },
+                    )
                 }
                 AppTab.SETTINGS -> {
                     when (activeSubScreen) {
@@ -286,6 +357,11 @@ fun MainApp(
                                 onNavigateBack = { activeSubScreen = null },
                             )
                         }
+                        "support" -> {
+                            SupportScreen(
+                                onNavigateBack = { activeSubScreen = null },
+                            )
+                        }
                         else -> {
                             SettingsScreen(
                                 captureLocation = captureLocation,
@@ -304,6 +380,12 @@ fun MainApp(
                                         )
                                     }
                                 },
+                                weeklyCardTime = weeklyCardTime,
+                                onWeeklyCardTimeChanged = { newTime ->
+                                    container.applicationScope.launch {
+                                        container.settingsRepository.setWeeklyCardTime(newTime)
+                                    }
+                                },
                                 onNavigateToReminders = { activeSubScreen = "reminders" },
                                 onNavigateToLockScreenCheckIn = { activeSubScreen = "lockscreen" },
                                 onNavigateToPlaces = { activeSubScreen = "places" },
@@ -314,36 +396,22 @@ fun MainApp(
             }
         }
     }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun WeekPlaceholderScreen(modifier: Modifier = Modifier) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.week_title)) },
-            )
-        },
-        modifier = modifier,
-    ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(24.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            val defaultCardTime = stringResource(
-                R.string.week_card_time,
-                stringResource(R.string.weekday_7),
-                "19:00",
-            )
-            Text(
-                text = stringResource(R.string.week_first_card, defaultCardTime),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
+    if (namingClusterId != null) {
+        val clusterIdStr = namingClusterId!!
+        val targetCluster = places.clusters[ClusterID(clusterIdStr)]
+        if (targetCluster != null) {
+            PlaceNamingSheet(
+                centroid = targetCluster.centroid,
+                existingLabels = placeLabels,
+                allEntries = entries,
+                onDismiss = { namingClusterId = null },
+                onSaveLabel = { label ->
+                    container.applicationScope.launch {
+                        storage.placeRepository.save(label)
+                        namingClusterId = null
+                    }
+                },
             )
         }
     }

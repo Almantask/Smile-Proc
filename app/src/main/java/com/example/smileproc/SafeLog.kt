@@ -32,6 +32,8 @@ object SafeLog {
         REMINDER_FIRED,
         TEST_REQUESTED,
         TEST_COMPLETED,
+        DEBUG_DEMO_SEEDED,
+        DEBUG_DEMO_CLEARED,
     }
 
     fun event(event: Event) {

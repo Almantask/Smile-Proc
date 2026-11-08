@@ -33,6 +33,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.smileproc.R
+import com.example.smileproc.core.WeeklyCardTime
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,12 +44,15 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     standing: Boolean = true,
     onStandingChanged: (Boolean) -> Unit = {},
+    weeklyCardTime: WeeklyCardTime = WeeklyCardTime.DEFAULT,
+    onWeeklyCardTimeChanged: (WeeklyCardTime) -> Unit = {},
     onNavigateToReminders: () -> Unit = {},
     onNavigateToLockScreenCheckIn: () -> Unit = {},
     onNavigateToPlaces: () -> Unit = {},
 ) {
     var showPrivacyDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
+    var showWeeklyCardTimeDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -125,6 +130,46 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Weekly card time row
+            val weeklyCardTimeLabel = stringResource(R.string.settings_weekly_card_time)
+            val weekdayRes = when (weeklyCardTime.weekday) {
+                1 -> R.string.weekday_1
+                2 -> R.string.weekday_2
+                3 -> R.string.weekday_3
+                4 -> R.string.weekday_4
+                5 -> R.string.weekday_5
+                6 -> R.string.weekday_6
+                else -> R.string.weekday_7
+            }
+            val dayName = stringResource(weekdayRes)
+            val timeFormatted = String.format(Locale.ROOT, "%02d:%02d", weeklyCardTime.hour, weeklyCardTime.minute)
+            val cardTimeStr = stringResource(R.string.week_card_time, dayName, timeFormatted)
+            val weeklyCardSummary = stringResource(R.string.weekly_card_time_summary, cardTimeStr)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { showWeeklyCardTimeDialog = true }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(
+                        text = weeklyCardTimeLabel,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = weeklyCardSummary,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -304,6 +349,18 @@ fun SettingsScreen(
                 ) {
                     Text(closeLabel)
                 }
+            },
+        )
+    }
+
+    // Weekly Card Time Dialog
+    if (showWeeklyCardTimeDialog) {
+        WeeklyCardTimeDialog(
+            initialTime = weeklyCardTime,
+            onDismiss = { showWeeklyCardTimeDialog = false },
+            onConfirm = { newTime ->
+                onWeeklyCardTimeChanged(newTime)
+                showWeeklyCardTimeDialog = false
             },
         )
     }

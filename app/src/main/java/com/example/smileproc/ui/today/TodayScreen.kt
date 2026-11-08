@@ -78,6 +78,7 @@ fun TodayScreen(
     onNavigateToHistory: () -> Unit,
     modifier: Modifier = Modifier,
     placeLabels: List<PlaceLabel> = emptyList(),
+    onNavigateToSupport: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val currentZone = remember { ZoneId.systemDefault() }
@@ -163,7 +164,13 @@ fun TodayScreen(
             // Low-run card if armed
             if (lowRunEvaluation.shouldShowCard) {
                 LowRunCard(
-                    onSeeSupport = { showSupportDialog = true },
+                    onSeeSupport = {
+                        if (onNavigateToSupport != null) {
+                            onNavigateToSupport()
+                        } else {
+                            showSupportDialog = true
+                        }
+                    },
                     onDismiss = {
                         val dismissedId = LowMoodMonitor.recordDismissal(entries)
                         onDismissLowRun(dismissedId)
