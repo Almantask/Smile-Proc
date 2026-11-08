@@ -4,12 +4,13 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
+import com.example.smileproc.AppContainer
 import com.example.smileproc.SmileProcApplication
 import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.Reminder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
+import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -24,17 +25,25 @@ class SystemEventsReceiverTest {
 
     private lateinit var context: Context
     private lateinit var alarmManager: AlarmManager
+    private lateinit var container: AppContainer
 
     @Before
-    fun setUp() {
+    fun setUp() = runTest {
         context = ApplicationProvider.getApplicationContext()
         alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        ReminderScheduler.cancelAll(context)
+        container = SmileProcApplication.container(context)
+        container.initialize()
+        container.settingsRepository.clearAll()
+    }
+
+    @After
+    fun tearDown() = runTest {
+        ReminderScheduler.cancelAll(context)
     }
 
     @Test
     fun bootCompletedReschedulesAlarmsAndRestoresRestingState() = runTest {
-        val container = SmileProcApplication.container(context)
-        container.initialize()
         val shadowAlarm = shadowOf(alarmManager)
 
         container.settingsRepository.setOnboardingCompleted(true)
@@ -56,8 +65,6 @@ class SystemEventsReceiverTest {
 
     @Test
     fun timeChangeReschedulesAlarm() = runTest {
-        val container = SmileProcApplication.container(context)
-        container.initialize()
         val shadowAlarm = shadowOf(alarmManager)
 
         container.settingsRepository.setOnboardingCompleted(true)
@@ -72,8 +79,6 @@ class SystemEventsReceiverTest {
 
     @Test
     fun timezoneChangeReschedulesAlarm() = runTest {
-        val container = SmileProcApplication.container(context)
-        container.initialize()
         val shadowAlarm = shadowOf(alarmManager)
 
         container.settingsRepository.setOnboardingCompleted(true)
@@ -88,10 +93,8 @@ class SystemEventsReceiverTest {
 
     @Test
     fun onboardingNotCompletedIgnoresEvents() = runTest {
-        val container = SmileProcApplication.container(context)
-        container.initialize()
-        ReminderScheduler.cancelAll(context)
         val shadowAlarm = shadowOf(alarmManager)
+        ReminderScheduler.cancelAll(context)
 
         container.settingsRepository.setOnboardingCompleted(false)
         container.settingsRepository.setReminders(Reminder.DEFAULT_REMINDERS)

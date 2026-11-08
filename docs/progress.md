@@ -335,7 +335,55 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M6 — Detailed emotion wheel
-- **Status:** not started
+- **Status:** claude-verified (2026-11-08, tag `m6-claude-verified`)
+- **Built:**
+  - `EmotionWheel` (`app/src/main/java/com/example/smileproc/ui/tags/EmotionWheel.kt`):
+    - Two concentric rings: inner core ring (7 wedges: Happy, Calm, Sad, Anxious, Angry, Tired, Surprised) and outer fine ring (35 fine wedges, 5 per core).
+    - Custom Compose Canvas drawing with pastel palette per core family (Happy amber, Calm green, Sad blue, Anxious purple, Angry coral, Tired sand, Surprised sky).
+    - Outer text ray-aligned along radial angle, flipped right-side up on bottom/left hemisphere (`angle > 90 && angle < 270`).
+    - Polar tap hit detection (`EmotionWheelMath`): converts `(x, y)` to polar coordinates `(r, θ)`, accurately disambiguating inner core vs outer fine wedges, with null outside wheel boundary or inside center hole.
+    - Wedge selection highlight with primary border and dot indicator. Max 3 tags enforced.
+  - `EmotionListPicker` (`app/src/main/java/com/example/smileproc/ui/tags/EmotionListPicker.kt`):
+    - Accessible list picker grouping tags by core emotion with minimum 48.dp touch targets (`heightIn(min = 48.dp)`).
+    - Automatically used when TalkBack/touch exploration is active, at large font scales (>= 1.5x), or when manually toggled by user.
+  - `TagPicker` (`app/src/main/java/com/example/smileproc/ui/tags/TagPicker.kt`):
+    - Unified tag picker replacing `GradualTagPicker` while keeping backward compatibility wrapper.
+    - Supports `TagPickerMode.GRADUAL` and `TagPickerMode.DETAILED` with mode toggle button.
+    - Pinned selection chip echo at top: selected tags appear as `InputChip`s with remove action (`R.string.tags_remove_cd`).
+    - Both modes produce identical canonical tag IDs (e.g. `calm.peaceful`).
+  - Integration:
+    - Wired into `FollowUpSheet` (Today) and `EntryDetailSheet` (History).
+    - Persisted picker mode in `SettingsRepository.tagPickerMode`.
+- **Evidence:**
+  - `scripts/check.sh`: PASS (all 7 gates: privacy-guard, fixtures, json, gradle, dogfood-classpath, dogfood-permissions, dogfood-manifest).
+  - Tests:
+    - `:core:test`: 100% PASS.
+    - `:app:testDebugUnitTest`: 24 tests PASS, including 7 tests in `TagPickerTest`:
+      - `emotionWheelMath_resolvesAllCoresAndFineTagsAccurately`: verifies all 7 cores and 35 fine tags hit-tested correctly across polar coordinates.
+      - `tagPicker_limitsSelectionToThreeTags`: verifies maximum 3 tags limit.
+      - `emotionListPicker_selectionLimitsAndToggles`: verifies list picker toggle and selection limit.
+      - `tagPicker_gradualMode_navigatesCoresAndFinerTags`: verifies 2-step navigation and input chip removal.
+      - `tagPicker_detailedMode_switchesToEmotionListPickerAtLargeFontScale`: verifies automatic fallback to accessible list picker at 2.0x font scale without nested scroll crashes.
+      - `tagPicker_gradualMode_producesCanonicalTagId` and `emotionListPicker_producesCanonicalTagId`: verifies both pickers output matching canonical tag IDs.
+      - `tagPicker_modeToggle_invokesCallback`: verifies mode switch button invocation.
+  - Live Emulator Scenarios (`sp36`):
+    - **E17 (2.0x font scale):**
+      - Screen font scale set to 2.0.
+      - Sheet opens with accessible `EmotionListPicker` cleanly rendered without clipping or nested scroll crash.
+      - Tapping tag pins selection chip at top.
+      - Captured screenshots: `build/emu-shots/m6-e17-today.png`, `m6-e17-followup-sheet.png`, `m6-e17-followup-sheet-selected.png`, `m6-e17-followup-sheet-scrolled.png`, `m6-e17-week.png`, `m6-e17-settings.png`.
+    - **E18 (Dark theme):**
+      - Night mode enabled (`cmd uimode night yes`).
+      - Wheel renders with high contrast against dark theme background; wedge highlights and chip selections verified.
+      - Captured screenshots: `build/emu-shots/m6-e18-today.png`, `m6-e18-wheel.png`, `m6-e18-wheel-selected.png`.
+  - Subagent Reviews:
+    - `copy-reviewer`: "No copy issues".
+    - `spec-reviewer`: "No gaps" (verified mode toggle test).
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** H4 (TalkBack on real phone, human check).
+- **Not fixed:** none.
+- **Decisions needed:** none.
 
 ## M7 — Places UI
 - **Status:** not started

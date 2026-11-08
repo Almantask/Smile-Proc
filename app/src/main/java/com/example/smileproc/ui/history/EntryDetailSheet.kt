@@ -44,7 +44,7 @@ import com.example.smileproc.core.PlaceKind
 import com.example.smileproc.core.PlaceLabel
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.ui.components.FaceButton
-import com.example.smileproc.ui.tags.GradualTagPicker
+import com.example.smileproc.ui.tags.TagPicker
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -137,7 +137,7 @@ fun EntryDetailSheet(
                 text = stringResource(R.string.entry_feelings),
                 style = MaterialTheme.typography.titleMedium,
             )
-            GradualTagPicker(
+            TagPicker(
                 selectedTags = selectedTags,
                 onTagsChanged = { selectedTags = it },
                 mode = tagPickerMode,

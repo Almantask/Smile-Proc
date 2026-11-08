@@ -203,5 +203,7 @@ class RemindersAndLockScreenTest {
         assertEquals(4, container.settingsRepository.reminders.first().size)
         assertTrue(container.settingsRepository.onboardingCompleted.first())
         assertNotNull(shadowAlarm.nextScheduledAlarm)
+
+        ReminderScheduler.cancelAll(context)
     }
 }

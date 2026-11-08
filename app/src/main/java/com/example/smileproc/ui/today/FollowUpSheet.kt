@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.example.smileproc.R
 import com.example.smileproc.core.Entry
 import com.example.smileproc.data.TagPickerMode
-import com.example.smileproc.ui.tags.GradualTagPicker
+import com.example.smileproc.ui.tags.TagPicker
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,7 +80,7 @@ fun FollowUpSheet(
                 )
             }
 
-            GradualTagPicker(
+            TagPicker(
                 selectedTags = selectedTags,
                 onTagsChanged = { selectedTags = it },
                 mode = tagPickerMode,
