@@ -39,11 +39,14 @@ import androidx.compose.ui.unit.dp
 import com.example.smileproc.R
 import com.example.smileproc.core.Entry
 import com.example.smileproc.core.EntrySource
+import com.example.smileproc.core.LatLon
 import com.example.smileproc.core.Mood
+import com.example.smileproc.core.PlaceAssignment
 import com.example.smileproc.core.PlaceKind
 import com.example.smileproc.core.PlaceLabel
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.ui.components.FaceButton
+import com.example.smileproc.ui.places.PlaceNamingSheet
 import com.example.smileproc.ui.tags.TagPicker
 import java.time.Instant
 import java.time.ZoneId
@@ -63,13 +66,16 @@ fun EntryDetailSheet(
     onSavePlaceLabel: (PlaceLabel) -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
+    places: PlaceAssignment? = null,
+    placeLabels: List<PlaceLabel> = emptyList(),
+    allEntries: List<Entry> = emptyList(),
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
     var mood by rememberSaveable(entry.id) { mutableStateOf(entry.mood) }
     var selectedTags by rememberSaveable(entry.id) { mutableStateOf(entry.tags) }
     var noteText by rememberSaveable(entry.id) { mutableStateOf(entry.comment.orEmpty()) }
     var showDeleteConfirm by rememberSaveable(entry.id) { mutableStateOf(false) }
-    var showNamePlaceDialog by rememberSaveable(entry.id) { mutableStateOf(false) }
+    var showNamingSheet by rememberSaveable(entry.id) { mutableStateOf(false) }
 
     val formatter = remember(entry.timeZoneID) {
         val zone = try { ZoneId.of(entry.timeZoneID) } catch (_: Exception) { ZoneId.systemDefault() }
@@ -166,12 +172,18 @@ fun EntryDetailSheet(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
-                    if (entry.location != null && placeName == stringResource(R.string.place_unnamed_title)) {
+                    if (entry.location != null) {
+                        val currentLabel = places?.clusterForEntry(entry.id)?.label
+                        val actionText = if (currentLabel != null) {
+                            stringResource(R.string.places_rename)
+                        } else {
+                            stringResource(R.string.entry_name_place)
+                        }
                         TextButton(
-                            onClick = { showNamePlaceDialog = true },
+                            onClick = { showNamingSheet = true },
                             modifier = Modifier.heightIn(min = 48.dp),
                         ) {
-                            Text(stringResource(R.string.entry_name_place))
+                            Text(actionText)
                         }
                     }
                 }
@@ -258,72 +270,26 @@ fun EntryDetailSheet(
         )
     }
 
-    if (showNamePlaceDialog && entry.location != null) {
-        var placeNameInput by remember { mutableStateOf("") }
-        var placeKind by remember { mutableStateOf(PlaceKind.OTHER) }
-        val cancelLabel = stringResource(R.string.action_cancel)
-        val saveActionLabel = stringResource(R.string.action_save)
+    val entryLoc = entry.location
+    if (showNamingSheet && entryLoc != null) {
+        val currentCluster = places?.clusterForEntry(entry.id)
+        val currentLabel = currentCluster?.label
+        val clusterPoints = currentCluster?.let { c ->
+            allEntries.filter { it.id in c.memberIDs && it.location != null }
+                .map { LatLon(it.location!!.latitude, it.location!!.longitude) }
+        } ?: listOf(LatLon(entryLoc.latitude, entryLoc.longitude))
 
-        AlertDialog(
-            onDismissRequest = { showNamePlaceDialog = false },
-            title = { Text(stringResource(R.string.entry_name_place)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedTextField(
-                        value = placeNameInput,
-                        onValueChange = { placeNameInput = it },
-                        label = { Text(stringResource(R.string.place_name_custom_hint)) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(
-                            selected = placeKind == PlaceKind.HOME,
-                            onClick = { placeKind = PlaceKind.HOME },
-                            label = { Text(stringResource(R.string.place_kind_home)) },
-                        )
-                        FilterChip(
-                            selected = placeKind == PlaceKind.WORK,
-                            onClick = { placeKind = PlaceKind.WORK },
-                            label = { Text(stringResource(R.string.place_kind_work)) },
-                        )
-                        FilterChip(
-                            selected = placeKind == PlaceKind.OTHER,
-                            onClick = { placeKind = PlaceKind.OTHER },
-                            label = { Text(stringResource(R.string.place_kind_other)) },
-                        )
-                    }
-                }
+        PlaceNamingSheet(
+            centroid = currentCluster?.centroid ?: LatLon(entryLoc.latitude, entryLoc.longitude),
+            existingLabels = placeLabels,
+            initialLabel = currentLabel,
+            clusterMemberPoints = clusterPoints,
+            allEntries = allEntries,
+            onSaveLabel = { label ->
+                onSavePlaceLabel(label)
+                showNamingSheet = false
             },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        val trimmed = placeNameInput.trim()
-                        if (trimmed.isNotEmpty()) {
-                            val newLabel = PlaceLabel(
-                                id = UUID.randomUUID().toString(),
-                                name = trimmed,
-                                kind = placeKind,
-                                anchorLatitude = entry.location!!.latitude,
-                                anchorLongitude = entry.location!!.longitude,
-                                createdAt = Instant.now(),
-                            )
-                            onSavePlaceLabel(newLabel)
-                            showNamePlaceDialog = false
-                        }
-                    },
-                    modifier = Modifier.heightIn(min = 48.dp),
-                ) {
-                    Text(saveActionLabel)
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = { showNamePlaceDialog = false },
-                    modifier = Modifier.heightIn(min = 48.dp),
-                ) {
-                    Text(cancelLabel)
-                }
-            },
+            onDismiss = { showNamingSheet = false },
         )
     }
 }

@@ -44,6 +44,7 @@ fun SettingsScreen(
     onStandingChanged: (Boolean) -> Unit = {},
     onNavigateToReminders: () -> Unit = {},
     onNavigateToLockScreenCheckIn: () -> Unit = {},
+    onNavigateToPlaces: () -> Unit = {},
 ) {
     var showPrivacyDialog by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
@@ -121,6 +122,25 @@ fun SettingsScreen(
             ) {
                 Text(
                     text = lockscreenLabel,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            // Places row
+            val placesLabel = stringResource(R.string.places_title)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clickable { onNavigateToPlaces() }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = placesLabel,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )

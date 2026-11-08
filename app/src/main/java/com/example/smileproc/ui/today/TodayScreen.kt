@@ -77,6 +77,7 @@ fun TodayScreen(
     onCaptureLocationForEntry: (String) -> Unit,
     onNavigateToHistory: () -> Unit,
     modifier: Modifier = Modifier,
+    placeLabels: List<PlaceLabel> = emptyList(),
 ) {
     val context = LocalContext.current
     val currentZone = remember { ZoneId.systemDefault() }
@@ -250,6 +251,9 @@ fun TodayScreen(
             },
             onSavePlaceLabel = onSavePlaceLabel,
             onDismiss = { selectedDetailEntryId = null },
+            places = places,
+            placeLabels = placeLabels,
+            allEntries = entries,
         )
     }
 

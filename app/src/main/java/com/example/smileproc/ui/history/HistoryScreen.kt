@@ -64,6 +64,7 @@ fun HistoryScreen(
     onSavePlaceLabel: (PlaceLabel) -> Unit,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
+    placeLabels: List<PlaceLabel> = emptyList(),
 ) {
     var selectedEntryId by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
@@ -163,6 +164,9 @@ fun HistoryScreen(
             onDeleteEntry = onDeleteEntry,
             onSavePlaceLabel = onSavePlaceLabel,
             onDismiss = { selectedEntryId = null },
+            places = places,
+            placeLabels = placeLabels,
+            allEntries = entries,
         )
     }
 }

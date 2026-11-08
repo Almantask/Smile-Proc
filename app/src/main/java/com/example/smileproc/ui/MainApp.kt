@@ -33,6 +33,7 @@ import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.notify.CheckInReceiver
 import com.example.smileproc.ui.history.HistoryScreen
+import com.example.smileproc.ui.places.PlacesScreen
 import com.example.smileproc.ui.places.resolvePlaces
 import com.example.smileproc.ui.settings.LockScreenCheckInScreen
 import com.example.smileproc.ui.settings.RemindersScreen
@@ -153,11 +154,13 @@ fun MainApp(
                                 }
                             },
                             onNavigateBack = { showingHistory = false },
+                            placeLabels = placeLabels,
                         )
                     } else {
                         TodayScreen(
                             entries = entries,
                             places = places,
+                            placeLabels = placeLabels,
                             lowRunDismissedEntryId = lowRunDismissedEntryId,
                             tagPickerMode = tagPickerMode,
                             onTagPickerModeToggle = {
@@ -257,6 +260,32 @@ fun MainApp(
                                 onNavigateBack = { activeSubScreen = null },
                             )
                         }
+                        "places" -> {
+                            PlacesScreen(
+                                entries = entries,
+                                placeLabels = placeLabels,
+                                places = places,
+                                onSavePlaceLabel = { label ->
+                                    container.applicationScope.launch {
+                                        storage.placeRepository.save(label)
+                                    }
+                                },
+                                onDeletePlaceLabel = { labelId ->
+                                    container.applicationScope.launch {
+                                        storage.placeRepository.deleteById(labelId)
+                                    }
+                                },
+                                onRemoveLocationFromAllEntries = {
+                                    container.applicationScope.launch {
+                                        val all = storage.entryRepository.getAllOldestFirst()
+                                        val updated = all.map { it.copy(location = null, updatedAt = Instant.now()) }
+                                        storage.entryRepository.saveAll(updated)
+                                        storage.placeRepository.deleteAll()
+                                    }
+                                },
+                                onNavigateBack = { activeSubScreen = null },
+                            )
+                        }
                         else -> {
                             SettingsScreen(
                                 captureLocation = captureLocation,
@@ -277,6 +306,7 @@ fun MainApp(
                                 },
                                 onNavigateToReminders = { activeSubScreen = "reminders" },
                                 onNavigateToLockScreenCheckIn = { activeSubScreen = "lockscreen" },
+                                onNavigateToPlaces = { activeSubScreen = "places" },
                             )
                         }
                     }

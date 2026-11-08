@@ -386,7 +386,47 @@ Status values: not started · in progress · partly verified · claude-verified 
 - **Decisions needed:** none.
 
 ## M7 — Places UI
-- **Status:** not started
+- **Status:** claude-verified (2026-11-08, tag `m7-claude-verified`)
+- **Built:**
+  - `PlaceFormatters` (`app/src/main/java/com/example/smileproc/ui/places/PlaceFormatters.kt`):
+    - Plural check-in counter formatting using `R.plurals.place_unnamed_count`.
+    - Timing description generator using `R.string.place_mostly_weekday` / `R.string.place_mostly_weekend` with localized dayparts (`R.plurals.daypart_mornings`, `daypart_afternoons`, `daypart_evenings`, `daypart_nights`), handling single-daypart, two-daypart ("mornings and afternoons"), and 3+ dayparts ("mornings, afternoons, and evenings").
+    - Place kind display name mapping (`PlaceKind.HOME` -> Home, `PlaceKind.WORK` -> Work, etc.).
+  - `PlaceNamingSheet` (`app/src/main/java/com/example/smileproc/ui/places/PlaceNamingSheet.kt`):
+    - Modal bottom sheet with quick suggestion chips ("Home", "Work") pre-populating text and kind.
+    - Custom label `OutlinedTextField` and `PlaceKind` selection chip row.
+    - 100m merge candidate detection using `PlaceResolver.findMergeCandidate`. Shows merge prompt dialog proposing to merge with existing place if within 100m.
+    - Merging computes combined centroid via `PlaceResolver.mergedAnchor` filtering member points with `horizontalAccuracy <= config.placeMaxAccuracyMeters` per `docs/spec/logic.md`.
+  - `PlacesScreen` (`app/src/main/java/com/example/smileproc/ui/places/PlacesScreen.kt`):
+    - Settings sub-screen displaying named places list and unnamed clusters list.
+    - Named place cards show name, kind chip, check-in count, and timing summary, with options to Rename or Forget name (with confirmation dialog).
+    - Unnamed cluster cards show cluster description and "Name this place" button opening `PlaceNamingSheet`.
+    - "Remove location from all entries" button at bottom with destructive action confirmation dialog (`R.string.places_remove_location_confirm`).
+  - History & App integration:
+    - `EntryDetailSheet`: replaced temporary naming dialog with `PlaceNamingSheet`, anchored to the cluster's centroid per `docs/spec/logic.md:26`.
+    - `HistoryScreen`: displays place names in entry rows and passes labels and clusters to detail sheet.
+    - `SettingsScreen`: added "Places" navigation row.
+    - `MainApp`: wired navigation route `"places"`, handling label save/update, label deletion ("forget"), and location removal across all sealed entries.
+- **Evidence:**
+  - `scripts/check.sh`: all 7 gates PASS (`privacy-guard`, `fixtures`, `json`, `gradle`, `dogfood-classpath`, `dogfood-permissions`, `dogfood-manifest`).
+  - Unit tests:
+    - `PlaceFormattersTest` (4 unit tests): plural counts, weekday/weekend daypart timing strings, single check-in fallback, place kind labels.
+    - `PlacesScreenTest` (7 Compose UI tests): empty state, named/unnamed cards rendering, rename place dialog, forget name confirmation dialog, remove location confirmation dialog, suggestion chips pre-population, and merge candidate acceptance/decline.
+    - `HistoryScreenTest` (added 2 tests): place name rendering in entry rows, "Name this place" triggering naming sheet.
+  - Live emulator verification (`sp36`, API 36):
+    - Injected 3 GPS coordinates via `geo.sh` (2 at Alexanderplatz within 40m, 1 2km away).
+    - Named the Alexanderplatz cluster "Work" via `PlaceNamingSheet`.
+    - Verified History screen shows "Work" for Alexanderplatz entries and "Unnamed place" for the 2km entry.
+    - Verified `PlacesScreen` displays "Work" card with 3 check-ins, "Unnamed place" cards, "Forget this name" confirmation dialog, and "Remove location from all entries" confirmation dialog.
+    - Screenshots captured in artifact directory `screenshots/`: `m7-history-before-naming.png`, `m7-detail-before-naming.png`, `m7-naming-sheet.png`, `m7-history-cluster-named.png`, `m7-places-screen.png`, `m7-places-forget-dialog.png`, `m7-remove-location-dialog.png`, `m7-today-final.png`.
+  - Subagent reviews:
+    - `copy-reviewer`: "No copy issues".
+    - `spec-reviewer`: "No gaps" (resolved all 6 review findings before re-verification).
+- **Left:** nothing.
+- **Deviations:** none.
+- **Not run:** none.
+- **Not fixed:** none.
+- **Decisions needed:** none.
 
 ## M8 — Weekly card and support
 - **Status:** not started
