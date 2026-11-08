@@ -11,6 +11,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.smileproc.core.CanonicalJson
 import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.Reminder
+import com.example.smileproc.core.WeeklyCardTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -39,6 +40,8 @@ interface SettingsRepository {
     val machineState: Flow<CheckInMachine.State>
     val reminders: Flow<List<Reminder>>
     val lastTestSuccess: Flow<Instant?>
+    val weeklyCardTime: Flow<WeeklyCardTime>
+    val lastSeenWeeklyCardPeriodStart: Flow<Instant?>
 
     suspend fun setCaptureLocation(enabled: Boolean)
     suspend fun setOnboardingCompleted(completed: Boolean)
@@ -51,6 +54,8 @@ interface SettingsRepository {
     suspend fun setReminders(reminders: List<Reminder>)
     suspend fun recordTestSuccess(completedAt: Instant)
     suspend fun clearLastTestSuccess()
+    suspend fun setWeeklyCardTime(time: WeeklyCardTime)
+    suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?)
     suspend fun clearAll()
 }
 
@@ -130,6 +135,33 @@ class DataStoreSettingsRepository(
             }
         }
 
+    override val weeklyCardTime: Flow<WeeklyCardTime> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs ->
+            val raw = prefs[KEY_WEEKLY_CARD_TIME]
+            if (raw == null) {
+                WeeklyCardTime.DEFAULT
+            } else {
+                try {
+                    CanonicalJson.json.decodeFromString(WeeklyCardTime.serializer(), raw)
+                } catch (e: Exception) {
+                    WeeklyCardTime.DEFAULT
+                }
+            }
+        }
+
+    override val lastSeenWeeklyCardPeriodStart: Flow<Instant?> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs ->
+            prefs[KEY_LAST_SEEN_WEEKLY_CARD]?.let {
+                try {
+                    Instant.parse(it)
+                } catch (e: Exception) {
+                    null
+                }
+            }
+        }
+
     override suspend fun setCaptureLocation(enabled: Boolean) {
         dataStore.edit { it[KEY_CAPTURE_LOCATION] = enabled }
     }
@@ -191,6 +223,22 @@ class DataStoreSettingsRepository(
         dataStore.edit { it.remove(KEY_LAST_TEST_SUCCESS) }
     }
 
+    override suspend fun setWeeklyCardTime(time: WeeklyCardTime) {
+        dataStore.edit {
+            it[KEY_WEEKLY_CARD_TIME] = CanonicalJson.json.encodeToString(WeeklyCardTime.serializer(), time)
+        }
+    }
+
+    override suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?) {
+        dataStore.edit {
+            if (periodStart == null) {
+                it.remove(KEY_LAST_SEEN_WEEKLY_CARD)
+            } else {
+                it[KEY_LAST_SEEN_WEEKLY_CARD] = periodStart.toString()
+            }
+        }
+    }
+
     override suspend fun clearAll() {
         dataStore.edit { it.clear() }
     }
@@ -206,5 +254,7 @@ class DataStoreSettingsRepository(
         val KEY_MACHINE_STATE = stringPreferencesKey("machine_state")
         val KEY_REMINDERS = stringPreferencesKey("reminders")
         val KEY_LAST_TEST_SUCCESS = stringPreferencesKey("last_test_success")
+        val KEY_WEEKLY_CARD_TIME = stringPreferencesKey("weekly_card_time")
+        val KEY_LAST_SEEN_WEEKLY_CARD = stringPreferencesKey("last_seen_weekly_card")
     }
 }
