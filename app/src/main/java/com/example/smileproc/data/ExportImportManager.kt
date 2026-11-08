@@ -121,6 +121,10 @@ class ExportImportManager(
             container.settingsRepository.setTagPickerMode(TagPickerMode.fromStorage(payload.settings.tagPickerMode))
             container.settingsRepository.setCaptureLocation(payload.settings.captureLocation)
 
+            // Weekly cards are rebuilt after import per docs/spec/android.md:102
+            storage.weeklyCardRepository.deleteAll()
+            container.settingsRepository.setLastSeenWeeklyCardPeriodStart(null)
+
             // Reschedule reminder alarm with restored reminders
             ReminderScheduler.scheduleNext(context)
 

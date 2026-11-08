@@ -230,6 +230,56 @@ class ExportImportTest {
         assertEquals(ExportException.Reason.INVALID_PAYLOAD, caught?.reason)
     }
 
+    @Test
+    fun importingTwiceDoesNotDuplicate() = runTest {
+        val sealer = FakeManagedSealer()
+        val container = createContainer(sealer, dbName1)
+        val ready = container.initialize() as StorageState.Ready
+        val storage = ready.storage
+        val manager = ExportImportManager(context, container)
+
+        val entry = Entry(
+            id = "e1111111-1111-4111-8111-111111111111",
+            createdAt = Instant.parse("2026-10-12T09:00:00Z"),
+            updatedAt = Instant.parse("2026-10-12T10:00:00Z"),
+            timeZoneID = "Europe/Rome",
+            mood = Mood.GOOD,
+            tags = emptyList(),
+            comment = "Check-in 1",
+            location = null,
+            source = EntrySource.APP,
+        )
+        val place = PlaceLabel(
+            id = "b1111111-1111-4111-8111-111111111111",
+            name = "Home Base",
+            kind = PlaceKind.HOME,
+            createdAt = Instant.parse("2026-10-12T09:00:00Z"),
+            anchorLatitude = 45.0,
+            anchorLongitude = 9.0,
+        )
+        storage.entryRepository.save(entry)
+        storage.placeRepository.save(place)
+
+        val password = "ExportPassword123!".toCharArray()
+        val out = ByteArrayOutputStream()
+        manager.exportToStream(out, password)
+        val exportedBytes = out.toByteArray()
+
+        // Import the same export once
+        manager.importFromStream(ByteArrayInputStream(exportedBytes), password)
+        // Import the exact same export a second time
+        manager.importFromStream(ByteArrayInputStream(exportedBytes), password)
+
+        // Verify counts did not double
+        val allEntries = storage.entryRepository.getAllOldestFirst()
+        assertEquals(1, allEntries.size)
+        assertEquals("e1111111-1111-4111-8111-111111111111", allEntries[0].id)
+
+        val allPlaces = storage.placeRepository.getAll()
+        assertEquals(1, allPlaces.size)
+        assertEquals("b1111111-1111-4111-8111-111111111111", allPlaces[0].id)
+    }
+
     private fun createContainer(sealer: ManagedSealer, dbName: String): AppContainer =
         AppContainer(
             context = context,
