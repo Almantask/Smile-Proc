@@ -9,6 +9,7 @@ import com.example.smileproc.data.KeystoreSealer
 import com.example.smileproc.data.ManagedSealer
 import com.example.smileproc.data.PlaceRepository
 import com.example.smileproc.data.SettingsRepository
+import com.example.smileproc.data.StorageLifetime
 import com.example.smileproc.data.WeeklyCardRepository
 import com.example.smileproc.data.db.SmileProcDatabase
 import com.example.smileproc.data.settingsDataStore
@@ -35,7 +36,14 @@ class StorageBundle(
     val entryRepository: EntryRepository,
     val placeRepository: PlaceRepository,
     val weeklyCardRepository: WeeklyCardRepository,
-)
+    private val lifetime: StorageLifetime = StorageLifetime(),
+) {
+    /** Retire this bundle: its flows end quietly from now on, then the database closes. */
+    fun close() {
+        lifetime.markClosed()
+        database.close()
+    }
+}
 
 /**
  * Application-wide storage lifecycle state (`docs/spec/android.md` › Storage and encryption).
@@ -166,7 +174,7 @@ class AppContainer(
     suspend fun startFresh(): StorageState = mutex.withLock {
         var openedDb: SmileProcDatabase? = null
         try {
-            (_storageState.value as? StorageState.Ready)?.storage?.database?.close()
+            (_storageState.value as? StorageState.Ready)?.storage?.close()
             appContext.deleteDatabase(dbName)
             settingsRepository.setLowRunDismissed(false)
             sealer.deleteKeyIfPresent()
@@ -197,7 +205,7 @@ class AppContainer(
 
     /** Closes any open Room database instance (used by tests during teardown). */
     suspend fun close() = mutex.withLock {
-        (_storageState.value as? StorageState.Ready)?.storage?.database?.close()
+        (_storageState.value as? StorageState.Ready)?.storage?.close()
     }
 
     private fun hasExistingDatabase(): Boolean {
@@ -215,13 +223,16 @@ class AppContainer(
             false
         }
 
-    private fun buildBundle(db: SmileProcDatabase): StorageBundle =
-        StorageBundle(
+    private fun buildBundle(db: SmileProcDatabase): StorageBundle {
+        val lifetime = StorageLifetime()
+        return StorageBundle(
             database = db,
-            entryRepository = EntryRepository(db.entryDao(), sealer),
-            placeRepository = PlaceRepository(db.placeDao(), sealer),
-            weeklyCardRepository = WeeklyCardRepository(db.weeklyCardDao(), sealer),
+            entryRepository = EntryRepository(db.entryDao(), sealer, lifetime),
+            placeRepository = PlaceRepository(db.placeDao(), sealer, lifetime),
+            weeklyCardRepository = WeeklyCardRepository(db.weeklyCardDao(), sealer, lifetime),
+            lifetime = lifetime,
         )
+    }
 
     companion object {
         private const val KEY_PROBE_AAD = "__smileproc_key_probe_v1__"

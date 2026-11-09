@@ -13,8 +13,34 @@ import com.example.smileproc.data.db.PlaceRow
 import com.example.smileproc.data.db.WeeklyCardDao
 import com.example.smileproc.data.db.WeeklyCardRow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.time.Instant
+
+/**
+ * Marks the end of one opened database's life. [AppContainer] sets [closed] *before* closing the
+ * database (Delete all, Start fresh), so a flow collector that re-queries the retired database
+ * ends quietly instead of crashing the UI with "Database is closed" (QA H-3). Errors from an
+ * open database still propagate.
+ */
+class StorageLifetime {
+    @Volatile
+    var closed: Boolean = false
+        private set
+
+    fun markClosed() {
+        closed = true
+    }
+}
+
+/**
+ * Room throws on a closed database both when a flow is created and when it re-queries, so the
+ * DAO call is deferred into collection where the closed-database check can see it.
+ */
+private fun <T> observing(lifetime: StorageLifetime, source: () -> Flow<T>): Flow<T> =
+    flow { emitAll(source()) }.catch { e -> if (!lifetime.closed) throw e }
 
 /**
  * Sealed repository for [Entry] records.
@@ -25,6 +51,7 @@ import java.time.Instant
 class EntryRepository(
     private val dao: EntryDao,
     private val sealer: Sealer,
+    private val lifetime: StorageLifetime = StorageLifetime(),
 ) {
     @Throws(SealException::class)
     suspend fun save(entry: Entry) {
@@ -50,11 +77,13 @@ class EntryRepository(
         dao.getAllOldestFirst().map(::openRow)
 
     fun observeAllNewestFirst(): Flow<List<Entry>> =
-        dao.observeAllNewestFirst().map { rows -> rows.map(::openRow) }
+        observing(lifetime) { dao.observeAllNewestFirst().map { rows -> rows.map(::openRow) } }
 
     fun observeInRange(startInclusive: Instant, endExclusive: Instant): Flow<List<Entry>> =
-        dao.observeInRange(startInclusive.toEpochMilli(), endExclusive.toEpochMilli())
-            .map { rows -> rows.map(::openRow) }
+        observing(lifetime) {
+            dao.observeInRange(startInclusive.toEpochMilli(), endExclusive.toEpochMilli())
+                .map { rows -> rows.map(::openRow) }
+        }
 
     suspend fun count(): Int = dao.count()
 
@@ -92,6 +121,7 @@ class EntryRepository(
 class PlaceRepository(
     private val dao: PlaceDao,
     private val sealer: Sealer,
+    private val lifetime: StorageLifetime = StorageLifetime(),
 ) {
     @Throws(SealException::class)
     suspend fun save(label: PlaceLabel) {
@@ -113,7 +143,7 @@ class PlaceRepository(
         dao.getAll().map(::openRow)
 
     fun observeAll(): Flow<List<PlaceLabel>> =
-        dao.observeAll().map { rows -> rows.map(::openRow) }
+        observing(lifetime) { dao.observeAll().map { rows -> rows.map(::openRow) } }
 
     suspend fun count(): Int = dao.count()
 
@@ -146,6 +176,7 @@ class PlaceRepository(
 class WeeklyCardRepository(
     private val dao: WeeklyCardDao,
     private val sealer: Sealer,
+    private val lifetime: StorageLifetime = StorageLifetime(),
 ) {
     @Throws(SealException::class)
     suspend fun save(card: WeeklyCard) {
@@ -163,7 +194,7 @@ class WeeklyCardRepository(
         dao.getAllNewestFirst().map(::openRow)
 
     fun observeAllNewestFirst(): Flow<List<WeeklyCard>> =
-        dao.observeAllNewestFirst().map { rows -> rows.map(::openRow) }
+        observing(lifetime) { dao.observeAllNewestFirst().map { rows -> rows.map(::openRow) } }
 
     suspend fun count(): Int = dao.count()
 

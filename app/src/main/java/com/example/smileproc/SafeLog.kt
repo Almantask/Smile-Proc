@@ -58,6 +58,7 @@ object SafeLog {
         APP_LOCK_FAILED,
         ERROR_LOGS_EXPORTED,
         ERROR_LOGS_EXPORT_FAILED,
+        WEEKLY_CARD_BUILD_FAILED,
     }
 
     fun event(event: Event) {

@@ -186,27 +186,35 @@ fun MainApp(
 
     // Build weekly card on first open after card time if not yet built
     LaunchedEffect(entries, weeklyCardTime) {
-        val config = PatternConfigCatalog.get(context)
-        if (entries.size >= config.firstCardMinEntries) {
-            val now = Instant.now()
-            val zone = ZoneId.systemDefault()
-            val period = CardPeriod.resolve(now, zone, weeklyCardTime)
-            val existing = storage.weeklyCardRepository.getByPeriodStart(period.periodStart)
-            if (existing == null) {
-                val emotionTags = EmotionTagsCatalog.get(context)
-                val library = PatternLibraryCatalog.get(context)
-                val buildResult = WeeklyCardBuilder.build(
-                    entries = entries,
-                    labels = placeLabels,
-                    now = now,
-                    zone = zone,
-                    config = config,
-                    emotionTags = emotionTags,
-                    library = library,
-                    cardTime = weeklyCardTime,
-                )
-                storage.weeklyCardRepository.save(buildResult.card)
+        // Storage can be retired under us (Delete all, Start fresh): a failed build is logged,
+        // never allowed to crash the UI (QA H-3).
+        try {
+            val config = PatternConfigCatalog.get(context)
+            if (entries.size >= config.firstCardMinEntries) {
+                val now = Instant.now()
+                val zone = ZoneId.systemDefault()
+                val period = CardPeriod.resolve(now, zone, weeklyCardTime)
+                val existing = storage.weeklyCardRepository.getByPeriodStart(period.periodStart)
+                if (existing == null) {
+                    val emotionTags = EmotionTagsCatalog.get(context)
+                    val library = PatternLibraryCatalog.get(context)
+                    val buildResult = WeeklyCardBuilder.build(
+                        entries = entries,
+                        labels = placeLabels,
+                        now = now,
+                        zone = zone,
+                        config = config,
+                        emotionTags = emotionTags,
+                        library = library,
+                        cardTime = weeklyCardTime,
+                    )
+                    storage.weeklyCardRepository.save(buildResult.card)
+                }
             }
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            SafeLog.failure(SafeLog.Event.WEEKLY_CARD_BUILD_FAILED, e)
         }
     }
 
