@@ -13,6 +13,7 @@ Private mood check-in app: Kotlin, Jetpack Compose, Room, no network.
 - Fixtures: `scripts/py tools/generate_fixtures.py` (`--check` to verify). `scripts/py` runs python3, or `py -3` where python3 is a Windows Store stub.
 - Goldens: `WRITE_GOLDENS=1 ./gradlew :core:test` — only when the human asks
 - Emulator: `scripts/emu/*` — see the android-emulator skill
+- Publish APKs to Drive: `scripts/publish-apk.sh` — see the publish-apk skill; always run at the end of a task to copy fresh APKs to `E:\GDrive\APK`
 
 ## Non-negotiables (full list: docs/spec/product.md)
 - IMPORTANT: the app has no network. No INTERNET permission, HTTP clients, WebView, Geocoder, Play Services or Firebase. From M0 a hook blocks these.
@@ -38,6 +39,7 @@ Private mood check-in app: Kotlin, Jetpack Compose, Room, no network.
 
 ## Workflow
 - One milestone per session, started with `/milestone M<n>`. Plan first, commit in small green steps, finish with check.sh, the emulator-tester, spec-reviewer and (when copy changed) copy-reviewer subagents, a progress.md update and a tag.
+- At the end of every task, bug fix, or milestone, run `publish-apk` (`scripts/publish-apk.sh`) to assemble fresh APKs and place them in `E:\GDrive\APK`.
 - Use a subagent for open-ended API research so the main context stays on implementation.
 - Fix root causes. Never weaken a hook, test, threshold or golden to make something pass. Ask before changing content/pattern-config.json.
 - After M5, Room schema changes only through migrations.

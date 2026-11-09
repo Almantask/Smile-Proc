@@ -17,6 +17,7 @@ On Windows, Antigravity's `run_command` runs **PowerShell**, where bare `bash` i
 - **Fixtures:** `& "$env:ProgramFiles\Git\bin\bash.exe" -c 'scripts/py tools/generate_fixtures.py --check'` (`scripts/py` resolves a working Python 3 interpreter, avoiding Windows Store `python3` stubs)
 - **Goldens:** `WRITE_GOLDENS=1 ./gradlew :core:test` — **only when the human explicitly asks**
 - **Emulator helpers:** `scripts/emu/*` — activate and follow the `android-emulator` skill (`.agents/skills/android-emulator/SKILL.md`)
+- **Publish APKs to Drive:** `& "$env:ProgramFiles\Git\bin\bash.exe" -c 'scripts/publish-apk.sh'` (activate `publish-apk` skill; always run at the end of a task to copy fresh APKs to `E:\GDrive\APK`)
 - **File edits:** Always use `write_file` / `edit_file` (never Bash heredocs, which collapse `\\` to `\`).
 
 ## Non-negotiables (full list: `docs/spec/product.md`)
@@ -45,5 +46,6 @@ On Windows, Antigravity's `run_command` runs **PowerShell**, where bare `bash` i
 ## Milestone Workflow
 
 - One milestone per session via `/milestone M<n>` (`.agents/skills/milestone/SKILL.md`): check `docs/progress.md` → read scoped spec → plan and wait for human approval → commit small green steps directly on `main` → pass `scripts/check.sh` → run `emulator-tester`, `spec-reviewer`, and (when copy changed) `copy-reviewer` subagents (`.agents/agents/`) → update `docs/progress.md` & `docs/device-test-checklist.md` → tag `m<n>-claude-verified` when fully verified.
+- At the end of every task, bug fix, or milestone, run `publish-apk` (`scripts/publish-apk.sh`) to assemble fresh APKs and place them in `E:\GDrive\APK`.
 - Fix root causes; never weaken a hook, guard, test, threshold, or golden to pass. Ask before changing `content/pattern-config.json`.
 - If an Android API differs from `docs/spec/android.md`, document the behaviour in `docs/spikes.md` and stop for human guidance.
