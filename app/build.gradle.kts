@@ -86,6 +86,14 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.biometric)
+    constraints {
+        // biometric 1.1.0 pulls in fragment 1.2.5, whose FragmentActivity rejects the >16-bit
+        // request codes activity 1.13 generates: every permission request and SAF launcher
+        // crashed MainActivity. Not a new library, only a version floor (ActivityResultLaunchTest).
+        implementation(libs.androidx.fragment) {
+            because("fragment < 1.3 crashes ActivityResultRegistry launches in a FragmentActivity")
+        }
+    }
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.json)
