@@ -64,22 +64,32 @@ class MainActivity : FragmentActivity() {
         setContent {
             val storageState by container.storageState.collectAsStateWithLifecycle()
             val onboardingCompleted by container.settingsRepository.onboardingCompleted.collectAsStateWithLifecycle(initialValue = null)
-            val appLockSetting by container.settingsRepository.appLock.collectAsStateWithLifecycle(initialValue = false)
+            // null until DataStore answers: the launch lock is decided from the real value only.
+            val appLockSetting by container.settingsRepository.appLock
+                .collectAsStateWithLifecycle<Boolean?>(initialValue = null)
             val isLocked by AppLockManager.isLocked.collectAsStateWithLifecycle()
 
             LaunchedEffect(appLockSetting) {
-                appLockEnabled = appLockSetting
-                updateRecentsMasking(appLockSetting)
+                val enabled = appLockSetting ?: return@LaunchedEffect
+                appLockEnabled = enabled
+                updateRecentsMasking(enabled)
+                AppLockManager.onSettingLoaded(enabled)
             }
 
             LaunchedEffect(appLockSetting, isLocked) {
-                if (appLockSetting && isLocked) {
+                if (appLockSetting == true && isLocked) {
                     AppLockManager.promptUnlock(this@MainActivity)
                 }
             }
 
             SmileProcTheme {
-                if (appLockSetting && isLocked && storageState is StorageState.Ready && onboardingCompleted == true) {
+                if (appLockSetting == null) {
+                    // Don't show any history before we know whether App lock is on.
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background,
+                    ) {}
+                } else if (appLockSetting == true && isLocked && storageState is StorageState.Ready && onboardingCompleted == true) {
                     AppLockScreen(
                         onUnlock = { AppLockManager.promptUnlock(this@MainActivity) },
                     )
@@ -226,7 +236,8 @@ class MainActivity : FragmentActivity() {
 
     override fun onResume() {
         super.onResume()
-        AppLockManager.onResumeCheck(appLockEnabled)
+        // The launch lock is decided in onSettingLoaded and the 60 s rule in
+        // AppLockManager.onStart; resume only re-applies recents masking.
         updateRecentsMasking(appLockEnabled)
     }
 

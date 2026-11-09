@@ -26,9 +26,16 @@ object AppLockManager : DefaultLifecycleObserver {
 
     private var backgroundedAt: Long = 0L
     private var isAppInBackground = false
-    private var isFirstLaunch = true
 
-    private val _isLocked = MutableStateFlow(false)
+    /**
+     * True until the first real App lock setting arrives in this process. The launch lock is
+     * decided then, never from a placeholder value (QA H-1: a `false` placeholder on the first
+     * resume used to consume the launch lock before DataStore delivered `true`).
+     */
+    private var launchLockPending = true
+
+    // Locked until the setting is known, so no content shows before the launch decision.
+    private val _isLocked = MutableStateFlow(true)
     val isLocked: StateFlow<Boolean> = _isLocked.asStateFlow()
 
     private var isObserverRegistered = false
@@ -60,21 +67,27 @@ object AppLockManager : DefaultLifecycleObserver {
         }
     }
 
-    fun onResumeCheck(appLockEnabled: Boolean) {
-        if (appLockEnabled) {
-            if (isFirstLaunch) {
-                isFirstLaunch = false
-                _isLocked.value = true
-            } else if (isAppInBackground) {
-                val elapsed = SystemClock.elapsedRealtime() - backgroundedAt
-                if (elapsed >= TIMEOUT_MS) {
-                    _isLocked.value = true
-                }
-            }
-        } else {
+    /**
+     * Call with every value of the stored App lock setting (not a placeholder). The first value in
+     * a process decides the launch lock; later values only matter when App lock is turned off.
+     * Turning it on while in use doesn't lock straight away (the 60 s background rule applies).
+     */
+    fun onSettingLoaded(appLockEnabled: Boolean) {
+        if (launchLockPending) {
+            launchLockPending = false
+            _isLocked.value = appLockEnabled
+        } else if (!appLockEnabled) {
             _isLocked.value = false
-            isFirstLaunch = false
         }
+    }
+
+    /**
+     * The person is using the app right now (e.g. just confirmed Delete all), so the launch lock
+     * must not fire when onboarding later turns App lock on.
+     */
+    fun markUserPresent() {
+        launchLockPending = false
+        _isLocked.value = false
     }
 
     fun canAuthenticate(context: Context): Boolean {
@@ -134,10 +147,11 @@ object AppLockManager : DefaultLifecycleObserver {
         _isLocked.value = true
     }
 
+    /** Back to a fresh process: locked until the setting is known. Tests only. */
     fun resetForTesting() {
-        _isLocked.value = false
+        _isLocked.value = true
         backgroundedAt = 0L
         isAppInBackground = false
-        isFirstLaunch = true
+        launchLockPending = true
     }
 }

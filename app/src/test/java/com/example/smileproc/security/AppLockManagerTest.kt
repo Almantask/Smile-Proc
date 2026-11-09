@@ -32,30 +32,55 @@ class AppLockManagerTest {
     }
 
     @Test
-    fun initialLaunchLocksWhenAppLockEnabled() {
-        assertFalse(AppLockManager.isLocked.value)
+    fun staysLockedUntilTheSettingIsKnown() {
+        // A fresh process must not show content before DataStore says whether App lock is on.
+        assertTrue(AppLockManager.isLocked.value)
+    }
 
-        // First resume with appLock = true
-        AppLockManager.onResumeCheck(appLockEnabled = true)
+    @Test
+    fun launchLocksWhenSettingLoadsEnabled() {
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
         assertTrue(AppLockManager.isLocked.value)
 
-        // User unlocks
         AppLockManager.unlockForTesting()
+        // Later emissions of the same setting (recomposition, resume) don't lock again.
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
         assertFalse(AppLockManager.isLocked.value)
+    }
 
-        // Subsequent resume without background timeout does not lock again
-        AppLockManager.onResumeCheck(appLockEnabled = true)
+    @Test
+    fun launchDoesNotLockWhenSettingLoadsDisabled() {
+        AppLockManager.onSettingLoaded(appLockEnabled = false)
+        assertFalse(AppLockManager.isLocked.value)
+    }
+
+    @Test
+    fun turningAppLockOnWhileInUseDoesNotLockImmediately() {
+        AppLockManager.onSettingLoaded(appLockEnabled = false)
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
+        assertFalse(AppLockManager.isLocked.value)
+    }
+
+    @Test
+    fun deleteAllMarksUserPresentSoOnboardingDoesNotRearmTheLaunchLock() {
+        // Regression: Delete all used resetForTesting(), which re-armed the launch lock and
+        // locked the app seconds after onboarding turned App lock on.
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
+        AppLockManager.unlockForTesting()
+
+        AppLockManager.markUserPresent()
+        AppLockManager.onSettingLoaded(appLockEnabled = false) // cleared settings
+        AppLockManager.onSettingLoaded(appLockEnabled = true) // onboarding turns it on
+
         assertFalse(AppLockManager.isLocked.value)
     }
 
     @Test
     fun backgroundUnder60SecondsDoesNotLock() {
         val testOwner = TestLifecycleOwner()
-        AppLockManager.onResumeCheck(appLockEnabled = true)
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
         AppLockManager.unlockForTesting()
-        assertFalse(AppLockManager.isLocked.value)
 
-        // Go to background for 30s (< 60s)
         AppLockManager.onStop(testOwner)
         ShadowSystemClock.advanceBy(Duration.ofSeconds(30))
         AppLockManager.onStart(testOwner)
@@ -66,11 +91,9 @@ class AppLockManagerTest {
     @Test
     fun background60SecondsOrMoreLocksApp() {
         val testOwner = TestLifecycleOwner()
-        AppLockManager.onResumeCheck(appLockEnabled = true)
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
         AppLockManager.unlockForTesting()
-        assertFalse(AppLockManager.isLocked.value)
 
-        // Go to background for 61s (>= 60s)
         AppLockManager.onStop(testOwner)
         ShadowSystemClock.advanceBy(Duration.ofSeconds(61))
         AppLockManager.onStart(testOwner)
@@ -80,10 +103,10 @@ class AppLockManagerTest {
 
     @Test
     fun disablingAppLockClearsLockedState() {
-        AppLockManager.lockForTesting()
+        AppLockManager.onSettingLoaded(appLockEnabled = true)
         assertTrue(AppLockManager.isLocked.value)
 
-        AppLockManager.onResumeCheck(appLockEnabled = false)
+        AppLockManager.onSettingLoaded(appLockEnabled = false)
         assertFalse(AppLockManager.isLocked.value)
     }
 

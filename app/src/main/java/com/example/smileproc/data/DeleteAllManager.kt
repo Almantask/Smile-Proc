@@ -39,8 +39,9 @@ object DeleteAllManager {
             // 4. Clear DataStore preferences
             container.settingsRepository.clearAll()
 
-            // 5. Reset AppLock in memory
-            com.example.smileproc.security.AppLockManager.resetForTesting()
+            // 5. Reset AppLock in memory. The person is here, so don't re-arm the launch lock:
+            // onboarding turning App lock on must not lock them out seconds later (QA H-1).
+            com.example.smileproc.security.AppLockManager.markUserPresent()
 
             // 6. Start fresh storage (deletes DB, replaces key, creates clean empty DB)
             container.startFresh()
