@@ -1,9 +1,246 @@
-{ "version": 1, "cores": [
-  {"id": "happy", "color": "#F2C14E", "fine": ["happy.joyful", "happy.grateful", "happy.proud", "happy.hopeful", "happy.excited"]},
-  {"id": "calm", "color": "#94D3A2", "fine": ["calm.relaxed", "calm.content", "calm.peaceful", "calm.focused", "calm.safe"]},
-  {"id": "sad", "color": "#9CB6F0", "fine": ["sad.down", "sad.lonely", "sad.disappointed", "sad.hurt", "sad.nostalgic"]},
-  {"id": "anxious", "color": "#DDA6E0", "fine": ["anxious.stressed", "anxious.worried", "anxious.overwhelmed", "anxious.nervous", "anxious.insecure"]},
-  {"id": "angry", "color": "#F4998B", "fine": ["angry.frustrated", "angry.irritated", "angry.resentful", "angry.jealous", "angry.impatient"]},
-  {"id": "tired", "color": "#C9C3B8", "fine": ["tired.drained", "tired.sleepy", "tired.bored", "tired.unmotivated", "tired.numb"]},
-  {"id": "surprised", "color": "#7FD0E0", "fine": ["surprised.amazed", "surprised.confused", "surprised.curious", "surprised.startled", "surprised.moved"]}
-] }
+{
+  "version": 1,
+  "cores": [
+    {
+      "id": "happy",
+      "color": "#F2C14E",
+      "fine": [
+        "happy.joyful",
+        "happy.grateful",
+        "happy.proud",
+        "happy.hopeful",
+        "happy.excited",
+        "happy.cheerful",
+        "happy.playful",
+        "happy.relaxed",
+        "happy.interested",
+        "happy.curious",
+        "happy.inquisitive",
+        "happy.successful",
+        "happy.confident",
+        "happy.accepted",
+        "happy.respected",
+        "happy.valued",
+        "happy.powerful",
+        "happy.courageous",
+        "happy.creative",
+        "happy.optimistic",
+        "happy.inspired"
+      ],
+      "groups": [
+        { "id": "happy.cheerful", "outer": ["happy.playful", "happy.relaxed"] },
+        { "id": "happy.interested", "outer": ["happy.curious", "happy.inquisitive"] },
+        { "id": "happy.proud", "outer": ["happy.successful", "happy.confident"] },
+        { "id": "happy.accepted", "outer": ["happy.respected", "happy.valued"] },
+        { "id": "happy.powerful", "outer": ["happy.courageous", "happy.creative"] },
+        { "id": "happy.optimistic", "outer": ["happy.hopeful", "happy.inspired"] }
+      ]
+    },
+    {
+      "id": "calm",
+      "color": "#94D3A2",
+      "fine": [
+        "calm.relaxed",
+        "calm.content",
+        "calm.peaceful",
+        "calm.focused",
+        "calm.safe",
+        "calm.free",
+        "calm.joyful",
+        "calm.loving",
+        "calm.thankful",
+        "calm.trusting",
+        "calm.sensitive",
+        "calm.intimate"
+      ],
+      "groups": [
+        { "id": "calm.content", "outer": ["calm.free", "calm.joyful"] },
+        { "id": "calm.peaceful", "outer": ["calm.loving", "calm.thankful"] },
+        { "id": "calm.trusting", "outer": ["calm.sensitive", "calm.intimate"] }
+      ]
+    },
+    {
+      "id": "sad",
+      "color": "#9CB6F0",
+      "fine": [
+        "sad.down",
+        "sad.lonely",
+        "sad.disappointed",
+        "sad.hurt",
+        "sad.nostalgic",
+        "sad.embarrassed",
+        "sad.inferior",
+        "sad.empty",
+        "sad.guilty",
+        "sad.remorseful",
+        "sad.ashamed",
+        "sad.despair",
+        "sad.powerless",
+        "sad.grief",
+        "sad.vulnerable",
+        "sad.fragile",
+        "sad.victimized",
+        "sad.abandoned",
+        "sad.ignored"
+      ],
+      "groups": [
+        { "id": "sad.hurt", "outer": ["sad.embarrassed", "sad.disappointed"] },
+        { "id": "sad.down", "outer": ["sad.inferior", "sad.empty"] },
+        { "id": "sad.guilty", "outer": ["sad.remorseful", "sad.ashamed"] },
+        { "id": "sad.despair", "outer": ["sad.powerless", "sad.grief"] },
+        { "id": "sad.vulnerable", "outer": ["sad.fragile", "sad.victimized"] },
+        { "id": "sad.lonely", "outer": ["sad.abandoned", "sad.ignored"] }
+      ]
+    },
+    {
+      "id": "anxious",
+      "color": "#DDA6E0",
+      "fine": [
+        "anxious.stressed",
+        "anxious.worried",
+        "anxious.overwhelmed",
+        "anxious.nervous",
+        "anxious.insecure",
+        "anxious.scared",
+        "anxious.helpless",
+        "anxious.frightened",
+        "anxious.uneasy",
+        "anxious.inadequate",
+        "anxious.inferior",
+        "anxious.weak",
+        "anxious.worthless",
+        "anxious.insignificant",
+        "anxious.rejected",
+        "anxious.excluded",
+        "anxious.persecuted",
+        "anxious.threatened",
+        "anxious.unsafe"
+      ],
+      "groups": [
+        { "id": "anxious.scared", "outer": ["anxious.helpless", "anxious.frightened"] },
+        { "id": "anxious.uneasy", "outer": ["anxious.overwhelmed", "anxious.worried"] },
+        { "id": "anxious.insecure", "outer": ["anxious.inadequate", "anxious.inferior"] },
+        { "id": "anxious.weak", "outer": ["anxious.worthless", "anxious.insignificant"] },
+        { "id": "anxious.rejected", "outer": ["anxious.excluded", "anxious.persecuted"] },
+        { "id": "anxious.threatened", "outer": ["anxious.nervous", "anxious.unsafe"] }
+      ]
+    },
+    {
+      "id": "angry",
+      "color": "#F4998B",
+      "fine": [
+        "angry.frustrated",
+        "angry.irritated",
+        "angry.resentful",
+        "angry.jealous",
+        "angry.impatient",
+        "angry.let_down",
+        "angry.betrayed",
+        "angry.humiliated",
+        "angry.disrespected",
+        "angry.belittled",
+        "angry.bitter",
+        "angry.indignant",
+        "angry.violated",
+        "angry.mad",
+        "angry.furious",
+        "angry.aggressive",
+        "angry.provoked",
+        "angry.hostile",
+        "angry.infuriated",
+        "angry.distant",
+        "angry.withdrawn",
+        "angry.numb",
+        "angry.critical",
+        "angry.skeptical",
+        "angry.dismissive"
+      ],
+      "groups": [
+        { "id": "angry.let_down", "outer": ["angry.betrayed", "angry.resentful"] },
+        { "id": "angry.humiliated", "outer": ["angry.disrespected", "angry.belittled"] },
+        { "id": "angry.bitter", "outer": ["angry.indignant", "angry.violated"] },
+        { "id": "angry.mad", "outer": ["angry.furious", "angry.jealous"] },
+        { "id": "angry.aggressive", "outer": ["angry.provoked", "angry.hostile"] },
+        { "id": "angry.frustrated", "outer": ["angry.infuriated", "angry.irritated"] },
+        { "id": "angry.distant", "outer": ["angry.withdrawn", "angry.numb"] },
+        { "id": "angry.critical", "outer": ["angry.skeptical", "angry.dismissive"] }
+      ]
+    },
+    {
+      "id": "tired",
+      "color": "#C9C3B8",
+      "fine": [
+        "tired.drained",
+        "tired.sleepy",
+        "tired.bored",
+        "tired.unmotivated",
+        "tired.numb",
+        "tired.unfocused",
+        "tired.tense",
+        "tired.weighed_down",
+        "tired.out_of_control",
+        "tired.busy",
+        "tired.rushed",
+        "tired.pressured",
+        "tired.indifferent",
+        "tired.apathetic"
+      ],
+      "groups": [
+        { "id": "tired.drained", "outer": ["tired.unfocused", "tired.sleepy"] },
+        { "id": "tired.tense", "outer": ["tired.weighed_down", "tired.out_of_control"] },
+        { "id": "tired.busy", "outer": ["tired.rushed", "tired.pressured"] },
+        { "id": "tired.bored", "outer": ["tired.indifferent", "tired.apathetic"] }
+      ]
+    },
+    {
+      "id": "surprised",
+      "color": "#7FD0E0",
+      "fine": [
+        "surprised.amazed",
+        "surprised.confused",
+        "surprised.curious",
+        "surprised.startled",
+        "surprised.moved",
+        "surprised.excited",
+        "surprised.energetic",
+        "surprised.eager",
+        "surprised.disillusioned",
+        "surprised.perplexed",
+        "surprised.awed",
+        "surprised.astonished",
+        "surprised.shocked",
+        "surprised.dismayed"
+      ],
+      "groups": [
+        { "id": "surprised.excited", "outer": ["surprised.energetic", "surprised.eager"] },
+        { "id": "surprised.confused", "outer": ["surprised.disillusioned", "surprised.perplexed"] },
+        { "id": "surprised.amazed", "outer": ["surprised.awed", "surprised.astonished"] },
+        { "id": "surprised.startled", "outer": ["surprised.shocked", "surprised.dismayed"] }
+      ]
+    },
+    {
+      "id": "disgusted",
+      "color": "#D6BFA9",
+      "fine": [
+        "disgusted.disapproving",
+        "disgusted.aversion",
+        "disgusted.hesitant",
+        "disgusted.awful",
+        "disgusted.revulsion",
+        "disgusted.nauseated",
+        "disgusted.disappointed",
+        "disgusted.reluctant",
+        "disgusted.appalled",
+        "disgusted.repelled",
+        "disgusted.condemning",
+        "disgusted.ashamed"
+      ],
+      "groups": [
+        { "id": "disgusted.disapproving", "outer": ["disgusted.aversion", "disgusted.hesitant"] },
+        { "id": "disgusted.awful", "outer": ["disgusted.revulsion", "disgusted.nauseated"] },
+        { "id": "disgusted.disappointed", "outer": ["disgusted.reluctant", "disgusted.appalled"] },
+        { "id": "disgusted.repelled", "outer": ["disgusted.condemning", "disgusted.ashamed"] }
+      ]
+    }
+  ]
+}

@@ -64,6 +64,7 @@
     <string name="tags_remove_cd">Remove %1$s</string>
     <string name="tags_wheel_cd">Feelings wheel</string>
     <string name="tags_list_title">Feelings</string>
+    <string name="tags_all_feelings">All feelings</string>
 
     <!-- Tag labels: tag_<core> and tag_<core>_<fine> (ids in content/emotion-tags.json) -->
     <string name="tag_happy">Happy</string>
@@ -72,42 +73,151 @@
     <string name="tag_happy_proud">Proud</string>
     <string name="tag_happy_hopeful">Hopeful</string>
     <string name="tag_happy_excited">Excited</string>
+    <string name="tag_happy_cheerful">Cheerful</string>
+    <string name="tag_happy_playful">Playful</string>
+    <string name="tag_happy_relaxed">Carefree</string>
+    <string name="tag_happy_interested">Interested</string>
+    <string name="tag_happy_curious">Intrigued</string>
+    <string name="tag_happy_inquisitive">Inquisitive</string>
+    <string name="tag_happy_successful">Successful</string>
+    <string name="tag_happy_confident">Confident</string>
+    <string name="tag_happy_accepted">Accepted</string>
+    <string name="tag_happy_respected">Respected</string>
+    <string name="tag_happy_valued">Valued</string>
+    <string name="tag_happy_powerful">Powerful</string>
+    <string name="tag_happy_courageous">Courageous</string>
+    <string name="tag_happy_creative">Creative</string>
+    <string name="tag_happy_optimistic">Optimistic</string>
+    <string name="tag_happy_inspired">Inspired</string>
+
     <string name="tag_calm">Calm</string>
     <string name="tag_calm_relaxed">Relaxed</string>
     <string name="tag_calm_content">Content</string>
     <string name="tag_calm_peaceful">Peaceful</string>
     <string name="tag_calm_focused">Focused</string>
     <string name="tag_calm_safe">Safe</string>
+    <string name="tag_calm_free">Free</string>
+    <string name="tag_calm_joyful">Blissful</string>
+    <string name="tag_calm_loving">Loving</string>
+    <string name="tag_calm_thankful">Thankful</string>
+    <string name="tag_calm_trusting">Trusting</string>
+    <string name="tag_calm_sensitive">Sensitive</string>
+    <string name="tag_calm_intimate">Tender</string>
+
     <string name="tag_sad">Sad</string>
     <string name="tag_sad_down">Down</string>
     <string name="tag_sad_lonely">Lonely</string>
     <string name="tag_sad_disappointed">Disappointed</string>
     <string name="tag_sad_hurt">Hurt</string>
     <string name="tag_sad_nostalgic">Nostalgic</string>
+    <string name="tag_sad_embarrassed">Embarrassed</string>
+    <string name="tag_sad_inferior">Diminished</string>
+    <string name="tag_sad_empty">Empty</string>
+    <string name="tag_sad_guilty">Guilty</string>
+    <string name="tag_sad_remorseful">Remorseful</string>
+    <string name="tag_sad_ashamed">Ashamed</string>
+    <string name="tag_sad_despair">Despair</string>
+    <string name="tag_sad_powerless">Powerless</string>
+    <string name="tag_sad_grief">Grieving</string>
+    <string name="tag_sad_vulnerable">Vulnerable</string>
+    <string name="tag_sad_fragile">Fragile</string>
+    <string name="tag_sad_victimized">Victimized</string>
+    <string name="tag_sad_abandoned">Abandoned</string>
+    <string name="tag_sad_ignored">Ignored</string>
+
     <string name="tag_anxious">Anxious</string>
     <string name="tag_anxious_stressed">Stressed</string>
     <string name="tag_anxious_worried">Worried</string>
     <string name="tag_anxious_overwhelmed">Overwhelmed</string>
     <string name="tag_anxious_nervous">Nervous</string>
     <string name="tag_anxious_insecure">Insecure</string>
+    <string name="tag_anxious_scared">Scared</string>
+    <string name="tag_anxious_helpless">Helpless</string>
+    <string name="tag_anxious_frightened">Frightened</string>
+    <string name="tag_anxious_uneasy">Uneasy</string>
+    <string name="tag_anxious_inadequate">Inadequate</string>
+    <string name="tag_anxious_inferior">Inferior</string>
+    <string name="tag_anxious_weak">Weak</string>
+    <string name="tag_anxious_worthless">Worthless</string>
+    <string name="tag_anxious_insignificant">Insignificant</string>
+    <string name="tag_anxious_rejected">Rejected</string>
+    <string name="tag_anxious_excluded">Excluded</string>
+    <string name="tag_anxious_persecuted">Persecuted</string>
+    <string name="tag_anxious_threatened">Threatened</string>
+    <string name="tag_anxious_unsafe">Unsafe</string>
+
     <string name="tag_angry">Angry</string>
     <string name="tag_angry_frustrated">Frustrated</string>
     <string name="tag_angry_irritated">Irritated</string>
     <string name="tag_angry_resentful">Resentful</string>
     <string name="tag_angry_jealous">Jealous</string>
     <string name="tag_angry_impatient">Impatient</string>
+    <string name="tag_angry_let_down">Let down</string>
+    <string name="tag_angry_betrayed">Betrayed</string>
+    <string name="tag_angry_humiliated">Humiliated</string>
+    <string name="tag_angry_disrespected">Disrespected</string>
+    <string name="tag_angry_belittled">Belittled</string>
+    <string name="tag_angry_bitter">Bitter</string>
+    <string name="tag_angry_indignant">Indignant</string>
+    <string name="tag_angry_violated">Violated</string>
+    <string name="tag_angry_mad">Mad</string>
+    <string name="tag_angry_furious">Furious</string>
+    <string name="tag_angry_aggressive">Aggressive</string>
+    <string name="tag_angry_provoked">Provoked</string>
+    <string name="tag_angry_hostile">Hostile</string>
+    <string name="tag_angry_infuriated">Infuriated</string>
+    <string name="tag_angry_distant">Distant</string>
+    <string name="tag_angry_withdrawn">Withdrawn</string>
+    <string name="tag_angry_numb">Shut down</string>
+    <string name="tag_angry_critical">Critical</string>
+    <string name="tag_angry_skeptical">Skeptical</string>
+    <string name="tag_angry_dismissive">Dismissive</string>
+
     <string name="tag_tired">Tired</string>
     <string name="tag_tired_drained">Drained</string>
     <string name="tag_tired_sleepy">Sleepy</string>
     <string name="tag_tired_bored">Bored</string>
     <string name="tag_tired_unmotivated">Unmotivated</string>
     <string name="tag_tired_numb">Numb</string>
+    <string name="tag_tired_unfocused">Unfocused</string>
+    <string name="tag_tired_tense">Tense</string>
+    <string name="tag_tired_weighed_down">Weighed down</string>
+    <string name="tag_tired_out_of_control">Out of control</string>
+    <string name="tag_tired_busy">Busy</string>
+    <string name="tag_tired_rushed">Rushed</string>
+    <string name="tag_tired_pressured">Pressured</string>
+    <string name="tag_tired_indifferent">Indifferent</string>
+    <string name="tag_tired_apathetic">Apathetic</string>
+
     <string name="tag_surprised">Surprised</string>
     <string name="tag_surprised_amazed">Amazed</string>
     <string name="tag_surprised_confused">Confused</string>
     <string name="tag_surprised_curious">Curious</string>
     <string name="tag_surprised_startled">Startled</string>
     <string name="tag_surprised_moved">Moved</string>
+    <string name="tag_surprised_excited">Thrilled</string>
+    <string name="tag_surprised_energetic">Energetic</string>
+    <string name="tag_surprised_eager">Eager</string>
+    <string name="tag_surprised_disillusioned">Disillusioned</string>
+    <string name="tag_surprised_perplexed">Perplexed</string>
+    <string name="tag_surprised_awed">Awed</string>
+    <string name="tag_surprised_astonished">Astonished</string>
+    <string name="tag_surprised_shocked">Shocked</string>
+    <string name="tag_surprised_dismayed">Dismayed</string>
+
+    <string name="tag_disgusted">Disgusted</string>
+    <string name="tag_disgusted_disapproving">Disapproving</string>
+    <string name="tag_disgusted_aversion">Aversion</string>
+    <string name="tag_disgusted_hesitant">Hesitant</string>
+    <string name="tag_disgusted_awful">Awful</string>
+    <string name="tag_disgusted_revulsion">Revulsion</string>
+    <string name="tag_disgusted_nauseated">Nauseated</string>
+    <string name="tag_disgusted_disappointed">Displeased</string>
+    <string name="tag_disgusted_reluctant">Reluctant</string>
+    <string name="tag_disgusted_appalled">Appalled</string>
+    <string name="tag_disgusted_repelled">Repelled</string>
+    <string name="tag_disgusted_condemning">Condemning</string>
+    <string name="tag_disgusted_ashamed">Mortified</string>
 
     <!-- Dayparts and weekdays, as used in {segment} and {weekday} -->
     <string name="daypart_morning">morning</string>
@@ -177,6 +287,33 @@
 
     <!-- Week -->
     <string name="week_title">Week</string>
+    <string name="week_day_time_patterns">Day &amp; Time Patterns</string>
+    <string name="week_hour_12am">12 AM</string>
+    <string name="week_hour_4am">4 AM</string>
+    <string name="week_hour_8am">8 AM</string>
+    <string name="week_hour_12pm">12 PM</string>
+    <string name="week_hour_4pm">4 PM</string>
+    <string name="week_hour_8pm">8 PM</string>
+    <string name="week_hour_am">%1$d AM</string>
+    <string name="week_hour_pm">%1$d PM</string>
+    <string name="week_most_checkins_between">Most check-ins are between %1$s and %2$s</string>
+    <string name="week_no_checkins">No check-ins this week</string>
+    <string name="week_legend_prefix">Check-ins:</string>
+    <string name="week_legend_sad">sad</string>
+    <string name="week_legend_neutral">neutral</string>
+    <string name="week_legend_happy">happy</string>
+    <plurals name="week_days_tracked">
+        <item quantity="one">%1$d day tracked</item>
+        <item quantity="other">%1$d days tracked</item>
+    </plurals>
+    <plurals name="week_checkins_count">
+        <item quantity="one">%1$d check-in</item>
+        <item quantity="other">%1$d check-ins</item>
+    </plurals>
+    <string name="week_summary_footer">%1$s • %2$s</string>
+    <string name="week_plot_cd">Weekly check-in plot for %1$s to %2$s, %3$d check-ins. Drag left for next week, drag right for previous week.</string>
+    <string name="week_previous_action">Previous week</string>
+    <string name="week_next_action">Next week</string>
     <string name="week_first_card">Your first weekly card arrives %1$s.</string>
     <!-- "Sunday at 19:00" -->
     <string name="week_card_time">%1$s at %2$s</string>

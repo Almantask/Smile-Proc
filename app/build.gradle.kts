@@ -6,6 +6,49 @@ plugins {
     alias(libs.plugins.room3)
 }
 
+// Monotonic versioning ensures Android treats every new APK as an in-place update
+// rather than failing or prompting to replace data; never leave versionCode pinned at 1.
+val versionPropsText = providers
+    .fileContents(layout.projectDirectory.file("version.properties"))
+    .asText
+    .orNull
+val versionPropsMap = versionPropsText
+    ?.lineSequence()
+    ?.map { it.trim() }
+    ?.filter { it.isNotEmpty() && !it.startsWith("#") && '=' in it }
+    ?.associate { line ->
+        val idx = line.indexOf('=')
+        line.substring(0, idx).trim() to line.substring(idx + 1).trim()
+    }
+    .orEmpty()
+val propsVersionCode = versionPropsMap["versionCode"]?.toIntOrNull() ?: 1
+val propsVersionName = versionPropsMap["versionName"]
+    ?.takeIf { it.isNotEmpty() }
+    ?: "0.0.1"
+val gitCommitCount = runCatching {
+    providers.exec {
+        commandLine("git", "rev-list", "--count", "HEAD")
+        isIgnoreExitValue = true
+    }.standardOutput.asText.map { it.trim().toIntOrNull() ?: 0 }.getOrElse(0)
+}.getOrDefault(0)
+val overrideVersionCode = providers.gradleProperty("smileproc.versionCode")
+    .orNull
+    ?.trim()
+    ?.toIntOrNull()
+val overrideVersionName = providers.gradleProperty("smileproc.versionName")
+    .orNull
+    ?.trim()
+    ?.takeIf { it.isNotEmpty() }
+val resolvedVersionCode = (overrideVersionCode ?: maxOf(propsVersionCode, gitCommitCount))
+    .coerceAtLeast(1)
+val resolvedVersionName = overrideVersionName ?: if (
+    resolvedVersionCode > propsVersionCode && propsVersionName == "0.0.$propsVersionCode"
+) {
+    "0.0.$resolvedVersionCode"
+} else {
+    propsVersionName
+}
+
 android {
     namespace = "com.example.smileproc"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -15,8 +58,8 @@ android {
         applicationId = "com.example.smileproc"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = resolvedVersionCode
+        versionName = resolvedVersionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

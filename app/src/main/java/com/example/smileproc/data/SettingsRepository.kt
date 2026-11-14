@@ -25,7 +25,7 @@ enum class TagPickerMode(val storageValue: String) {
 
     companion object {
         fun fromStorage(value: String?): TagPickerMode =
-            if (value == DETAILED.storageValue) DETAILED else GRADUAL
+            if (value == GRADUAL.storageValue) GRADUAL else DETAILED
     }
 }
 

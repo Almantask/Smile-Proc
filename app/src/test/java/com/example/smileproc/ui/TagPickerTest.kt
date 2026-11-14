@@ -50,6 +50,7 @@ class TagPickerTest {
         val radius = 180f
         val holeRadius = radius * EmotionWheelMath.HOLE_RATIO
         val innerRadius = radius * EmotionWheelMath.INNER_RATIO
+        val middleRadius = radius * EmotionWheelMath.MIDDLE_RATIO
 
         // Center hole returns null
         assertNull(
@@ -62,6 +63,7 @@ class TagPickerTest {
                 catalog = catalog,
             )
         )
+        assertTrue(EmotionWheelMath.isCenterHoleTap(cx, cy, cx, cy, radius))
 
         // Outside wheel returns null
         assertNull(
@@ -77,9 +79,10 @@ class TagPickerTest {
 
         val coreSweep = 360f / catalog.cores.size
         val midInnerRadius = (holeRadius + innerRadius) / 2f
-        val midOuterRadius = (innerRadius + radius) / 2f
+        val midMiddleRadius = (innerRadius + middleRadius) / 2f
+        val midOuterRadius = (middleRadius + radius) / 2f
 
-        // Every core inner ray resolves to that core id
+        // Every core inner ray resolves to that core id, and every middle & outer ring ray resolves accurately
         catalog.cores.forEachIndexed { i, core ->
             val angleDeg = EmotionWheelMath.START_ANGLE_DEG + (i * coreSweep) + (coreSweep / 2f)
             val rad = Math.toRadians(angleDeg.toDouble())
@@ -96,23 +99,53 @@ class TagPickerTest {
             )
             assertEquals("Core index $i should resolve to ${core.id}", core.id, detected)
 
-            // Every fine tag outer ray resolves to that fine tag id
-            val fineSweep = coreSweep / core.fine.size
-            core.fine.forEachIndexed { j, fineId ->
-                val fineAngleDeg = EmotionWheelMath.START_ANGLE_DEG + (i * coreSweep) + (j * fineSweep) + (fineSweep / 2f)
-                val fineRad = Math.toRadians(fineAngleDeg.toDouble())
-                val fineTapX = (cx + midOuterRadius * cos(fineRad)).toFloat()
-                val fineTapY = (cy + midOuterRadius * sin(fineRad)).toFloat()
+            val groupSweep = coreSweep / core.groups.size
+            core.groups.forEachIndexed { g, group ->
+                val groupAngleDeg = EmotionWheelMath.START_ANGLE_DEG + (i * coreSweep) + (g * groupSweep) + (groupSweep / 2f)
+                val groupRad = Math.toRadians(groupAngleDeg.toDouble())
+                val groupTapX = (cx + midMiddleRadius * cos(groupRad)).toFloat()
+                val groupTapY = (cy + midMiddleRadius * sin(groupRad)).toFloat()
 
-                val fineDetected = EmotionWheelMath.findTappedTag(
-                    tapX = fineTapX,
-                    tapY = fineTapY,
+                val groupDetected = EmotionWheelMath.findTappedTag(
+                    tapX = groupTapX,
+                    tapY = groupTapY,
                     centerX = cx,
                     centerY = cy,
                     radius = radius,
                     catalog = catalog,
                 )
-                assertEquals("Fine tag [$i][$j] should resolve to $fineId", fineId, fineDetected)
+                assertEquals("Middle tag [$i][$g] should resolve to ${group.id}", group.id, groupDetected)
+
+                val outerSweep = groupSweep / group.outer.size
+                group.outer.forEachIndexed { o, outerId ->
+                    val outerAngleDeg = EmotionWheelMath.START_ANGLE_DEG + (i * coreSweep) + (g * groupSweep) + (o * outerSweep) + (outerSweep / 2f)
+                    val outerRad = Math.toRadians(outerAngleDeg.toDouble())
+                    val outerTapX = (cx + midOuterRadius * cos(outerRad)).toFloat()
+                    val outerTapY = (cy + midOuterRadius * sin(outerRad)).toFloat()
+
+                    val outerDetected = EmotionWheelMath.findTappedTag(
+                        tapX = outerTapX,
+                        tapY = outerTapY,
+                        centerX = cx,
+                        centerY = cy,
+                        radius = radius,
+                        catalog = catalog,
+                    )
+                    assertEquals("Outer tag [$i][$g][$o] should resolve to $outerId", outerId, outerDetected)
+                }
+            }
+
+            // Also verify focusedCoreId mode expands this core to 360 degrees
+            val focusedGroupSweep = 360f / core.groups.size
+            core.groups.forEachIndexed { g, group ->
+                val fgAngleDeg = EmotionWheelMath.START_ANGLE_DEG + (g * focusedGroupSweep) + (focusedGroupSweep / 2f)
+                val fgRad = Math.toRadians(fgAngleDeg.toDouble())
+                val fgTapX = (cx + midMiddleRadius * cos(fgRad)).toFloat()
+                val fgTapY = (cy + midMiddleRadius * sin(fgRad)).toFloat()
+                assertEquals(
+                    group.id,
+                    EmotionWheelMath.findTappedTag(fgTapX, fgTapY, cx, cy, radius, catalog, focusedCoreId = core.id),
+                )
             }
         }
     }

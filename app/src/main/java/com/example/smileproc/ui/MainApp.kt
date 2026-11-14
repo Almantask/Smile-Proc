@@ -102,7 +102,7 @@ fun MainApp(
     val lowRunDismissedEntryId by container.settingsRepository.lowRunDismissedEntryId.collectAsStateWithLifecycle(initialValue = null)
     val captureLocation by container.settingsRepository.captureLocation.collectAsStateWithLifecycle(initialValue = true)
     val standing by container.settingsRepository.standing.collectAsStateWithLifecycle(initialValue = true)
-    val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.GRADUAL)
+    val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.DETAILED)
     val appLock by container.settingsRepository.appLock.collectAsStateWithLifecycle(initialValue = false)
 
     val exportDoneMessage = stringResource(R.string.export_done)
@@ -421,12 +421,7 @@ fun MainApp(
                 }
                 AppTab.WEEK -> {
                     WeekScreen(
-                        cards = weeklyCards,
-                        labels = placeLabels,
-                        places = places,
-                        weeklyCardTime = weeklyCardTime,
-                        onNavigateToSupport = { activeSubScreen = "support" },
-                        onNamePlace = { clusterId -> namingClusterId = clusterId },
+                        entries = entries,
                     )
                 }
                 AppTab.SETTINGS -> {

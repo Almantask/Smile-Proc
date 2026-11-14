@@ -3,26 +3,16 @@ package com.example.smileproc.ui
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
-import com.example.smileproc.core.CardItem
-import com.example.smileproc.core.Cluster
-import com.example.smileproc.core.ClusterID
-import com.example.smileproc.core.Confidence
-import com.example.smileproc.core.DetectedPattern
-import com.example.smileproc.core.Detector
-import com.example.smileproc.core.Direction
-import com.example.smileproc.core.Family
-import com.example.smileproc.core.LatLon
-import com.example.smileproc.core.PatternParams
-import com.example.smileproc.core.PlaceAssignment
-import com.example.smileproc.core.PlaceKind
-import com.example.smileproc.core.PlaceLabel
-import com.example.smileproc.core.Variant
-import com.example.smileproc.core.WeeklyCard
-import com.example.smileproc.core.WeeklyCardTime
-import com.example.smileproc.core.WindowKind
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.swipeRight
+import com.example.smileproc.core.Entry
+import com.example.smileproc.core.EntrySource
+import com.example.smileproc.core.Mood
+import com.example.smileproc.ui.week.WeekPlotMath
 import com.example.smileproc.ui.week.WeekScreen
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -30,7 +20,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.Locale
 import java.util.UUID
 
@@ -40,298 +33,161 @@ class WeekScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private fun makeSampleCard(
-        periodStart: Instant = Instant.parse("2026-10-11T17:00:00Z"),
-        periodEnd: Instant = Instant.parse("2026-10-18T17:00:00Z"),
-        isLowWeek: Boolean = false,
-        variant: Variant = Variant.NORMAL,
-        items: List<CardItem> = emptyList(),
-    ): WeeklyCard {
-        val days = List(7) { listOf(1, 2, 1) } // 7 x 4 = 28
-        return WeeklyCard(
-            periodStart = periodStart,
-            periodEnd = periodEnd,
-            windowKind = WindowKind.WEEK,
-            entryCount = 28,
-            moodCounts = listOf(7, 14, 7),
-            days = days,
-            isLowWeek = isLowWeek,
-            variant = variant,
-            items = items,
+    private val testZone = ZoneId.of("UTC")
+
+    private fun makeEntry(
+        date: LocalDate,
+        hour: Int,
+        minute: Int = 0,
+        mood: Mood = Mood.OKAY,
+        zone: ZoneId = testZone,
+    ): Entry {
+        val instant = ZonedDateTime.of(date, LocalTime.of(hour, minute), zone).toInstant()
+        return Entry(
+            id = UUID.randomUUID().toString().lowercase(Locale.ROOT),
+            createdAt = instant,
+            updatedAt = instant,
+            timeZoneID = zone.id,
+            mood = mood,
+            tags = emptyList(),
+            comment = null,
+            location = null,
+            source = EntrySource.APP,
         )
     }
 
     @Test
-    fun preFirstCard_rendersArrivalNotice() {
-        composeTestRule.setContent {
-            WeekScreen(
-                cards = emptyList(),
-                labels = emptyList(),
-                places = null,
-                weeklyCardTime = WeeklyCardTime(weekday = 7, hour = 19, minute = 0),
-                onNavigateToSupport = {},
-                onNamePlace = {},
-            )
-        }
+    fun plotMath_mapsDayIndexAndHourFractionAccurately() {
+        val monday = LocalDate.of(2026, 11, 2) // Monday
+        val sunday = LocalDate.of(2026, 11, 8) // Sunday
 
-        composeTestRule.onNodeWithText("Your first weekly card arrives Sunday at 19:00.")
-            .assertIsDisplayed()
+        val midnightEntry = makeEntry(monday, hour = 0, minute = 0, mood = Mood.LOW)
+        val noonEntry = makeEntry(monday.plusDays(2), hour = 12, minute = 0, mood = Mood.OKAY)
+        val eveningEntry = makeEntry(sunday, hour = 18, minute = 0, mood = Mood.GOOD)
+
+        val pMidnight = WeekPlotMath.pointForEntry(midnightEntry)
+        assertEquals(0, pMidnight.dayIndex)
+        assertEquals(0f, pMidnight.yFractionFromBottom, 0.0001f)
+
+        val pNoon = WeekPlotMath.pointForEntry(noonEntry)
+        assertEquals(2, pNoon.dayIndex) // Wednesday
+        assertEquals(0.5f, pNoon.yFractionFromBottom, 0.0001f)
+
+        val pEvening = WeekPlotMath.pointForEntry(eveningEntry)
+        assertEquals(6, pEvening.dayIndex) // Sunday
+        assertEquals(0.75f, pEvening.yFractionFromBottom, 0.0001f)
     }
 
     @Test
-    fun normalCard_rendersPeriodAndFaceStripAndPatternItems() {
-        val patternItem = CardItem(
-            patternID = "timeOfDay.lower.afternoon",
-            libraryID = "afternoon-dip",
-            pattern = DetectedPattern(
-                id = "timeOfDay.lower.afternoon",
-                detector = Detector.TIME_OF_DAY,
-                family = Family.TIME,
-                direction = Direction.LOWER,
-                params = PatternParams(segment = "afternoon"),
-                nSegment = 5,
-                nRest = 10,
-                meanSegment = 1.4,
-                meanRest = 2.3,
-                diff = -0.9,
-                z = -2.5,
-                score = 0.9,
-                confidence = Confidence.EARLY_HINT,
-                supportingEntryIDs = emptyList(),
-            ),
-        )
-
-        val card = makeSampleCard(items = listOf(patternItem))
-
-        composeTestRule.setContent {
-            WeekScreen(
-                cards = listOf(card),
-                labels = emptyList(),
-                places = null,
-                weeklyCardTime = WeeklyCardTime.DEFAULT,
-                onNavigateToSupport = {},
-                onNamePlace = {},
-            )
-        }
-
-        // Title from library
-        composeTestRule.onNodeWithText("Afternoons run lower").assertIsDisplayed()
-
-        // Early hint badge
-        composeTestRule.onNodeWithText("Early hint").assertIsDisplayed()
-
-        // Observation line (counts only, no raw averages)
-        composeTestRule.onNodeWithText("Your afternoon check-ins were lower than the rest of your day (5 check-ins).")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun lowWeekCard_rendersAcknowledgmentAndTalkToSomeoneAction() {
-        var supportClicked = false
-
-        val card = makeSampleCard(isLowWeek = true)
-
-        composeTestRule.setContent {
-            WeekScreen(
-                cards = listOf(card),
-                labels = emptyList(),
-                places = null,
-                weeklyCardTime = WeeklyCardTime.DEFAULT,
-                onNavigateToSupport = { supportClicked = true },
-                onNamePlace = {},
-            )
-        }
-
-        // Low-week acknowledgment copy
-        composeTestRule.onNodeWithText("This week looked heavy. That's worth noticing, and it's okay.")
-            .assertIsDisplayed()
-        composeTestRule.onNodeWithText("Talking to someone you trust can make it lighter.")
-            .assertIsDisplayed()
-
-        // Action button
-        composeTestRule.onNodeWithText("Talk to someone").assertIsDisplayed().performClick()
-        assertTrue(supportClicked)
-    }
-
-    @Test
-    fun unnamedPlaceItem_displaysNameThisPlaceButton_triggersCallback() {
-        var namedCluster: String? = null
-        val clusterId = "u:entry-abc-123"
-
-        val placeItem = CardItem(
-            patternID = "place.lower.$clusterId",
-            libraryID = "place-lower",
-            pattern = DetectedPattern(
-                id = "place.lower.$clusterId",
-                detector = Detector.PLACE,
-                family = Family.PLACE,
-                direction = Direction.LOWER,
-                params = PatternParams(clusterID = ClusterID(clusterId)),
-                nSegment = 6,
-                nRest = 8,
-                meanSegment = 1.2,
-                meanRest = 2.4,
-                diff = -1.2,
-                z = -2.8,
-                score = 1.2,
-                confidence = Confidence.PATTERN,
-                supportingEntryIDs = emptyList(),
-            ),
-        )
-
-        val card = makeSampleCard(items = listOf(placeItem))
-        val places = PlaceAssignment(
-            entryToCluster = mapOf("entry-abc-123" to ClusterID(clusterId)),
-            clusters = mapOf(
-                ClusterID(clusterId) to Cluster(
-                    id = ClusterID(clusterId),
-                    centroid = LatLon(52.5200, 13.4050),
-                    memberIDs = listOf("entry-abc-123"),
-                    label = null,
-                ),
-            ),
+    fun weekScreen_rendersDayTimePatternsAndSummaryAndLegend() {
+        val monday = LocalDate.of(2026, 11, 2)
+        // 18 check-ins across all 7 days between 8 AM and 6 PM (18:00)
+        val entries = listOf(
+            // Monday (4)
+            makeEntry(monday, 8, 0, Mood.LOW),
+            makeEntry(monday, 9, 0, Mood.LOW),
+            makeEntry(monday, 12, 0, Mood.OKAY),
+            makeEntry(monday, 17, 0, Mood.LOW),
+            // Tuesday (5)
+            makeEntry(monday.plusDays(1), 8, 0, Mood.LOW),
+            makeEntry(monday.plusDays(1), 9, 0, Mood.GOOD),
+            makeEntry(monday.plusDays(1), 12, 0, Mood.OKAY),
+            makeEntry(monday.plusDays(1), 14, 0, Mood.LOW),
+            makeEntry(monday.plusDays(1), 18, 0, Mood.GOOD),
+            // Wednesday (3)
+            makeEntry(monday.plusDays(2), 8, 0, Mood.LOW),
+            makeEntry(monday.plusDays(2), 12, 0, Mood.OKAY),
+            makeEntry(monday.plusDays(2), 18, 0, Mood.OKAY),
+            // Thursday (2)
+            makeEntry(monday.plusDays(3), 10, 0, Mood.OKAY),
+            makeEntry(monday.plusDays(3), 18, 0, Mood.GOOD),
+            // Friday (2)
+            makeEntry(monday.plusDays(4), 10, 0, Mood.OKAY),
+            makeEntry(monday.plusDays(4), 16, 0, Mood.LOW),
+            // Saturday (1)
+            makeEntry(monday.plusDays(5), 10, 0, Mood.GOOD),
+            // Sunday (1)
+            makeEntry(monday.plusDays(6), 14, 0, Mood.LOW),
         )
 
         composeTestRule.setContent {
             WeekScreen(
-                cards = listOf(card),
-                labels = emptyList(),
-                places = places,
-                weeklyCardTime = WeeklyCardTime.DEFAULT,
-                onNavigateToSupport = {},
-                onNamePlace = { namedCluster = it },
+                entries = entries,
+                initialWeekStart = monday,
             )
         }
 
-        // Shows "Check-ins at an unnamed place run lower"
-        composeTestRule.onNodeWithText("Check-ins at an unnamed place run lower").performScrollTo().assertIsDisplayed()
+        // Period header
+        composeTestRule.onNodeWithText("2026-11-02 – 2026-11-09").assertIsDisplayed()
 
-        // "Name this place" button
-        composeTestRule.onNodeWithText("Name this place").performScrollTo().assertIsDisplayed().performClick()
-        assertEquals(clusterId, namedCluster)
+        // Section title
+        composeTestRule.onNodeWithText("Day & Time Patterns").assertIsDisplayed()
+
+        // Y-axis labels
+        assertTrue(composeTestRule.onAllNodesWithText("12 AM").fetchSemanticsNodes().size >= 2)
+        composeTestRule.onNodeWithText("8 PM").assertIsDisplayed()
+        composeTestRule.onNodeWithText("4 PM").assertIsDisplayed()
+        composeTestRule.onNodeWithText("12 PM").assertIsDisplayed()
+        composeTestRule.onNodeWithText("8 AM").assertIsDisplayed()
+        composeTestRule.onNodeWithText("4 AM").assertIsDisplayed()
+
+        // Summary and legend
+        composeTestRule.onNodeWithText("Most check-ins are between 8 AM and 6 PM").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Check-ins:").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("sad").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("neutral").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("happy").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("7 days tracked • 18 check-ins").performScrollTo().assertIsDisplayed()
     }
 
     @Test
-    fun renamedPlace_dynamicallyUpdatesCardDisplay() {
-        val entryId = "entry-abc-123"
-        val clusterId = "u:$entryId"
-        val labelId = UUID.randomUUID().toString().lowercase(Locale.ROOT)
+    fun draggingRightAndLeftOnPlot_movesWeekBackwardAndForward() {
+        val week2Monday = LocalDate.of(2026, 11, 2)
+        val week1Monday = week2Monday.minusWeeks(1) // 2026-10-26
+        val week3Monday = week2Monday.plusWeeks(1)  // 2026-11-09
 
-        val placeItem = CardItem(
-            patternID = "place.lower.$clusterId",
-            libraryID = "place-lower",
-            pattern = DetectedPattern(
-                id = "place.lower.$clusterId",
-                detector = Detector.PLACE,
-                family = Family.PLACE,
-                direction = Direction.LOWER,
-                params = PatternParams(clusterID = ClusterID(clusterId)),
-                nSegment = 6,
-                nRest = 8,
-                meanSegment = 1.2,
-                meanRest = 2.4,
-                diff = -1.2,
-                z = -2.8,
-                score = 1.2,
-                confidence = Confidence.PATTERN,
-                supportingEntryIDs = emptyList(),
-            ),
-        )
-
-        val card = makeSampleCard(items = listOf(placeItem))
-
-        val label = PlaceLabel(
-            id = labelId,
-            name = "Cozy Studio",
-            kind = PlaceKind.WORK,
-            anchorLatitude = 52.5200,
-            anchorLongitude = 13.4050,
-            createdAt = Instant.parse("2026-10-10T10:00:00Z"),
-        )
-
-        // The place is now named "Cozy Studio"
-        val places = PlaceAssignment(
-            entryToCluster = mapOf(entryId to ClusterID("p:$labelId")),
-            clusters = mapOf(
-                ClusterID("p:$labelId") to Cluster(
-                    id = ClusterID("p:$labelId"),
-                    centroid = LatLon(52.5200, 13.4050),
-                    memberIDs = listOf(entryId),
-                    label = label,
-                ),
-            ),
+        val entries = listOf(
+            // 2 check-ins in Week 1 (2026-10-26)
+            makeEntry(week1Monday, 9, 0, Mood.GOOD),
+            makeEntry(week1Monday.plusDays(1), 15, 0, Mood.OKAY),
+            // 3 check-ins in Week 2 (2026-11-02)
+            makeEntry(week2Monday, 8, 0, Mood.LOW),
+            makeEntry(week2Monday.plusDays(2), 12, 0, Mood.OKAY),
+            makeEntry(week2Monday.plusDays(4), 18, 0, Mood.GOOD),
         )
 
         composeTestRule.setContent {
             WeekScreen(
-                cards = listOf(card),
-                labels = listOf(label),
-                places = places,
-                weeklyCardTime = WeeklyCardTime.DEFAULT,
-                onNavigateToSupport = {},
-                onNamePlace = {},
+                entries = entries,
+                initialWeekStart = week2Monday,
             )
         }
 
-        // Dynamically renders the updated place name: "Check-ins at Cozy Studio run lower"
-        composeTestRule.onNodeWithText("Check-ins at Cozy Studio run lower").assertIsDisplayed()
-    }
+        // Starts on Week 2
+        composeTestRule.onNodeWithText("2026-11-02 – 2026-11-09").assertIsDisplayed()
+        composeTestRule.onNodeWithText("3 days tracked • 3 check-ins").performScrollTo().assertIsDisplayed()
 
-    @Test
-    fun pastWeeksSelector_switchesSelectedCard() {
-        val card1 = makeSampleCard(
-            periodStart = Instant.parse("2026-10-11T17:00:00Z"),
-            periodEnd = Instant.parse("2026-10-18T17:00:00Z"),
-            variant = Variant.NORMAL,
-        )
-        val card2 = makeSampleCard(
-            periodStart = Instant.parse("2026-10-04T17:00:00Z"),
-            periodEnd = Instant.parse("2026-10-11T17:00:00Z"),
-            variant = Variant.NOT_ENOUGH_DATA,
-        )
-
-        composeTestRule.setContent {
-            WeekScreen(
-                cards = listOf(card1, card2),
-                labels = emptyList(),
-                places = null,
-                weeklyCardTime = WeeklyCardTime.DEFAULT,
-                onNavigateToSupport = {},
-                onNamePlace = {},
-            )
+        // Dragging right on the plot moves 1 week backward (Week 1: 2026-10-26 – 2026-11-02)
+        composeTestRule.onNodeWithTag("week_plot").performScrollTo().performTouchInput {
+            swipeRight()
         }
+        composeTestRule.onNodeWithText("2026-10-26 – 2026-11-02").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("2 days tracked • 2 check-ins").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Most check-ins are between 9 AM and 3 PM").performScrollTo().assertIsDisplayed()
 
-        // Initial card is card1 (normal)
-        composeTestRule.onNodeWithText("Past weeks").assertIsDisplayed()
-
-        // Switch to card2
-        val chips = composeTestRule.onAllNodesWithText("10/11/26")
-        if (chips.fetchSemanticsNodes().isNotEmpty()) {
-            chips[0].performClick()
-            composeTestRule.onNodeWithText("Patterns need a few more check-ins.").performScrollTo().assertIsDisplayed()
+        // Dragging left on the plot moves 1 week forward (back to Week 2: 2026-11-02 – 2026-11-09)
+        composeTestRule.onNodeWithTag("week_plot").performScrollTo().performTouchInput {
+            swipeLeft()
         }
-    }
+        composeTestRule.onNodeWithText("2026-11-02 – 2026-11-09").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("3 days tracked • 3 check-ins").performScrollTo().assertIsDisplayed()
 
-    @Test
-    fun unseenCardIndicator_andLastSeenResolution() {
-        val period1 = Instant.parse("2026-10-11T17:00:00Z")
-        val period2 = Instant.parse("2026-10-18T17:00:00Z")
-        val card2 = makeSampleCard(
-            periodStart = period2,
-            periodEnd = period2.plus(7, java.time.temporal.ChronoUnit.DAYS),
-        )
-
-        var lastSeen: Instant? = null
-        val latestCard = card2
-        val hasUnseen1 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
-        assertTrue(hasUnseen1)
-
-        lastSeen = period1
-        val hasUnseen2 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
-        assertTrue(hasUnseen2)
-
-        lastSeen = card2.periodStart
-        val hasUnseen3 = latestCard != null && (lastSeen == null || latestCard.periodStart.isAfter(lastSeen))
-        org.junit.Assert.assertFalse(hasUnseen3)
+        // Dragging left again moves forward to Week 3 (2026-11-09 – 2026-11-16, empty week)
+        composeTestRule.onNodeWithTag("week_plot").performScrollTo().performTouchInput {
+            swipeLeft()
+        }
+        composeTestRule.onNodeWithText("${week3Monday} – ${week3Monday.plusDays(7)}").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("No check-ins this week").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("0 days tracked • 0 check-ins").performScrollTo().assertIsDisplayed()
     }
 }

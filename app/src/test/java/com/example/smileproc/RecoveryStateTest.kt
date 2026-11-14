@@ -5,9 +5,16 @@ import androidx.test.core.app.ApplicationProvider
 import com.example.smileproc.core.Entry
 import com.example.smileproc.core.EntrySource
 import com.example.smileproc.core.Mood
+import com.example.smileproc.core.PlaceKind
+import com.example.smileproc.core.PlaceLabel
+import com.example.smileproc.core.Variant
+import com.example.smileproc.core.WeeklyCard
+import com.example.smileproc.core.WindowKind
 import com.example.smileproc.core.crypto.JcaSealer
 import com.example.smileproc.core.crypto.SealException
 import com.example.smileproc.data.ManagedSealer
+import com.example.smileproc.data.db.SmileProcDatabase
+import com.example.smileproc.data.db.WeeklyCardRow
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -160,6 +167,136 @@ class RecoveryStateTest {
         val settled = container.awaitState()
         assertTrue(settled is StorageState.Ready)
         assertEquals(settled, container.storageState.value)
+    }
+
+    @Test
+    fun reopenPreservesEntriesPlacesWeeklyCardsAcrossUpdateWithSameKey() = runTest {
+        val sealer = FakeManagedSealer()
+        val firstLaunch = newContainer(sealer)
+        val firstStorage = (firstLaunch.initialize() as StorageState.Ready).storage
+
+        val entry = Entry(
+            id = "dddddddd-4444-4444-8444-444444444444",
+            createdAt = Instant.parse("2026-10-12T08:30:00.000Z"),
+            updatedAt = Instant.parse("2026-10-12T08:30:00.000Z"),
+            timeZoneID = "UTC",
+            mood = Mood.GOOD,
+            tags = listOf("calm.peaceful"),
+            comment = "Preserved across APK update",
+            location = null,
+            source = EntrySource.APP,
+        )
+        val place = PlaceLabel(
+            id = "eeeeeeee-5555-4555-8555-555555555555",
+            name = "Home",
+            kind = PlaceKind.HOME,
+            anchorLatitude = 37.7749,
+            anchorLongitude = -122.4194,
+            createdAt = Instant.parse("2026-10-12T08:00:00.000Z"),
+        )
+        val cardStart = Instant.parse("2026-10-12T00:00:00.000Z")
+        val card = WeeklyCard(
+            periodStart = cardStart,
+            periodEnd = Instant.parse("2026-10-19T00:00:00.000Z"),
+            windowKind = WindowKind.WEEK,
+            entryCount = 1,
+            moodCounts = listOf(0, 0, 1),
+            days = List(7) { idx -> if (idx == 0) listOf(0, 0, 1) else listOf(0, 0, 0) },
+            isLowWeek = false,
+            variant = Variant.FIRST_WEEK,
+            items = emptyList(),
+        )
+        firstStorage.entryRepository.save(entry)
+        firstStorage.placeRepository.save(place)
+        firstStorage.weeklyCardRepository.save(card)
+        firstLaunch.close()
+
+        val upgradedLaunch = newContainer(sealer)
+        val upgradedStorage = (upgradedLaunch.initialize() as StorageState.Ready).storage
+        assertEquals(listOf(entry), upgradedStorage.entryRepository.getAllNewestFirst())
+        assertEquals(listOf(place), upgradedStorage.placeRepository.getAll())
+        assertEquals(card, upgradedStorage.weeklyCardRepository.getByPeriodStart(cardStart))
+    }
+
+    @Test
+    fun staleWeeklyCardFormatAfterUpdateClearsOnlyCacheWithoutLosingEntries() = runTest {
+        val sealer = FakeManagedSealer()
+        val firstLaunch = newContainer(sealer)
+        val firstStorage = (firstLaunch.initialize() as StorageState.Ready).storage
+
+        val entry = Entry(
+            id = "ffffffff-6666-4666-8666-666666666666",
+            createdAt = Instant.parse("2026-10-13T10:00:00.000Z"),
+            updatedAt = Instant.parse("2026-10-13T10:00:00.000Z"),
+            timeZoneID = "UTC",
+            mood = Mood.OKAY,
+            tags = emptyList(),
+            comment = "Must survive weekly card cache reset",
+            location = null,
+            source = EntrySource.NOTIFICATION,
+        )
+        firstStorage.entryRepository.save(entry)
+        firstLaunch.close()
+
+        // Validly sealed payload whose JSON structure doesn't match WeeklyCard after an upgrade.
+        val periodStartMillis = Instant.parse("2026-10-12T00:00:00.000Z").toEpochMilli()
+        val rawDb = SmileProcDatabase.open(context, dbName)
+        try {
+            rawDb.weeklyCardDao().upsert(
+                WeeklyCardRow(
+                    periodStart = periodStartMillis,
+                    payload = sealer.seal(
+                        periodStartMillis.toString(),
+                        "{\"legacy\":true}".toByteArray(Charsets.UTF_8),
+                    ),
+                ),
+            )
+        } finally {
+            rawDb.close()
+        }
+
+        val upgradedLaunch = newContainer(sealer)
+        val state = upgradedLaunch.initialize()
+        assertTrue(state is StorageState.Ready)
+        val upgradedStorage = (state as StorageState.Ready).storage
+        assertEquals(listOf(entry), upgradedStorage.entryRepository.getAllNewestFirst())
+        assertEquals(0, upgradedStorage.weeklyCardRepository.count())
+    }
+
+    @Test
+    fun corruptedWeeklyCardSealStillRoutesToRecoveryWithoutDroppingEntries() = runTest {
+        val sealer = FakeManagedSealer()
+        val firstLaunch = newContainer(sealer)
+        val firstStorage = (firstLaunch.initialize() as StorageState.Ready).storage
+        val entry = Entry(
+            id = "11111111-7777-4777-8777-777777777777",
+            createdAt = Instant.parse("2026-10-14T10:00:00.000Z"),
+            updatedAt = Instant.parse("2026-10-14T10:00:00.000Z"),
+            timeZoneID = "UTC",
+            mood = Mood.LOW,
+            tags = emptyList(),
+            comment = null,
+            location = null,
+            source = EntrySource.APP,
+        )
+        firstStorage.entryRepository.save(entry)
+        firstLaunch.close()
+
+        val periodStartMillis = Instant.parse("2026-10-12T00:00:00.000Z").toEpochMilli()
+        val rawDb = SmileProcDatabase.open(context, dbName)
+        try {
+            rawDb.weeklyCardDao().upsert(
+                WeeklyCardRow(
+                    periodStart = periodStartMillis,
+                    payload = ByteArray(32) { 0x5A },
+                ),
+            )
+        } finally {
+            rawDb.close()
+        }
+
+        val upgradedLaunch = newContainer(sealer)
+        assertEquals(StorageState.NeedsRecovery, upgradedLaunch.initialize())
     }
 
     private fun newContainer(sealer: ManagedSealer): AppContainer =

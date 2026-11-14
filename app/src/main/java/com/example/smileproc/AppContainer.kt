@@ -134,9 +134,7 @@ class AppContainer(
             val bundle = buildBundle(db)
             db.entryDao().peekOne()?.let { bundle.entryRepository.getById(it.id) }
             db.placeDao().peekOne()?.let { bundle.placeRepository.getById(it.id) }
-            db.weeklyCardDao().peekOne()?.let {
-                bundle.weeklyCardRepository.getByPeriodStart(Instant.ofEpochMilli(it.periodStart))
-            }
+            verifyOrClearCachedWeeklyCards(db, bundle)
             val ready = StorageState.Ready(bundle)
             _storageState.value = ready
             ready
@@ -222,6 +220,27 @@ class AppContainer(
         } catch (_: Exception) {
             false
         }
+
+    private suspend fun verifyOrClearCachedWeeklyCards(
+        db: SmileProcDatabase,
+        bundle: StorageBundle,
+    ) {
+        try {
+            db.weeklyCardDao().peekOne()?.let {
+                bundle.weeklyCardRepository.getByPeriodStart(Instant.ofEpochMilli(it.periodStart))
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: SealException) {
+            // Key/integrity failure must still route through NeedsRecovery without dropping data.
+            throw e
+        } catch (e: Exception) {
+            // WeeklyCard is cached/derived from entries and places; if an update changes its JSON
+            // shape, drop only the cache so entries and places remain intact.
+            SafeLog.failure(SafeLog.Event.WEEKLY_CARD_BUILD_FAILED, e)
+            db.weeklyCardDao().deleteAll()
+        }
+    }
 
     private fun buildBundle(db: SmileProcDatabase): StorageBundle {
         val lifetime = StorageLifetime()

@@ -630,7 +630,7 @@ def build_patterns():
     # noise-1..3 -------------------------------------------------------------
     for n in (1, 2, 3):
         scn = Scenario(f"noise-{n}", "4 weeks of random check-ins (25 a week): moods, times, places and tags uniform at random.")
-        cores = json.loads((ROOT / "content" / "emotion-tags.json").read_text(encoding="utf-8"))["cores"]
+        cores = [c for c in json.loads((ROOT / "content" / "emotion-tags.json").read_text(encoding="utf-8"))["cores"][:7]]
         week_start = date(2026, 9, 21)
         for week in range(4):
             for _ in range(25):
@@ -643,7 +643,7 @@ def build_patterns():
                 tags = []
                 for _ in range(scn.rng.choice((0, 0, 1, 2))):
                     core = scn.rng.choice(cores)
-                    tag = scn.rng.choice([core["id"]] + core["fine"])
+                    tag = scn.rng.choice([core["id"]] + core["fine"][:5])
                     if tag not in tags:
                         tags.append(tag)
                 scn.add(created, ROME, scn.rng.randint(1, 3), place, tags=tags)

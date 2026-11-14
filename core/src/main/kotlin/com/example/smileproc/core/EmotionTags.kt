@@ -5,12 +5,31 @@ import kotlinx.serialization.Transient
 
 private val HEX_COLOR = Regex("^#[0-9A-Fa-f]{6}$")
 
-/** One of the 7 core emotion families and its 5 fine tag ids (`<core>.<fine>`). */
+/**
+ * One middle-ring emotion (`<core>.<middle>`) and its outer-ring sub-emotions (`<core>.<outer>`)
+ * on the 3-ring Feelings Wheel.
+ */
+@Serializable
+data class MiddleEmotionGroup(
+    val id: String,
+    val outer: List<String>,
+) {
+    init {
+        require(id.isNotBlank() && '.' in id) { "Invalid middle emotion id: $id" }
+        require(outer.isNotEmpty() && outer.all { it.isNotBlank() && '.' in it }) {
+            "Invalid outer emotion list for $id: $outer"
+        }
+        require(outer.distinct().size == outer.size) { "Duplicate outer emotions in $id" }
+    }
+}
+
+/** One core emotion family, its flat fine tag ids (`<core>.<fine>`), and its 3-ring wheel groups. */
 @Serializable
 data class CoreEmotionTag(
     val id: String,
     val color: String,
     val fine: List<String>,
+    val groups: List<MiddleEmotionGroup> = emptyList(),
 ) {
     init {
         require(id.isNotBlank() && '.' !in id) { "Invalid core emotion id: $id" }
@@ -19,6 +38,13 @@ data class CoreEmotionTag(
             "Invalid fine tag list for $id: $fine"
         }
         require(fine.distinct().size == fine.size) { "Duplicate fine tags in $id" }
+        val fineSet = fine.toSet()
+        for (group in groups) {
+            require(group.id in fineSet) { "Middle group id ${group.id} must be listed in fine tags of $id" }
+            require(group.outer.all { it in fineSet }) {
+                "Outer tags ${group.outer} of ${group.id} must be listed in fine tags of $id"
+            }
+        }
     }
 }
 

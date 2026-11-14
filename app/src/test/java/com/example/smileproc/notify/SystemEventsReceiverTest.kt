@@ -1,6 +1,7 @@
 package com.example.smileproc.notify
 
 import android.app.AlarmManager
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
@@ -11,6 +12,7 @@ import com.example.smileproc.core.Reminder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -92,6 +94,34 @@ class SystemEventsReceiverTest {
     }
 
     @Test
+    fun myPackageReplacedReschedulesAlarmsRestoresNotificationAndPreservesSettings() = runTest {
+        val shadowAlarm = shadowOf(alarmManager)
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val shadowNotif = shadowOf(notificationManager)
+
+        val customReminders = listOf(Reminder(hour = 10, minute = 15))
+        container.settingsRepository.setOnboardingCompleted(true)
+        container.settingsRepository.setReminders(customReminders)
+        container.settingsRepository.setStanding(true)
+        container.settingsRepository.setDismissed(false)
+        container.settingsRepository.setLowRunDismissed(true)
+
+        val receiver = SystemEventsReceiver()
+        receiver.handleIntent(context, Intent(Intent.ACTION_MY_PACKAGE_REPLACED))
+
+        assertNotNull(shadowAlarm.nextScheduledAlarm)
+        assertEquals(customReminders, container.settingsRepository.reminders.first())
+        assertTrue(container.settingsRepository.onboardingCompleted.first())
+        assertTrue(container.settingsRepository.lowRunDismissed.first())
+
+        val state = container.settingsRepository.machineState.first()
+        assertTrue(state is CheckInMachine.State.Faces && !state.alerting)
+        assertEquals(1, shadowNotif.allNotifications.size)
+        assertNotNull(shadowNotif.getNotification(CheckInNotifier.ID_CHECKIN))
+    }
+
+    @Test
     fun onboardingNotCompletedIgnoresEvents() = runTest {
         val shadowAlarm = shadowOf(alarmManager)
         ReminderScheduler.cancelAll(context)
@@ -101,6 +131,7 @@ class SystemEventsReceiverTest {
 
         val receiver = SystemEventsReceiver()
         receiver.handleIntent(context, Intent(Intent.ACTION_BOOT_COMPLETED))
+        receiver.handleIntent(context, Intent(Intent.ACTION_MY_PACKAGE_REPLACED))
         receiver.handleIntent(context, Intent(Intent.ACTION_TIME_CHANGED))
         receiver.handleIntent(context, Intent(Intent.ACTION_TIMEZONE_CHANGED))
 

@@ -18,13 +18,49 @@ import kotlin.math.pow
 class ContentContractTest {
 
     private val tagTable = linkedMapOf(
-        "happy" to listOf("joyful", "grateful", "proud", "hopeful", "excited"),
-        "calm" to listOf("relaxed", "content", "peaceful", "focused", "safe"),
-        "sad" to listOf("down", "lonely", "disappointed", "hurt", "nostalgic"),
-        "anxious" to listOf("stressed", "worried", "overwhelmed", "nervous", "insecure"),
-        "angry" to listOf("frustrated", "irritated", "resentful", "jealous", "impatient"),
-        "tired" to listOf("drained", "sleepy", "bored", "unmotivated", "numb"),
-        "surprised" to listOf("amazed", "confused", "curious", "startled", "moved"),
+        "happy" to listOf(
+            "joyful", "grateful", "proud", "hopeful", "excited",
+            "cheerful", "playful", "relaxed", "interested", "curious", "inquisitive",
+            "successful", "confident", "accepted", "respected", "valued",
+            "powerful", "courageous", "creative", "optimistic", "inspired",
+        ),
+        "calm" to listOf(
+            "relaxed", "content", "peaceful", "focused", "safe",
+            "free", "joyful", "loving", "thankful", "trusting", "sensitive", "intimate",
+        ),
+        "sad" to listOf(
+            "down", "lonely", "disappointed", "hurt", "nostalgic",
+            "embarrassed", "inferior", "empty", "guilty", "remorseful", "ashamed",
+            "despair", "powerless", "grief", "vulnerable", "fragile", "victimized",
+            "abandoned", "ignored",
+        ),
+        "anxious" to listOf(
+            "stressed", "worried", "overwhelmed", "nervous", "insecure",
+            "scared", "helpless", "frightened", "uneasy", "inadequate", "inferior",
+            "weak", "worthless", "insignificant", "rejected", "excluded", "persecuted",
+            "threatened", "unsafe",
+        ),
+        "angry" to listOf(
+            "frustrated", "irritated", "resentful", "jealous", "impatient",
+            "let_down", "betrayed", "humiliated", "disrespected", "belittled",
+            "bitter", "indignant", "violated", "mad", "furious",
+            "aggressive", "provoked", "hostile", "infuriated", "distant",
+            "withdrawn", "numb", "critical", "skeptical", "dismissive",
+        ),
+        "tired" to listOf(
+            "drained", "sleepy", "bored", "unmotivated", "numb",
+            "unfocused", "tense", "weighed_down", "out_of_control",
+            "busy", "rushed", "pressured", "indifferent", "apathetic",
+        ),
+        "surprised" to listOf(
+            "amazed", "confused", "curious", "startled", "moved",
+            "excited", "energetic", "eager", "disillusioned", "perplexed",
+            "awed", "astonished", "shocked", "dismayed",
+        ),
+        "disgusted" to listOf(
+            "disapproving", "aversion", "hesitant", "awful", "revulsion", "nauseated",
+            "disappointed", "reluctant", "appalled", "repelled", "condemning", "ashamed",
+        ),
     )
 
     @Test

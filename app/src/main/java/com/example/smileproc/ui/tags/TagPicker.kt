@@ -44,10 +44,12 @@ import com.example.smileproc.data.TagPickerMode
 
 /**
  * Unified Emotion Tag Picker supporting:
- * - Gradual mode (Step 1 core -> Step 2 fine)
- * - Detailed mode:
- *   - Emotion Wheel canvas (default when TalkBack is off and font scale is normal)
- *   - Emotion List picker (when TalkBack/touch exploration is active, font scale >= 1.5x, or toggled)
+ * - Detailed mode (default):
+ *   - Interactive 3-ring Emotion Wheel (Inner Core + Middle Ring + Outer Ring), with optional sector zoom
+ *   - Accessible Emotion List picker (when TalkBack/touch exploration is active, font scale >= 1.95x, or toggled)
+ * - Gradual mode:
+ *   - Step 1: Core Emotion Wheel (tap a core wedge on the wheel to zoom into that core)
+ *   - Step 2: Focused 3-ring Emotion Wheel for the chosen core
  * - Pinned selection echo chips at the top (max 3 tags).
  */
 @OptIn(ExperimentalLayoutApi::class)
@@ -62,13 +64,14 @@ fun TagPicker(
 ) {
     val context = LocalContext.current
     var selectedCoreId by rememberSaveable { mutableStateOf<String?>(null) }
+    var focusedCoreInDetailed by rememberSaveable { mutableStateOf<String?>(null) }
     var preferListInDetailed by rememberSaveable { mutableStateOf(false) }
 
     val accessibilityManager = remember(context) {
         context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
     }
     val isTouchExploration = accessibilityManager?.isTouchExplorationEnabled == true
-    val isLargeFont = LocalDensity.current.fontScale >= 1.5f
+    val isLargeFont = LocalDensity.current.fontScale >= 1.95f
     val forceList = isTouchExploration || isLargeFont
 
     val isMaxSelected = selectedTags.size >= 3
@@ -176,7 +179,22 @@ fun TagPicker(
         if (mode == TagPickerMode.GRADUAL) {
             val activeCore = selectedCoreId?.let { id -> catalog.cores.firstOrNull { it.id == id } }
             if (activeCore == null) {
-                // Step 1: 7 Core chips
+                // Step 1: Interactive Core Wheel + accessible Core chips
+                if (!forceList) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        EmotionWheel(
+                            selectedTags = selectedTags,
+                            onTagToggled = { tappedCoreId -> selectedCoreId = tappedCoreId },
+                            catalog = catalog,
+                            coreOnly = true,
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -194,7 +212,7 @@ fun TagPicker(
                     }
                 }
             } else {
-                // Step 2: Finer chips + "Just {core}"
+                // Step 2: Focused 3-Ring Sector Wheel for the chosen Core + Back button & chips
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Start,
@@ -215,6 +233,22 @@ fun TagPicker(
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))
+
+                if (!forceList) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        EmotionWheel(
+                            selectedTags = selectedTags,
+                            onTagToggled = { toggleTag(it) },
+                            catalog = catalog,
+                            focusedCoreId = activeCore.id,
+                            onCenterHoleClick = { selectedCoreId = null },
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
 
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -255,7 +289,7 @@ fun TagPicker(
                     catalog = catalog,
                 )
             } else {
-                // Wheel Canvas View
+                // Full 3-Ring Wheel Canvas View + Sector Zoom Filter Row
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center,
@@ -264,7 +298,42 @@ fun TagPicker(
                         selectedTags = selectedTags,
                         onTagToggled = { toggleTag(it) },
                         catalog = catalog,
+                        focusedCoreId = focusedCoreInDetailed,
+                        onCenterHoleClick = if (focusedCoreInDetailed != null) {
+                            { focusedCoreInDetailed = null }
+                        } else {
+                            null
+                        },
                     )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Quick sector zoom bar so user can zoom the wheel into any core family or view the full wheel
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    FilterChip(
+                        selected = focusedCoreInDetailed == null,
+                        onClick = { focusedCoreInDetailed = null },
+                        label = { Text(stringResource(R.string.tags_all_feelings)) },
+                        modifier = Modifier.heightIn(min = 48.dp),
+                    )
+                    catalog.cores.forEach { core ->
+                        val coreLabel = context.resolveTagLabel(core.id)
+                        FilterChip(
+                            selected = focusedCoreInDetailed == core.id,
+                            onClick = {
+                                focusedCoreInDetailed = if (focusedCoreInDetailed == core.id) null else core.id
+                            },
+                            label = { Text(coreLabel) },
+                            modifier = Modifier.heightIn(min = 48.dp),
+                        )
+                    }
                 }
             }
         }

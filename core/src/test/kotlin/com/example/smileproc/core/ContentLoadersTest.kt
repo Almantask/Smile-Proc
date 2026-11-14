@@ -60,11 +60,15 @@ class ContentLoadersTest {
     @Test
     fun emotionTagsAndPatternLibraryLoadRuntimeFiles() {
         val tags = EmotionTags.fromJson(File(TestData.content, "emotion-tags.json").readText(Charsets.UTF_8))
-        assertEquals(7, tags.cores.size)
-        assertEquals(42, tags.allTagIds.size)
+        assertEquals(8, tags.cores.size)
+        assertEquals(144, tags.allTagIds.size)
+        assertEquals(41, tags.cores.sumOf { it.groups.size })
+        assertEquals(82, tags.cores.sumOf { core -> core.groups.sumOf { it.outer.size } })
         assertEquals("anxious", tags.coreOf("anxious.stressed"))
+        assertEquals("disgusted", tags.coreOf("disgusted.repelled"))
         assertEquals("tired", tags.coreOf("tired"))
         assertTrue(tags.isValidTag("surprised.moved"))
+        assertTrue(tags.isValidTag("disgusted.nauseated"))
         assertFalse(tags.isValidTag("surprised.unknown"))
 
         val library = PatternLibrary.fromJson(File(TestData.content, "pattern-library.en.json").readText(Charsets.UTF_8))
