@@ -1,0 +1,97 @@
+[
+  { "id": "afternoon-dip", "match": { "detector": "timeOfDay", "direction": "lower", "segment": "afternoon" },
+    "title": "Popietės būna sunkesnės",
+    "common": "Daug žmonių pastebi, kad po pietų nuotaika ir energija nusileidžia.",
+    "tip": "Išbandyk 10 minučių pasivaikščiojimą arba kelias minutes dienos šviesos prieš pat tą laiką, kai dažniausiai pajunti nuosmukį.",
+    "question": "Kur rytoj po pietų galėtų tilpti 10 minučių pertrauka?" },
+
+  { "id": "sunday-evening", "match": { "detector": "weekdayDaypart", "direction": "lower", "weekday": "7", "segment": "evening" },
+    "title": "Sekmadienio vakarai būna sunkesni",
+    "common": "Nuosmukį prieš savaitės pradžią atpažįsta daugelis žmonių.",
+    "tip": "Suplanuok vieną mažą dalyką pirmadieniui, kurio galėtum laukti.",
+    "question": "Kokį vieną mažą dalyką galėtum įtraukti į pirmadienį?" },
+
+  { "id": "out-lifts", "match": { "detector": "awayFromHome", "direction": "higher" },
+    "title": "Išėjus iš namų jautiesi geriau",
+    "common": "Daugeliui žmonių aplinkos pakeitimas pakelia nuotaiką.",
+    "tip": "Įtrauk į savo savaitę vieną išėjimą į lauką ar laiką ne namuose.",
+    "question": "Kurią dieną tam rastum laiko?" },
+
+  { "id": "stress-at-place", "match": { "detector": "tagAtPlace", "tag": "anxious.stressed" },
+    "title": "Vietoje „{place}“ dažniau kyla įtampa",
+    "common": "Dažnai būna taip, kad viena vieta surenka didžiąją dalį savaitės įtampos.",
+    "tip": "Skirk 2 minučių pauzę atvykus į vietą „{place}“ arba prieš pat išeinant.",
+    "question": "Atvykus ar išeinant – kuri pauzė atrodo paprastesnė?" },
+
+  { "id": "tired-on-low", "match": { "detector": "tagOnLow", "tag": "tired" },
+    "title": "Daugelyje prastų įrašų pasikartoja nuovargis",
+    "common": "Prasta nuotaika ir nuovargis dažnai eina kartu.",
+    "tip": "Pirmiausia atkreipk dėmesį į miegą: pasirink vieną vakarą šią savaitę, kai pradėsi ruoštis poilsiui anksčiau.",
+    "question": "Kuris vakaras galėtų prasidėti 30 minučių anksčiau?" },
+
+  { "id": "time-lower", "match": { "detector": "timeOfDay", "direction": "lower" },
+    "title": "Sunkesnis paros metas – {segment}",
+    "common": "Daugeliui žmonių vienas paros metas būna sunkesnis už kitus.",
+    "tip": "Šią savaitę skirk sau nedidelę pauzę, kai ateina {segment}: trumpai atsikvėpk, užkąsk arba kelioms minutėms išeik į lauką.",
+    "question": "Kas padėtų, kad kitas paros metas ({segment}) būtų bent šiek tiek lengvesnis?" },
+
+  { "id": "time-higher", "match": { "detector": "timeOfDay", "direction": "higher" },
+    "title": "Geriausias tavo paros metas – {segment}",
+    "common": "Dauguma žmonių turi paros metą, kai jaučiasi labiausiai savimi.",
+    "tip": "Jei įmanoma, suplanuok ką nors tau svarbaus tam laikui, kai būna {segment}.",
+    "question": "Ką galėtum perkelti į tą laiką?" },
+
+  { "id": "weekday-lower", "match": { "detector": "weekday", "direction": "lower" },
+    "title": "Sunkesnė savaitės diena – {weekday}",
+    "common": "Daugeliui viena savaitės diena būna sunkesnė už kitas.",
+    "tip": "Pridėk vieną mažą, malonų dalyką kitai dienai ({weekday}).",
+    "question": "Kas palengvintų kitą dieną ({weekday})?" },
+
+  { "id": "weekday-higher", "match": { "detector": "weekday", "direction": "higher" },
+    "title": "{weekday} tau paprastai būna gera diena",
+    "common": "Pastebėti gerąsias dienas yra taip pat naudinga, kaip ir sunkiąsias.",
+    "tip": "Pažiūrėk, kuo skiriasi {weekday} nuo kitų dienų, ir pasiskolink vieną detalę kitai dienai.",
+    "question": "Kas padaro, kad {weekday} pavyksta?" },
+
+  { "id": "weekday-segment-lower", "match": { "detector": "weekdayDaypart", "direction": "lower" },
+    "title": "Sunkesnis laikas – {weekday}, {segment}",
+    "common": "Daug kas pastebi vieną savaitės atkarpą, kuri būna sunkesnė.",
+    "tip": "Suplanuok ką nors nedidelio ir lengvo ateinančiam laikui ({weekday}, {segment}).",
+    "question": "Ką galėtum tam suplanuoti?" },
+
+  { "id": "weekday-segment-higher", "match": { "detector": "weekdayDaypart", "direction": "higher" },
+    "title": "Gerai einasi šiuo metu: {weekday}, {segment}",
+    "common": "Pastebėti, kas veikia, jau yra pusė kelio norint tai pakartoti.",
+    "tip": "Pagalvok, kodėl tas laikas pavyksta, ir pritaikyk vieną detalę kitai dienai.",
+    "question": "Kurią detalę norėtum pasiskolinti?" },
+
+  { "id": "place-lower", "match": { "detector": "place", "direction": "lower" },
+    "title": "Vietoje „{place}“ savijauta būna prastesnė",
+    "common": "Skirtingos vietos dažnai sukuria savą nuotaiką.",
+    "tip": "Išbandyk vieną mažą pokytį vietoje „{place}“: trumpą pauzę, kitą kampelį arba akimirką lauke.",
+    "question": "Kurį pokytį lengviausia išbandyti?" },
+
+  { "id": "place-higher", "match": { "detector": "place", "direction": "higher" },
+    "title": "Vietoje „{place}“ jautiesi geriau",
+    "common": "Daugelis žmonių turi vietą, kuri padeda jaustis stabiliau.",
+    "tip": "Jei gali, šią savaitę praleisk šiek tiek daugiau laiko vietoje „{place}“.",
+    "question": "Kada galėtum ten pabūti?" },
+
+  { "id": "home-higher", "match": { "detector": "awayFromHome", "direction": "lower" },
+    "title": "Namuose jautiesi geriau nei ne namuose",
+    "common": "Buvimas ne namuose daugeliui žmonių kainuoja daugiau energijos.",
+    "tip": "Suplanuok kelias ramias minutes atsigauti grįžus namo.",
+    "question": "Kada tau to dažniausiai labiausiai reikia?" },
+
+  { "id": "tag-on-low", "match": { "detector": "tagOnLow" },
+    "title": "Daugelyje prastų įrašų pasikartoja jausmas „{tag}“",
+    "common": "Įvardyti, kas slepiasi už prastos akimirkos, yra naudingas žingsnis.",
+    "tip": "Šią savaitę išsirink vieną mažą dalyką, kuris palengvintų būseną, kai apima jausmas „{tag}“.",
+    "question": "Kas tau dažniausiai bent šiek tiek padeda?" },
+
+  { "id": "tag-at-place", "match": { "detector": "tagAtPlace" },
+    "title": "Vietoje „{place}“ dažniau pasikartoja jausmas „{tag}“",
+    "common": "Dažnai nutinka, kad viena vieta išryškina vieną konkretų jausmą.",
+    "tip": "Šią savaitę padaryk 2 minučių pauzę vietoje „{place}“ ir pastebėk, kas keičiasi.",
+    "question": "Kada tokia pauzė tiktų?" }
+]

@@ -1,6 +1,12 @@
 package com.example.smileproc.data
 
 import com.example.smileproc.core.CanonicalJson
+import com.example.smileproc.core.CustomTag
+import com.example.smileproc.core.EntryExtras
+import com.example.smileproc.data.db.CustomTagDao
+import com.example.smileproc.data.db.CustomTagRow
+import com.example.smileproc.data.db.EntryExtrasDao
+import com.example.smileproc.data.db.EntryExtrasRow
 import com.example.smileproc.core.Entry
 import com.example.smileproc.core.PlaceLabel
 import com.example.smileproc.core.WeeklyCard
@@ -39,7 +45,7 @@ class StorageLifetime {
  * Room throws on a closed database both when a flow is created and when it re-queries, so the
  * DAO call is deferred into collection where the closed-database check can see it.
  */
-private fun <T> observing(lifetime: StorageLifetime, source: () -> Flow<T>): Flow<T> =
+internal fun <T> observing(lifetime: StorageLifetime, source: () -> Flow<T>): Flow<T> =
     flow { emitAll(source()) }.catch { e -> if (!lifetime.closed) throw e }
 
 /**

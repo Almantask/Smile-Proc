@@ -1,5 +1,16 @@
 package com.example.smileproc.ui.places
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.SuggestionChipDefaults
+import androidx.compose.ui.graphics.Color
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.GlassDivider
+import com.example.smileproc.ui.components.GlassTopBar
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,21 +82,14 @@ fun PlacesScreen(
     }
     val hasAnyPlaces = placeLabels.isNotEmpty() || unnamedClusters.isNotEmpty()
 
+    val smileColors = LocalSmileProcColors.current
+
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.places_title)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateBack,
-                        modifier = Modifier.size(48.dp),
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_back),
-                            contentDescription = stringResource(R.string.action_back),
-                        )
-                    }
-                },
+            GlassTopBar(
+                title = stringResource(R.string.places_title),
+                onNavigateBack = onNavigateBack,
             )
         },
         modifier = modifier,
@@ -98,12 +102,17 @@ fun PlacesScreen(
                     .padding(24.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = stringResource(R.string.places_empty),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
+                GlassCard(
+                    contentPadding = PaddingValues(horizontal = 24.dp, vertical = 20.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.places_empty),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
         } else {
             Column(
@@ -111,7 +120,7 @@ fun PlacesScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                    .padding(horizontal = 20.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 // Named Places Section
@@ -124,28 +133,24 @@ fun PlacesScreen(
                     placeLabels.forEach { label ->
                         val cluster = places.clusters[ClusterID.named(label.id)]
                         val memberCount = cluster?.memberIDs?.size ?: 0
-                        Card(
+                        GlassCard(
                             modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            ),
+                            contentPadding = PaddingValues(16.dp),
                         ) {
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
+                                modifier = Modifier.fillMaxWidth(),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
                                             text = label.name,
                                             style = MaterialTheme.typography.titleLarge,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            color = MaterialTheme.colorScheme.onSurface,
                                         )
                                         Text(
                                             text = pluralStringResource(
@@ -162,6 +167,12 @@ fun PlacesScreen(
                                         label = {
                                             Text(PlaceFormatters.formatPlaceKind(context, label.kind))
                                         },
+                                        shape = CircleShape,
+                                        colors = SuggestionChipDefaults.suggestionChipColors(
+                                            containerColor = smileColors.chipFill,
+                                            labelColor = MaterialTheme.colorScheme.onSurface,
+                                        ),
+                                        border = BorderStroke(1.dp, smileColors.chipBorder),
                                         modifier = Modifier.heightIn(min = 48.dp),
                                     )
                                 }
@@ -173,12 +184,14 @@ fun PlacesScreen(
                                 ) {
                                     TextButton(
                                         onClick = { labelToRename = label },
+                                        shape = CircleShape,
                                         modifier = Modifier.heightIn(min = 48.dp),
                                     ) {
                                         Text(stringResource(R.string.places_rename))
                                     }
                                     TextButton(
                                         onClick = { labelToForget = label },
+                                        shape = CircleShape,
                                         modifier = Modifier.heightIn(min = 48.dp),
                                     ) {
                                         Text(stringResource(R.string.places_forget_name))
@@ -192,7 +205,7 @@ fun PlacesScreen(
                 // Unnamed Places Section
                 if (unnamedClusters.isNotEmpty()) {
                     if (placeLabels.isNotEmpty()) {
-                        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                        GlassDivider()
                     }
                     Text(
                         text = stringResource(R.string.place_unnamed_title),
@@ -202,22 +215,18 @@ fun PlacesScreen(
                     unnamedClusters.forEach { cluster ->
                         val memberEntries = entries.filter { it.id in cluster.memberIDs }
                         val description = PlaceFormatters.formatUnnamedDescription(context, memberEntries)
-                        Card(
+                        GlassCard(
                             modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            ),
+                            contentPadding = PaddingValues(16.dp),
                         ) {
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
+                                modifier = Modifier.fillMaxWidth(),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 Text(
                                     text = description,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -230,6 +239,7 @@ fun PlacesScreen(
                                                 .map { LatLon(it.latitude, it.longitude) }
                                             clusterToName = Pair(cluster.centroid, points)
                                         },
+                                        shape = CircleShape,
                                         modifier = Modifier.heightIn(min = 48.dp),
                                     ) {
                                         Text(stringResource(R.string.place_name_title))
@@ -240,14 +250,15 @@ fun PlacesScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 // Danger zone: Remove location from all entries
                 OutlinedButton(
                     onClick = { showRemoveLocationDialog = true },
+                    shape = CircleShape,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 48.dp),
+                        .heightIn(min = 50.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.places_remove_location),
@@ -292,6 +303,8 @@ fun PlacesScreen(
     labelToForget?.let { label ->
         AlertDialog(
             onDismissRequest = { labelToForget = null },
+            containerColor = smileColors.dialogContainer,
+            shape = RoundedCornerShape(28.dp),
             title = {
                 Text(stringResource(R.string.places_forget_name))
             },
@@ -304,6 +317,7 @@ fun PlacesScreen(
                         onDeletePlaceLabel(label.id)
                         labelToForget = null
                     },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(stringResource(R.string.action_delete))
@@ -312,6 +326,7 @@ fun PlacesScreen(
             dismissButton = {
                 TextButton(
                     onClick = { labelToForget = null },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(stringResource(R.string.action_cancel))
@@ -324,6 +339,8 @@ fun PlacesScreen(
     if (showRemoveLocationDialog) {
         AlertDialog(
             onDismissRequest = { showRemoveLocationDialog = false },
+            containerColor = smileColors.dialogContainer,
+            shape = RoundedCornerShape(28.dp),
             title = {
                 Text(stringResource(R.string.places_remove_location_confirm_title))
             },
@@ -336,6 +353,7 @@ fun PlacesScreen(
                         onRemoveLocationFromAllEntries()
                         showRemoveLocationDialog = false
                     },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(
@@ -347,6 +365,7 @@ fun PlacesScreen(
             dismissButton = {
                 TextButton(
                     onClick = { showRemoveLocationDialog = false },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(stringResource(R.string.action_cancel))

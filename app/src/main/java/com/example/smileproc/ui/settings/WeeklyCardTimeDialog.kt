@@ -1,5 +1,10 @@
 package com.example.smileproc.ui.settings
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilterChipDefaults
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -37,12 +42,15 @@ fun WeeklyCardTimeDialog(
     onDismiss: () -> Unit,
     onConfirm: (WeeklyCardTime) -> Unit,
 ) {
+    val smileColors = LocalSmileProcColors.current
     var selectedDay by remember { mutableIntStateOf(initialTime.weekday) }
     var hour by remember { mutableIntStateOf(initialTime.hour) }
     var minute by remember { mutableIntStateOf(initialTime.minute) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = smileColors.dialogContainer,
+        shape = RoundedCornerShape(28.dp),
         title = { Text(stringResource(R.string.settings_weekly_card_time)) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -53,7 +61,8 @@ fun WeeklyCardTimeDialog(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     for (isoDay in 1..7) {
                         val isSelected = isoDay == selectedDay
@@ -62,6 +71,16 @@ fun WeeklyCardTimeDialog(
                             selected = isSelected,
                             onClick = { selectedDay = isoDay },
                             label = { Text(label) },
+                            shape = CircleShape,
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = smileColors.chipFill,
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isSelected,
+                                borderColor = smileColors.chipBorder,
+                            ),
                             modifier = Modifier.heightIn(min = 48.dp),
                         )
                     }
@@ -96,6 +115,7 @@ fun WeeklyCardTimeDialog(
                 onClick = {
                     onConfirm(WeeklyCardTime(weekday = selectedDay, hour = hour, minute = minute))
                 },
+                shape = CircleShape,
                 modifier = Modifier.heightIn(min = 48.dp),
             ) {
                 Text(stringResource(R.string.action_save))
@@ -104,6 +124,7 @@ fun WeeklyCardTimeDialog(
         dismissButton = {
             TextButton(
                 onClick = onDismiss,
+                shape = CircleShape,
                 modifier = Modifier.heightIn(min = 48.dp),
             ) {
                 Text(stringResource(R.string.action_cancel))
@@ -147,13 +168,13 @@ private fun TimePickerWheel(
 @Composable
 private fun weekdayShortLabel(isoDay: Int): String {
     val resId = when (isoDay) {
-        1 -> R.string.weekday_1
-        2 -> R.string.weekday_2
-        3 -> R.string.weekday_3
-        4 -> R.string.weekday_4
-        5 -> R.string.weekday_5
-        6 -> R.string.weekday_6
-        else -> R.string.weekday_7
+        1 -> R.string.weekday_short_1
+        2 -> R.string.weekday_short_2
+        3 -> R.string.weekday_short_3
+        4 -> R.string.weekday_short_4
+        5 -> R.string.weekday_short_5
+        6 -> R.string.weekday_short_6
+        else -> R.string.weekday_short_7
     }
-    return stringResource(resId).take(3)
+    return stringResource(resId)
 }

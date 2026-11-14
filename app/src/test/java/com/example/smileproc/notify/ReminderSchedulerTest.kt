@@ -110,4 +110,44 @@ class ReminderSchedulerTest {
 
         assertNull(shadowAlarm.nextScheduledAlarm)
     }
+
+    @Test
+    fun scheduleNextRespectsPauseAndDeterministicFlexibilityWindows() = runTest {
+        val container = SmileProcApplication.container(context)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val shadowAlarm = shadowOf(alarmManager)
+
+        val singleReminder = listOf(Reminder(id = "flex-1", hour = 14, minute = 0, days = (1..7).toSet()))
+        container.settingsRepository.setOnboardingCompleted(true)
+        container.settingsRepository.setReminders(singleReminder)
+        container.settingsRepository.setReminderWindows(mapOf("flex-1" to 30))
+
+        val day = LocalDate.of(2026, 11, 7)
+        val fixedNow = day.atTime(9, 0).atZone(zoneId).toInstant()
+
+        // Indefinite pause cancels all alarms
+        container.settingsRepository.setReminderPause(com.example.smileproc.core.ReminderPause.INDEFINITE)
+        ReminderScheduler.scheduleNext(context, now = fixedNow, zoneId = zoneId)
+        assertNull(shadowAlarm.nextScheduledAlarm)
+
+        // Timed pause (until tomorrow) skips today and schedules for tomorrow's deterministic window
+        container.settingsRepository.setReminderPause(
+            com.example.smileproc.core.ReminderPause.untilTomorrow(fixedNow, zoneId),
+        )
+        ReminderScheduler.scheduleNext(context, now = fixedNow, zoneId = zoneId)
+        val pausedScheduled = shadowAlarm.nextScheduledAlarm
+        assertNotNull(pausedScheduled)
+        val expectedResume = ReminderScheduler.nextReminderInstant(
+            reminders = singleReminder,
+            now = fixedNow,
+            zoneId = zoneId,
+            windowsByReminderId = mapOf("flex-1" to 30),
+            pause = com.example.smileproc.core.ReminderPause.untilTomorrow(fixedNow, zoneId),
+        )!!
+        assertEquals(expectedResume.toEpochMilli(), pausedScheduled!!.triggerAtTime)
+
+        // Reset pause & window state cleanly for sibling tests
+        container.settingsRepository.setReminderPause(com.example.smileproc.core.ReminderPause.NONE)
+        container.settingsRepository.setReminderWindows(emptyMap())
+    }
 }

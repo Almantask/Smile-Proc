@@ -117,6 +117,10 @@ class PlatformLocationClientTest {
         override val weeklyCardTime: Flow<com.example.smileproc.core.WeeklyCardTime> = MutableStateFlow(com.example.smileproc.core.WeeklyCardTime.DEFAULT)
         override val lastSeenWeeklyCardPeriodStart: Flow<Instant?> = MutableStateFlow(null)
         override val appLock: Flow<Boolean> = MutableStateFlow(false)
+        override val reminderWindows: Flow<Map<String, Int>> = MutableStateFlow(emptyMap())
+        override val reminderPause: Flow<com.example.smileproc.core.ReminderPause> =
+            MutableStateFlow(com.example.smileproc.core.ReminderPause.NONE)
+        override val lastNotificationEntry: Flow<Pair<String, Long>?> = MutableStateFlow(null)
 
         override suspend fun setCaptureLocation(enabled: Boolean) { _capture.value = enabled }
         override suspend fun setOnboardingCompleted(completed: Boolean) { _onboarding.value = completed }
@@ -132,6 +136,10 @@ class PlatformLocationClientTest {
         override suspend fun setWeeklyCardTime(time: com.example.smileproc.core.WeeklyCardTime) {}
         override suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?) {}
         override suspend fun setAppLock(enabled: Boolean) {}
+        override suspend fun setReminderWindows(windows: Map<String, Int>) {}
+        override suspend fun setReminderPause(pause: com.example.smileproc.core.ReminderPause) {}
+        override suspend fun setLastNotificationEntry(entryId: String, savedAtEpochMillis: Long) {}
+        override suspend fun clearLastNotificationEntry() {}
         override suspend fun clearAll() {}
     }
 }

@@ -280,6 +280,92 @@ class ExportImportTest {
         assertEquals("b1111111-1111-4111-8111-111111111111", allPlaces[0].id)
     }
 
+    @Test
+    fun roundTripPreservesV2ExtrasCustomTagsPauseAndWindowsAndSupportsV1Imports() = runTest {
+        val sealer1 = FakeManagedSealer()
+        val container1 = createContainer(sealer1, dbName1)
+        val ready1 = container1.initialize() as StorageState.Ready
+        val storage1 = ready1.storage
+
+        val entry = Entry(
+            id = "e2222222-2222-4222-8222-222222222222",
+            createdAt = Instant.parse("2026-10-12T09:00:00Z"),
+            updatedAt = Instant.parse("2026-10-12T09:05:00Z"),
+            timeZoneID = "Europe/Vilnius",
+            mood = Mood.OKAY,
+            tags = listOf("calm.settled"),
+            comment = "Tea break",
+            location = null,
+            source = EntrySource.APP,
+        )
+        storage1.entryRepository.save(entry)
+
+        val customTag = com.example.smileproc.core.CustomTag.create(
+            rawLabel = "Green tea",
+            createdAt = Instant.parse("2026-10-12T09:00:00Z"),
+            id = "custom.tea",
+        )
+        storage1.customTagRepository.save(customTag)
+
+        val extras = com.example.smileproc.core.EntryExtras(
+            entryId = entry.id,
+            contextTags = listOf(com.example.smileproc.core.BuiltInContextTag.REST.id),
+            customTagIds = listOf(customTag.id),
+            bookmarked = true,
+            updatedAt = Instant.parse("2026-10-12T09:06:00Z"),
+        )
+        storage1.entryExtrasRepository.save(extras)
+
+        val pause = com.example.smileproc.core.ReminderPause(
+            pausedUntil = Instant.parse("2026-10-15T00:00:00Z"),
+            pausedIndefinitely = false,
+        )
+        container1.settingsRepository.setReminders(listOf(Reminder("r-tea", 14, 0, setOf(1, 2, 3, 4, 5))))
+        container1.settingsRepository.setReminderWindows(mapOf("r-tea" to 30))
+        container1.settingsRepository.setReminderPause(pause)
+
+        val password = "V2Password123!".toCharArray()
+        val out = ByteArrayOutputStream()
+        ExportImportManager(context, container1).exportToStream(out, password)
+
+        val container2 = createContainer(FakeManagedSealer(), dbName2)
+        container2.initialize()
+        val result = ExportImportManager(context, container2).importFromStream(
+            ByteArrayInputStream(out.toByteArray()),
+            password,
+        )
+        assertEquals(1, result.entriesImported)
+
+        val storage2 = (container2.awaitState() as StorageState.Ready).storage
+        assertEquals(listOf(customTag), storage2.customTagRepository.getAll())
+        assertEquals(extras, storage2.entryExtrasRepository.getByEntryId(entry.id))
+        assertEquals(mapOf("r-tea" to 30), container2.settingsRepository.reminderWindows.first())
+        assertEquals(pause, container2.settingsRepository.reminderPause.first())
+
+        // Verify legacy v1 ExportPayload still imports cleanly into v2 storage.
+        val v1Entry = entry.copy(
+            id = "e3333333-3333-4333-8333-333333333333",
+            comment = "Pure v1 payload",
+        )
+        val v1Payload = ExportImportManager(context, container1).createExportPayload().copy(entries = listOf(v1Entry))
+        val v1Json = com.example.smileproc.core.CanonicalJson.json.encodeToString(
+            com.example.smileproc.core.export.ExportPayload.serializer(),
+            v1Payload,
+        )
+        val v1Envelope = ExportCrypto.encrypt(v1Json, password, iterations = 1000)
+        val v1Bytes = com.example.smileproc.core.CanonicalJson.json.encodeToString(
+            com.example.smileproc.core.export.ExportEnvelope.serializer(),
+            v1Envelope,
+        ).toByteArray(Charsets.UTF_8)
+
+        val v1Result = ExportImportManager(context, container2).importFromStream(
+            ByteArrayInputStream(v1Bytes),
+            password,
+        )
+        assertEquals(1, v1Result.entriesImported)
+        assertNotNull(storage2.entryRepository.getById(v1Entry.id))
+    }
+
     private fun createContainer(sealer: ManagedSealer, dbName: String): AppContainer =
         AppContainer(
             context = context,

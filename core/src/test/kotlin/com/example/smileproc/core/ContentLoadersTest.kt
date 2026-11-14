@@ -76,6 +76,12 @@ class ContentLoadersTest {
         val rendered = library.getValue("stress-at-place").render(place = "Office")
         assertEquals("Stress tends to show up at Office", rendered.title)
         assertTrue(rendered.tip.contains("Office"))
+
+        val libraryLt = PatternLibrary.fromJson(File(TestData.content, "pattern-library.lt.json").readText(Charsets.UTF_8))
+        assertEquals(16, libraryLt.entries.size)
+        val renderedLt = libraryLt.getValue("stress-at-place").render(place = "Biuras")
+        assertTrue(renderedLt.title.contains("Biuras"))
+        assertTrue(renderedLt.tip.contains("Biuras"))
     }
 
     @Test

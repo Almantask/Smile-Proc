@@ -7,6 +7,8 @@ import android.content.Intent
 import com.example.smileproc.SafeLog
 import com.example.smileproc.SmileProcApplication
 import com.example.smileproc.core.Reminder
+import com.example.smileproc.core.ReminderPause
+import com.example.smileproc.core.ReminderScheduleCalculator
 import kotlinx.coroutines.flow.first
 import java.time.Instant
 import java.time.ZoneId
@@ -25,32 +27,15 @@ object ReminderScheduler {
         reminders: List<Reminder>,
         now: Instant,
         zoneId: ZoneId,
-    ): Instant? {
-        if (reminders.isEmpty()) return null
-        val zonedDateTime = now.atZone(zoneId)
-        val today = zonedDateTime.toLocalDate()
-        var earliest: Instant? = null
-
-        for (dayOffset in 0L..7L) {
-            val candidateDate = today.plusDays(dayOffset)
-            val isoWeekday = candidateDate.dayOfWeek.value // 1 (Mon) .. 7 (Sun)
-            for (reminder in reminders) {
-                if (isoWeekday in reminder.days) {
-                    val candidateZdt = candidateDate.atTime(reminder.hour, reminder.minute).atZone(zoneId)
-                    val candidateInstant = candidateZdt.toInstant()
-                    if (candidateInstant.isAfter(now)) {
-                        if (earliest == null || candidateInstant.isBefore(earliest)) {
-                            earliest = candidateInstant
-                        }
-                    }
-                }
-            }
-            if (earliest != null) {
-                break
-            }
-        }
-        return earliest
-    }
+        windowsByReminderId: Map<String, Int> = emptyMap(),
+        pause: ReminderPause = ReminderPause.NONE,
+    ): Instant? = ReminderScheduleCalculator.nextOccurrence(
+        reminders = reminders,
+        now = now,
+        zone = zoneId,
+        windowsByReminderId = windowsByReminderId,
+        pause = pause,
+    )
 
     suspend fun scheduleNext(
         context: Context,
@@ -63,7 +48,15 @@ object ReminderScheduler {
             return
         }
         val reminders = container.settingsRepository.reminders.first()
-        val nextInstant = nextReminderInstant(reminders, now, zoneId)
+        val windows = container.settingsRepository.reminderWindows.first()
+        val pause = container.settingsRepository.reminderPause.first()
+        val nextInstant = nextReminderInstant(
+            reminders = reminders,
+            now = now,
+            zoneId = zoneId,
+            windowsByReminderId = windows,
+            pause = pause,
+        )
         val alarmManager = context.getSystemService(AlarmManager::class.java) ?: return
 
         val intent = Intent(context, ReminderReceiver::class.java).apply {

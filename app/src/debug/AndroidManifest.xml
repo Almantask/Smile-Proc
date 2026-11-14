@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Debug builds only (plan B.11). Exported so adb can reach them, but guarded by DUMP,
      which the adb shell holds and ordinary apps can't get. -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <application>
+        <activity
+            android:name=".debug.DesignPrototypeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.SmileProc"
+            tools:ignore="ExportedActivity" />
         <receiver
             android:name=".debug.ProbeReceiver"
             android:exported="true"

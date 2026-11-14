@@ -1,5 +1,11 @@
 package com.example.smileproc.ui.support
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
@@ -48,10 +54,13 @@ fun SupportDialog(
 ) {
     val context = LocalContext.current
     val contacts = remember(context) { SupportContactsHelper.loadVerifiedContacts(context) }
+    val smileColors = LocalSmileProcColors.current
     val closeLabel = stringResource(R.string.action_close)
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = smileColors.dialogContainer,
+        shape = RoundedCornerShape(28.dp),
         title = {
             Text(
                 text = stringResource(R.string.support_title),
@@ -79,60 +88,67 @@ fun SupportDialog(
 
                 if (contacts.isNotEmpty()) {
                     contacts.forEach { contact ->
-                        Column(
-                            modifier = Modifier.padding(top = 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                        GlassCard(
+                            contentPadding = PaddingValues(14.dp),
                         ) {
-                            Text(
-                                text = contact.name,
-                                style = MaterialTheme.typography.titleSmall,
-                            )
-                            contact.phone?.let { phone ->
-                                val callLabel = stringResource(R.string.support_contact_call, contact.name)
-                                OutlinedButton(
-                                    onClick = {
-                                        try {
-                                            context.startActivity(Intent(Intent.ACTION_DIAL, "tel:$phone".toUri()))
-                                        } catch (_: Exception) {}
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .heightIn(min = 48.dp)
-                                        .semantics { contentDescription = callLabel },
-                                ) {
-                                    Text(callLabel)
+                            Column(
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                Text(
+                                    text = contact.name,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                )
+                                contact.phone?.let { phone ->
+                                    val callLabel = stringResource(R.string.support_contact_call, contact.name)
+                                    OutlinedButton(
+                                        onClick = {
+                                            try {
+                                                context.startActivity(Intent(Intent.ACTION_DIAL, "tel:$phone".toUri()))
+                                            } catch (_: Exception) {}
+                                        },
+                                        shape = CircleShape,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .heightIn(min = 48.dp)
+                                            .semantics { contentDescription = callLabel },
+                                    ) {
+                                        Text(callLabel)
+                                    }
                                 }
-                            }
-                            contact.sms?.let { sms ->
-                                val textLabel = stringResource(R.string.support_contact_text, contact.name)
-                                OutlinedButton(
-                                    onClick = {
-                                        try {
-                                            context.startActivity(Intent(Intent.ACTION_SENDTO, "smsto:$sms".toUri()))
-                                        } catch (_: Exception) {}
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .heightIn(min = 48.dp)
-                                        .semantics { contentDescription = textLabel },
-                                ) {
-                                    Text(textLabel)
+                                contact.sms?.let { sms ->
+                                    val textLabel = stringResource(R.string.support_contact_text, contact.name)
+                                    OutlinedButton(
+                                        onClick = {
+                                            try {
+                                                context.startActivity(Intent(Intent.ACTION_SENDTO, "smsto:$sms".toUri()))
+                                            } catch (_: Exception) {}
+                                        },
+                                        shape = CircleShape,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .heightIn(min = 48.dp)
+                                            .semantics { contentDescription = textLabel },
+                                    ) {
+                                        Text(textLabel)
+                                    }
                                 }
-                            }
-                            contact.url?.let { url ->
-                                val webLabel = stringResource(R.string.support_contact_website, contact.name)
-                                OutlinedButton(
-                                    onClick = {
-                                        try {
-                                            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-                                        } catch (_: Exception) {}
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .heightIn(min = 48.dp)
-                                        .semantics { contentDescription = webLabel },
-                                ) {
-                                    Text(webLabel)
+                                contact.url?.let { url ->
+                                    val webLabel = stringResource(R.string.support_contact_website, contact.name)
+                                    OutlinedButton(
+                                        onClick = {
+                                            try {
+                                                context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+                                            } catch (_: Exception) {}
+                                        },
+                                        shape = CircleShape,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .heightIn(min = 48.dp)
+                                            .semantics { contentDescription = webLabel },
+                                    ) {
+                                        Text(webLabel)
+                                    }
                                 }
                             }
                         }
@@ -143,6 +159,7 @@ fun SupportDialog(
         confirmButton = {
             TextButton(
                 onClick = onDismiss,
+                shape = CircleShape,
                 modifier = Modifier
                     .heightIn(min = 48.dp)
                     .semantics { contentDescription = closeLabel },

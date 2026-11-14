@@ -5,12 +5,14 @@ import com.example.smileproc.AppContainer
 import com.example.smileproc.SafeLog
 import com.example.smileproc.StorageState
 import com.example.smileproc.core.CanonicalJson
+import com.example.smileproc.core.ReminderPause
 import com.example.smileproc.core.export.ExportAppInfo
 import com.example.smileproc.core.export.ExportCrypto
 import com.example.smileproc.core.export.ExportEnvelope
 import com.example.smileproc.core.export.ExportException
 import com.example.smileproc.core.export.ExportPayload
 import com.example.smileproc.core.export.ExportSettings
+import com.example.smileproc.core.export.ExtendedExportPayload
 import com.example.smileproc.notify.ReminderScheduler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -28,19 +30,26 @@ class ExportImportManager(
     private val context: Context,
     private val container: AppContainer,
 ) {
-    suspend fun createExportPayload(): ExportPayload = withContext(Dispatchers.IO) {
+    suspend fun createExportPayload(): ExportPayload =
+        createExtendedExportPayload().toBasePayload()
+
+    suspend fun createExtendedExportPayload(): ExtendedExportPayload = withContext(Dispatchers.IO) {
         val ready = container.awaitState() as StorageState.Ready
         val storage = ready.storage
         val entries = storage.entryRepository.getAllOldestFirst()
         val places = storage.placeRepository.getAll()
+        val entryExtras = storage.entryExtrasRepository.getAll()
+        val customTags = storage.customTagRepository.getAll()
 
         val reminders = container.settingsRepository.reminders.first()
         val keepCheckIn = container.settingsRepository.standing.first()
         val weeklyCard = container.settingsRepository.weeklyCardTime.first()
         val tagPickerMode = container.settingsRepository.tagPickerMode.first()
         val captureLocation = container.settingsRepository.captureLocation.first()
+        val reminderWindows = container.settingsRepository.reminderWindows.first()
+        val reminderPause = container.settingsRepository.reminderPause.first()
 
-        ExportPayload(
+        ExtendedExportPayload(
             exportedAt = Instant.now().toString(),
             app = ExportAppInfo(platform = "android", version = "1.0.0"),
             entries = entries,
@@ -52,6 +61,10 @@ class ExportImportManager(
                 tagPickerMode = tagPickerMode.storageValue,
                 captureLocation = captureLocation,
             ),
+            entryExtras = entryExtras,
+            customTags = customTags,
+            reminderWindows = reminderWindows,
+            reminderPause = reminderPause,
         )
     }
 
@@ -60,8 +73,8 @@ class ExportImportManager(
         password: CharArray,
     ) = withContext(Dispatchers.IO) {
         try {
-            val payload = createExportPayload()
-            val plaintextJson = CanonicalJson.json.encodeToString(ExportPayload.serializer(), payload)
+            val payload = createExtendedExportPayload()
+            val plaintextJson = ExtendedExportPayload.encodeToString(payload)
             val envelope = ExportCrypto.encrypt(plaintextJson, password)
             val envelopeJson = CanonicalJson.json.encodeToString(ExportEnvelope.serializer(), envelope)
             outputStream.bufferedWriter(Charsets.UTF_8).use {
@@ -88,7 +101,7 @@ class ExportImportManager(
 
             val plaintextJson = ExportCrypto.decrypt(envelope, password)
             val payload = try {
-                CanonicalJson.json.decodeFromString(ExportPayload.serializer(), plaintextJson)
+                ExtendedExportPayload.decodeFromString(plaintextJson)
             } catch (e: Exception) {
                 throw ExportException(ExportException.Reason.INVALID_PAYLOAD, e)
             }
@@ -114,18 +127,34 @@ class ExportImportManager(
                 }
             }
 
+            for (customTag in payload.customTags) {
+                val existing = storage.customTagRepository.getById(customTag.id)
+                if (existing == null || customTag.createdAt.isAfter(existing.createdAt)) {
+                    storage.customTagRepository.save(customTag)
+                }
+            }
+
+            for (extras in payload.entryExtras) {
+                val existing = storage.entryExtrasRepository.getByEntryId(extras.entryId)
+                if (existing == null || extras.updatedAt.isAfter(existing.updatedAt)) {
+                    storage.entryExtrasRepository.save(extras)
+                }
+            }
+
             // Restore settings
             container.settingsRepository.setReminders(payload.settings.reminders)
             container.settingsRepository.setStanding(payload.settings.keepCheckIn)
             container.settingsRepository.setWeeklyCardTime(payload.settings.weeklyCard)
             container.settingsRepository.setTagPickerMode(TagPickerMode.fromStorage(payload.settings.tagPickerMode))
             container.settingsRepository.setCaptureLocation(payload.settings.captureLocation)
+            container.settingsRepository.setReminderWindows(payload.reminderWindows)
+            container.settingsRepository.setReminderPause(payload.reminderPause)
 
             // Weekly cards are rebuilt after import per docs/spec/android.md:102
             storage.weeklyCardRepository.deleteAll()
             container.settingsRepository.setLastSeenWeeklyCardPeriodStart(null)
 
-            // Reschedule reminder alarm with restored reminders
+            // Reschedule reminder alarm with restored reminders, flexibility windows, and pause state
             ReminderScheduler.scheduleNext(context)
 
             SafeLog.event(SafeLog.Event.IMPORT_RESTORED)

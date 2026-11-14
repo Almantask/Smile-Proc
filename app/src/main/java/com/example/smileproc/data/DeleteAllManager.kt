@@ -34,10 +34,13 @@ object DeleteAllManager {
                 state.storage.entryRepository.deleteAll()
                 state.storage.placeRepository.deleteAll()
                 state.storage.weeklyCardRepository.deleteAll()
+                state.storage.entryExtrasRepository.deleteAll()
+                state.storage.customTagRepository.deleteAll()
             }
 
-            // 4. Clear DataStore preferences
+            // 4. Clear DataStore preferences and per-app locale preference
             container.settingsRepository.clearAll()
+            com.example.smileproc.AppLocale.reset(context)
 
             // 5. Reset AppLock in memory. The person is here, so don't re-arm the launch lock:
             // onboarding turning App lock on must not lock them out seconds later (QA H-1).

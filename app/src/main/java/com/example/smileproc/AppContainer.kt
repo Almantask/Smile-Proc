@@ -11,6 +11,8 @@ import com.example.smileproc.data.PlaceRepository
 import com.example.smileproc.data.SettingsRepository
 import com.example.smileproc.data.StorageLifetime
 import com.example.smileproc.data.WeeklyCardRepository
+import com.example.smileproc.data.EntryExtrasRepository
+import com.example.smileproc.data.CustomTagRepository
 import com.example.smileproc.data.db.SmileProcDatabase
 import com.example.smileproc.data.settingsDataStore
 import com.example.smileproc.location.LocationClient
@@ -36,6 +38,8 @@ class StorageBundle(
     val entryRepository: EntryRepository,
     val placeRepository: PlaceRepository,
     val weeklyCardRepository: WeeklyCardRepository,
+    val entryExtrasRepository: EntryExtrasRepository,
+    val customTagRepository: CustomTagRepository,
     private val lifetime: StorageLifetime = StorageLifetime(),
 ) {
     /** Retire this bundle: its flows end quietly from now on, then the database closes. */
@@ -134,6 +138,8 @@ class AppContainer(
             val bundle = buildBundle(db)
             db.entryDao().peekOne()?.let { bundle.entryRepository.getById(it.id) }
             db.placeDao().peekOne()?.let { bundle.placeRepository.getById(it.id) }
+            db.entryExtrasDao().peekOne()?.let { bundle.entryExtrasRepository.getByEntryId(it.entryId) }
+            db.customTagDao().peekOne()?.let { bundle.customTagRepository.getById(it.id) }
             verifyOrClearCachedWeeklyCards(db, bundle)
             val ready = StorageState.Ready(bundle)
             _storageState.value = ready
@@ -249,6 +255,8 @@ class AppContainer(
             entryRepository = EntryRepository(db.entryDao(), sealer, lifetime),
             placeRepository = PlaceRepository(db.placeDao(), sealer, lifetime),
             weeklyCardRepository = WeeklyCardRepository(db.weeklyCardDao(), sealer, lifetime),
+            entryExtrasRepository = EntryExtrasRepository(db.entryExtrasDao(), sealer, lifetime),
+            customTagRepository = CustomTagRepository(db.customTagDao(), sealer, lifetime),
             lifetime = lifetime,
         )
     }

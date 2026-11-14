@@ -1,5 +1,10 @@
 package com.example.smileproc.ui.tags
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.InputChipDefaults
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import android.content.Context
 import android.view.accessibility.AccessibilityManager
 import androidx.compose.foundation.horizontalScroll
@@ -63,6 +68,7 @@ fun TagPicker(
     catalog: EmotionTags = EmotionTagsCatalog.get(LocalContext.current),
 ) {
     val context = LocalContext.current
+    val smileColors = LocalSmileProcColors.current
     var selectedCoreId by rememberSaveable { mutableStateOf<String?>(null) }
     var focusedCoreInDetailed by rememberSaveable { mutableStateOf<String?>(null) }
     var preferListInDetailed by rememberSaveable { mutableStateOf(false) }
@@ -97,10 +103,27 @@ fun TagPicker(
                 selectedTags.forEach { tagId ->
                     val label = context.resolveTagLabel(tagId)
                     val removeCd = stringResource(R.string.tags_remove_cd, label)
+                    val coreColor = resolveTagCoreColor(catalog, tagId)
+                    val tagColors = coreColor?.let {
+                        coreTagChipColors(it, isDark = smileColors.isDark, emphasized = true)
+                    }
                     InputChip(
                         selected = true,
                         onClick = { onTagsChanged(selectedTags - tagId) },
                         label = { Text(label) },
+                        shape = CircleShape,
+                        colors = InputChipDefaults.inputChipColors(
+                            selectedContainerColor = tagColors?.container ?: MaterialTheme.colorScheme.primaryContainer,
+                            selectedLabelColor = tagColors?.content ?: MaterialTheme.colorScheme.onPrimaryContainer,
+                            selectedTrailingIconColor = tagColors?.content ?: MaterialTheme.colorScheme.onPrimaryContainer,
+                        ),
+                        border = tagColors?.let {
+                            InputChipDefaults.inputChipBorder(
+                                enabled = true,
+                                selected = true,
+                                selectedBorderColor = it.border,
+                            )
+                        },
                         trailingIcon = {
                             Icon(
                                 painter = painterResource(R.drawable.ic_close),
@@ -203,10 +226,24 @@ fun TagPicker(
                     catalog.cores.forEach { core ->
                         val coreLabel = context.resolveTagLabel(core.id)
                         val isCoreSelected = core.id in selectedTags
+                        val coreColor = parseCoreColor(core.color)
+                        val chipColors = coreTagChipColors(coreColor, isDark = smileColors.isDark, emphasized = true)
                         FilterChip(
                             selected = isCoreSelected,
                             onClick = { selectedCoreId = core.id },
                             label = { Text(coreLabel) },
+                            shape = CircleShape,
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = coreColor.copy(alpha = if (smileColors.isDark) 0.14f else 0.20f),
+                                selectedContainerColor = chipColors.container,
+                                selectedLabelColor = chipColors.content,
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isCoreSelected,
+                                borderColor = coreColor.copy(alpha = 0.42f),
+                                selectedBorderColor = chipColors.border,
+                            ),
                             modifier = Modifier.heightIn(min = 48.dp),
                         )
                     }
@@ -256,6 +293,8 @@ fun TagPicker(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     val coreLabel = context.resolveTagLabel(activeCore.id)
+                    val activeCoreColor = parseCoreColor(activeCore.color)
+                    val activePalette = coreTagChipColors(activeCoreColor, isDark = smileColors.isDark, emphasized = true)
                     val justCoreLabel = stringResource(R.string.tags_just_core, coreLabel)
                     val isJustCoreSelected = activeCore.id in selectedTags
 
@@ -263,6 +302,18 @@ fun TagPicker(
                         selected = isJustCoreSelected,
                         onClick = { toggleTag(activeCore.id) },
                         label = { Text(justCoreLabel) },
+                        shape = CircleShape,
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = smileColors.chipFill,
+                            selectedContainerColor = activePalette.container,
+                            selectedLabelColor = activePalette.content,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = isJustCoreSelected,
+                            borderColor = smileColors.chipBorder,
+                            selectedBorderColor = activePalette.border,
+                        ),
                         modifier = Modifier.heightIn(min = 48.dp),
                     )
 
@@ -274,6 +325,18 @@ fun TagPicker(
                             selected = isFineSelected,
                             onClick = { toggleTag(fineId) },
                             label = { Text(fineLabel) },
+                            shape = CircleShape,
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = smileColors.chipFill,
+                                selectedContainerColor = activePalette.container,
+                                selectedLabelColor = activePalette.content,
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isFineSelected,
+                                borderColor = smileColors.chipBorder,
+                                selectedBorderColor = activePalette.border,
+                            ),
                             modifier = Modifier.heightIn(min = 48.dp),
                         )
                     }
@@ -321,16 +384,41 @@ fun TagPicker(
                         selected = focusedCoreInDetailed == null,
                         onClick = { focusedCoreInDetailed = null },
                         label = { Text(stringResource(R.string.tags_all_feelings)) },
+                        shape = CircleShape,
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = smileColors.chipFill,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = focusedCoreInDetailed == null,
+                            borderColor = smileColors.chipBorder,
+                        ),
                         modifier = Modifier.heightIn(min = 48.dp),
                     )
                     catalog.cores.forEach { core ->
                         val coreLabel = context.resolveTagLabel(core.id)
+                        val isFocused = focusedCoreInDetailed == core.id
+                        val coreColor = parseCoreColor(core.color)
+                        val focusedChipColors = coreTagChipColors(coreColor, isDark = smileColors.isDark, emphasized = true)
                         FilterChip(
-                            selected = focusedCoreInDetailed == core.id,
+                            selected = isFocused,
                             onClick = {
                                 focusedCoreInDetailed = if (focusedCoreInDetailed == core.id) null else core.id
                             },
                             label = { Text(coreLabel) },
+                            shape = CircleShape,
+                            colors = FilterChipDefaults.filterChipColors(
+                                containerColor = coreColor.copy(alpha = if (smileColors.isDark) 0.14f else 0.20f),
+                                selectedContainerColor = focusedChipColors.container,
+                                selectedLabelColor = focusedChipColors.content,
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = isFocused,
+                                borderColor = coreColor.copy(alpha = 0.42f),
+                                selectedBorderColor = focusedChipColors.border,
+                            ),
                             modifier = Modifier.heightIn(min = 48.dp),
                         )
                     }

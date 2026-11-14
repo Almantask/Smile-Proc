@@ -1,5 +1,7 @@
 package com.example.smileproc.ui.tags
 
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import android.graphics.Paint
 import android.graphics.Typeface
 import androidx.compose.foundation.Canvas
@@ -14,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -170,10 +173,11 @@ fun EmotionWheel(
     val backLabel = stringResource(R.string.action_back)
     val density = LocalDensity.current
 
-    val surfaceColor = MaterialTheme.colorScheme.surface
+    val smileColors = LocalSmileProcColors.current
+    val surfaceColor = smileColors.sheetContainer
     val onSurfaceColor = MaterialTheme.colorScheme.onSurface
-    val strokeColor = surfaceColor.copy(alpha = 0.92f)
-    val highlightStrokeColor = MaterialTheme.colorScheme.primary
+    val strokeColor = surfaceColor.copy(alpha = 0.94f)
+    val highlightStrokeColor = smileColors.wheelSelectionStroke
 
     BoxWithConstraints(
         modifier = modifier.fillMaxWidth(),
@@ -240,6 +244,17 @@ fun EmotionWheel(
 
             val dividerWidthPx = with(density) { if (focusedCoreId != null || coreOnly) 1.5.dp.toPx() else 0.9.dp.toPx() }
             val highlightWidthPx = with(density) { 2.8.dp.toPx() }
+
+            // Soft aurora glow behind the wheel
+            drawCircle(
+                brush = Brush.radialGradient(
+                    colors = listOf(smileColors.brandAccent.copy(alpha = 0.20f), Color.Transparent),
+                    center = center,
+                    radius = radiusPx * 1.12f,
+                ),
+                radius = radiusPx * 1.12f,
+                center = center,
+            )
 
             activeCores.forEachIndexed { i, core ->
                 val startAngle = EmotionWheelMath.START_ANGLE_DEG + (i * coreSweep)
@@ -441,10 +456,10 @@ fun EmotionWheel(
                 center = center,
             )
             drawCircle(
-                color = strokeColor,
+                color = smileColors.brandAccent.copy(alpha = 0.55f),
                 radius = holeRadiusPx,
                 center = center,
-                style = Stroke(width = dividerWidthPx),
+                style = Stroke(width = 1.5.dp.toPx()),
             )
 
             if (onCenterHoleClick != null) {

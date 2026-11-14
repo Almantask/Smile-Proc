@@ -1,5 +1,6 @@
 package com.example.smileproc
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -8,17 +9,22 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +35,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -47,17 +57,27 @@ import com.example.smileproc.notify.ReminderScheduler
 import com.example.smileproc.security.AppLockManager
 import com.example.smileproc.ui.MainApp
 import com.example.smileproc.ui.RecoveryScreen
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.SmileProcBackground
 import com.example.smileproc.ui.onboarding.OnboardingScreen
 import com.example.smileproc.ui.settings.ImportPasswordDialog
+import com.example.smileproc.ui.theme.LocalSmileProcColors
 import com.example.smileproc.ui.theme.SmileProcTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : FragmentActivity() {
     private var appLockEnabled: Boolean = false
+    private var pendingNotificationFollowUp by mutableStateOf(false)
+
+    override fun attachBaseContext(newBase: android.content.Context) {
+        super.attachBaseContext(AppLocale.wrapContext(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        pendingNotificationFollowUp =
+            intent?.getBooleanExtra(CheckInNotifier.EXTRA_OPEN_FOLLOWUP, false) == true
         val container = SmileProcApplication.container(this)
         AppLockManager.init(this)
 
@@ -83,24 +103,29 @@ class MainActivity : FragmentActivity() {
             }
 
             SmileProcTheme {
-                if (appLockSetting == null) {
-                    // Don't show any history before we know whether App lock is on.
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background,
-                    ) {}
-                } else if (appLockSetting == true && isLocked && storageState is StorageState.Ready && onboardingCompleted == true) {
-                    AppLockScreen(
-                        onUnlock = { AppLockManager.promptUnlock(this@MainActivity) },
+                val readyState = storageState as? StorageState.Ready
+                val isUnlockedOrLockOff = appLockSetting != null && !(appLockSetting == true && isLocked)
+                if (readyState != null && onboardingCompleted == true && isUnlockedOrLockOff) {
+                    MainApp(
+                        container = container,
+                        storage = readyState.storage,
+                        openNotificationFollowUp = pendingNotificationFollowUp,
+                        onNotificationFollowUpHandled = { pendingNotificationFollowUp = false },
                     )
                 } else {
-                    when (val state = storageState) {
-                        StorageState.Loading -> {
-                            Surface(
-                                modifier = Modifier.fillMaxSize(),
-                                color = MaterialTheme.colorScheme.background,
-                            ) {}
-                        }
+                SmileProcBackground {
+                    if (appLockSetting == null) {
+                        // Don't show any history before we know whether App lock is on.
+                        Box(modifier = Modifier.fillMaxSize())
+                    } else if (appLockSetting == true && isLocked && storageState is StorageState.Ready && onboardingCompleted == true) {
+                        AppLockScreen(
+                            onUnlock = { AppLockManager.promptUnlock(this@MainActivity) },
+                        )
+                    } else {
+                        when (val state = storageState) {
+                            StorageState.Loading -> {
+                                Box(modifier = Modifier.fillMaxSize())
+                            }
                         StorageState.NeedsRecovery -> {
                             var showImportPasswordDialog by rememberSaveable { mutableStateOf(false) }
                             var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
@@ -157,7 +182,7 @@ class MainActivity : FragmentActivity() {
 
                                                 val plaintextJson = ExportCrypto.decrypt(envelope, password)
                                                 val payload = try {
-                                                    CanonicalJson.json.decodeFromString(ExportPayload.serializer(), plaintextJson)
+                                                    com.example.smileproc.core.export.ExtendedExportPayload.decodeFromString(plaintextJson)
                                                 } catch (e: Exception) {
                                                     throw ExportException(ExportException.Reason.INVALID_PAYLOAD, e)
                                                 }
@@ -166,11 +191,15 @@ class MainActivity : FragmentActivity() {
                                                 if (freshState is StorageState.Ready) {
                                                     freshState.storage.entryRepository.saveAll(payload.entries)
                                                     payload.places.forEach { freshState.storage.placeRepository.save(it) }
+                                                    freshState.storage.customTagRepository.saveAll(payload.customTags)
+                                                    freshState.storage.entryExtrasRepository.saveAll(payload.entryExtras)
                                                     container.settingsRepository.setReminders(payload.settings.reminders)
                                                     container.settingsRepository.setStanding(payload.settings.keepCheckIn)
                                                     container.settingsRepository.setWeeklyCardTime(payload.settings.weeklyCard)
                                                     container.settingsRepository.setTagPickerMode(TagPickerMode.fromStorage(payload.settings.tagPickerMode))
                                                     container.settingsRepository.setCaptureLocation(payload.settings.captureLocation)
+                                                    container.settingsRepository.setReminderWindows(payload.reminderWindows)
+                                                    container.settingsRepository.setReminderPause(payload.reminderPause)
                                                     container.settingsRepository.setOnboardingCompleted(true)
                                                     ReminderScheduler.scheduleNext(this@MainActivity)
                                                     SafeLog.event(SafeLog.Event.IMPORT_RESTORED)
@@ -196,10 +225,7 @@ class MainActivity : FragmentActivity() {
                         is StorageState.Ready -> {
                             when (onboardingCompleted) {
                                 null -> {
-                                    Surface(
-                                        modifier = Modifier.fillMaxSize(),
-                                        color = MaterialTheme.colorScheme.background,
-                                    ) {}
+                                    Box(modifier = Modifier.fillMaxSize())
                                 }
                                 false -> {
                                     OnboardingScreen(
@@ -220,17 +246,22 @@ class MainActivity : FragmentActivity() {
                                         },
                                     )
                                 }
-                                true -> {
-                                    MainApp(
-                                        container = container,
-                                        storage = state.storage,
-                                    )
-                                }
+                                true -> {}
                             }
                         }
                     }
+                    }
+                }
                 }
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (intent.getBooleanExtra(CheckInNotifier.EXTRA_OPEN_FOLLOWUP, false)) {
+            pendingNotificationFollowUp = true
         }
     }
 
@@ -259,36 +290,66 @@ private fun AppLockScreen(
     onUnlock: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
+    val colors = LocalSmileProcColors.current
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .safeDrawingPadding()
+            .padding(24.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        GlassCard(
+            modifier = Modifier.widthIn(max = 420.dp),
+            highlighted = true,
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_lock),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = stringResource(R.string.app_lock_locked_title),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Button(
-                onClick = onUnlock,
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 48.dp),
+                    .padding(vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(stringResource(R.string.app_lock_unlock))
+                Box(
+                    modifier = Modifier
+                        .size(72.dp)
+                        .drawBehind {
+                            drawCircle(
+                                brush = Brush.radialGradient(
+                                    colors = listOf(colors.navActiveGlow, Color.Transparent),
+                                    center = center,
+                                    radius = size.maxDimension * 0.72f,
+                                ),
+                                radius = size.maxDimension * 0.72f,
+                                center = center,
+                            )
+                        }
+                        .clip(CircleShape)
+                        .background(colors.navActivePill, CircleShape)
+                        .border(1.dp, colors.navActiveBorder, CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_lock),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp),
+                        tint = colors.navActiveContent,
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.app_lock_locked_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Button(
+                    onClick = onUnlock,
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 50.dp),
+                ) {
+                    Text(stringResource(R.string.app_lock_unlock))
+                }
             }
         }
     }

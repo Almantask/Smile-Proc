@@ -103,6 +103,7 @@ class CheckInReceiverTest {
         assertEquals(1, entries.size)
         assertEquals(Mood.GOOD, entries[0].mood)
         assertEquals(EntrySource.NOTIFICATION, entries[0].source)
+        assertEquals(entries[0].id, container.settingsRepository.lastNotificationEntry.first()?.first)
 
         // Notification updated to "Saved ✓", still exactly 1 notification
         assertEquals(1, shadowNotif.allNotifications.size)

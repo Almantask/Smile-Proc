@@ -86,4 +86,94 @@ class StringsContractTest {
         assertEquals("See support options", strings["lowrun_see_support"])
         assertEquals("Not now", strings["action_not_now"])
     }
+
+    @Test
+    fun lithuanianStringsCoverAllTranslatableKeysClrdPluralsAndPlaceholders() {
+        val factory = DocumentBuilderFactory.newInstance()
+        val enDoc = factory.newDocumentBuilder().parse(TestData.strings)
+        val ltFile = java.io.File(TestData.strings.parentFile.parentFile, "values-lt/strings.xml")
+        assertTrue("values-lt/strings.xml must exist at $ltFile", ltFile.exists())
+        val ltDoc = factory.newDocumentBuilder().parse(ltFile)
+
+        data class ResourceData(
+            val strings: Map<String, String>,
+            val nonTranslatableStrings: Set<String>,
+            val plurals: Map<String, Map<String, String>>,
+        )
+
+        fun parse(doc: org.w3c.dom.Document): ResourceData {
+            val strMap = linkedMapOf<String, String>()
+            val nonTranslatable = linkedSetOf<String>()
+            val pluralMap = linkedMapOf<String, Map<String, String>>()
+            val nodes = doc.documentElement.childNodes
+            for (i in 0 until nodes.length) {
+                val node = nodes.item(i) as? Element ?: continue
+                val name = node.getAttribute("name")
+                when (node.tagName) {
+                    "string" -> {
+                        if (node.getAttribute("translatable") == "false") {
+                            nonTranslatable += name
+                        } else {
+                            strMap[name] = unescape(node.textContent)
+                        }
+                    }
+                    "plurals" -> {
+                        val itemsMap = linkedMapOf<String, String>()
+                        val items = node.getElementsByTagName("item")
+                        for (j in 0 until items.length) {
+                            val item = items.item(j) as Element
+                            itemsMap[item.getAttribute("quantity")] = unescape(item.textContent)
+                        }
+                        pluralMap[name] = itemsMap
+                    }
+                }
+            }
+            return ResourceData(strMap, nonTranslatable, pluralMap)
+        }
+
+        val en = parse(enDoc)
+        val lt = parse(ltDoc)
+
+        val missingStrings = en.strings.keys - lt.strings.keys
+        assertEquals("Missing LT translations for <string>", emptySet<String>(), missingStrings)
+
+        val extraLtStrings = lt.strings.keys - en.strings.keys
+        assertEquals("Extra LT <string> keys not in default strings.xml", emptySet<String>(), extraLtStrings)
+
+        val emptyLtStrings = lt.strings.filterValues { it.isBlank() }.keys
+        assertEquals("Blank LT <string> values", emptySet<String>(), emptyLtStrings)
+
+        val missingPlurals = en.plurals.keys - lt.plurals.keys
+        assertEquals("Missing LT translations for <plurals>", emptySet<String>(), missingPlurals)
+
+        val extraLtPlurals = lt.plurals.keys - en.plurals.keys
+        assertEquals("Extra LT <plurals> keys not in default strings.xml", emptySet<String>(), extraLtPlurals)
+
+        val requiredLtQuantities = setOf("one", "few", "many", "other")
+        val formatRegex = Regex("%\\d+\\$[\\d.]*[sd]")
+
+        for ((name, enText) in en.strings) {
+            val ltText = lt.strings.getValue(name)
+            val enArgs = formatRegex.findAll(enText).map { it.value }.toSet()
+            val ltArgs = formatRegex.findAll(ltText).map { it.value }.toSet()
+            assertEquals("Format arguments mismatch for <string name=\"$name\">", enArgs, ltArgs)
+        }
+
+        for ((name, enForms) in en.plurals) {
+            val ltForms = lt.plurals.getValue(name)
+            assertEquals("CLDR Lithuanian plural quantities for $name", requiredLtQuantities, ltForms.keys)
+            val enArgs = formatRegex.findAll(enForms.getValue("other")).map { it.value }.toSet()
+            for ((qty, ltText) in ltForms) {
+                assertTrue("$name[$qty] must not be blank", ltText.isNotBlank())
+                val ltArgs = formatRegex.findAll(ltText).map { it.value }.toSet()
+                assertEquals("Format arguments mismatch for $name[$qty]", enArgs, ltArgs)
+            }
+        }
+
+        for (day in 1..7) {
+            assertTrue("weekday_short_$day in EN", "weekday_short_$day" in en.strings)
+            assertTrue("weekday_short_$day in LT", "weekday_short_$day" in lt.strings)
+        }
+        assertTrue("week_hour_24 in EN", "week_hour_24" in (en.strings.keys + en.nonTranslatableStrings))
+    }
 }

@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="hello_body">Tai „SmileProc“ pradžia.</string>
+
+    <!-- Common -->
+    <string name="action_cancel">Atšaukti</string>
+    <string name="action_ok">Gerai</string>
+    <string name="action_save">Išsaugoti</string>
+    <string name="action_done">Atlikta</string>
+    <string name="action_next">Toliau</string>
+    <string name="action_skip">Praleisti</string>
+    <string name="action_back">Atgal</string>
+    <string name="action_close">Uždaryti</string>
+    <string name="action_delete">Ištrinti</string>
+    <string name="action_try_again">Bandyti dar kartą</string>
+    <string name="action_open_settings">Atidaryti nustatymus</string>
+    <string name="action_not_now">Ne dabar</string>
+    <string name="action_yes">Taip</string>
+    <string name="action_no">Ne</string>
+
+    <!-- Faces: 1 = Low, 2 = Okay, 3 = Good. Every face is a valid answer. -->
+    <string name="face_low">Prastai</string>
+    <string name="face_okay">Normaliai</string>
+    <string name="face_good">Gerai</string>
+
+    <!-- The one check-in notification. Its text is only ever one of the four below. -->
+    <string name="notification_channel_name">Savijautos žymėjimas</string>
+    <string name="notification_channel_description">Priminimai pasižymėti ir žymėjimasis užrakinimo ekrane.</string>
+    <string name="notification_text_ask">Kaip jautiesi dabar?</string>
+    <string name="notification_text_saved">Išsaugota ✓</string>
+    <string name="notification_text_test_done">Veikia ✓</string>
+    <string name="notification_text_failed">Nepavyko išsaugoti. Atidaryk „SmileProc“.</string>
+
+    <!-- Navigation -->
+    <string name="tab_today">Šiandien</string>
+    <string name="tab_week">Savaitė</string>
+    <string name="tab_settings">Nustatymai</string>
+
+    <!-- Today -->
+    <string name="today_question">Kaip jautiesi dabar?</string>
+    <string name="today_saved_header">Išsaugota</string>
+    <string name="today_followup_hint">Jei nori, pridėk jausmą arba pastabą.</string>
+    <string name="today_comment_label">Pastaba</string>
+    <string name="today_comment_hint">Ką norėtum prisiminti apie šią akimirką</string>
+    <string name="today_entries_title">Šiandien</string>
+    <string name="today_entries_empty">Šiandienos įrašai bus rodomi čia.</string>
+    <string name="today_all_entries">Visi įrašai</string>
+    <string name="today_save_failed">Nepavyko išsaugoti. Bandyk dar kartą.</string>
+
+    <!-- Low-run card on Today -->
+    <string name="lowrun_text">Pastarieji keli tavo įrašai buvo prasti. Jei padėtų, pokalbis su kuo nors gali tai palengvinti.</string>
+    <string name="lowrun_see_support">Peržiūrėti pagalbos galimybes</string>
+
+    <!-- Tag pickers -->
+    <string name="tags_mode_gradual">Palaipsniui</string>
+    <string name="tags_mode_detailed">Išsamiai</string>
+    <string name="tags_mode_switch_cd">Perjungti tarp palaipsnio ir išsamaus jausmų pasirinkimo</string>
+    <string name="tags_step_core">Kas arčiausiai?</string>
+    <string name="tags_just_core">Tiesiog %1$s</string>
+    <string name="tags_limit">Gali pasirinkti iki 3.</string>
+    <string name="tags_remove_cd">Pašalinti %1$s</string>
+    <string name="tags_wheel_cd">Jausmų ratas</string>
+    <string name="tags_list_title">Jausmai</string>
+    <string name="tags_all_feelings">Visi jausmai</string>
+
+    <!-- Tag labels: tag_<core> and tag_<core>_<fine> (ids in content/emotion-tags.json) -->
+    <string name="tag_happy">Laimingas</string>
+    <string name="tag_happy_joyful">Džiaugsmingas</string>
+    <string name="tag_happy_grateful">Dėkingas</string>
+    <string name="tag_happy_proud">Išdidus</string>
+    <string name="tag_happy_hopeful">Viltingas</string>
+    <string name="tag_happy_excited">Pakylėtas</string>
+    <string name="tag_happy_cheerful">Linksmas</string>
+    <string name="tag_happy_playful">Žaismingas</string>
+    <string name="tag_happy_relaxed">Nerūpestingas</string>
+    <string name="tag_happy_interested">Susidomėjęs</string>
+    <string name="tag_happy_curious">Suintriguotas</string>
+    <string name="tag_happy_inquisitive">Smalsaujantis</string>
+    <string name="tag_happy_successful">Sėkmingas</string>
+    <string name="tag_happy_confident">Pasitikintis</string>
+    <string name="tag_happy_accepted">Priimtas</string>
+    <string name="tag_happy_respected">Gerbiamas</string>
+    <string name="tag_happy_valued">Vertinamas</string>
+    <string name="tag_happy_powerful">Stiprus</string>
+    <string name="tag_happy_courageous">Drąsus</string>
+    <string name="tag_happy_creative">Kūrybiškas</string>
+    <string name="tag_happy_optimistic">Optimistiškas</string>
+    <string name="tag_happy_inspired">Įkvėptas</string>
+
+    <string name="tag_calm">Ramus</string>
+    <string name="tag_calm_relaxed">Atsipalaidavęs</string>
+    <string name="tag_calm_content">Patenkintas</string>
+    <string name="tag_calm_peaceful">Taikus</string>
+    <string name="tag_calm_focused">Susikaupęs</string>
+    <string name="tag_calm_safe">Saugus</string>
+    <string name="tag_calm_free">Laisvas</string>
+    <string name="tag_calm_joyful">Palaimingas</string>
+    <string name="tag_calm_loving">Mylintis</string>
+    <string name="tag_calm_thankful">Dėkingas</string>
+    <string name="tag_calm_trusting">Pasitikintis kitu</string>
+    <string name="tag_calm_sensitive">Jautrus</string>
+    <string name="tag_calm_intimate">Švelnus</string>
+
+    <string name="tag_sad">Liūdnas</string>
+    <string name="tag_sad_down">Prislėgtas</string>
+    <string name="tag_sad_lonely">Vienišas</string>
+    <string name="tag_sad_disappointed">Nusivylęs</string>
+    <string name="tag_sad_hurt">Įskaudintas</string>
+    <string name="tag_sad_nostalgic">Nostalgiškas</string>
+    <string name="tag_sad_embarrassed">Susigėdęs</string>
+    <string name="tag_sad_inferior">Menkesnis</string>
+    <string name="tag_sad_empty">Tuščias</string>
+    <string name="tag_sad_guilty">Kaltas</string>
+    <string name="tag_sad_remorseful">Graužiantis save</string>
+    <string name="tag_sad_ashamed">Sugėdintas</string>
+    <string name="tag_sad_despair">Nevilties apimtas</string>
+    <string name="tag_sad_powerless">Bejėgis</string>
+    <string name="tag_sad_grief">Gedintis</string>
+    <string name="tag_sad_vulnerable">Pažeidžiamas</string>
+    <string name="tag_sad_fragile">Trapus</string>
+    <string name="tag_sad_victimized">Nuskriaustas</string>
+    <string name="tag_sad_abandoned">Paliktas</string>
+    <string name="tag_sad_ignored">Ignoruojamas</string>
+
+    <string name="tag_anxious">Neramus</string>
+    <string name="tag_anxious_stressed">Įsitempęs</string>
+    <string name="tag_anxious_worried">Susirūpinęs</string>
+    <string name="tag_anxious_overwhelmed">Prislėgtas rūpesčių</string>
+    <string name="tag_anxious_nervous">Nervingas</string>
+    <string name="tag_anxious_insecure">Nesaugus</string>
+    <string name="tag_anxious_scared">Išsigandęs</string>
+    <string name="tag_anxious_helpless">Bepagalbis</string>
+    <string name="tag_anxious_frightened">Pabūgęs</string>
+    <string name="tag_anxious_uneasy">Nerimastingas</string>
+    <string name="tag_anxious_inadequate">Nepakankamas</string>
+    <string name="tag_anxious_inferior">Menkavertis</string>
+    <string name="tag_anxious_weak">Silpnas</string>
+    <string name="tag_anxious_worthless">Nereikšmingas</string>
+    <string name="tag_anxious_insignificant">Menkas</string>
+    <string name="tag_anxious_rejected">Atstumtas</string>
+    <string name="tag_anxious_excluded">Atribotas</string>
+    <string name="tag_anxious_persecuted">Persekiojamas</string>
+    <string name="tag_anxious_threatened">Grėsmės apimtas</string>
+    <string name="tag_anxious_unsafe">Nesaugiai besijaučiantis</string>
+
+    <string name="tag_angry">Piktas</string>
+    <string name="tag_angry_frustrated">Suirzęs</string>
+    <string name="tag_angry_irritated">Suerzintas</string>
+    <string name="tag_angry_resentful">Apmaudingas</string>
+    <string name="tag_angry_jealous">Pavydus</string>
+    <string name="tag_angry_impatient">Nekantrus</string>
+    <string name="tag_angry_let_down">Nuviltas</string>
+    <string name="tag_angry_betrayed">Išduotas</string>
+    <string name="tag_angry_humiliated">Pažemintas</string>
+    <string name="tag_angry_disrespected">Nepagerbtas</string>
+    <string name="tag_angry_belittled">Sumenkintas</string>
+    <string name="tag_angry_bitter">Kartėlio apimtas</string>
+    <string name="tag_angry_indignant">Pasipiktinęs</string>
+    <string name="tag_angry_violated">Pažeistas</string>
+    <string name="tag_angry_mad">Įpykęs</string>
+    <string name="tag_angry_furious">Įtūžęs</string>
+    <string name="tag_angry_aggressive">Agresyvus</string>
+    <string name="tag_angry_provoked">Išprovokuotas</string>
+    <string name="tag_angry_hostile">Priešiškas</string>
+    <string name="tag_angry_infuriated">Įsiutęs</string>
+    <string name="tag_angry_distant">Nutolęs</string>
+    <string name="tag_angry_withdrawn">Užsisklendęs</string>
+    <string name="tag_angry_numb">Užsidaręs</string>
+    <string name="tag_angry_critical">Kritiškas</string>
+    <string name="tag_angry_skeptical">Skeptiškas</string>
+    <string name="tag_angry_dismissive">Atmetantis</string>
+
+    <string name="tag_tired">Pavargęs</string>
+    <string name="tag_tired_drained">Išsekęs</string>
+    <string name="tag_tired_sleepy">Mieguistas</string>
+    <string name="tag_tired_bored">Nuobodžiaujantis</string>
+    <string name="tag_tired_unmotivated">Nemotyvuotas</string>
+    <string name="tag_tired_numb">Sustingęs</string>
+    <string name="tag_tired_unfocused">Išsiblaškęs</string>
+    <string name="tag_tired_tense">Įsitempęs</string>
+    <string name="tag_tired_weighed_down">Prislėgtas</string>
+    <string name="tag_tired_out_of_control">Praradęs kontrolę</string>
+    <string name="tag_tired_busy">Užsiėmęs</string>
+    <string name="tag_tired_rushed">Skubantis</string>
+    <string name="tag_tired_pressured">Spaudžiamas</string>
+    <string name="tag_tired_indifferent">Abejingas</string>
+    <string name="tag_tired_apathetic">Apatiškas</string>
+
+    <string name="tag_surprised">Nustebęs</string>
+    <string name="tag_surprised_amazed">Nustebintas</string>
+    <string name="tag_surprised_confused">Sumišęs</string>
+    <string name="tag_surprised_curious">Smalsus</string>
+    <string name="tag_surprised_startled">Krūptelėjęs</string>
+    <string name="tag_surprised_moved">Paliestas</string>
+    <string name="tag_surprised_excited">Sujaudintas</string>
+    <string name="tag_surprised_energetic">Energingas</string>
+    <string name="tag_surprised_eager">Nekantraujantis</string>
+    <string name="tag_surprised_disillusioned">Praradęs iliuzijas</string>
+    <string name="tag_surprised_perplexed">Sutrikęs</string>
+    <string name="tag_surprised_awed">Susižavėjęs</string>
+    <string name="tag_surprised_astonished">Pritrenktas</string>
+    <string name="tag_surprised_shocked">Šokiruotas</string>
+    <string name="tag_surprised_dismayed">Suniuręs</string>
+
+    <string name="tag_disgusted">Pasibjaurėjęs</string>
+    <string name="tag_disgusted_disapproving">Nepritariantis</string>
+    <string name="tag_disgusted_aversion">Pasipriešinimo apimtas</string>
+    <string name="tag_disgusted_hesitant">Dvejojantis</string>
+    <string name="tag_disgusted_awful">Bjauriai besijaučiantis</string>
+    <string name="tag_disgusted_revulsion">Pasibjaurėjimo apimtas</string>
+    <string name="tag_disgusted_nauseated">Šleikštulio apimtas</string>
+    <string name="tag_disgusted_disappointed">Nepatenkintas</string>
+    <string name="tag_disgusted_reluctant">Nenorintis</string>
+    <string name="tag_disgusted_appalled">Pašiurpęs</string>
+    <string name="tag_disgusted_repelled">Atstumtas</string>
+    <string name="tag_disgusted_condemning">Smerkiantis</string>
+    <string name="tag_disgusted_ashamed">Sustingęs iš gėdos</string>
+
+    <!-- Dayparts and weekdays, as used in {segment} and {weekday} -->
+    <string name="daypart_morning">rytas</string>
+    <string name="daypart_afternoon">popietė</string>
+    <string name="daypart_evening">vakaras</string>
+    <string name="daypart_night">naktis</string>
+    <string name="weekday_1">Pirmadienis</string>
+    <string name="weekday_2">Antradienis</string>
+    <string name="weekday_3">Trečiadienis</string>
+    <string name="weekday_4">Ketvirtadienis</string>
+    <string name="weekday_5">Penktadienis</string>
+    <string name="weekday_6">Šeštadienis</string>
+    <string name="weekday_7">Sekmadienis</string>
+    <string name="weekday_short_1">Pr</string>
+    <string name="weekday_short_2">An</string>
+    <string name="weekday_short_3">Tr</string>
+    <string name="weekday_short_4">Kt</string>
+    <string name="weekday_short_5">Pn</string>
+    <string name="weekday_short_6">Št</string>
+    <string name="weekday_short_7">Sk</string>
+
+    <!-- History and entry detail -->
+    <string name="history_title">Visi įrašai</string>
+    <string name="history_empty">Tavo įrašai bus rodomi čia.</string>
+    <string name="history_today">Šiandien</string>
+    <string name="history_yesterday">Vakar</string>
+    <string name="entry_title">Įrašas</string>
+    <string name="entry_mood">Nuotaika</string>
+    <string name="entry_feelings">Jausmai</string>
+    <string name="entry_note">Pastaba</string>
+    <string name="entry_no_location">Be vietos</string>
+    <string name="entry_name_place">Pavadinti šią vietą</string>
+    <string name="entry_delete">Ištrinti įrašą</string>
+    <string name="entry_delete_confirm_title">Ištrinti šį įrašą?</string>
+    <string name="entry_delete_confirm_body">Šio veiksmo negalima atšaukti.</string>
+    <string name="entry_deleted">Įrašas ištrintas</string>
+    <string name="entry_source_app">Išsaugota programėlėje</string>
+    <string name="entry_source_notification">Išsaugota iš pranešimo</string>
+
+    <!-- Places -->
+    <string name="places_title">Vietos</string>
+    <string name="places_empty">Vietos atsiras čia, kai pasižymėsi įjungus vietos nustatymą.</string>
+    <string name="place_kind_home">Namai</string>
+    <string name="place_kind_work">Darbas</string>
+    <string name="place_kind_other">Kita</string>
+    <string name="place_unnamed_title">Neįvardyta vieta</string>
+    <!-- Used for {place} in the weekly card -->
+    <string name="place_unnamed_inline">neįvardyta vieta</string>
+    <string name="place_gone_inline">viena iš tavo vietų</string>
+    <plurals name="place_unnamed_count">
+        <item quantity="one">%1$d įrašas</item>
+        <item quantity="few">%1$d įrašai</item>
+        <item quantity="many">%1$d įrašų</item>
+        <item quantity="other">%1$d įrašų</item>
+    </plurals>
+    <string name="place_unnamed_description">Neįvardyta vieta · %1$s · %2$s</string>
+    <!-- %1$s is one of daypart_*_plural -->
+    <string name="place_mostly_weekday">dažniausiai darbo dienomis %1$s</string>
+    <string name="place_mostly_weekend">dažniausiai savaitgaliais %1$s</string>
+    <string name="daypart_morning_plural">rytais</string>
+    <string name="daypart_afternoon_plural">popietėmis</string>
+    <string name="daypart_evening_plural">vakarais</string>
+    <string name="daypart_night_plural">naktimis</string>
+    <string name="place_name_title">Pavadinti šią vietą</string>
+    <string name="place_name_custom_hint">Kitas pavadinimas</string>
+    <string name="place_name_merge">Ar tai „%1$s“?</string>
+    <string name="places_rename">Pervadinti</string>
+    <string name="places_change_kind">Keisti tipą</string>
+    <string name="places_forget_name">Pamiršti šį pavadinimą</string>
+    <string name="places_forget_name_confirm">Pamiršti pavadinimą „%1$s“? Šios vietos įrašai išliks ir vėl bus rodomi kaip neįvardyta vieta.</string>
+    <string name="places_remove_location">Pašalinti vietą iš visų įrašų</string>
+    <string name="places_remove_location_confirm_title">Pašalinti vietą iš kiekvieno įrašo?</string>
+    <string name="places_remove_location_confirm_body">Tavo nuotaikos, jausmai ir pastabos liks. Vietos ir jų pavadinimai bus ištrinti. Šio veiksmo negalima atšaukti.</string>
+    <string name="places_remove_location_confirm_action">Pašalinti vietą</string>
+
+    <!-- Week -->
+    <string name="week_title">Savaitė</string>
+    <string name="week_day_time_patterns">Dienos ir laiko dėsningumai</string>
+    <string name="week_hour_12am">00:00</string>
+    <string name="week_hour_4am">04:00</string>
+    <string name="week_hour_8am">08:00</string>
+    <string name="week_hour_12pm">12:00</string>
+    <string name="week_hour_4pm">16:00</string>
+    <string name="week_hour_8pm">20:00</string>
+    <string name="week_hour_am">%1$d ryto</string>
+    <string name="week_hour_pm">%1$d vakaro</string>
+    <string name="week_most_checkins_between">Daugiausia įrašų tarp %1$s ir %2$s</string>
+    <string name="week_no_checkins">Šią savaitę įrašų nėra</string>
+    <string name="week_legend_prefix">Įrašai:</string>
+    <string name="week_legend_sad">liūdnas</string>
+    <string name="week_legend_neutral">neutralus</string>
+    <string name="week_legend_happy">laimingas</string>
+    <plurals name="week_days_tracked">
+        <item quantity="one">%1$d sekta diena</item>
+        <item quantity="few">%1$d sektos dienos</item>
+        <item quantity="many">%1$d sektų dienų</item>
+        <item quantity="other">%1$d sektų dienų</item>
+    </plurals>
+    <plurals name="week_checkins_count">
+        <item quantity="one">%1$d įrašas</item>
+        <item quantity="few">%1$d įrašai</item>
+        <item quantity="many">%1$d įrašų</item>
+        <item quantity="other">%1$d įrašų</item>
+    </plurals>
+    <string name="week_summary_footer">%1$s • %2$s</string>
+    <string name="week_plot_cd">Savaitės įrašų grafikas nuo %1$s iki %2$s, įrašų skaičius: %3$d. Brauk kairėn dėl kitos savaitės, brauk dešinėn dėl ankstesnės.</string>
+    <string name="week_previous_action">Ankstesnė savaitė</string>
+    <string name="week_next_action">Kita savaitė</string>
+    <string name="week_first_card">Pirma tavo savaitės kortelė: %1$s.</string>
+    <!-- "Sekmadienis, 19:00" -->
+    <string name="week_card_time">%1$s, %2$s</string>
+    <string name="week_new_card_cd">Nauja savaitės kortelė</string>
+    <string name="week_period">%1$s – %2$s</string>
+    <string name="week_past_cards">Ankstesnės savaitės</string>
+    <string name="week_strip_day_cd">%1$s: Prastai %2$d, Normaliai %3$d, Gerai %4$d</string>
+    <string name="week_early_hint">Ankstyva užuomina</string>
+    <string name="week_name_this_place">Pavadinti šią vietą</string>
+    <string name="week_not_enough_data">Dėsningumams pamatyti reikia dar kelių įrašų.</string>
+    <string name="week_first_week">Dėsningumai išryškėja po dviejų ar trijų savaičių.</string>
+    <string name="week_low_acknowledgment">Ši savaitė atrodė sunki. Verta tai pastebėti, ir tai yra visiškai normalu.</string>
+    <string name="week_low_talk">Pokalbis su žmogumi, kuriuo pasitiki, gali palengvinti.</string>
+    <string name="week_low_talk_action">Pasikalbėti su kuo nors</string>
+    <!-- Observation lines: week_observation_<detector>_<dir>, plurals on the check-in count. Counts only; never raw averages. -->
+    <plurals name="week_observation_timeOfDay_lower">
+        <item quantity="one">Tavo įrašai (%1$s) buvo prastesni nei likusią dienos dalį (%2$d įrašas).</item>
+        <item quantity="few">Tavo įrašai (%1$s) buvo prastesni nei likusią dienos dalį (%2$d įrašai).</item>
+        <item quantity="many">Tavo įrašai (%1$s) buvo prastesni nei likusią dienos dalį (%2$d įrašų).</item>
+        <item quantity="other">Tavo įrašai (%1$s) buvo prastesni nei likusią dienos dalį (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_timeOfDay_higher">
+        <item quantity="one">Tavo įrašai (%1$s) buvo geresni nei likusią dienos dalį (%2$d įrašas).</item>
+        <item quantity="few">Tavo įrašai (%1$s) buvo geresni nei likusią dienos dalį (%2$d įrašai).</item>
+        <item quantity="many">Tavo įrašai (%1$s) buvo geresni nei likusią dienos dalį (%2$d įrašų).</item>
+        <item quantity="other">Tavo įrašai (%1$s) buvo geresni nei likusią dienos dalį (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_weekday_lower">
+        <item quantity="one">Diena (%1$s): tavo įrašai buvo prastesni nei kitomis dienomis (%2$d įrašas).</item>
+        <item quantity="few">Diena (%1$s): tavo įrašai buvo prastesni nei kitomis dienomis (%2$d įrašai).</item>
+        <item quantity="many">Diena (%1$s): tavo įrašai buvo prastesni nei kitomis dienomis (%2$d įrašų).</item>
+        <item quantity="other">Diena (%1$s): tavo įrašai buvo prastesni nei kitomis dienomis (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_weekday_higher">
+        <item quantity="one">Diena (%1$s): tavo įrašai buvo geresni nei kitomis dienomis (%2$d įrašas).</item>
+        <item quantity="few">Diena (%1$s): tavo įrašai buvo geresni nei kitomis dienomis (%2$d įrašai).</item>
+        <item quantity="many">Diena (%1$s): tavo įrašai buvo geresni nei kitomis dienomis (%2$d įrašų).</item>
+        <item quantity="other">Diena (%1$s): tavo įrašai buvo geresni nei kitomis dienomis (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_weekdayDaypart_lower">
+        <item quantity="one">Laikas (%1$s, %2$s): tavo įrašai buvo prastesni nei likusią savaitę (%3$d įrašas).</item>
+        <item quantity="few">Laikas (%1$s, %2$s): tavo įrašai buvo prastesni nei likusią savaitę (%3$d įrašai).</item>
+        <item quantity="many">Laikas (%1$s, %2$s): tavo įrašai buvo prastesni nei likusią savaitę (%3$d įrašų).</item>
+        <item quantity="other">Laikas (%1$s, %2$s): tavo įrašai buvo prastesni nei likusią savaitę (%3$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_weekdayDaypart_higher">
+        <item quantity="one">Laikas (%1$s, %2$s): tavo įrašai buvo geresni nei likusią savaitę (%3$d įrašas).</item>
+        <item quantity="few">Laikas (%1$s, %2$s): tavo įrašai buvo geresni nei likusią savaitę (%3$d įrašai).</item>
+        <item quantity="many">Laikas (%1$s, %2$s): tavo įrašai buvo geresni nei likusią savaitę (%3$d įrašų).</item>
+        <item quantity="other">Laikas (%1$s, %2$s): tavo įrašai buvo geresni nei likusią savaitę (%3$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_place_lower">
+        <item quantity="one">Tavo įrašai vietoje „%1$s“ buvo prastesni nei kitose vietose (%2$d įrašas).</item>
+        <item quantity="few">Tavo įrašai vietoje „%1$s“ buvo prastesni nei kitose vietose (%2$d įrašai).</item>
+        <item quantity="many">Tavo įrašai vietoje „%1$s“ buvo prastesni nei kitose vietose (%2$d įrašų).</item>
+        <item quantity="other">Tavo įrašai vietoje „%1$s“ buvo prastesni nei kitose vietose (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_place_higher">
+        <item quantity="one">Tavo įrašai vietoje „%1$s“ buvo geresni nei kitose vietose (%2$d įrašas).</item>
+        <item quantity="few">Tavo įrašai vietoje „%1$s“ buvo geresni nei kitose vietose (%2$d įrašai).</item>
+        <item quantity="many">Tavo įrašai vietoje „%1$s“ buvo geresni nei kitose vietose (%2$d įrašų).</item>
+        <item quantity="other">Tavo įrašai vietoje „%1$s“ buvo geresni nei kitose vietose (%2$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_awayFromHome_lower">
+        <item quantity="one">Tavo įrašai ne namuose buvo prastesni nei namuose (%1$d įrašas).</item>
+        <item quantity="few">Tavo įrašai ne namuose buvo prastesni nei namuose (%1$d įrašai).</item>
+        <item quantity="many">Tavo įrašai ne namuose buvo prastesni nei namuose (%1$d įrašų).</item>
+        <item quantity="other">Tavo įrašai ne namuose buvo prastesni nei namuose (%1$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_awayFromHome_higher">
+        <item quantity="one">Tavo įrašai ne namuose buvo geresni nei namuose (%1$d įrašas).</item>
+        <item quantity="few">Tavo įrašai ne namuose buvo geresni nei namuose (%1$d įrašai).</item>
+        <item quantity="many">Tavo įrašai ne namuose buvo geresni nei namuose (%1$d įrašų).</item>
+        <item quantity="other">Tavo įrašai ne namuose buvo geresni nei namuose (%1$d įrašų).</item>
+    </plurals>
+    <plurals name="week_observation_tagOnLow">
+        <item quantity="one">Jausmą „%1$s“ pasirinkai %2$d prastame įraše.</item>
+        <item quantity="few">Jausmą „%1$s“ pasirinkai %2$d prastuose įrašuose.</item>
+        <item quantity="many">Jausmą „%1$s“ pasirinkai %2$d prastų įrašų metu.</item>
+        <item quantity="other">Jausmą „%1$s“ pasirinkai %2$d prastų įrašų metu.</item>
+    </plurals>
+    <plurals name="week_observation_tagAtPlace">
+        <item quantity="one">Jausmą „%1$s“ pasirinkai %2$d įraše vietoje „%3$s“.</item>
+        <item quantity="few">Jausmą „%1$s“ pasirinkai %2$d įrašuose vietoje „%3$s“.</item>
+        <item quantity="many">Jausmą „%1$s“ pasirinkai %2$d įrašų metu vietoje „%3$s“.</item>
+        <item quantity="other">Jausmą „%1$s“ pasirinkai %2$d įrašų metu vietoje „%3$s“.</item>
+    </plurals>
+
+    <!-- Support (gentle copy; contacts come only from content/support.json) -->
+    <string name="support_title">Pasikalbėti su kuo nors</string>
+    <string name="support_body">Kai būna sunku, pokalbis su žmogumi, kuriuo pasitiki, gali viską šiek tiek palengvinti. Tai gali būti draugas, šeimos narys arba specialistas, kurio darbas – išklausyti.</string>
+    <string name="support_emergency">Jei šiuo metu tau gresia pavojus, susisiek su vietos pagalbos numeriu.</string>
+    <string name="support_contact_call">Skambinti %1$s</string>
+    <string name="support_contact_text">Rašyti žinutę %1$s</string>
+    <string name="support_contact_website">Atidaryti „%1$s“ svetainę</string>
+
+    <!-- Lock-screen check-in (readiness) -->
+    <string name="lockscreen_title">Žymėjimasis užrakinimo ekrane</string>
+    <string name="lockscreen_intro">Pasižymėk tiesiai užrakinimo ekrane net neatrakinus telefono. Šie patikrinimai padeda įsitikinti, kad pranešimas ten matomas.</string>
+    <string name="lockscreen_ok_cd">Paruošta</string>
+    <string name="lockscreen_problem_cd">Reikia sutvarkyti</string>
+    <string name="lockscreen_row_notifications">Pranešimai leidžiami</string>
+    <string name="lockscreen_row_notifications_fix">„SmileProc“ dar negali rodyti pranešimų. Leisk juos, kad galėtum pasižymėti užrakinimo ekrane.</string>
+    <string name="lockscreen_row_notifications_action">Leisti pranešimus</string>
+    <string name="lockscreen_row_channel">Savijautos žymėjimas įjungtas</string>
+    <string name="lockscreen_row_channel_fix">Savijautos žymėjimo pranešimai išjungti „Android“ nustatymuose.</string>
+    <string name="lockscreen_row_visibility">Rodoma užrakinimo ekrane</string>
+    <string name="lockscreen_row_visibility_fix">Tavo užrakinimo ekranas slepia „SmileProc“ pranešimus.</string>
+    <string name="lockscreen_row_keep">Laikyti pasižymėjimą užrakinimo ekrane</string>
+    <string name="lockscreen_row_keep_summary">Tarp priminimų užrakinimo ekrane išlieka ramus žymėjimosi pranešimas.</string>
+    <string name="lockscreen_app_only">Be pranešimų vis tiek gali pasižymėti čia, programėlėje.</string>
+    <string name="lockscreen_send_test">Siųsti bandomąjį pranešimą</string>
+    <string name="lockscreen_test_explainer">Bandomasis pranešimas pasirodys maždaug po 10 sekundžių. Bakstelėk bet kurį veiduką. Nieko nebus išsaugota.</string>
+    <string name="lockscreen_lock_now">Užrakink telefoną dabar</string>
+    <string name="lockscreen_test_works">Veikia ✓</string>
+    <string name="lockscreen_test_hint">Paspaudimas neatėjo. Patikrink, ar tavo užrakinimo ekrane rodomi pranešimai. „Samsung“ telefonuose įsitikink, kad neįjungtas tik piktogramų rodymas.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Nustatymai</string>
+    <string name="settings_reminders">Priminimai</string>
+    <string name="settings_keep_checkin">Laikyti pasižymėjimą užrakinimo ekrane</string>
+    <string name="settings_lockscreen">Žymėjimasis užrakinimo ekrane</string>
+    <string name="settings_weekly_card_time">Savaitės kortelės laikas</string>
+    <string name="settings_places">Vietos</string>
+    <string name="settings_capture_location">Fiksuoti vietą</string>
+    <string name="settings_capture_location_summary">Išsaugoti, kur esi kiekvieno įrašo metu, kad vietos galėtų pasirodyti savaitės kortelėje.</string>
+    <string name="settings_capture_location_approximate">Apytikslė vieta yra per netiksli vietoms atskirti. Leisk tikslią vietą, kad matytum vietas.</string>
+    <string name="settings_app_lock">Programėlės užraktas</string>
+    <string name="settings_app_lock_summary">Atidarant „SmileProc“, prašyti piršto antspaudo, veido arba ekrano užrakto.</string>
+    <string name="settings_app_lock_no_screen_lock">Nustatyk ekrano užraktą telefone, kad galėtum naudoti programėlės užraktą.</string>
+    <string name="settings_export">Eksportuoti</string>
+    <string name="settings_import">Importuoti</string>
+    <string name="settings_privacy">Privatumas</string>
+    <string name="settings_privacy_summary">Kas ir kur saugoma</string>
+    <string name="settings_delete_all">Ištrinti visus duomenis</string>
+    <string name="settings_language">Kalba</string>
+    <string name="language_system">Pagal sistemą</string>
+    <string name="onboarding_language_cd">Keisti kalbą</string>
+    <string name="settings_about">Apie programėlę</string>
+    <string name="about_tagline">Privati nuotaikos žymėjimo programėlė.</string>
+    <string name="about_body">Šifruota saugykla šiame telefone. Jokių tinklo jungčių.</string>
+    <string name="about_error_logs">Klaidų žurnalai</string>
+    <string name="export_error_logs">Eksportuoti klaidų žurnalus</string>
+    <string name="export_error_logs_cd">Eksportuoti iššifruotus klaidų žurnalus į failą</string>
+    <string name="error_logs_exported">Klaidų žurnalai eksportuoti</string>
+    <string name="error_logs_export_failed">Nepavyko eksportuoti klaidų žurnalų</string>
+
+    <!-- Reminders -->
+    <string name="reminders_title">Priminimai</string>
+    <string name="reminders_add">Pridėti priminimą</string>
+    <string name="reminders_max">Gali turėti iki 6 priminimų.</string>
+    <string name="reminders_empty">Priminimų nėra. Pasižymėti programėlėje gali bet kada.</string>
+    <string name="reminders_days">Dienos</string>
+    <string name="reminders_every_day">Kasdien</string>
+    <string name="reminders_time_cd">Priminimas %1$s</string>
+    <string name="reminders_delete_cd">Ištrinti priminimą %1$s</string>
+
+    <!-- Weekly card time -->
+    <string name="weekly_card_time_summary">Tavo savaitės kortelė paruošiama: %1$s.</string>
+
+    <!-- Onboarding (5 screens) -->
+    <string name="onboarding_privacy_title">Tik tau</string>
+    <string name="onboarding_privacy_body">„SmileProc“ saugo tavo įrašus šiame telefone. Paskyros nėra, ir duomenys palieka telefoną tik tada, kai juos eksportuoji.</string>
+    <string name="onboarding_privacy_backup">Tavo istorija nėra įtraukiama į atsargines kopijas ar perkėlimus tarp telefonų. Eksportuok, jei nori išsaugoti kopiją.</string>
+    <string name="onboarding_location_title">Pastebėti vietas</string>
+    <string name="onboarding_location_body">Įjungus vietos nustatymą, „SmileProc“ gali pastebėti, kaip vietos veikia tavo nuotaiką. Įrašai išsisaugo ir be jo.</string>
+    <string name="onboarding_location_action">Leisti vietą</string>
+    <string name="onboarding_reminders_title">Švelnūs priminimai</string>
+    <string name="onboarding_reminders_body">Šie laikai pasiūlyti tau, ir juos galima pakeisti bet kada. Veiduką gali bakstelėti tiesiai pranešime.</string>
+    <string name="onboarding_reminders_action">Leisti pranešimus</string>
+    <string name="onboarding_applock_title">Programėlės užraktas</string>
+    <string name="onboarding_applock_body">Atidarant „SmileProc“, prašyti piršto antspaudo, veido arba ekrano užrakto. Pasižymėjimas užrakinimo ekrane veiks ir toliau.</string>
+    <string name="onboarding_test_title">Išbandyk užrakinimo ekrane</string>
+    <string name="onboarding_test_body">Išsiųsk bandomąjį pranešimą, užrakink telefoną ir bakstelėk veiduką. Nieko nebus išsaugota.</string>
+    <string name="onboarding_start">Pradėti</string>
+
+    <!-- Permission rationale -->
+    <string name="rationale_location">„SmileProc“ naudoja vietą tik tam, kad pastebėtų vietas. Kaip ir tavo įrašai, ji lieka šiame telefone, nebent ją eksportuoji.</string>
+    <string name="rationale_notifications">Kad pasižymėjimo pranešimas galėtų pasirodyti tavo pasirinktu laiku.</string>
+
+    <!-- Privacy screen -->
+    <string name="privacy_title">Kas ir kur saugoma</string>
+    <string name="privacy_on_phone">Tavo įrašai, jausmai, pastabos ir vietos yra saugomi tik šiame telefone, užšifruotai.</string>
+    <string name="privacy_nothing_leaves">Niekas nepalieka telefono, nebent eksportuoji failą arba paspaudi ant pagalbos kontakto.</string>
+    <string name="privacy_no_backup">Tavo istorija nėra įtraukiama į atsargines kopijas ar perkėlimus tarp telefonų.</string>
+    <string name="privacy_lost_phone">Praradus šį telefoną, kartu dingsta ir istorija, nebent turi eksportuotą kopiją.</string>
+    <string name="privacy_no_account">Čia nėra paskyros, jokios analitikos ir jokių reklamų.</string>
+
+    <!-- Export and import -->
+    <string name="export_title">Eksportuoti</string>
+    <string name="export_body">Išsaugok užšifruotą savo istorijos kopiją į failą. Tu pasirenki, kur ją laikyti.</string>
+    <string name="export_password">Slaptažodis</string>
+    <string name="export_password_again">Pakartok slaptažodį</string>
+    <string name="export_password_min">Naudok bent 8 simbolius.</string>
+    <string name="export_password_mismatch">Slaptažodžiai nesutampa.</string>
+    <string name="export_password_warning">Jei pamirši šį slaptažodį, eksporto failo nebus įmanoma atidaryti.</string>
+    <string name="export_in_progress">Šifruojama…</string>
+    <string name="export_done">Eksportas išsaugotas</string>
+    <string name="export_failed">Nepavyko eksportuoti. Bandyk dar kartą.</string>
+    <string name="import_title">Importuoti</string>
+    <string name="import_body">Atidaryk „SmileProc“ eksporto failą. Jau turimi įrašai liks, o naujesni pakeitimai turės pirmenybę.</string>
+    <string name="import_password">Eksporto slaptažodis</string>
+    <string name="import_in_progress">Atidaroma…</string>
+    <string name="import_wrong_password">Šis slaptažodis netiko šiam failui.</string>
+    <string name="import_failed">Nepavyko importuoti šio failo.</string>
+    <plurals name="import_done">
+        <item quantity="one">Importuotas %1$d įrašas</item>
+        <item quantity="few">Importuoti %1$d įrašai</item>
+        <item quantity="many">Importuota %1$d įrašų</item>
+        <item quantity="other">Importuota %1$d įrašų</item>
+    </plurals>
+
+    <!-- Recovery (database present, key missing) -->
+    <string name="recovery_title">Nepavyksta atidaryti istorijos</string>
+    <string name="recovery_body">„SmileProc“ neranda rakto, kuris atrakina tavo istoriją šiame telefone. Gali ją atkurti iš eksporto failo arba pradėti iš naujo.</string>
+    <string name="recovery_import">Importuoti eksportą</string>
+    <string name="recovery_start_fresh">Pradėti iš naujo</string>
+    <string name="recovery_start_fresh_confirm">Pradėti iš naujo? Šiame telefone esančios istorijos nebeįmanoma atidaryti ir ji bus pašalinta.</string>
+
+    <!-- Delete all -->
+    <string name="delete_all_title">Ištrinti visus duomenis?</string>
+    <string name="delete_all_body">Tai pašalins kiekvieną įrašą, vietą, savaitės kortelę ir nustatymą iš šio telefono. Šio veiksmo negalima atšaukti. Jei nori kopijos, pirmiausia eksportuok.</string>
+    <string name="delete_all_action">Ištrinti viską</string>
+
+    <!-- App lock prompt -->
+    <string name="app_lock_prompt_title">Atrakinti „SmileProc“</string>
+    <string name="app_lock_locked_title">„SmileProc“ užrakinta</string>
+    <string name="app_lock_unlock">Atrakinti</string>
+
+    <!-- Deeper reflection: Week, Month Rhythm, Insights -->
+    <string name="week_subtab_week">Savaitė</string>
+    <string name="week_subtab_month">Mėnuo</string>
+    <string name="week_subtab_insights">Įžvalgos</string>
+    <string name="week_tap_dot_hint">Paliesk bet kurią šypsenėlę grafike peržiūrai ar keitimui</string>
+    <string name="week_entry_preview_open">Atidaryti įrašą</string>
+    <string name="week_highlight_clear">Nuimti</string>
+    <plurals name="week_highlighting_count">
+        <item quantity="one">Paryškintas %1$d susijęs įrašas</item>
+        <item quantity="few">Paryškinti %1$d susiję įrašai</item>
+        <item quantity="many">Paryškinta %1$d susijusių įrašų</item>
+        <item quantity="other">Paryškinta %1$d susijusių įrašų</item>
+    </plurals>
+    <string name="week_insights_section">Šios savaitės pastebėjimai</string>
+    <string name="week_pattern_early_hint">Ankstyva užuomina</string>
+    <string name="week_pattern_tap_highlight">Paliesk, kad paryškintum grafike</string>
+    <string name="week_pattern_name_place">Pavadinti šią vietą</string>
+    <string name="week_card_no_entries_yet">Keli įrašai per savaitę čia surinks tavo ramius pastebėjimus.</string>
+    <string name="week_low_card_title">Sunkesnė savaitė</string>
+    <string name="week_low_card_body">Dauguma šios savaitės įrašų buvo sunkūs. Jei nori su kuo nors pasikalbėti, pagalbos kontaktai yra čia pat.</string>
+    <string name="week_low_card_cta">Pasikalbėti su kuo nors</string>
+
+    <string name="rhythm_window_30">30 dienų</string>
+    <string name="rhythm_window_90">90 dienų</string>
+    <string name="rhythm_mosaic_title">Diena po dienos</string>
+    <plurals name="rhythm_checkins_count">
+        <item quantity="one">%1$d įrašas</item>
+        <item quantity="few">%1$d įrašai</item>
+        <item quantity="many">%1$d įrašų</item>
+        <item quantity="other">%1$d įrašų</item>
+    </plurals>
+    <plurals name="rhythm_days_count">
+        <item quantity="one">%1$d diena</item>
+        <item quantity="few">%1$d dienos</item>
+        <item quantity="many">%1$d dienų</item>
+        <item quantity="other">%1$d dienų</item>
+    </plurals>
+    <string name="rhythm_daypart_title">Pagal dienos metą</string>
+    <string name="rhythm_weekday_title">Pagal savaitės dieną</string>
+    <string name="rhythm_empty_day">%1$s: įrašų nėra</string>
+    <string name="rhythm_day_summary_a11y">%1$s: %2$s</string>
+    <string name="rhythm_no_data">Pažymėk kelias dienas, kad čia matytum savo mėnesio ritmą.</string>
+
+    <string name="insights_feelings_title">Kas lydėjo nuotaikas</string>
+    <string name="insights_context_title">Kontekstas ir asmeninės žymos</string>
+    <string name="insights_places_title">Vietos</string>
+    <string name="insights_no_tags_yet">Pridėk jausmų arba konteksto žymų, kad čia matytum, kas dažniau lydi skirtingas nuotaikas.</string>
+    <string name="insights_no_places_yet">Įjunk apytikslę vietą nustatymuose, jei nori matyti ramią vietų apžvalgą.</string>
+    <string name="insights_mood_breakdown_counts">%1$d gerai · %2$d normaliai · %3$d blogai</string>
+    <string name="insights_top_tags_prefix">Dažnai kartu: %1$s</string>
+
+    <!-- History search and filters -->
+    <string name="history_search_hint">Ieškoti pastabose, žymose ar vietose</string>
+    <string name="history_search_clear">Išvalyti paiešką</string>
+    <string name="history_filter_toggle">Filtruoti įrašus</string>
+    <string name="history_filter_saved_moments">Išsaugotos akimirkos</string>
+    <string name="history_filter_with_note">Su pastaba</string>
+    <string name="history_filter_clear">Išvalyti filtrus</string>
+    <string name="history_filter_empty_title">Pagal šiuos filtrus įrašų nerasta</string>
+    <string name="history_filter_empty_body">Pabandyk nuimti žymėjimą arba pakeisti paieškos žodžius.</string>
+
+    <!-- Richer check-in context, personal tags, prompts, bookmarks -->
+    <string name="today_followup_recent_banner">Pridėk žymų ar pastabą prie paskutinio įrašo</string>
+    <string name="followup_bookmark_label">Išsaugoti akimirką</string>
+    <string name="followup_bookmarked_label">Akimirka išsaugota</string>
+    <string name="followup_context_title">Kas vyko aplink? (nebūtina)</string>
+    <string name="followup_custom_tags_title">Asmeninės žymos</string>
+    <string name="followup_custom_tag_add">Nauja žyma</string>
+    <string name="followup_custom_tag_dialog_title">Nauja asmeninė žyma</string>
+    <string name="followup_custom_tag_hint">Pasivaikščiojimas, Kava, Skaitymas…</string>
+    <string name="followup_custom_tag_delete">Pašalinti žymą %1$s</string>
+    <string name="followup_custom_tag_max_reached">Pasiektas %1$d asmeninių žymų limitas</string>
+
+    <string name="ctx_sleep">Miegas</string>
+    <string name="ctx_movement">Judėjimas</string>
+    <string name="ctx_outdoors">Laukas</string>
+    <string name="ctx_social">Žmonės</string>
+    <string name="ctx_work">Darbas</string>
+    <string name="ctx_solo">Vienumoje</string>
+    <string name="ctx_rest">Poilsis</string>
+    <string name="ctx_food">Maistas</string>
+
+    <string name="note_prompt_1">Ar yra kas nors, ką norėtum prisiminti apie šią akimirką?</string>
+    <string name="note_prompt_2">Kas ką tik padėjo arba pasirodė sunkiau?</string>
+    <string name="note_prompt_3">Keli žodžiai apie tai, kur esi ar kas vyksta…</string>
+    <string name="note_prompt_4">Palik sau trumpą pastabą (nebūtina)</string>
+
+    <!-- Gentler reminders: Pause, Flexible timing, Edit, Accessibility -->
+    <string name="reminders_pause_title">Padaryti priminimų pertrauką</string>
+    <string name="reminders_pause_action">Pristabdyti</string>
+    <string name="reminders_resume_action">Atnaujinti</string>
+    <string name="reminders_paused_until">Pristabdyta iki %1$s</string>
+    <string name="reminders_paused_indefinitely">Pristabdyta, kol atnaujinsi</string>
+    <string name="reminders_pause_tomorrow">Iki rytojaus</string>
+    <string name="reminders_pause_three_days">3 dienoms</string>
+    <string name="reminders_pause_indefinite">Kol pats atnaujinsiu</string>
+    <string name="reminders_edit_title">Redaguoti priminimą</string>
+    <string name="reminders_window_label">Laiko lankstumas</string>
+    <string name="reminders_window_exact">Tiksliu laiku</string>
+    <string name="reminders_window_plus_minus">±%1$d min.</string>
+    <string name="reminders_window_helper">Kasdien šiek tiek atsitiktinai pastumia priminimą šiame lange.</string>
+    <string name="reminders_duplicate_notice">Priminimas šiuo laiku jau yra – atnaujintas esamas</string>
+    <string name="time_picker_increase">Padidinti: %1$s</string>
+    <string name="time_picker_decrease">Sumažinti: %1$s</string>
+    <string name="reminders_hour_label">valandos</string>
+    <string name="reminders_minute_label">minutės</string>
+    <string name="settings_reminders_paused">Pristabdyta</string>
+</resources>

@@ -1,5 +1,9 @@
 package com.example.smileproc.ui.settings
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,12 +44,15 @@ fun ExportDialog(
     var passwordAgain by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
 
+    val smileColors = LocalSmileProcColors.current
     val isMinLength = password.length >= 8
     val isMatching = password == passwordAgain
     val isValid = isMinLength && isMatching
 
     AlertDialog(
         onDismissRequest = { if (!isExporting) onDismiss() },
+        containerColor = smileColors.dialogContainer,
+        shape = RoundedCornerShape(28.dp),
         title = { Text(stringResource(R.string.export_title)) },
         text = {
             Column(
@@ -87,6 +94,7 @@ fun ExportDialog(
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
                         isError = showError && !isMinLength,
                         supportingText = if (showError && !isMinLength) {
                             { Text(stringResource(R.string.export_password_min)) }
@@ -104,6 +112,7 @@ fun ExportDialog(
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
                         isError = showError && isMinLength && !isMatching,
                         supportingText = if (showError && isMinLength && !isMatching) {
                             { Text(stringResource(R.string.export_password_mismatch)) }
@@ -123,6 +132,7 @@ fun ExportDialog(
                             showError = true
                         }
                     },
+                    shape = CircleShape,
                 ) {
                     Text(stringResource(R.string.export_title))
                 }
@@ -130,7 +140,7 @@ fun ExportDialog(
         },
         dismissButton = {
             if (!isExporting) {
-                TextButton(onClick = onDismiss) {
+                TextButton(onClick = onDismiss, shape = CircleShape) {
                     Text(stringResource(R.string.action_cancel))
                 }
             }

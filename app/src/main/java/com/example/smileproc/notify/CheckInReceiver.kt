@@ -89,6 +89,7 @@ class CheckInReceiver : BroadcastReceiver() {
             when (val storageState = container.awaitState()) {
                 is StorageState.Ready -> {
                     storageState.storage.entryRepository.save(entry)
+                    container.settingsRepository.setLastNotificationEntry(entry.id, now.toEpochMilli())
                     SafeLog.event(SafeLog.Event.NOTIFICATION_TAP_SAVED)
                     true
                 }

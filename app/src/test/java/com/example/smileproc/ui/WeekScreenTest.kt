@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
@@ -189,5 +190,82 @@ class WeekScreenTest {
         composeTestRule.onNodeWithText("${week3Monday} – ${week3Monday.plusDays(7)}").performScrollTo().assertIsDisplayed()
         composeTestRule.onNodeWithText("No check-ins this week").performScrollTo().assertIsDisplayed()
         composeTestRule.onNodeWithText("0 days tracked • 0 check-ins").performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun weekScreen_monthRhythmInsightsAndLowWeekSupportWork() {
+        val today = LocalDate.now(testZone)
+        val weekMonday = WeekPlotMath.mondayOf(today)
+        val entries = (0..5).map { idx ->
+            val day = weekMonday.plusDays(idx.toLong())
+            val instant = ZonedDateTime.of(day, LocalTime.of(10, 0), testZone).toInstant()
+            Entry(
+                id = "00000000-0000-4000-8000-00000000000$idx",
+                createdAt = instant,
+                updatedAt = instant,
+                timeZoneID = testZone.id,
+                mood = Mood.LOW,
+                tags = listOf("tired.drained"),
+                comment = null,
+                location = com.example.smileproc.core.LocationSample(
+                    latitude = 54.6872,
+                    longitude = 25.2797,
+                    horizontalAccuracy = 15.0,
+                    capturedAt = instant,
+                    kind = com.example.smileproc.core.LocationKind.FRESH,
+                ),
+                source = EntrySource.APP,
+            )
+        }
+        val unnamedCluster = com.example.smileproc.core.Cluster(
+            id = com.example.smileproc.core.ClusterID.unnamed("00000000-0000-4000-8000-000000000000"),
+            centroid = com.example.smileproc.core.LatLon(54.6872, 25.2797),
+            memberIDs = entries.map { it.id },
+            label = null,
+        )
+        val assignment = com.example.smileproc.core.PlaceAssignment(
+            entryToCluster = entries.associate { it.id to unnamedCluster.id },
+            clusters = mapOf(unnamedCluster.id to unnamedCluster),
+        )
+        val extras = mapOf(
+            "00000000-0000-4000-8000-000000000000" to com.example.smileproc.core.EntryExtras(
+                entryId = "00000000-0000-4000-8000-000000000000",
+                contextTags = listOf(com.example.smileproc.core.BuiltInContextTag.WORK.id),
+                customTagIds = emptyList(),
+                bookmarked = false,
+                updatedAt = entries.first().updatedAt,
+            ),
+        )
+        var supportNavigated = false
+
+        composeTestRule.setContent {
+            WeekScreen(
+                entries = entries,
+                initialWeekStart = weekMonday,
+                places = assignment,
+                entryExtrasById = extras,
+                onNavigateToSupport = { supportNavigated = true },
+            )
+        }
+
+        // Low-week support CTA appears under "This week's notes"
+        composeTestRule.onNodeWithText("This week's notes").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Talk to someone").performScrollTo().performClick()
+        assertTrue(supportNavigated)
+
+        // Month rhythm subtab
+        composeTestRule.onNodeWithText("Month").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Day by day").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Time of day").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Day of the week").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("90 days").performScrollTo().performClick()
+
+        // Insights subtab + inline place naming
+        composeTestRule.onNodeWithText("Insights").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Feelings by mood").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Context & personal tags").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Places").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("Name this place").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Another name").assertIsDisplayed()
     }
 }

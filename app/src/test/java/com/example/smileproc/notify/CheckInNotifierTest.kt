@@ -103,4 +103,16 @@ class CheckInNotifierTest {
         assertFalse(rendered3)
         assertEquals(0, shadow.allNotifications.size)
     }
+
+    @Test
+    fun savedNotificationSetsFollowUpExtraWithoutMoodOrEntrySecrets() {
+        val savedNotif = CheckInNotifier.build(context, CheckInMachine.State.Saved, ongoing = true)
+        val savedIntent = shadowOf(savedNotif.contentIntent).savedIntent
+        assertTrue(savedIntent.getBooleanExtra(CheckInNotifier.EXTRA_OPEN_FOLLOWUP, false))
+        assertEquals(setOf(CheckInNotifier.EXTRA_OPEN_FOLLOWUP), savedIntent.extras?.keySet())
+
+        val askNotif = CheckInNotifier.build(context, CheckInMachine.State.Faces(alerting = true), ongoing = true)
+        val askIntent = shadowOf(askNotif.contentIntent).savedIntent
+        assertFalse(askIntent.getBooleanExtra(CheckInNotifier.EXTRA_OPEN_FOLLOWUP, false))
+    }
 }

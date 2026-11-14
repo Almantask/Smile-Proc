@@ -222,4 +222,65 @@ class RemindersAndLockScreenTest {
 
         ReminderScheduler.cancelAll(context)
     }
+
+    @Test
+    fun remindersScreen_pauseResumeAndTapToEditFlexWindowAndWheelAccessibility() = runTest {
+        container.settingsRepository.setReminders(
+            listOf(
+                Reminder("r-late", 18, 0, (1..7).toSet()),
+                Reminder("r-early", 8, 0, (1..7).toSet()),
+            ),
+        )
+        container.settingsRepository.setReminderPause(com.example.smileproc.core.ReminderPause.NONE)
+        container.settingsRepository.setReminderWindows(emptyMap())
+
+        composeTestRule.setContent {
+            RemindersScreen(
+                container = container,
+                onNavigateBack = {},
+            )
+        }
+
+        // Verify Pause flow
+        composeTestRule.onNodeWithText("Pause").performClick()
+        composeTestRule.onNodeWithText("For 3 days").performClick()
+        composeTestRule.waitUntil(timeoutMillis = 5000) {
+            runBlocking {
+                container.settingsRepository.reminderPause.first().isPausedAt(java.time.Instant.now())
+            }
+        }
+        composeTestRule.onNodeWithText("Resume").assertIsDisplayed()
+
+        // Resume reminders
+        composeTestRule.onNodeWithText("Resume").performClick()
+        composeTestRule.waitUntil(timeoutMillis = 5000) {
+            runBlocking {
+                !container.settingsRepository.reminderPause.first().isPausedAt(java.time.Instant.now())
+            }
+        }
+        composeTestRule.onNodeWithText("Pause").assertIsDisplayed()
+
+        // Tap existing 18:00 reminder to edit time and set ±30 min flexibility
+        composeTestRule.onNodeWithText("18:00").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Edit reminder").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Increase hour").assertExists()
+        composeTestRule.onNodeWithContentDescription("Decrease hour").performClick()
+        composeTestRule.onNodeWithText("±30 min").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Save").performClick()
+
+        composeTestRule.waitUntil(timeoutMillis = 5000) {
+            runBlocking {
+                val hasEditedTime = container.settingsRepository.reminders.first()
+                    .any { it.id == "r-late" && it.hour == 17 }
+                val hasWindow = container.settingsRepository.reminderWindows.first()["r-late"] == 30
+                hasEditedTime && hasWindow
+            }
+        }
+        composeTestRule.onNodeWithText("17:00").performScrollTo().assertIsDisplayed()
+        composeTestRule.onNodeWithText("±30 min").performScrollTo().assertIsDisplayed()
+        assertEquals(30, container.settingsRepository.reminderWindows.first()["r-late"])
+
+        container.settingsRepository.setReminderPause(com.example.smileproc.core.ReminderPause.NONE)
+        container.settingsRepository.setReminderWindows(emptyMap())
+    }
 }

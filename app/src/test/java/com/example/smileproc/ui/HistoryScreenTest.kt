@@ -241,4 +241,69 @@ class HistoryScreenTest {
         composeTestRule.onAllNodesWithText("Home")[0].assertIsDisplayed()
         composeTestRule.onAllNodesWithText("Work")[0].assertIsDisplayed()
     }
+
+    @Test
+    fun searchAndSavedMomentsFiltersNarrowEntriesAndReset() {
+        val e1 = Entry(
+            id = "00000000-0000-4000-8000-000000000001",
+            createdAt = Instant.parse("2026-11-10T09:00:00Z"),
+            updatedAt = Instant.parse("2026-11-10T09:00:00Z"),
+            timeZoneID = "UTC",
+            mood = Mood.GOOD,
+            tags = listOf("calm.peaceful"),
+            comment = "Quiet lake morning",
+            location = null,
+            source = EntrySource.APP,
+        )
+        val e2 = Entry(
+            id = "00000000-0000-4000-8000-000000000002",
+            createdAt = Instant.parse("2026-11-10T15:00:00Z"),
+            updatedAt = Instant.parse("2026-11-10T15:00:00Z"),
+            timeZoneID = "UTC",
+            mood = Mood.LOW,
+            tags = listOf("tired.drained"),
+            comment = "Heavy rain commute",
+            location = null,
+            source = EntrySource.APP,
+        )
+        val extras = mapOf(
+            e1.id to com.example.smileproc.core.EntryExtras(
+                entryId = e1.id,
+                contextTags = listOf(com.example.smileproc.core.BuiltInContextTag.OUTDOORS.id),
+                customTagIds = emptyList(),
+                bookmarked = true,
+                updatedAt = Instant.parse("2026-11-10T09:01:00Z"),
+            ),
+        )
+
+        composeTestRule.setContent {
+            HistoryScreen(
+                entries = listOf(e1, e2),
+                places = null,
+                tagPickerMode = TagPickerMode.DETAILED,
+                onTagPickerModeToggle = {},
+                onSaveEntry = {},
+                onDeleteEntry = {},
+                onSavePlaceLabel = {},
+                onNavigateBack = {},
+                entryExtrasById = extras,
+            )
+        }
+
+        // Filter to Saved moments -> only e1 remains
+        composeTestRule.onNodeWithText("Saved moments").performClick()
+        composeTestRule.onNodeWithText("Quiet lake morning").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Heavy rain commute").fetchSemanticsNodes().let {
+            assertEquals(0, it.size)
+        }
+
+        // Search for unmatched text -> empty filter card + Reset filters button
+        composeTestRule.onNodeWithText("Search notes, tags, or places").performTextInput("zzzunmatched")
+        composeTestRule.onNodeWithText("No check-ins match these filters").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Reset filters").performClick()
+
+        // Both entries reappear
+        composeTestRule.onNodeWithText("Quiet lake morning").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Heavy rain commute").assertIsDisplayed()
+    }
 }

@@ -95,6 +95,22 @@ class DeleteAllTest {
         )
         assertTrue(nm.activeNotifications.any { it.id == CheckInNotifier.ID_CHECKIN })
 
+        // Seed notification tracking, extras, custom tags, windows, pause
+        val customTag = com.example.smileproc.core.CustomTag.create("Journaling", Instant.now(), id = "custom.j1")
+        storage.customTagRepository.save(customTag)
+        storage.entryExtrasRepository.save(
+            com.example.smileproc.core.EntryExtras(
+                entryId = "11111111-1111-4111-8111-111111111111",
+                contextTags = listOf(com.example.smileproc.core.BuiltInContextTag.REST.id),
+                customTagIds = listOf(customTag.id),
+                bookmarked = true,
+                updatedAt = Instant.now(),
+            ),
+        )
+        container.settingsRepository.setReminderWindows(mapOf("r1" to 30))
+        container.settingsRepository.setReminderPause(com.example.smileproc.core.ReminderPause.INDEFINITE)
+        container.settingsRepository.setLastNotificationEntry("11111111-1111-4111-8111-111111111111", 123456L)
+
         // Seed error log
         container.errorLogStore.record(com.example.smileproc.SafeLog.Event.NOTIFY_FAILED, RuntimeException("Test"))
         assertTrue(container.errorLogStore.count() > 0)
@@ -105,16 +121,19 @@ class DeleteAllTest {
         // Assert 1: Notification cancelled
         assertFalse(nm.activeNotifications.any { it.id == CheckInNotifier.ID_CHECKIN })
 
-        // Assert 2: Onboarding reset
+        // Assert 2: Onboarding, App lock, pause, windows, and lastNotificationEntry reset
         assertFalse(container.settingsRepository.onboardingCompleted.first())
-
-        // Assert 3: App lock reset
         assertFalse(container.settingsRepository.appLock.first())
+        assertEquals(emptyMap<String, Int>(), container.settingsRepository.reminderWindows.first())
+        assertEquals(com.example.smileproc.core.ReminderPause.NONE, container.settingsRepository.reminderPause.first())
+        assertEquals(null, container.settingsRepository.lastNotificationEntry.first())
 
-        // Assert 4: Storage fresh and empty
+        // Assert 4: Storage fresh and empty (including v2 tables)
         val stateAfter = container.awaitState() as StorageState.Ready
         assertEquals(0, stateAfter.storage.entryRepository.getAllOldestFirst().size)
         assertEquals(0, stateAfter.storage.placeRepository.getAll().size)
+        assertEquals(0, stateAfter.storage.entryExtrasRepository.getAll().size)
+        assertEquals(0, stateAfter.storage.customTagRepository.getAll().size)
 
         // Assert 5: Error logs cleared
         assertEquals(0, container.errorLogStore.count())

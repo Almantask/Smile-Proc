@@ -1,5 +1,9 @@
 package com.example.smileproc.ui.settings
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,10 +41,13 @@ fun ImportPasswordDialog(
     onDismiss: () -> Unit,
     onConfirm: (CharArray) -> Unit,
 ) {
+    val smileColors = LocalSmileProcColors.current
     var password by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = { if (!isImporting) onDismiss() },
+        containerColor = smileColors.dialogContainer,
+        shape = RoundedCornerShape(28.dp),
         title = { Text(stringResource(R.string.import_title)) },
         text = {
             Column(
@@ -74,6 +81,7 @@ fun ImportPasswordDialog(
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
                         isError = errorMessage != null,
                         supportingText = errorMessage?.let { { Text(it, color = MaterialTheme.colorScheme.error) } },
                         modifier = Modifier.fillMaxWidth(),
@@ -90,6 +98,7 @@ fun ImportPasswordDialog(
                         }
                     },
                     enabled = password.isNotEmpty(),
+                    shape = CircleShape,
                 ) {
                     Text(stringResource(R.string.import_title))
                 }
@@ -97,7 +106,7 @@ fun ImportPasswordDialog(
         },
         dismissButton = {
             if (!isImporting) {
-                TextButton(onClick = onDismiss) {
+                TextButton(onClick = onDismiss, shape = CircleShape) {
                     Text(stringResource(R.string.action_cancel))
                 }
             }

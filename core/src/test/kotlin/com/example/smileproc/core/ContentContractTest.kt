@@ -110,21 +110,36 @@ class ContentContractTest {
         val detectors = setOf("timeOfDay", "weekday", "weekdayDaypart", "place", "awayFromHome", "tagOnLow", "tagAtPlace")
         val matchKeys = setOf("detector", "direction", "segment", "weekday", "placeKind", "tag")
         val placeholders = setOf("{segment}", "{weekday}", "{place}", "{tag}")
-        val entries = TestData.content("pattern-library.en.json").jsonArray.map { it.jsonObject }
-        assertEquals(entries.size, entries.map { it.str("id") }.toSet().size)
-        for (entry in entries) {
-            val id = entry.str("id")
-            val match = entry.getValue("match").jsonObject
-            assertTrue("$id detector", match.str("detector") in detectors)
-            assertTrue("$id match keys ${match.keys}", matchKeys.containsAll(match.keys))
-            assertTrue("$id match values are strings", match.values.all { it is JsonPrimitive && it.isString })
-            for (field in listOf("title", "common", "tip", "question")) {
-                val text = entry.str(field)
-                assertTrue("$id $field is empty", text.isNotBlank())
-                val used = Regex("\\{[^}]*}").findAll(text).map { it.value }.toSet()
-                assertTrue("$id $field uses $used", placeholders.containsAll(used))
+        val enEntries = TestData.content("pattern-library.en.json").jsonArray.map { it.jsonObject }
+        val ltEntries = TestData.content("pattern-library.lt.json").jsonArray.map { it.jsonObject }
+
+        for ((lang, entries) in listOf("en" to enEntries, "lt" to ltEntries)) {
+            assertEquals("$lang unique ids", entries.size, entries.map { it.str("id") }.toSet().size)
+            for (entry in entries) {
+                val id = entry.str("id")
+                val match = entry.getValue("match").jsonObject
+                assertTrue("$lang $id detector", match.str("detector") in detectors)
+                assertTrue("$lang $id match keys ${match.keys}", matchKeys.containsAll(match.keys))
+                assertTrue("$lang $id match values are strings", match.values.all { it is JsonPrimitive && it.isString })
+                for (field in listOf("title", "common", "tip", "question")) {
+                    val text = entry.str(field)
+                    assertTrue("$lang $id $field is empty", text.isNotBlank())
+                    val used = Regex("\\{[^}]*}").findAll(text).map { it.value }.toSet()
+                    assertTrue("$lang $id $field uses $used", placeholders.containsAll(used))
+                }
             }
         }
+
+        assertEquals(
+            "pattern-library.lt.json must mirror pattern-library.en.json IDs",
+            enEntries.map { it.str("id") },
+            ltEntries.map { it.str("id") },
+        )
+        assertEquals(
+            "pattern-library.lt.json must mirror pattern-library.en.json match criteria",
+            enEntries.map { it.getValue("match") },
+            ltEntries.map { it.getValue("match") },
+        )
     }
 
     @Test

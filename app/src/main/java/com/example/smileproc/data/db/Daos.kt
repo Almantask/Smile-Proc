@@ -94,3 +94,57 @@ interface WeeklyCardDao {
     @Query("DELETE FROM weekly_card")
     suspend fun deleteAll()
 }
+
+@Dao
+interface EntryExtrasDao {
+    @Upsert
+    suspend fun upsert(row: EntryExtrasRow)
+
+    @Upsert
+    suspend fun upsertAll(rows: List<EntryExtrasRow>)
+
+    @Query("SELECT * FROM entry_extras WHERE entryId = :entryId LIMIT 1")
+    suspend fun getByEntryId(entryId: String): EntryExtrasRow?
+
+    @Query("SELECT * FROM entry_extras LIMIT 1")
+    suspend fun peekOne(): EntryExtrasRow?
+
+    @Query("SELECT * FROM entry_extras ORDER BY updatedAt DESC, entryId ASC")
+    suspend fun getAll(): List<EntryExtrasRow>
+
+    @Query("SELECT * FROM entry_extras ORDER BY updatedAt DESC, entryId ASC")
+    fun observeAll(): Flow<List<EntryExtrasRow>>
+
+    @Query("DELETE FROM entry_extras WHERE entryId = :entryId")
+    suspend fun deleteByEntryId(entryId: String)
+
+    @Query("DELETE FROM entry_extras")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface CustomTagDao {
+    @Upsert
+    suspend fun upsert(row: CustomTagRow)
+
+    @Upsert
+    suspend fun upsertAll(rows: List<CustomTagRow>)
+
+    @Query("SELECT * FROM custom_tag WHERE id = :id LIMIT 1")
+    suspend fun getById(id: String): CustomTagRow?
+
+    @Query("SELECT * FROM custom_tag LIMIT 1")
+    suspend fun peekOne(): CustomTagRow?
+
+    @Query("SELECT * FROM custom_tag ORDER BY id ASC")
+    suspend fun getAll(): List<CustomTagRow>
+
+    @Query("SELECT * FROM custom_tag ORDER BY id ASC")
+    fun observeAll(): Flow<List<CustomTagRow>>
+
+    @Query("DELETE FROM custom_tag WHERE id = :id")
+    suspend fun deleteById(id: String)
+
+    @Query("DELETE FROM custom_tag")
+    suspend fun deleteAll()
+}

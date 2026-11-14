@@ -4,21 +4,15 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,12 +20,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.smileproc.AppContainer
@@ -41,7 +33,10 @@ import com.example.smileproc.StorageBundle
 import com.example.smileproc.core.CardPeriod
 import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.ClusterID
-import com.example.smileproc.core.PlaceKind
+import com.example.smileproc.core.CustomTag
+import com.example.smileproc.core.Entry
+import com.example.smileproc.core.EntryExtras
+import com.example.smileproc.core.ReminderPause
 import com.example.smileproc.core.WeeklyCardBuilder
 import com.example.smileproc.core.WeeklyCardTime
 import com.example.smileproc.core.export.ExportException
@@ -49,6 +44,8 @@ import com.example.smileproc.data.DeleteAllManager
 import com.example.smileproc.data.ExportImportManager
 import com.example.smileproc.data.TagPickerMode
 import com.example.smileproc.notify.CheckInReceiver
+import com.example.smileproc.ui.components.GlassBottomNavBar
+import com.example.smileproc.ui.components.SmileProcBackground
 import com.example.smileproc.ui.history.HistoryScreen
 import com.example.smileproc.ui.places.PatternConfigCatalog
 import com.example.smileproc.ui.places.PlaceNamingSheet
@@ -63,6 +60,7 @@ import com.example.smileproc.ui.settings.RemindersScreen
 import com.example.smileproc.ui.settings.SettingsScreen
 import com.example.smileproc.ui.support.SupportScreen
 import com.example.smileproc.ui.tags.EmotionTagsCatalog
+import com.example.smileproc.ui.theme.LocalSmileProcColors
 import com.example.smileproc.ui.today.TodayScreen
 import com.example.smileproc.ui.week.PatternLibraryCatalog
 import com.example.smileproc.ui.week.WeekScreen
@@ -82,6 +80,8 @@ fun MainApp(
     container: AppContainer,
     storage: StorageBundle,
     modifier: Modifier = Modifier,
+    openNotificationFollowUp: Boolean = false,
+    onNotificationFollowUpHandled: () -> Unit = {},
 ) {
     val context = LocalContext.current
     var currentTab by rememberSaveable { mutableStateOf(AppTab.TODAY) }
@@ -95,6 +95,10 @@ fun MainApp(
         resolvePlaces(context, entries, placeLabels)
     }
 
+    val entryExtrasList by storage.entryExtrasRepository.observeAll().collectAsStateWithLifecycle(initialValue = emptyList())
+    val entryExtrasById = remember(entryExtrasList) { entryExtrasList.associateBy { it.entryId } }
+    val customTags by storage.customTagRepository.observeAll().collectAsStateWithLifecycle(initialValue = emptyList())
+
     val weeklyCards by storage.weeklyCardRepository.observeAllNewestFirst().collectAsStateWithLifecycle(initialValue = emptyList())
     val weeklyCardTime by container.settingsRepository.weeklyCardTime.collectAsStateWithLifecycle(initialValue = WeeklyCardTime.DEFAULT)
     val lastSeenWeeklyCardPeriodStart by container.settingsRepository.lastSeenWeeklyCardPeriodStart.collectAsStateWithLifecycle(initialValue = null)
@@ -104,6 +108,78 @@ fun MainApp(
     val standing by container.settingsRepository.standing.collectAsStateWithLifecycle(initialValue = true)
     val tagPickerMode by container.settingsRepository.tagPickerMode.collectAsStateWithLifecycle(initialValue = TagPickerMode.DETAILED)
     val appLock by container.settingsRepository.appLock.collectAsStateWithLifecycle(initialValue = false)
+    val reminderPause by container.settingsRepository.reminderPause.collectAsStateWithLifecycle(initialValue = ReminderPause.NONE)
+
+    var entriesLoaded by remember { mutableStateOf(false) }
+    LaunchedEffect(storage) {
+        storage.entryRepository.observeAllNewestFirst().collect { entriesLoaded = true }
+    }
+    var lastNotificationLoaded by remember { mutableStateOf(false) }
+    var lastNotificationPair by remember { mutableStateOf<Pair<String, Long>?>(null) }
+    LaunchedEffect(container) {
+        container.settingsRepository.lastNotificationEntry.collect { pair ->
+            lastNotificationPair = pair
+            lastNotificationLoaded = true
+        }
+    }
+    val recentNotificationEntryId = remember(lastNotificationPair, entries) {
+        val pair = lastNotificationPair ?: return@remember null
+        val ageMs = Instant.now().toEpochMilli() - pair.second
+        if (ageMs in 0..3_600_000L && entries.any { it.id == pair.first }) pair.first else null
+    }
+
+    LaunchedEffect(openNotificationFollowUp, lastNotificationLoaded, entriesLoaded, recentNotificationEntryId) {
+        if (openNotificationFollowUp) {
+            currentTab = AppTab.TODAY
+            showingHistory = false
+            activeSubScreen = null
+            if (lastNotificationLoaded && entriesLoaded && recentNotificationEntryId == null) {
+                onNotificationFollowUpHandled()
+            }
+        }
+    }
+
+    val saveEntryPreservingLocation: (Entry, Boolean) -> Unit = { entry, markRatedInApp ->
+        container.applicationScope.launch {
+            val existing = storage.entryRepository.getById(entry.id)
+            val toSave = if (existing?.location != null && entry.location == null) {
+                entry.copy(location = existing.location)
+            } else {
+                entry
+            }
+            storage.entryRepository.save(toSave)
+            if (markRatedInApp) {
+                CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.RatedInApp)
+            }
+        }
+    }
+    val deleteEntryAndExtras: (String) -> Unit = { id ->
+        container.applicationScope.launch {
+            storage.entryRepository.deleteById(id)
+            storage.entryExtrasRepository.deleteByEntryId(id)
+        }
+    }
+    val saveEntryExtras: (EntryExtras) -> Unit = { extras ->
+        container.applicationScope.launch {
+            storage.entryExtrasRepository.save(extras)
+        }
+    }
+    val createCustomTag: (CustomTag) -> Unit = { tag ->
+        container.applicationScope.launch {
+            storage.customTagRepository.save(tag)
+        }
+    }
+    val deleteCustomTag: (String) -> Unit = { id ->
+        container.applicationScope.launch {
+            storage.customTagRepository.deleteById(id)
+        }
+    }
+    val toggleTagPickerMode: () -> Unit = {
+        container.applicationScope.launch {
+            val next = if (tagPickerMode == TagPickerMode.GRADUAL) TagPickerMode.DETAILED else TagPickerMode.GRADUAL
+            container.settingsRepository.setTagPickerMode(next)
+        }
+    }
 
     val exportDoneMessage = stringResource(R.string.export_done)
     val exportFailedMessage = stringResource(R.string.export_failed)
@@ -227,62 +303,39 @@ fun MainApp(
         }
     }
 
+    val colors = LocalSmileProcColors.current
+    val latestMood = entries.firstOrNull()?.mood
+    SmileProcBackground(
+        latestMood = latestMood,
+        modifier = modifier,
+    ) {
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        bottomBar = {
-            if (!showingHistory && activeSubScreen == null) {
-                NavigationBar {
-                    NavigationBarItem(
-                        selected = currentTab == AppTab.TODAY,
-                        onClick = { currentTab = AppTab.TODAY },
-                        icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_tab_today),
-                                contentDescription = stringResource(R.string.tab_today),
-                            )
-                        },
-                        label = { Text(stringResource(R.string.tab_today)) },
-                    )
-                    NavigationBarItem(
-                        selected = currentTab == AppTab.WEEK,
-                        onClick = { currentTab = AppTab.WEEK },
-                        icon = {
-                            BadgedBox(
-                                badge = {
-                                    if (hasUnseenCard) {
-                                        Badge()
-                                    }
-                                },
-                            ) {
-                                Icon(
-                                    painter = painterResource(R.drawable.ic_tab_week),
-                                    contentDescription = stringResource(R.string.tab_week),
-                                )
-                            }
-                        },
-                        label = { Text(stringResource(R.string.tab_week)) },
-                    )
-                    NavigationBarItem(
-                        selected = currentTab == AppTab.SETTINGS,
-                        onClick = { currentTab = AppTab.SETTINGS },
-                        icon = {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_tab_settings),
-                                contentDescription = stringResource(R.string.tab_settings),
-                            )
-                        },
-                        label = { Text(stringResource(R.string.tab_settings)) },
-                    )
-                }
+        containerColor = Color.Transparent,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = {
+            SnackbarHost(snackbarHostState) { data ->
+                Snackbar(
+                    snackbarData = data,
+                    shape = RoundedCornerShape(16.dp),
+                    containerColor = colors.dialogContainer,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
             }
         },
-        modifier = modifier,
+        bottomBar = {
+            if (!showingHistory && activeSubScreen == null) {
+                GlassBottomNavBar(
+                    currentTab = currentTab,
+                    hasUnseenCard = hasUnseenCard,
+                    onSelectTab = { currentTab = it },
+                )
+            }
+        },
     ) { innerPadding ->
-        Surface(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            color = MaterialTheme.colorScheme.background,
         ) {
             if (activeSubScreen == "support") {
                 SupportScreen(
@@ -300,29 +353,9 @@ fun MainApp(
                             entries = entries,
                             places = places,
                             tagPickerMode = tagPickerMode,
-                            onTagPickerModeToggle = {
-                                container.applicationScope.launch {
-                                    val next = if (tagPickerMode == TagPickerMode.GRADUAL) TagPickerMode.DETAILED else TagPickerMode.GRADUAL
-                                    container.settingsRepository.setTagPickerMode(next)
-                                }
-                            },
-                            onSaveEntry = { entry ->
-                                container.applicationScope.launch {
-                                    val existing = storage.entryRepository.getById(entry.id)
-                                    val toSave = if (existing?.location != null && entry.location == null) {
-                                        entry.copy(location = existing.location)
-                                    } else {
-                                        entry
-                                    }
-                                    storage.entryRepository.save(toSave)
-                                    CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.RatedInApp)
-                                }
-                            },
-                            onDeleteEntry = { id ->
-                                container.applicationScope.launch {
-                                    storage.entryRepository.deleteById(id)
-                                }
-                            },
+                            onTagPickerModeToggle = toggleTagPickerMode,
+                            onSaveEntry = { entry -> saveEntryPreservingLocation(entry, true) },
+                            onDeleteEntry = deleteEntryAndExtras,
                             onSavePlaceLabel = { label ->
                                 container.applicationScope.launch {
                                     storage.placeRepository.save(label)
@@ -330,6 +363,11 @@ fun MainApp(
                             },
                             onNavigateBack = { showingHistory = false },
                             placeLabels = placeLabels,
+                            entryExtrasById = entryExtrasById,
+                            customTags = customTags,
+                            onSaveEntryExtras = saveEntryExtras,
+                            onCreateCustomTag = createCustomTag,
+                            onDeleteCustomTag = deleteCustomTag,
                         )
                     } else {
                         TodayScreen(
@@ -338,35 +376,9 @@ fun MainApp(
                             placeLabels = placeLabels,
                             lowRunDismissedEntryId = lowRunDismissedEntryId,
                             tagPickerMode = tagPickerMode,
-                            onTagPickerModeToggle = {
-                                container.applicationScope.launch {
-                                    val next = if (tagPickerMode == TagPickerMode.GRADUAL) TagPickerMode.DETAILED else TagPickerMode.GRADUAL
-                                    container.settingsRepository.setTagPickerMode(next)
-                                }
-                            },
-                            onSaveEntry = { entry ->
-                                container.applicationScope.launch {
-                                    val existing = storage.entryRepository.getById(entry.id)
-                                    val toSave = if (existing?.location != null && entry.location == null) {
-                                        entry.copy(location = existing.location)
-                                    } else {
-                                        entry
-                                    }
-                                    storage.entryRepository.save(toSave)
-                                    CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.RatedInApp)
-                                }
-                            },
-                            onUpdateEntry = { entry ->
-                                container.applicationScope.launch {
-                                    val existing = storage.entryRepository.getById(entry.id)
-                                    val toSave = if (existing?.location != null && entry.location == null) {
-                                        entry.copy(location = existing.location)
-                                    } else {
-                                        entry
-                                    }
-                                    storage.entryRepository.save(toSave)
-                                }
-                            },
+                            onTagPickerModeToggle = toggleTagPickerMode,
+                            onSaveEntry = { entry -> saveEntryPreservingLocation(entry, true) },
+                            onUpdateEntry = { entry -> saveEntryPreservingLocation(entry, false) },
                             onUpdateEntryDetails = { id, tags, comment ->
                                 container.applicationScope.launch {
                                     val existing = storage.entryRepository.getById(id)
@@ -381,11 +393,7 @@ fun MainApp(
                                     }
                                 }
                             },
-                            onDeleteEntry = { id ->
-                                container.applicationScope.launch {
-                                    storage.entryRepository.deleteById(id)
-                                }
-                            },
+                            onDeleteEntry = deleteEntryAndExtras,
                             onSavePlaceLabel = { label ->
                                 container.applicationScope.launch {
                                     storage.placeRepository.save(label)
@@ -416,12 +424,44 @@ fun MainApp(
                             },
                             onNavigateToHistory = { showingHistory = true },
                             onNavigateToSupport = { activeSubScreen = "support" },
+                            entryExtrasById = entryExtrasById,
+                            customTags = customTags,
+                            onSaveEntryExtras = saveEntryExtras,
+                            onCreateCustomTag = createCustomTag,
+                            onDeleteCustomTag = deleteCustomTag,
+                            recentNotificationEntryId = recentNotificationEntryId,
+                            openRecentFollowUp = openNotificationFollowUp && recentNotificationEntryId != null,
+                            onClearRecentNotificationFollowUp = {
+                                onNotificationFollowUpHandled()
+                                container.applicationScope.launch {
+                                    container.settingsRepository.clearLastNotificationEntry()
+                                }
+                            },
                         )
                     }
                 }
                 AppTab.WEEK -> {
                     WeekScreen(
                         entries = entries,
+                        places = places,
+                        placeLabels = placeLabels,
+                        weeklyCards = weeklyCards,
+                        weeklyCardTime = weeklyCardTime,
+                        entryExtrasById = entryExtrasById,
+                        customTags = customTags,
+                        tagPickerMode = tagPickerMode,
+                        onTagPickerModeToggle = toggleTagPickerMode,
+                        onSaveEntry = { entry -> saveEntryPreservingLocation(entry, false) },
+                        onDeleteEntry = deleteEntryAndExtras,
+                        onSavePlaceLabel = { label ->
+                            container.applicationScope.launch {
+                                storage.placeRepository.save(label)
+                            }
+                        },
+                        onSaveEntryExtras = saveEntryExtras,
+                        onCreateCustomTag = createCustomTag,
+                        onDeleteCustomTag = deleteCustomTag,
+                        onNavigateToSupport = { activeSubScreen = "support" },
                     )
                 }
                 AppTab.SETTINGS -> {
@@ -494,6 +534,7 @@ fun MainApp(
                                         container.settingsRepository.setAppLock(enabled)
                                     }
                                 },
+                                reminderPause = reminderPause,
                                 onNavigateToReminders = { activeSubScreen = "reminders" },
                                 onNavigateToLockScreenCheckIn = { activeSubScreen = "lockscreen" },
                                 onNavigateToPlaces = { activeSubScreen = "places" },
@@ -512,7 +553,8 @@ fun MainApp(
             }
         }
     }
-}
+    }
+    }
 
     if (namingClusterId != null) {
         val clusterIdStr = namingClusterId!!

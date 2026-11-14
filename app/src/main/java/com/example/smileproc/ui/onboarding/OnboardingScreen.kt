@@ -1,5 +1,16 @@
 package com.example.smileproc.ui.onboarding
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
@@ -118,27 +129,104 @@ fun OnboardingScreen(
         onComplete(configuredReminders, standingEnabled, appLockEnabled && canAuth)
     }
 
+    val smileColors = LocalSmileProcColors.current
     val scrollState = rememberScrollState()
     LaunchedEffect(step) {
         scrollState.scrollTo(0)
     }
 
-    Scaffold(modifier = modifier) { innerPadding ->
+    Scaffold(
+        containerColor = Color.Transparent,
+        modifier = modifier,
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(scrollState)
-                .padding(horizontal = 24.dp, vertical = 32.dp),
+                .padding(horizontal = 24.dp, vertical = 20.dp),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
+                // Subtle 5-step progress bar
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    repeat(5) { index ->
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(4.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    if (index <= step) smileColors.brandAccent else smileColors.chipFill,
+                                ),
+                        )
+                    }
+                }
+
                 when (step) {
                     0 -> {
-                        // Step 1: Privacy promise
+                        // Step 1: Privacy promise + quick language switcher
+                        val localeContext = androidx.compose.ui.platform.LocalContext.current
+                        val currentLang = com.example.smileproc.AppLocale.currentLanguage(localeContext)
+                        val activeCode = com.example.smileproc.AppLocale.effectiveLanguageCode(localeContext)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                        ) {
+                            val isEn = currentLang == com.example.smileproc.AppLanguage.EN ||
+                                (currentLang == com.example.smileproc.AppLanguage.SYSTEM && activeCode != "lt")
+                            androidx.compose.material3.FilterChip(
+                                selected = isEn,
+                                onClick = {
+                                    com.example.smileproc.AppLocale.setLanguage(
+                                        localeContext,
+                                        com.example.smileproc.AppLanguage.EN,
+                                    )
+                                },
+                                label = { Text(stringResource(R.string.language_english)) },
+                                shape = CircleShape,
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = smileColors.chipFill,
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                ),
+                                border = FilterChipDefaults.filterChipBorder(
+                                    enabled = true,
+                                    selected = isEn,
+                                    borderColor = smileColors.chipBorder,
+                                ),
+                                modifier = Modifier.heightIn(min = 48.dp),
+                            )
+                            val isLt = currentLang == com.example.smileproc.AppLanguage.LT ||
+                                (currentLang == com.example.smileproc.AppLanguage.SYSTEM && activeCode == "lt")
+                            androidx.compose.material3.FilterChip(
+                                selected = isLt,
+                                onClick = {
+                                    com.example.smileproc.AppLocale.setLanguage(
+                                        localeContext,
+                                        com.example.smileproc.AppLanguage.LT,
+                                    )
+                                },
+                                label = { Text(stringResource(R.string.language_lithuanian)) },
+                                shape = CircleShape,
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = smileColors.chipFill,
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                ),
+                                border = FilterChipDefaults.filterChipBorder(
+                                    enabled = true,
+                                    selected = isLt,
+                                    borderColor = smileColors.chipBorder,
+                                ),
+                                modifier = Modifier.heightIn(min = 48.dp),
+                            )
+                        }
+
                         Text(
                             text = stringResource(R.string.onboarding_privacy_title),
                             style = MaterialTheme.typography.headlineLarge,
@@ -149,17 +237,14 @@ fun OnboardingScreen(
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
-                        Card(
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            ),
-                            modifier = Modifier.fillMaxWidth(),
+                        GlassCard(
+                            highlighted = true,
+                            contentPadding = PaddingValues(18.dp),
                         ) {
                             Text(
                                 text = stringResource(R.string.onboarding_privacy_backup),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(16.dp),
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
                         }
                     }
@@ -175,17 +260,14 @@ fun OnboardingScreen(
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
-                        Card(
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                            ),
-                            modifier = Modifier.fillMaxWidth(),
+                        GlassCard(
+                            highlighted = true,
+                            contentPadding = PaddingValues(18.dp),
                         ) {
                             Text(
                                 text = stringResource(R.string.rationale_location),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(16.dp),
+                                color = MaterialTheme.colorScheme.onSurface,
                             )
                         }
                     }
@@ -203,62 +285,70 @@ fun OnboardingScreen(
                         )
 
                         // Reminders preview list
-                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             configuredReminders.forEach { reminder ->
                                 val timeStr = String.format(Locale.ROOT, "%02d:%02d", reminder.hour, reminder.minute)
                                 val deleteCd = stringResource(R.string.reminders_delete_cd, timeStr)
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 4.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
+                                GlassCard(
+                                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                                 ) {
-                                    Text(
-                                        text = timeStr,
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                    )
-                                    IconButton(
-                                        onClick = {
-                                            configuredReminders = configuredReminders.filterNot { it.id == reminder.id }
-                                        },
-                                        modifier = Modifier.semantics { contentDescription = deleteCd },
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
-                                        Icon(
-                                            painter = painterResource(R.drawable.ic_close),
-                                            contentDescription = deleteCd,
-                                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        Text(
+                                            text = timeStr,
+                                            style = MaterialTheme.typography.titleMedium,
+                                            color = MaterialTheme.colorScheme.onSurface,
                                         )
+                                        IconButton(
+                                            onClick = {
+                                                configuredReminders = configuredReminders.filterNot { it.id == reminder.id }
+                                            },
+                                            modifier = Modifier.semantics { contentDescription = deleteCd },
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(R.drawable.ic_close),
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
 
                         // Keep on lock screen toggle
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
+                        GlassCard(
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                         ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(
-                                    text = stringResource(R.string.settings_keep_checkin),
-                                    style = MaterialTheme.typography.titleMedium,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                )
-                                Text(
-                                    text = stringResource(R.string.lockscreen_row_keep_summary),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Column(
+                                    modifier = Modifier.weight(1f),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.settings_keep_checkin),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    )
+                                    Text(
+                                        text = stringResource(R.string.lockscreen_row_keep_summary),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Switch(
+                                    checked = standingEnabled,
+                                    onCheckedChange = { standingEnabled = it },
                                 )
                             }
-                            Switch(
-                                checked = standingEnabled,
-                                onCheckedChange = { standingEnabled = it },
-                            )
                         }
                     }
                     3 -> {
@@ -274,23 +364,27 @@ fun OnboardingScreen(
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                         val canAuth = remember(context) { com.example.smileproc.security.AppLockManager.canAuthenticate(context) }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
+                        GlassCard(
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
                         ) {
-                            Text(
-                                text = stringResource(R.string.settings_app_lock),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurface,
-                            )
-                            Switch(
-                                checked = appLockEnabled && canAuth,
-                                onCheckedChange = { appLockEnabled = it },
-                                enabled = canAuth,
-                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.settings_app_lock),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Switch(
+                                    checked = appLockEnabled && canAuth,
+                                    onCheckedChange = { appLockEnabled = it },
+                                    enabled = canAuth,
+                                )
+                            }
                         }
                     }
                     4 -> {
@@ -342,12 +436,16 @@ fun OnboardingScreen(
                                     }
                                 },
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = stringResource(R.string.lockscreen_app_only),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+                            GlassCard(
+                                highlighted = true,
+                                contentPadding = PaddingValues(16.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.lockscreen_app_only),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                )
+                            }
                         } else if (!readiness.visibilityPublic) {
                             CheckRow(
                                 title = stringResource(R.string.lockscreen_row_visibility),
@@ -379,11 +477,16 @@ fun OnboardingScreen(
                         }
 
                         if (testSent) {
-                            Text(
-                                text = stringResource(R.string.lockscreen_lock_now),
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
+                            GlassCard(
+                                highlighted = true,
+                                contentPadding = PaddingValues(16.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.lockscreen_lock_now),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
                         } else {
                             OutlinedButton(
                                 onClick = {
@@ -392,7 +495,10 @@ fun OnboardingScreen(
                                         CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.TestRequested)
                                     }
                                 },
-                                modifier = Modifier.fillMaxWidth(),
+                                shape = CircleShape,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .heightIn(min = 50.dp),
                             ) {
                                 Text(stringResource(R.string.lockscreen_send_test))
                             }
@@ -401,7 +507,7 @@ fun OnboardingScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(28.dp))
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -412,9 +518,10 @@ fun OnboardingScreen(
                         val nextLabel = stringResource(R.string.action_next)
                         Button(
                             onClick = { step = 1 },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 48.dp)
+                                .heightIn(min = 50.dp)
                                 .semantics { contentDescription = nextLabel },
                         ) {
                             Text(nextLabel)
@@ -431,9 +538,10 @@ fun OnboardingScreen(
                                     ),
                                 )
                             },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 48.dp)
+                                .heightIn(min = 50.dp)
                                 .semantics { contentDescription = allowLabel },
                         ) {
                             Text(allowLabel)
@@ -442,6 +550,7 @@ fun OnboardingScreen(
                         val skipLabel = stringResource(R.string.action_skip)
                         TextButton(
                             onClick = { step = 2 },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
@@ -460,9 +569,10 @@ fun OnboardingScreen(
                                     step = 3
                                 }
                             },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 48.dp)
+                                .heightIn(min = 50.dp)
                                 .semantics { contentDescription = allowLabel },
                         ) {
                             Text(allowLabel)
@@ -471,6 +581,7 @@ fun OnboardingScreen(
                         val skipLabel = stringResource(R.string.action_skip)
                         TextButton(
                             onClick = { step = 3 },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(min = 48.dp)
@@ -483,9 +594,10 @@ fun OnboardingScreen(
                         val nextLabel = stringResource(R.string.action_next)
                         Button(
                             onClick = { step = 4 },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 48.dp)
+                                .heightIn(min = 50.dp)
                                 .semantics { contentDescription = nextLabel },
                         ) {
                             Text(nextLabel)
@@ -495,9 +607,10 @@ fun OnboardingScreen(
                         val startLabel = stringResource(R.string.onboarding_start)
                         Button(
                             onClick = { finishOnboarding() },
+                            shape = CircleShape,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(min = 48.dp)
+                                .heightIn(min = 50.dp)
                                 .semantics { contentDescription = startLabel },
                         ) {
                             Text(startLabel)

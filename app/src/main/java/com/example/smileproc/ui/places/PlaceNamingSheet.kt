@@ -1,5 +1,11 @@
 package com.example.smileproc.ui.places
 
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilterChipDefaults
+import com.example.smileproc.ui.components.GlassModalBottomSheet
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -9,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,7 +24,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -134,7 +140,8 @@ fun PlaceNamingSheet(
         dismissSheet()
     }
 
-    ModalBottomSheet(
+    val smileColors = LocalSmileProcColors.current
+    GlassModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
         modifier = modifier,
@@ -142,6 +149,7 @@ fun PlaceNamingSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .navigationBarsPadding()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 24.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -170,6 +178,16 @@ fun PlaceNamingSheet(
                         selectedKind = PlaceKind.HOME
                     },
                     label = { Text(homeLabel) },
+                    shape = CircleShape,
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = smileColors.chipFill,
+                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ),
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = nameInput == homeLabel && selectedKind == PlaceKind.HOME,
+                        borderColor = smileColors.chipBorder,
+                    ),
                     modifier = Modifier.heightIn(min = 48.dp),
                 )
                 FilterChip(
@@ -179,6 +197,16 @@ fun PlaceNamingSheet(
                         selectedKind = PlaceKind.WORK
                     },
                     label = { Text(workLabel) },
+                    shape = CircleShape,
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = smileColors.chipFill,
+                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ),
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = nameInput == workLabel && selectedKind == PlaceKind.WORK,
+                        borderColor = smileColors.chipBorder,
+                    ),
                     modifier = Modifier.heightIn(min = 48.dp),
                 )
             }
@@ -188,6 +216,7 @@ fun PlaceNamingSheet(
                 onValueChange = { nameInput = it },
                 label = { Text(stringResource(R.string.place_name_custom_hint)) },
                 singleLine = true,
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth(),
             )
 
@@ -206,18 +235,48 @@ fun PlaceNamingSheet(
                         selected = selectedKind == PlaceKind.HOME,
                         onClick = { selectedKind = PlaceKind.HOME },
                         label = { Text(homeLabel) },
+                        shape = CircleShape,
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = smileColors.chipFill,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = selectedKind == PlaceKind.HOME,
+                            borderColor = smileColors.chipBorder,
+                        ),
                         modifier = Modifier.heightIn(min = 48.dp),
                     )
                     FilterChip(
                         selected = selectedKind == PlaceKind.WORK,
                         onClick = { selectedKind = PlaceKind.WORK },
                         label = { Text(workLabel) },
+                        shape = CircleShape,
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = smileColors.chipFill,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = selectedKind == PlaceKind.WORK,
+                            borderColor = smileColors.chipBorder,
+                        ),
                         modifier = Modifier.heightIn(min = 48.dp),
                     )
                     FilterChip(
                         selected = selectedKind == PlaceKind.OTHER,
                         onClick = { selectedKind = PlaceKind.OTHER },
                         label = { Text(otherLabel) },
+                        shape = CircleShape,
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = smileColors.chipFill,
+                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = selectedKind == PlaceKind.OTHER,
+                            borderColor = smileColors.chipBorder,
+                        ),
                         modifier = Modifier.heightIn(min = 48.dp),
                     )
                 }
@@ -233,6 +292,7 @@ fun PlaceNamingSheet(
             ) {
                 TextButton(
                     onClick = { dismissSheet() },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(cancelLabel)
@@ -241,6 +301,7 @@ fun PlaceNamingSheet(
                 Button(
                     onClick = { checkMergeAndSave() },
                     enabled = nameInput.trim().isNotEmpty(),
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(saveActionLabel)
@@ -257,12 +318,15 @@ fun PlaceNamingSheet(
                 saveLabelDirectly()
                 pendingMergeCandidate = null
             },
+            containerColor = smileColors.dialogContainer,
+            shape = RoundedCornerShape(28.dp),
             title = {
                 Text(stringResource(R.string.place_name_merge, candidate.name))
             },
             confirmButton = {
                 TextButton(
                     onClick = { mergeIntoCandidate(candidate) },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(stringResource(R.string.action_yes))
@@ -275,6 +339,7 @@ fun PlaceNamingSheet(
                         pendingMergeCandidate = null
                         saveLabelDirectly()
                     },
+                    shape = CircleShape,
                     modifier = Modifier.heightIn(min = 48.dp),
                 ) {
                     Text(stringResource(R.string.action_no))

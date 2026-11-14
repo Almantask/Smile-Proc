@@ -1,5 +1,10 @@
 package com.example.smileproc.ui.privacy
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.graphics.Color
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.GlassTopBar
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,20 +46,11 @@ fun PrivacyScreen(
     BackHandler(onBack = onNavigateBack)
 
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.settings_privacy)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateBack,
-                        modifier = Modifier.semantics { contentDescription = backLabel },
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_back),
-                            contentDescription = null,
-                        )
-                    }
-                },
+            GlassTopBar(
+                title = stringResource(R.string.settings_privacy),
+                onNavigateBack = onNavigateBack,
             )
         },
         modifier = modifier,
@@ -64,8 +60,8 @@ fun PrivacyScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             PrivacyCard(
                 title = stringResource(R.string.privacy_title),
@@ -93,18 +89,17 @@ private fun PrivacyCard(
     body: String?,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        contentPadding = PaddingValues(18.dp),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             if (body != null) {
                 Text(

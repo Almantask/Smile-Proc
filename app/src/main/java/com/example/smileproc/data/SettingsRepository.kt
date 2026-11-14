@@ -11,11 +11,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.example.smileproc.core.CanonicalJson
 import com.example.smileproc.core.CheckInMachine
 import com.example.smileproc.core.Reminder
+import com.example.smileproc.core.ReminderPause
 import com.example.smileproc.core.WeeklyCardTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.serializer
 import java.io.IOException
 import java.time.Instant
 
@@ -43,6 +46,9 @@ interface SettingsRepository {
     val weeklyCardTime: Flow<WeeklyCardTime>
     val lastSeenWeeklyCardPeriodStart: Flow<Instant?>
     val appLock: Flow<Boolean>
+    val reminderWindows: Flow<Map<String, Int>>
+    val reminderPause: Flow<ReminderPause>
+    val lastNotificationEntry: Flow<Pair<String, Long>?>
 
     suspend fun setCaptureLocation(enabled: Boolean)
     suspend fun setOnboardingCompleted(completed: Boolean)
@@ -58,6 +64,10 @@ interface SettingsRepository {
     suspend fun setWeeklyCardTime(time: WeeklyCardTime)
     suspend fun setLastSeenWeeklyCardPeriodStart(periodStart: Instant?)
     suspend fun setAppLock(enabled: Boolean)
+    suspend fun setReminderWindows(windows: Map<String, Int>)
+    suspend fun setReminderPause(pause: ReminderPause)
+    suspend fun setLastNotificationEntry(entryId: String, savedAtEpochMillis: Long)
+    suspend fun clearLastNotificationEntry()
     suspend fun clearAll()
 }
 
@@ -168,8 +178,80 @@ class DataStoreSettingsRepository(
         .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
         .map { prefs -> prefs[KEY_APP_LOCK] ?: false }
 
+    override val reminderWindows: Flow<Map<String, Int>> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs ->
+            val raw = prefs[KEY_REMINDER_WINDOWS]
+            if (raw == null) {
+                emptyMap()
+            } else {
+                try {
+                    CanonicalJson.json.decodeFromString(
+                        MapSerializer(String.serializer(), Int.serializer()),
+                        raw,
+                    )
+                } catch (e: Exception) {
+                    emptyMap()
+                }
+            }
+        }
+
+    override val reminderPause: Flow<ReminderPause> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs ->
+            val raw = prefs[KEY_REMINDER_PAUSE]
+            if (raw == null) {
+                ReminderPause.NONE
+            } else {
+                try {
+                    ReminderPause.decode(raw)
+                } catch (e: Exception) {
+                    ReminderPause.NONE
+                }
+            }
+        }
+
+    override val lastNotificationEntry: Flow<Pair<String, Long>?> = dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { prefs ->
+            val raw = prefs[KEY_LAST_NOTIFICATION_ENTRY] ?: return@map null
+            val sep = raw.indexOf('|')
+            if (sep <= 0) {
+                null
+            } else {
+                val id = raw.substring(0, sep)
+                val ts = raw.substring(sep + 1).toLongOrNull()
+                if (ts != null) id to ts else null
+            }
+        }
+
     override suspend fun setAppLock(enabled: Boolean) {
         dataStore.edit { it[KEY_APP_LOCK] = enabled }
+    }
+
+    override suspend fun setReminderWindows(windows: Map<String, Int>) {
+        dataStore.edit {
+            it[KEY_REMINDER_WINDOWS] = CanonicalJson.json.encodeToString(
+                MapSerializer(String.serializer(), Int.serializer()),
+                windows,
+            )
+        }
+    }
+
+    override suspend fun setReminderPause(pause: ReminderPause) {
+        dataStore.edit {
+            it[KEY_REMINDER_PAUSE] = ReminderPause.encode(pause)
+        }
+    }
+
+    override suspend fun setLastNotificationEntry(entryId: String, savedAtEpochMillis: Long) {
+        dataStore.edit {
+            it[KEY_LAST_NOTIFICATION_ENTRY] = "$entryId|$savedAtEpochMillis"
+        }
+    }
+
+    override suspend fun clearLastNotificationEntry() {
+        dataStore.edit { it.remove(KEY_LAST_NOTIFICATION_ENTRY) }
     }
 
     override suspend fun setCaptureLocation(enabled: Boolean) {
@@ -267,5 +349,8 @@ class DataStoreSettingsRepository(
         val KEY_WEEKLY_CARD_TIME = stringPreferencesKey("weekly_card_time")
         val KEY_LAST_SEEN_WEEKLY_CARD = stringPreferencesKey("last_seen_weekly_card")
         val KEY_APP_LOCK = booleanPreferencesKey("app_lock")
+        val KEY_REMINDER_WINDOWS = stringPreferencesKey("reminder_windows")
+        val KEY_REMINDER_PAUSE = stringPreferencesKey("reminder_pause")
+        val KEY_LAST_NOTIFICATION_ENTRY = stringPreferencesKey("last_notification_entry")
     }
 }

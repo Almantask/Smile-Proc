@@ -16,13 +16,14 @@ import com.example.smileproc.ui.tags.resolveTagLabel
 import java.util.Locale
 
 object PatternLibraryCatalog {
-    private var cached: PatternLibrary? = null
+    private val cached = java.util.concurrent.ConcurrentHashMap<String, PatternLibrary>()
 
     fun get(context: Context): PatternLibrary {
-        cached?.let { return it }
-        val json = context.assets.open("pattern-library.en.json").bufferedReader().use { it.readText() }
+        val lang = if (com.example.smileproc.AppLocale.effectiveLanguageCode(context) == "lt") "lt" else "en"
+        cached[lang]?.let { return it }
+        val json = context.assets.open("pattern-library.$lang.json").bufferedReader().use { it.readText() }
         val parsed = PatternLibrary.fromJson(json)
-        cached = parsed
+        cached[lang] = parsed
         return parsed
     }
 }
@@ -56,7 +57,9 @@ object WeeklyCardRenderer {
         val segmentStr = pattern.params.segment?.let { resolveSegmentString(context, it) }
         val weekdayStr = pattern.params.weekday?.let { resolveWeekdayString(context, it) }
         val (placeStr, unnamedClusterId) = resolvePlaceInfo(context, pattern, labels, places)
-        val tagStr = pattern.params.tag?.let { context.resolveTagLabel(it).lowercase(Locale.getDefault()) }
+        val tagStr = pattern.params.tag?.let {
+            context.resolveTagLabel(it).lowercase(com.example.smileproc.AppLocale.effectiveLocale(context))
+        }
 
         val renderedCopy = libraryEntry.render(
             segment = segmentStr,

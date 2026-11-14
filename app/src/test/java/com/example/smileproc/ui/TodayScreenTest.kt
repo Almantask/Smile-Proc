@@ -104,4 +104,67 @@ class TodayScreenTest {
         assertEquals("Walking in the park", updatedEntry?.comment)
         assertEquals(Mood.OKAY, updatedEntry?.mood)
     }
+
+    @Test
+    fun notificationDeepLinkOpensFollowUpSheetAndSavesBookmarkContextAndCustomTag() {
+        val recentEntry = Entry(
+            id = "00000000-0000-4000-8000-000000000011",
+            createdAt = Instant.now(),
+            updatedAt = Instant.now(),
+            timeZoneID = "UTC",
+            mood = Mood.OKAY,
+            tags = emptyList(),
+            comment = null,
+            location = null,
+            source = EntrySource.NOTIFICATION,
+        )
+        var savedExtras: com.example.smileproc.core.EntryExtras? = null
+        var createdTag: com.example.smileproc.core.CustomTag? = null
+        var clearedFollowUp = false
+
+        composeTestRule.setContent {
+            TodayScreen(
+                entries = listOf(recentEntry),
+                places = null,
+                lowRunDismissedEntryId = null,
+                tagPickerMode = TagPickerMode.DETAILED,
+                onTagPickerModeToggle = {},
+                onSaveEntry = {},
+                onUpdateEntry = {},
+                onDeleteEntry = {},
+                onSavePlaceLabel = {},
+                onDismissLowRun = {},
+                onResetLowRunDismissed = {},
+                onCaptureLocationForEntry = {},
+                onNavigateToHistory = {},
+                onSaveEntryExtras = { savedExtras = it },
+                onCreateCustomTag = { createdTag = it },
+                recentNotificationEntryId = recentEntry.id,
+                openRecentFollowUp = true,
+                onClearRecentNotificationFollowUp = { clearedFollowUp = true },
+            )
+        }
+
+        // FollowUpSheet opens automatically for the recent notification entry
+        composeTestRule.onNodeWithText("Saved").assertIsDisplayed()
+        assertTrue(clearedFollowUp)
+
+        // Toggle bookmark and Sleep context chip
+        composeTestRule.onNodeWithText("Save moment").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Sleep").performScrollTo().performClick()
+
+        // Create a personal custom tag inline
+        composeTestRule.onNodeWithText("New tag").performScrollTo().performClick()
+        composeTestRule.onNodeWithText("Walk, Coffee, Reading…").performTextInput("Reading")
+        composeTestRule.onNodeWithText("Save").performClick()
+
+        composeTestRule.onNodeWithText("Done").performScrollTo().performClick()
+
+        assertNotNull(createdTag)
+        assertEquals("Reading", createdTag?.label)
+        assertNotNull(savedExtras)
+        assertTrue(savedExtras?.bookmarked == true)
+        assertTrue(savedExtras?.contextTags?.contains(com.example.smileproc.core.BuiltInContextTag.SLEEP.id) == true)
+        assertTrue(savedExtras?.customTagIds?.contains(createdTag?.id) == true)
+    }
 }

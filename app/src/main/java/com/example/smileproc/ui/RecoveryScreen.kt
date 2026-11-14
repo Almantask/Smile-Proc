@@ -2,6 +2,7 @@ package com.example.smileproc.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,12 +13,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -34,6 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.smileproc.R
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.SmileProcBackground
+import com.example.smileproc.ui.theme.LocalSmileProcColors
 import com.example.smileproc.ui.theme.SmileProcTheme
 
 /**
@@ -53,41 +58,44 @@ fun RecoveryScreen(
     val importLabel = stringResource(R.string.recovery_import)
     val startFreshLabel = stringResource(R.string.recovery_start_fresh)
     val cancelLabel = stringResource(R.string.action_cancel)
+    val colors = LocalSmileProcColors.current
 
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .safeDrawingPadding()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp, vertical = 32.dp),
+        contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-            horizontalAlignment = Alignment.CenterHorizontally,
+        GlassCard(
+            modifier = Modifier.widthIn(max = 480.dp),
+            highlighted = true,
         ) {
             Column(
-                modifier = Modifier.widthIn(max = 480.dp),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
                     text = stringResource(R.string.recovery_title),
                     style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                 )
                 Text(
                     text = stringResource(R.string.recovery_body),
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = onImportExport,
+                    shape = CircleShape,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = 50.dp)
                         .semantics { contentDescription = importLabel },
                 ) {
                     Text(
@@ -97,9 +105,10 @@ fun RecoveryScreen(
                 }
                 OutlinedButton(
                     onClick = { showStartFreshConfirm = true },
+                    shape = CircleShape,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 48.dp)
+                        .heightIn(min = 50.dp)
                         .semantics { contentDescription = startFreshLabel },
                 ) {
                     Text(
@@ -114,6 +123,8 @@ fun RecoveryScreen(
     if (showStartFreshConfirm) {
         AlertDialog(
             onDismissRequest = { showStartFreshConfirm = false },
+            containerColor = colors.dialogContainer,
+            shape = RoundedCornerShape(28.dp),
             title = {
                 Text(text = startFreshLabel)
             },
@@ -160,9 +171,11 @@ fun RecoveryScreen(
 @Composable
 private fun RecoveryScreenPreview() {
     SmileProcTheme {
-        RecoveryScreen(
-            onImportExport = {},
-            onStartFresh = {},
-        )
+        SmileProcBackground {
+            RecoveryScreen(
+                onImportExport = {},
+                onStartFresh = {},
+            )
+        }
     }
 }

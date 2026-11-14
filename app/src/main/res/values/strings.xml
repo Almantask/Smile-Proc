@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App -->
-    <string name="app_name">SmileProc</string>
+    <string name="app_name" translatable="false">SmileProc</string>
     <string name="hello_body">This is the start of SmileProc.</string>
 
     <!-- Common -->
@@ -28,7 +28,7 @@
     <!-- The one check-in notification. Its text is only ever one of the four below. -->
     <string name="notification_channel_name">Check-ins</string>
     <string name="notification_channel_description">Your check-in reminders and the check-in on your lock screen.</string>
-    <string name="notification_title">SmileProc</string>
+    <string name="notification_title" translatable="false">SmileProc</string>
     <string name="notification_text_ask">How are you right now?</string>
     <string name="notification_text_saved">Saved ✓</string>
     <string name="notification_text_test_done">It works ✓</string>
@@ -231,6 +231,13 @@
     <string name="weekday_5">Friday</string>
     <string name="weekday_6">Saturday</string>
     <string name="weekday_7">Sunday</string>
+    <string name="weekday_short_1">Mon</string>
+    <string name="weekday_short_2">Tue</string>
+    <string name="weekday_short_3">Wed</string>
+    <string name="weekday_short_4">Thu</string>
+    <string name="weekday_short_5">Fri</string>
+    <string name="weekday_short_6">Sat</string>
+    <string name="weekday_short_7">Sun</string>
 
     <!-- History and entry detail -->
     <string name="history_title">All entries</string>
@@ -296,6 +303,7 @@
     <string name="week_hour_8pm">8 PM</string>
     <string name="week_hour_am">%1$d AM</string>
     <string name="week_hour_pm">%1$d PM</string>
+    <string name="week_hour_24" translatable="false">%1$02d:00</string>
     <string name="week_most_checkins_between">Most check-ins are between %1$s and %2$s</string>
     <string name="week_no_checkins">No check-ins this week</string>
     <string name="week_legend_prefix">Check-ins:</string>
@@ -425,6 +433,11 @@
     <string name="settings_privacy">Privacy</string>
     <string name="settings_privacy_summary">What\'s stored and where</string>
     <string name="settings_delete_all">Delete all data</string>
+    <string name="settings_language">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_lithuanian" translatable="false">Lietuvių</string>
+    <string name="onboarding_language_cd">Change language</string>
     <string name="settings_about">About</string>
     <string name="about_tagline">Private mood check-in app.</string>
     <string name="about_body">Encrypted storage on this phone. Zero network.</string>
@@ -513,4 +526,106 @@
     <string name="app_lock_prompt_title">Unlock SmileProc</string>
     <string name="app_lock_locked_title">SmileProc is locked</string>
     <string name="app_lock_unlock">Unlock</string>
+
+    <!-- Deeper reflection: Week, Month Rhythm, Insights -->
+    <string name="week_subtab_week">Week</string>
+    <string name="week_subtab_month">Month</string>
+    <string name="week_subtab_insights">Insights</string>
+    <string name="week_tap_dot_hint">Tap any smiley on the chart to view or edit it</string>
+    <string name="week_entry_preview_open">Open check-in</string>
+    <string name="week_highlight_clear">Clear</string>
+    <plurals name="week_highlighting_count">
+        <item quantity="one">Highlighting %1$d matching check-in</item>
+        <item quantity="other">Highlighting %1$d matching check-ins</item>
+    </plurals>
+    <string name="week_insights_section">This week\'s notes</string>
+    <string name="week_pattern_early_hint">Early hint</string>
+    <string name="week_pattern_tap_highlight">Tap to highlight on chart</string>
+    <string name="week_pattern_name_place">Name this place</string>
+    <string name="week_card_no_entries_yet">A few check-ins across the week will gather your gentle observations here.</string>
+    <string name="week_low_card_title">A heavier week</string>
+    <string name="week_low_card_body">Most check-ins this week felt low. If you want someone in your corner, support options are one tap away.</string>
+    <string name="week_low_card_cta">Talk to someone</string>
+
+    <string name="rhythm_window_30">30 days</string>
+    <string name="rhythm_window_90">90 days</string>
+    <string name="rhythm_mosaic_title">Day by day</string>
+    <plurals name="rhythm_checkins_count">
+        <item quantity="one">%1$d check-in</item>
+        <item quantity="other">%1$d check-ins</item>
+    </plurals>
+    <plurals name="rhythm_days_count">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <string name="rhythm_daypart_title">Time of day</string>
+    <string name="rhythm_weekday_title">Day of the week</string>
+    <string name="rhythm_empty_day">%1$s: no check-ins</string>
+    <string name="rhythm_day_summary_a11y">%1$s: %2$s</string>
+    <string name="rhythm_no_data">Check in across a few days to see your rhythm over the month.</string>
+
+    <string name="insights_feelings_title">Feelings by mood</string>
+    <string name="insights_context_title">Context &amp; personal tags</string>
+    <string name="insights_places_title">Places</string>
+    <string name="insights_no_tags_yet">Add feelings or context tags when checking in to see what shows up alongside each mood.</string>
+    <string name="insights_no_places_yet">Turn on approximate location in Settings to see calm summaries by place.</string>
+    <string name="insights_mood_breakdown_counts">%1$d good · %2$d okay · %3$d low</string>
+    <string name="insights_top_tags_prefix">Often with: %1$s</string>
+
+    <!-- History search and filters -->
+    <string name="history_search_hint">Search notes, tags, or places</string>
+    <string name="history_search_clear">Clear search</string>
+    <string name="history_filter_toggle">Filter check-ins</string>
+    <string name="history_filter_saved_moments">Saved moments</string>
+    <string name="history_filter_with_note">With note</string>
+    <string name="history_filter_clear">Reset filters</string>
+    <string name="history_filter_empty_title">No check-ins match these filters</string>
+    <string name="history_filter_empty_body">Try clearing a chip or broadening your search.</string>
+
+    <!-- Richer check-in context, personal tags, prompts, bookmarks -->
+    <string name="today_followup_recent_banner">Add tags or a note to your recent check-in</string>
+    <string name="followup_bookmark_label">Save moment</string>
+    <string name="followup_bookmarked_label">Saved moment</string>
+    <string name="followup_context_title">What was around you? (optional)</string>
+    <string name="followup_custom_tags_title">Personal tags</string>
+    <string name="followup_custom_tag_add">New tag</string>
+    <string name="followup_custom_tag_dialog_title">New personal tag</string>
+    <string name="followup_custom_tag_hint">Walk, Coffee, Reading…</string>
+    <string name="followup_custom_tag_delete">Remove tag %1$s</string>
+    <string name="followup_custom_tag_max_reached">Limit of %1$d personal tags reached</string>
+
+    <string name="ctx_sleep">Sleep</string>
+    <string name="ctx_movement">Movement</string>
+    <string name="ctx_outdoors">Outdoors</string>
+    <string name="ctx_social">People</string>
+    <string name="ctx_work">Work</string>
+    <string name="ctx_solo">Solo</string>
+    <string name="ctx_rest">Rest</string>
+    <string name="ctx_food">Food</string>
+
+    <string name="note_prompt_1">Anything you\'d like to remember about right now?</string>
+    <string name="note_prompt_2">What helped or felt heavy just now?</string>
+    <string name="note_prompt_3">A few words about where you are or what\'s happening…</string>
+    <string name="note_prompt_4">Leave yourself a quiet note (optional)</string>
+
+    <!-- Gentler reminders: Pause, Flexible timing, Edit, Accessibility -->
+    <string name="reminders_pause_title">Take a break from reminders</string>
+    <string name="reminders_pause_action">Pause</string>
+    <string name="reminders_resume_action">Resume</string>
+    <string name="reminders_paused_until">Paused until %1$s</string>
+    <string name="reminders_paused_indefinitely">Paused until you resume</string>
+    <string name="reminders_pause_tomorrow">Until tomorrow</string>
+    <string name="reminders_pause_three_days">For 3 days</string>
+    <string name="reminders_pause_indefinite">Until I resume</string>
+    <string name="reminders_edit_title">Edit reminder</string>
+    <string name="reminders_window_label">Timing flexibility</string>
+    <string name="reminders_window_exact">Exact time</string>
+    <string name="reminders_window_plus_minus">±%1$d min</string>
+    <string name="reminders_window_helper">Shifts each day by a small random offset within this window.</string>
+    <string name="reminders_duplicate_notice">A reminder at this time already exists — updated existing one</string>
+    <string name="time_picker_increase">Increase %1$s</string>
+    <string name="time_picker_decrease">Decrease %1$s</string>
+    <string name="reminders_hour_label">hour</string>
+    <string name="reminders_minute_label">minutes</string>
+    <string name="settings_reminders_paused">Paused</string>
 </resources>

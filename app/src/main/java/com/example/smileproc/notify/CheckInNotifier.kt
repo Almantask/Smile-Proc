@@ -31,6 +31,7 @@ object CheckInNotifier {
     const val ID_CHECKIN = CheckInMachine.ID_CHECKIN
 
     const val REQUEST_CONTENT = 0
+    const val REQUEST_CONTENT_FOLLOWUP = 7
     const val REQUEST_RATE_LOW = 1
     const val REQUEST_RATE_OKAY = 2
     const val REQUEST_RATE_GOOD = 3
@@ -41,14 +42,22 @@ object CheckInNotifier {
     const val REQUEST_TEST_OKAY = 12
     const val REQUEST_TEST_GOOD = 13
 
+    /**
+     * Privacy-safe intent extra indicating the user tapped the `"Saved ✓"` notification so the
+     * app can open the follow-up tag/note sheet after passing App Lock (if enabled).
+     * Carries no mood, entry ID, tag, comment, or location data.
+     */
+    const val EXTRA_OPEN_FOLLOWUP = "com.example.smileproc.extra.OPEN_FOLLOWUP"
+
     fun ensureChannel(context: Context) {
+        val localized = com.example.smileproc.AppLocale.wrapContext(context)
         val manager = context.getSystemService(NotificationManager::class.java) ?: return
         val channel = NotificationChannel(
             CHANNEL_ID,
-            context.getString(R.string.notification_channel_name),
+            localized.getString(R.string.notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT,
         ).apply {
-            description = context.getString(R.string.notification_channel_description)
+            description = localized.getString(R.string.notification_channel_description)
             lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             setShowBadge(false)
         }
@@ -56,7 +65,8 @@ object CheckInNotifier {
     }
 
     fun build(context: Context, state: CheckInMachine.State, ongoing: Boolean): Notification {
-        ensureChannel(context)
+        val localized = com.example.smileproc.AppLocale.wrapContext(context)
+        ensureChannel(localized)
         val copyKey = CheckInMachine.notificationCopyKey(state)
             ?: throw IllegalArgumentException("Cannot build notification for state $state")
 
@@ -67,11 +77,13 @@ object CheckInNotifier {
             CheckInMachine.NotificationCopyKey.FAILED -> R.string.notification_text_failed
         }
 
+        val isSaved = state == CheckInMachine.State.Saved
         val contentIntent = PendingIntent.getActivity(
             context,
-            REQUEST_CONTENT,
+            if (isSaved) REQUEST_CONTENT_FOLLOWUP else REQUEST_CONTENT,
             Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra(EXTRA_OPEN_FOLLOWUP, isSaved)
             },
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
@@ -87,8 +99,8 @@ object CheckInNotifier {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_face)
-            .setContentTitle(context.getString(R.string.notification_title))
-            .setContentText(context.getString(textRes))
+            .setContentTitle(localized.getString(R.string.notification_title))
+            .setContentText(localized.getString(textRes))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setShowWhen(false)
@@ -127,7 +139,7 @@ object CheckInNotifier {
                     rateIntent,
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
                 )
-                val action = NotificationCompat.Action.Builder(0, context.getString(stringRes), pending)
+                val action = NotificationCompat.Action.Builder(0, localized.getString(stringRes), pending)
                     .setAuthenticationRequired(false)
                     .setShowsUserInterface(false)
                     .build()

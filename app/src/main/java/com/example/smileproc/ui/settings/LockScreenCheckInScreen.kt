@@ -1,5 +1,16 @@
 package com.example.smileproc.ui.settings
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.GlassTopBar
+import com.example.smileproc.ui.theme.LocalSmileProcColors
+
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationManager
@@ -118,18 +129,13 @@ fun LockScreenCheckInScreen(
         readiness = checkReadiness(context)
     }
 
+    val smileColors = LocalSmileProcColors.current
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.lockscreen_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_back),
-                            contentDescription = stringResource(R.string.action_back),
-                        )
-                    }
-                },
+            GlassTopBar(
+                title = stringResource(R.string.lockscreen_title),
+                onNavigateBack = onNavigateBack,
             )
         },
         modifier = modifier,
@@ -139,15 +145,15 @@ fun LockScreenCheckInScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+                .padding(horizontal = 20.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = stringResource(R.string.lockscreen_intro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
             )
-
-            Spacer(modifier = Modifier.height(24.dp))
 
             // Row 1: Notifications allowed
             CheckRow(
@@ -169,8 +175,6 @@ fun LockScreenCheckInScreen(
                 },
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             // Row 2: Check-ins turned on
             CheckRow(
                 title = stringResource(R.string.lockscreen_row_channel),
@@ -185,8 +189,6 @@ fun LockScreenCheckInScreen(
                     context.startActivity(intent)
                 },
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             // Row 3: Shown on lock screen
             CheckRow(
@@ -203,102 +205,115 @@ fun LockScreenCheckInScreen(
                 },
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
             // Row 4: Keep a check-in on the lock screen toggle
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+            GlassCard(
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
             ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = stringResource(R.string.lockscreen_row_keep),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
-                    Text(
-                        text = stringResource(R.string.lockscreen_row_keep_summary),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.lockscreen_row_keep),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        Text(
+                            text = stringResource(R.string.lockscreen_row_keep_summary),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Switch(
+                        checked = standing,
+                        onCheckedChange = { isChecked ->
+                            scope.launch {
+                                container.settingsRepository.setStanding(isChecked)
+                                CheckInReceiver.dispatchMachineEvent(
+                                    context,
+                                    if (isChecked) CheckInMachine.Event.StandingTurnedOn else CheckInMachine.Event.StandingTurnedOff,
+                                )
+                            }
+                        },
                     )
                 }
-                Spacer(modifier = Modifier.size(16.dp))
-                Switch(
-                    checked = standing,
-                    onCheckedChange = { isChecked ->
-                        scope.launch {
-                            container.settingsRepository.setStanding(isChecked)
-                            CheckInReceiver.dispatchMachineEvent(
-                                context,
-                                if (isChecked) CheckInMachine.Event.StandingTurnedOn else CheckInMachine.Event.StandingTurnedOff,
-                            )
-                        }
-                    },
-                )
             }
 
             if (!readiness.notificationsAllowed) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = stringResource(R.string.lockscreen_app_only),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Test check-in section
-            Text(
-                text = stringResource(R.string.lockscreen_send_test),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.lockscreen_test_explainer),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (lastTestSuccess != null) {
-                Text(
-                    text = stringResource(R.string.lockscreen_test_works),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(vertical = 8.dp),
-                )
-            } else if (testRequestedByMe) {
-                Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                GlassCard(
+                    highlighted = true,
+                    contentPadding = PaddingValues(horizontal = 18.dp, vertical = 14.dp),
+                ) {
                     Text(
-                        text = stringResource(R.string.lockscreen_lock_now),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = stringResource(R.string.lockscreen_test_hint),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        text = stringResource(R.string.lockscreen_app_only),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }
 
-            Button(
-                onClick = {
-                    testRequestedByMe = true
-                    scope.launch {
-                        container.settingsRepository.clearLastTestSuccess()
-                        CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.TestRequested)
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Test check-in section
+            GlassCard(
+                highlighted = lastTestSuccess != null,
+                contentPadding = PaddingValues(18.dp),
             ) {
-                Text(stringResource(R.string.lockscreen_send_test))
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        text = stringResource(R.string.lockscreen_send_test),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        text = stringResource(R.string.lockscreen_test_explainer),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+
+                    if (lastTestSuccess != null) {
+                        Text(
+                            text = stringResource(R.string.lockscreen_test_works),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = smileColors.successBadgeFg,
+                        )
+                    } else if (testRequestedByMe) {
+                        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Text(
+                                text = stringResource(R.string.lockscreen_lock_now),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                            Text(
+                                text = stringResource(R.string.lockscreen_test_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+
+                    Button(
+                        onClick = {
+                            testRequestedByMe = true
+                            scope.launch {
+                                container.settingsRepository.clearLastTestSuccess()
+                                CheckInReceiver.dispatchMachineEvent(context, CheckInMachine.Event.TestRequested)
+                            }
+                        },
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 50.dp),
+                    ) {
+                        Text(stringResource(R.string.lockscreen_send_test))
+                    }
+                }
             }
         }
     }
@@ -313,52 +328,64 @@ internal fun CheckRow(
     onFix: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val smileColors = LocalSmileProcColors.current
     val readyCd = stringResource(R.string.lockscreen_ok_cd)
     val problemCd = stringResource(R.string.lockscreen_problem_cd)
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
+    GlassCard(
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(1f),
-            )
-            if (isOk) {
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Text(
-                    text = "✓",
+                    text = title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.semantics { contentDescription = readyCd },
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f),
                 )
-            } else {
-                Text(
-                    text = "!",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.semantics { contentDescription = problemCd },
-                )
+                Box(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(if (isOk) smileColors.successBadgeBg else smileColors.warningBadgeBg),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    if (isOk) {
+                        Text(
+                            text = "✓",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = smileColors.successBadgeFg,
+                            modifier = Modifier.semantics { contentDescription = readyCd },
+                        )
+                    } else {
+                        Text(
+                            text = "!",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = smileColors.warningBadgeFg,
+                            modifier = Modifier.semantics { contentDescription = problemCd },
+                        )
+                    }
+                }
             }
-        }
 
-        if (!isOk) {
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = problemSummary,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedButton(onClick = onFix) {
-                Text(fixActionLabel)
+            if (!isOk) {
+                Text(
+                    text = problemSummary,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OutlinedButton(
+                    onClick = onFix,
+                    shape = CircleShape,
+                    modifier = Modifier.heightIn(min = 48.dp),
+                ) {
+                    Text(fixActionLabel)
+                }
             }
         }
     }

@@ -1,5 +1,11 @@
 package com.example.smileproc.ui.support
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Color
+import com.example.smileproc.ui.components.GlassCard
+import com.example.smileproc.ui.components.GlassTopBar
+
 import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -45,20 +51,11 @@ fun SupportScreen(
     BackHandler(onBack = onNavigateBack)
 
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.support_title)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateBack,
-                        modifier = Modifier.semantics { contentDescription = backLabel },
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_back),
-                            contentDescription = backLabel,
-                        )
-                    }
-                },
+            GlassTopBar(
+                title = stringResource(R.string.support_title),
+                onNavigateBack = onNavigateBack,
             )
         },
         modifier = modifier,
@@ -68,29 +65,35 @@ fun SupportScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(horizontal = 20.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            Text(
-                text = stringResource(R.string.support_body),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
+            GlassCard(
+                highlighted = true,
+                contentPadding = PaddingValues(18.dp),
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(
+                        text = stringResource(R.string.support_body),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
 
-            Text(
-                text = stringResource(R.string.support_emergency),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+                    Text(
+                        text = stringResource(R.string.support_emergency),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
 
             if (contacts.isNotEmpty()) {
                 contacts.forEach { contact ->
-                    Card(
+                    GlassCard(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+                        contentPadding = PaddingValues(18.dp),
                     ) {
                         Column(
-                            modifier = Modifier.padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
                             Text(
@@ -107,6 +110,7 @@ fun SupportScreen(
                                             context.startActivity(Intent(Intent.ACTION_DIAL, "tel:$phone".toUri()))
                                         } catch (_: Exception) {}
                                     },
+                                    shape = CircleShape,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .heightIn(min = 48.dp)
@@ -124,6 +128,7 @@ fun SupportScreen(
                                             context.startActivity(Intent(Intent.ACTION_SENDTO, "smsto:$sms".toUri()))
                                         } catch (_: Exception) {}
                                     },
+                                    shape = CircleShape,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .heightIn(min = 48.dp)
@@ -141,6 +146,7 @@ fun SupportScreen(
                                             context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
                                         } catch (_: Exception) {}
                                     },
+                                    shape = CircleShape,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .heightIn(min = 48.dp)

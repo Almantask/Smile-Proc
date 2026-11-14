@@ -1,5 +1,8 @@
 package com.example.smileproc.ui.today
 
+import androidx.compose.foundation.shape.CircleShape
+import com.example.smileproc.ui.components.GlassCard
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,20 +30,17 @@ fun LowRunCard(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    GlassCard(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
+        highlighted = true,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
                 text = stringResource(R.string.lowrun_text),
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Row(
@@ -51,6 +51,7 @@ fun LowRunCard(
                 val notNowLabel = stringResource(R.string.action_not_now)
                 TextButton(
                     onClick = onDismiss,
+                    shape = CircleShape,
                     modifier = Modifier
                         .heightIn(min = 48.dp)
                         .semantics { contentDescription = notNowLabel },
@@ -61,6 +62,7 @@ fun LowRunCard(
                 val seeSupportLabel = stringResource(R.string.lowrun_see_support)
                 OutlinedButton(
                     onClick = onSeeSupport,
+                    shape = CircleShape,
                     modifier = Modifier
                         .heightIn(min = 48.dp)
                         .semantics { contentDescription = seeSupportLabel },
